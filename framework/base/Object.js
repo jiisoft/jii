@@ -1,0 +1,81 @@
+/**
+ * @author Vladimir Kozhin <affka@affka.ru>
+ * @license MIT
+ */
+
+'use strict';
+
+/**
+ *
+ * @class Jii.base.Object
+ * @extends Function
+ */
+Jii.defineClass('Jii.base.Object', {
+
+	__static: {
+
+		/**
+		 * Return full class name with namespace
+		 * @returns {string}
+		 */
+		className: function () {
+			return this.__className;
+		},
+
+		/**
+		 * Return extended class name with namespace
+		 * @returns {string}
+		 */
+		parentClassName: function () {
+			return this.__parentClassName;
+		}
+
+	},
+
+	/**
+	 * @param {object} [config]
+	 * @constructor
+	 */
+	constructor: function (config) {
+		this.__super.apply(this, arguments);
+
+		// Apply configuration to instance
+		if (_.isObject(config)) {
+			Jii.configure(this, config);
+		}
+
+		// Run custom init method
+		this.init();
+	},
+
+	/**
+	 * Customized initialize method
+	 */
+	init: function () {
+	},
+
+	/**
+	 * Method defined jsdoc for hide errors in IDE
+	 * @param {...*} [params]
+	 * @protected
+	 */
+	__super: function (params) {
+	},
+
+	/**
+	 * Return full class name with namespace
+	 * @returns {string}
+	 */
+	className: function () {
+		return this.__className;
+	},
+
+	/**
+	 * Return extended class name with namespace
+	 * @returns {string}
+	 */
+	parentClassName: function () {
+		return this.__parentClassName;
+	}
+
+});

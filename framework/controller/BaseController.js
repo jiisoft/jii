@@ -118,7 +118,7 @@ Jii.defineClass('Jii.controller.BaseController', {
 				}
 
 				return action.runWithParams(context);
-			});
+			}).catch(Jii.catchHandler());
 	},
 
 	/**

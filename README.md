@@ -17,6 +17,16 @@ Supported features
   - Basic HTTP Server
   - Controllers with inline or instance actions
 
+Basic application
+---
+
+Basic application supplied with Jii Framework. Application represent is http server
+with simple form and model with validation. Run application as:
+
+    node apps/basic/index.js
+
+After run, site will be available at http://localhost:3000/.
+
 Bootstrap example
 ---
 

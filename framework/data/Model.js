@@ -341,7 +341,7 @@ Jii.defineClass('Jii.data.Model', {
 		return Promise.resolve(this.beforeValidate())
 			.then(_.bind(function (bool) {
 				if (!bool) {
-					return Promise.reject();
+					return Promise.resolve(false);
 				}
 
 				var promises = _.map(this.getActiveValidators(), _.bind(function (validator) {
@@ -352,11 +352,11 @@ Jii.defineClass('Jii.data.Model', {
 			.then(this.afterValidate)
 			.then(_.bind(function () {
 				if (this.hasErrors()) {
-					return Promise.reject();
+					return Promise.resolve(false);
 				}
 
 				// Return result
-				return Promise.resolve();
+				return Promise.resolve(true);
 			}, this));
 	},
 
@@ -394,7 +394,7 @@ Jii.defineClass('Jii.data.Model', {
 	clearErrors: function (attribute) {
 		if (!attribute) {
 			this._errors = {};
-		} else {
+		} else if (this._errors) {
 			delete this._errors[attribute];
 		}
 	},

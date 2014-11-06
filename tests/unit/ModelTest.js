@@ -49,6 +49,7 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
             sampleModel.setScenario('insert');
             sampleModel.set('description', '1234567890+1');
             sampleModel.validate().then(function (isValid) {
+
                 // Check validation errors
                 test.strictEqual(isValid, false);
                 test.strictEqual(sampleModel.hasErrors(), true);

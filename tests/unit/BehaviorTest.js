@@ -2,6 +2,8 @@
 
 require('./bootstrap');
 
+global.tests = Jii.namespace('tests');
+
 /**
  * @class tests.unit.BehaviorTest
  * @extends Jii.base.UnitTest

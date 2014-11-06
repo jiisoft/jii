@@ -21,7 +21,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
             test.strictEqual(model.hasErrors(), hasErrors, 'Attribute errors: ' + model.getErrors('foo'));
 
             // Value
-            test.strictEqual(validator.validateValue(value), !hasErrors, 'Value error, value: ' + value);
+            test.strictEqual(validator.validateValue(value), !hasErrors, validator.className() + ': Value error, value: ' + value);
         });
     },
 

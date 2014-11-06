@@ -9,12 +9,14 @@
 'use strict';
 
 var classes = require('./utils/classes');
+var Neatness = require('neatness').newContext();
 
 /**
  * @class Jii
  * @extends Jii.base.Object
  */
-classes.defineClass('Jii', {
+global.Jii = Neatness.defineClass('Jii', {
+
 	/**
 	 * @type {object} static methods.
 	 */
@@ -34,13 +36,13 @@ classes.defineClass('Jii', {
 		 * True, if running in node js
 		 * @type {boolean}
 		 */
-		isNode: typeof module !== 'undefined' && module.exports,
+		isNode: typeof module !== 'undefined' && module.exports ? true : false,
 
 		/**
 		 * Global object - `window` for browser or `global` for node js
 		 * @type {boolean}
 		 */
-		global: typeof window !== 'undefined' ? window : global,
+		//global: typeof window !== 'undefined' ? window : global,
 
 		_contextConfig: null,
 
@@ -58,7 +60,7 @@ classes.defineClass('Jii', {
 		 * @returns {function|object}
 		 */
 		namespace: function (name) {
-			return classes.namespace.apply(this, arguments);
+			return Neatness.namespace(name, arguments);
 		},
 
 		/**
@@ -80,7 +82,7 @@ classes.defineClass('Jii', {
 		 * @return {object}
 		 */
 		defineClass: function (globalName, options) {
-			return classes.defineClass(globalName, options);
+			return Neatness.defineClass(globalName, options);
 		},
 
 		/**

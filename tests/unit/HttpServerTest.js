@@ -4,6 +4,8 @@ require('./bootstrap');
 
 var request = require('request');
 
+global.app = Jii.namespace('app');
+
 /**
  * @class tests.unit.HttpServerTest
  * @extends Jii.base.UnitTest

@@ -49,9 +49,9 @@ Jii.defineClass('Jii.base.Event', {
 		 * @returns {*}
 		 */
 		normalizeHandler: function (handler, context) {
-			context = context || Jii.global;
+			context = context || null;
 
-			if (_.isObject(handler) && handler.callback && handler.context) {
+			if (_.isObject(handler) && _.has(handler, 'callback') && _.has(handler, 'context')) {
 				return handler;
 			}
 
@@ -69,7 +69,7 @@ Jii.defineClass('Jii.base.Event', {
 				};
 			}
 
-			throw new Jii.exceptions.ApplicationException('Wrong handler format:' + String(handler));
+			throw new Jii.exceptions.ApplicationException('Wrong handler format:' + JSON.stringify(handler));
 		},
 
 		_events: {},

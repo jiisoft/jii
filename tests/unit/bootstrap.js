@@ -1,7 +1,10 @@
 'use strict';
 
-// Load libs
-require('../../framework/require-server');
+/**
+ * @namespace Jii
+ * @ignore
+ */
+global.Jii = require('../../index');
 
 Jii.createWebApplication({
 	application: {

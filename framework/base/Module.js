@@ -6,10 +6,18 @@
 'use strict';
 
 /**
- * @class Jii.app.Module
+ * @namespace Jii
+ * @ignore
+ */
+var Jii = require('../Jii');
+
+require('./Context');
+
+/**
+ * @class Jii.base.Module
  * @extends Jii.base.Context
  */
-Jii.defineClass('Jii.base.Module', {
+Jii.defineClass('Jii.base.Module', /** @lends Jii.base.Module.prototype */{
 
 	__extends: Jii.base.Context,
 
@@ -42,7 +50,7 @@ Jii.defineClass('Jii.base.Module', {
      *   }
      * }
 	 * ~~~
-	 * @type {array}
+	 * @type {object}
 	 */
 	controllerMap: {},
 

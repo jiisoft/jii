@@ -1,26 +1,21 @@
 /**
- * Jii — Full-Stack JavaScript Framework based on PHP Yii Framework architecture.
+ * Jii — Full-Stack JavaScript Framework based on PHP Yii 2 Framework architecture.
  *
  * @author Vladimir Kozhin <affka@affka.ru>
- * @author Dmitriy Yurchenko <evildev@evildev.ru>
  * @license MIT
  */
 
 'use strict';
 
-var classes = require('./utils/classes');
 var Neatness = require('neatness').newContext();
 
 /**
- * @class Jii
- * @extends Jii.base.Object
+ * @namespace
+ * @alias module:jii
  */
-global.Jii = Neatness.defineClass('Jii', {
+var Jii = Neatness.defineClass('Jii', {
 
-	/**
-	 * @type {object} static methods.
-	 */
-	__static: {
+	__static: /** @lends Jii */{
 
 		/**
 		 * @type {Jii.base.Application}
@@ -37,12 +32,6 @@ global.Jii = Neatness.defineClass('Jii', {
 		 * @type {boolean}
 		 */
 		isNode: typeof module !== 'undefined' && module.exports ? true : false,
-
-		/**
-		 * Global object - `window` for browser or `global` for node js
-		 * @type {boolean}
-		 */
-		//global: typeof window !== 'undefined' ? window : global,
 
 		_contextConfig: null,
 
@@ -410,3 +399,8 @@ global.Jii = Neatness.defineClass('Jii', {
 	}
 
 });
+
+/**
+ * @module Jii
+ */
+module.exports = Jii;

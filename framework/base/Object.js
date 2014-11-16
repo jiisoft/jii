@@ -6,13 +6,18 @@
 'use strict';
 
 /**
+ * @namespace Jii
+ * @ignore
+ */
+var Jii = require('../Jii');
+
+/**
  *
  * @class Jii.base.Object
- * @extends Function
  */
-Jii.defineClass('Jii.base.Object', {
+Jii.defineClass('Jii.base.Object', /** @lends Jii.base.Object.prototype */{
 
-	__static: {
+	__static: /** @lends Jii.base.Object */{
 
 		/**
 		 * Return full class name with namespace

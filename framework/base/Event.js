@@ -6,10 +6,18 @@
 'use strict';
 
 /**
+ * @namespace Jii
+ * @ignore
+ */
+var Jii = require('../Jii');
+
+require('./Object');
+
+/**
  * @class Jii.base.Event
  * @extends Jii.base.Object
  */
-Jii.defineClass('Jii.base.Event', {
+Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.prototype */{
 
 	__extends: Jii.base.Object,
 
@@ -40,7 +48,7 @@ Jii.defineClass('Jii.base.Event', {
 	 */
 	data: null,
 
-	__static: {
+	__static: /** @lends Jii.base.Event */{
 
 		/**
 		 * Convert string/function/object to object handler with context and callback params

@@ -6,10 +6,18 @@
 'use strict';
 
 /**
+ * @namespace Jii
+ * @ignore
+ */
+var Jii = require('../Jii');
+
+require('./Object');
+
+/**
  * @class Jii.base.Component
  * @extends Jii.base.Object
  */
-Jii.defineClass('Jii.base.Component', {
+Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Component.prototype */{
 
 	__extends: Jii.base.Object,
 

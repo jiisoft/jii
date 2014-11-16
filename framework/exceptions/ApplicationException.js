@@ -6,10 +6,16 @@
 'use strict';
 
 /**
+ * @namespace Jii
+ * @ignore
+ */
+var Jii = require('../Jii');
+
+/**
  * @class Jii.exceptions.ApplicationException
  * @extends Error
  */
-Jii.defineClass('Jii.exceptions.ApplicationException', {
+Jii.defineClass('Jii.exceptions.ApplicationException', /** @lends Jii.exceptions.ApplicationException.prototype */ {
 
 	__extends: Error,
 

@@ -1,20 +1,11 @@
 {
   "name": "jii",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Jii - Full-Stack JavaScript Framework",
   "main": "index.js",
-  "contributors": [
-    {
-      "name": "Vladimir Kozhin",
-      "email": "affka@affka.ru"
-    },
-    {
-      "name": "Dmitriy Yurchenko",
-      "email": "evildev@evildev.ru"
-    }
-  ],
+  "author": "Vladimir Kozhin <affka@affka.ru>",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nodeunit tests/unit"
   },
   "repository": {
     "type": "git",
@@ -32,22 +23,10 @@
     "url": "https://github.com/jiisoft/jii/issues"
   },
   "dependencies": {
-    "mysql": "^2.0.1",
-    "redis": "~0.9.0",
-    "request": "^2.36.0",
-    "express": "^4.4.3",
-    "neatness": "^1.1.8"
+    "neatness": "^1.1.8",
+    "require-all": "0.0.8"
   },
   "devDependencies": {
-    "nodeunit": "*",
-    "grunt": "~0.4.2",
-    "grunt-contrib-jshint": "~0.6.3",
-    "grunt-contrib-nodeunit": "~0.2.0",
-    "grunt-contrib-uglify": "~0.2.2",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-copy": "^0.5.0",
-    "browserify": "^3.44.2",
-    "grunt-browserify": "^2.0.8",
-    "optimist": "~0.6.1"
+    "nodeunit": "*"
   }
 }

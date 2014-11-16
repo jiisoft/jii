@@ -8,10 +8,18 @@
 'use strict';
 
 /**
+ * @namespace Jii
+ * @ignore
+ */
+var Jii = require('../Jii');
+
+require('../base/Application');
+
+/**
  * @class Jii.application.WebApplication
  * @extends Jii.base.Application
  */
-Jii.defineClass('Jii.application.WebApplication', {
+Jii.defineClass('Jii.application.WebApplication', /** @lends Jii.application.WebApplication.prototype */{
 
 	__extends: Jii.base.Application,
 

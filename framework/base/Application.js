@@ -6,10 +6,18 @@
 'use strict';
 
 /**
+ * @namespace Jii
+ * @ignore
+ */
+var Jii = require('../Jii');
+
+require('./Module');
+
+/**
  * @class Jii.base.Application
  * @extends Jii.base.Module
  */
-Jii.defineClass('Jii.base.Application', {
+Jii.defineClass('Jii.base.Application', /** @lends Jii.base.Application.prototype */{
 
 	__extends: Jii.base.Module,
 
@@ -54,7 +62,7 @@ Jii.defineClass('Jii.base.Application', {
 	bootstrap: null,
 
 	/**
-	 * @constructor
+	 * @constructs
 	 */
 	constructor: function (config) {
 		Jii.app = this;

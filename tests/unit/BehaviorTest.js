@@ -1,8 +1,13 @@
 'use strict';
 
+/**
+ * @namespace Jii
+ * @ignore
+ */
+var Jii = require('../../index');
 require('./bootstrap');
 
-global.tests = Jii.namespace('tests');
+var tests = Jii.namespace('tests');
 
 /**
  * @class tests.unit.BehaviorTest

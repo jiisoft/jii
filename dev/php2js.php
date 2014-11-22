@@ -13,10 +13,10 @@ if (empty($_GET['file'])) {
 }
 
 $sourceCode = file_get_contents($_GET['file']);
-$namespace = 'Jii.data.sql';
+$namespace = 'Jii.sql';
 
 $classNamesMap = [
-    'yii.db' => 'Jii.data.sql',
+    'yii.db' => 'Jii.sql',
 ];
 
 // Store namespace
@@ -150,7 +150,7 @@ foreach(find_foreaches($sourceCode) as $for) {
         $key = $matches[3];
         $value = $matches[4];
 
-        $newFor = str_replace($matches[0], '_.each(' . $list . ', _.bind(function(' . $value . ($key ? ', ' . $key : '') . ')', $for);
+        $newFor = str_replace($matches[0], 'Jii._.each(' . $list . ', Jii._.bind(function(' . $value . ($key ? ', ' . $key : '') . ')', $for);
         $newFor = preg_replace('/}$/', '}, this));', $newFor);
 
         $sourceCode = str_replace($for, $newFor, $sourceCode);
@@ -218,10 +218,10 @@ $replaces = [
     '/class ([^ ]+) extends ([^ ]+).*\n{/' => "Jii.defineClass('" . $namespace . ".$1', {\n\n    __extends: Jii.base.$2,\n\n    __static: {\n    },",
     '/public \$([^; ]+).*/' => "$1: null,\n",
     '/(private|protected) function ([^(]+)(.*)/' => "_$1: function $2",
-    '/empty\(/' => '_.isEmpty(',
-    '/is_array\(/' => '_.isArray(',
-    '/is_string\(/' => '_.isString(',
-    '/is_integer\(/' => '_.isNumber(',
+    '/empty\(/' => 'Jii._.isEmpty(',
+    '/is_array\(/' => 'Jii._.isArray(',
+    '/is_string\(/' => 'Jii._.isString(',
+    '/is_integer\(/' => 'Jii._.isNumber(',
     '/::/' => '.',
     '/\$/' => '',
     '/\.=/' => '+=',

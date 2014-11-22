@@ -4,7 +4,7 @@
  * @namespace Jii
  * @ignore
  */
-global.Jii = require('../../index');
+var Jii = require('../../index');
 
 Jii.createWebApplication({
 	application: {

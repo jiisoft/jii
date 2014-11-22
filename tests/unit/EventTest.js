@@ -1,6 +1,13 @@
 'use strict';
 
+/**
+ * @namespace Jii
+ * @ignore
+ */
+var Jii = require('../../index');
 require('./bootstrap');
+
+var tests = Jii.namespace('tests');
 
 /**
  * @class tests.unit.EventTest
@@ -12,7 +19,7 @@ var self = Jii.defineClass('tests.unit.EventTest', {
 
 	_counter: null,
 
-	setUp: function (callback) {
+	setUp: function () {
 
 		// Clear
 		this._counter = 0;
@@ -20,7 +27,7 @@ var self = Jii.defineClass('tests.unit.EventTest', {
 		Jii.base.Event.off(tests.unit.User.className(), 'save');
 		Jii.base.Event.off(tests.unit.ActiveRecord.className(), 'save');
 
-		this.__super(callback);
+		return this.__super();
 	},
 
 	onTest: function (test) {

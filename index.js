@@ -2,15 +2,20 @@
  * Require relations libs and jii files
  *
  * @author Vladimir Kozhin <affka@affka.ru>
- * @author Dmitriy Yurchenko <evildev@evildev.ru>
  * @license MIT
  */
 
-// Load global libraries
-global._ = require('./lib/lodash/lodash');
-global._.string = require('./lib/underscore/underscore.string');
-require('./lib/es6-promise/promise');
+/**
+ * @namespace Jii
+ * @ignore
+ */
+var Jii = module.exports = require('./lib/Jii');
 
-// Load Jii files
-module.exports = require('./framework/Jii');
-require('require-all')(__dirname + '/framework');
+// Load global libraries
+Jii._ = require('lodash');
+Jii._s = require('underscore.string');
+Jii.when = require('when');
+Jii.isNode = true;
+
+// Load framework files
+require('require-all')(__dirname + '/lib');

@@ -46,7 +46,7 @@ foreach ($matches[1] as $className) {
 
 
 // Methods
-$sourceCode = preg_replace_callback('/(public|private|protected) (static )?function *([^(]+) *\(([^(]*)\)\n    {/', function($matches) {
+$sourceCode = preg_replace_callback('/(public|private|protected) (static )?function *([^(]+) *\(([^(]*)\)\r?\n    {/', function($matches) {
     $args = preg_split('/\s*,\s*/', trim($matches[4]), -1, PREG_SPLIT_NO_EMPTY);
     $defaults = [];
     foreach ($args as $i => $arg) {
@@ -105,7 +105,7 @@ $sourceCode = preg_replace_callback('/@(return|param|var) ([^\s]+)/', function($
         }
     }
 
-    return "@$tag {" . implode('|', $types) . "}";
+    return "@" . $tag . " {" . implode('|', $types) . "}";
 }, $sourceCode);
 
 
@@ -150,8 +150,8 @@ foreach(find_foreaches($sourceCode) as $for) {
         $key = $matches[3];
         $value = $matches[4];
 
-        $newFor = str_replace($matches[0], 'Jii._.each(' . $list . ', Jii._.bind(function(' . $value . ($key ? ', ' . $key : '') . ')', $for);
-        $newFor = preg_replace('/}$/', '}, this));', $newFor);
+        $newFor = str_replace($matches[0], 'Jii._.each(' . $list . ', function(' . $value . ($key ? ', ' . $key : '') . ')', $for);
+        $newFor = preg_replace('/}$/', '}.(this));', $newFor);
 
         $sourceCode = str_replace($for, $newFor, $sourceCode);
     }
@@ -212,7 +212,7 @@ $sourceCode = trim($sourceCode) . ');';
 
 // Single replaces
 $replaces = [
-    '/<\?(php)?\n/' => '',
+    '/<\?(php)?\r?\n/' => '',
     '/\r/' => '',
     '/\n *(use|namespace) [^;]+;/' => '',
     '/class ([^ ]+) extends ([^ ]+).*\n{/' => "Jii.defineClass('" . $namespace . ".$1', {\n\n    __extends: Jii.base.$2,\n\n    __static: {\n    },",

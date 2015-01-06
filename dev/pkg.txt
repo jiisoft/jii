@@ -1,0 +1,13 @@
+jii (base)
+jii-model
+jii-ar-sql
+jii-http-server
+jii-url-manager
+
+
+models manager
+
+
+tasks:
+- config
+- views

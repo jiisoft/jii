@@ -37,5 +37,4 @@ Unit tests
 
 ```sh
 nodeunit tests/unit
-nodeunit framework/data/sql/tests
 ```

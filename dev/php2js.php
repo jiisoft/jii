@@ -151,7 +151,7 @@ foreach(find_foreaches($sourceCode) as $for) {
         $value = $matches[4];
 
         $newFor = str_replace($matches[0], 'Jii._.each(' . $list . ', function(' . $value . ($key ? ', ' . $key : '') . ')', $for);
-        $newFor = preg_replace('/}$/', '}.(this));', $newFor);
+        $newFor = preg_replace('/}$/', '}.bind(this));', $newFor);
 
         $sourceCode = str_replace($for, $newFor, $sourceCode);
     }

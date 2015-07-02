@@ -11,13 +11,12 @@
  * @namespace Jii
  * @ignore
  */
-var Jii = window.Jii = require('./lib/Jii');
+var Jii = module.exports = window.Jii = require('./lib/Jii');
 
 // Global libraries
 Jii._ = window._;
 Jii._s = window.s;
-Jii.when = window.when;
-Jii.isNode = true;
+Jii.isNode = false;
 
 // Load framework files
 require('./lib/application/WebApplication');

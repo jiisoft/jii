@@ -3,6 +3,7 @@
   "version": "0.4.3",
   "description": "Jii - Full-Stack JavaScript Framework",
   "main": "index.js",
+  "browser": "index-client.js",
   "author": "Vladimir Kozhin <affka@affka.ru>",
   "scripts": {
     "test": "nodeunit tests/unit"
@@ -23,11 +24,10 @@
     "url": "https://github.com/jiisoft/jii/issues"
   },
   "dependencies": {
-    "neatness": "^1.1.8",
+    "neatness": "^1.1.10",
     "require-all": "0.0.8",
     "lodash": "^2.4.1",
-    "underscore.string": "^2.4.0",
-    "when": "^3.6.3"
+    "underscore.string": "^2.4.0"
   },
   "devDependencies": {
     "nodeunit": "*"

@@ -15,7 +15,6 @@ var Jii = module.exports = require('./lib/Jii');
 
 Jii._ = require('lodash');
 Jii._s = require('underscore.string');
-Jii.when = require('when');
 Jii.isNode = true;
 
 // Load framework files

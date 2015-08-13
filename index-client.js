@@ -14,8 +14,8 @@
 var Jii = module.exports = window.Jii = require('./lib/Jii');
 
 // Global libraries
-Jii._ = window._;
-Jii._s = window.s;
+Jii._ = window._ || null;
+Jii._s = window._s || window.s || null;
 Jii.isNode = false;
 
 // Load framework files

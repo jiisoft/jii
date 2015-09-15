@@ -4,6 +4,7 @@
 - Response.redirect()
 - GulpTasks add watch to browserify
 - Manual implement JSON.* methods for browsers
+- Logger
 
 # client packages
 - lodash
@@ -13,3 +14,4 @@
 - jii-model
 - jii-view
 - jii-urlmanager
+- jii-comet

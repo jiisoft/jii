@@ -21,6 +21,7 @@ Jii.isNode = false;
 // Load framework files
 require('./lib/application/WebApplication');
 require('./lib/base/Action');
+require('./lib/base/ActionEvent');
 require('./lib/base/Application');
 require('./lib/base/Behavior');
 require('./lib/base/Component');
@@ -40,5 +41,9 @@ require('./lib/exceptions/InvalidParamException');
 require('./lib/exceptions/InvalidRouteException');
 require('./lib/exceptions/NotSupportedException');
 require('./lib/exceptions/UnknownPropertyException');
+require('./lib/helpers/File');
 require('./lib/helpers/String');
 require('./lib/helpers/Url');
+require('./lib/request/AnonymousAction');
+require('./lib/request/HeaderCollection');
+require('./lib/request/InlineAction');

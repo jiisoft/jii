@@ -2,9 +2,9 @@
 # TODO jii
 - Access behavior properties via get(), set() method
 - Response.redirect()
-- GulpTasks add watch to browserify
 - Manual implement JSON.* methods for browsers
 - Logger
+- Run response.send() after afterAction() event
 
 # client packages
 - lodash

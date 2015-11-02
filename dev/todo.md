@@ -2,16 +2,22 @@
 # TODO jii
 - Access behavior properties via get(), set() method
 - Response.redirect()
+- #15 Logger
+- #11 Tests for controller
 - Manual implement JSON.* methods for browsers
-- Logger
-- Run response.send() after afterAction() event
-
-# client packages
-- lodash
-- underscore.string
-- when
-- jii
-- jii-model
-- jii-view
-- jii-urlmanager
-- jii-comet
+- #3 sqlite driver
+- Валидация форм в браузере и на сервере
+- #8 Console - Migrations command
+- React Views
+- MongoDB driver
+- es6 классы
+- #7 Implement Internationalization
+- #6 Active Record - transactions
+- #5 httpserver - Request and Response todos
+- #2 Docs: models, views
+- #17 WebUser
+- Client models
+- Auto require classes
+- Show error on not found jii-* npm package
+- Docs: Readme.md
+- Docs: translate to english jiiframework.ru

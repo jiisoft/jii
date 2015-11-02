@@ -1,7 +1,7 @@
 Jii
 ====
 
-Jii (JavaScript Yii) — Full-Stack JavaScript Framework architecture based on PHP Yii Framework v2
+[Jii](http://www.jiiframework.ru/) (JavaScript Yii) — Full-Stack JavaScript Framework architecture based on PHP Yii Framework v2
 
     npm install jii
 

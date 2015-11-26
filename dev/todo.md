@@ -1,5 +1,8 @@
 
 # TODO jii
+- Docs: translate to english jiiframework.ru
+- Docs: Readme.md
+- Auto require classes
 - Access behavior properties via get(), set() method
 - Response.redirect()
 - #15 Logger
@@ -17,7 +20,4 @@
 - #2 Docs: models, views
 - #17 WebUser
 - Client models
-- Auto require classes
 - Show error on not found jii-* npm package
-- Docs: Readme.md
-- Docs: translate to english jiiframework.ru

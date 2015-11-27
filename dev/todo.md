@@ -1,6 +1,5 @@
 
 # TODO jii
-- Docs: translate to english jiiframework.ru
 - Docs: Readme.md
 - Auto require classes
 - Access behavior properties via get(), set() method
@@ -21,3 +20,4 @@
 - #17 WebUser
 - Client models
 - Show error on not found jii-* npm package
+- Fix AliasesTest

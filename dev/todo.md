@@ -1,5 +1,6 @@
 
 # TODO jii
+- automerge objects in configure()
 - Docs: Readme.md
 - Auto require classes
 - Access behavior properties via get(), set() method

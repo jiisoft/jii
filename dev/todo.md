@@ -1,6 +1,5 @@
 
 # TODO jii
-- replace Jii._.bind() to native .bind() 
 - automerge objects in configure()
 - Docs: Readme.md
 - Auto require classes

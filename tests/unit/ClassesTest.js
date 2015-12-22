@@ -15,7 +15,7 @@ var tests = Jii.namespace('tests');
  */
 var self = Jii.defineClass('tests.unit.ClassesTest', {
 
-	__extends: Jii.base.UnitTest,
+	__extends: 'Jii.base.UnitTest',
 
     aliasesTest: function (test) {
 		var Foo = Jii.defineClass('tests.Foo', {
@@ -39,7 +39,7 @@ var self = Jii.defineClass('tests.unit.ClassesTest', {
 		test.strictEqual(tests.Foo.__className, 'tests.Foo');
 
 		var Bar = Jii.defineClass('tests.Bar', {
-			__extends: tests.Foo,
+			__extends: 'tests.Foo',
 			__static: {
 				fooStatic: 5,
 				barStatic: 6

@@ -15,7 +15,7 @@ var tests = Jii.namespace('tests');
  */
 var self = Jii.defineClass('tests.unit.EventTest', {
 
-	__extends: Jii.base.UnitTest,
+	__extends: 'Jii.base.UnitTest',
 
 	_counter: null,
 
@@ -86,7 +86,7 @@ var self = Jii.defineClass('tests.unit.EventTest', {
  * @extends Jii.base.Component
  */
 Jii.defineClass('tests.unit.ActiveRecord', {
-	__extends: Jii.base.Component,
+	__extends: 'Jii.base.Component',
 	save: function() {
 		this.trigger('save');
 	}
@@ -97,7 +97,7 @@ Jii.defineClass('tests.unit.ActiveRecord', {
  * @extends tests.unit.ActiveRecord
  */
 Jii.defineClass('tests.unit.User', {
-	__extends: tests.unit.ActiveRecord
+	__extends: 'tests.unit.ActiveRecord'
 });
 
 /**
@@ -105,7 +105,7 @@ Jii.defineClass('tests.unit.User', {
  * @extends tests.unit.ActiveRecord
  */
 Jii.defineClass('tests.unit.Post', {
-	__extends: tests.unit.ActiveRecord
+	__extends: 'tests.unit.ActiveRecord'
 });
 
 module.exports = new self().exports();

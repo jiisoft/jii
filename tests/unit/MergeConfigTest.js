@@ -12,7 +12,7 @@ var Jii = require('../../index');
  */
 var self = Jii.defineClass('tests.unit.MergeConfigTest', {
 
-	__extends: Jii.base.UnitTest,
+	__extends: 'Jii.base.UnitTest',
 
     mergeTest: function (test) {
         var o1 = {

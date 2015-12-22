@@ -1,49 +1,38 @@
-/**
- * Require relations libs and jii files
- *
- * @author Vladimir Kozhin <affka@affka.ru>
- * @license MIT
- */
-
-'use strict';
-
-/**
- * @namespace Jii
- * @ignore
- */
-var Jii = module.exports = window.Jii = require('./lib/Jii');
-
-// Global libraries
-Jii._ = window._ || null;
-Jii._s = window._s || window.s || (window._ ? window._.string : null) || null;
+var Jii = module.exports = require('./lib/Jii');
 Jii.isNode = false;
 
-// Load framework files
-require('./lib/application/WebApplication');
-require('./lib/base/Action');
-require('./lib/base/ActionEvent');
-require('./lib/base/Application');
-require('./lib/base/Behavior');
-require('./lib/base/Component');
-require('./lib/base/Context');
-require('./lib/base/Controller');
-require('./lib/base/Event');
-require('./lib/base/HttpRequest');
-require('./lib/base/ModelEvent');
-require('./lib/base/Module');
-require('./lib/base/Object');
-require('./lib/base/Request');
-require('./lib/base/Response');
-require('./lib/exceptions/ApplicationException');
-require('./lib/exceptions/InvalidCallException');
-require('./lib/exceptions/InvalidConfigException');
-require('./lib/exceptions/InvalidParamException');
-require('./lib/exceptions/InvalidRouteException');
-require('./lib/exceptions/NotSupportedException');
-require('./lib/exceptions/UnknownPropertyException');
-require('./lib/helpers/File');
-require('./lib/helpers/String');
-require('./lib/helpers/Url');
-require('./lib/request/AnonymousAction');
-require('./lib/request/HeaderCollection');
-require('./lib/request/InlineAction');
+window.Jii = Jii;
+Jii._ = window._ || null;
+Jii._s = window._s || window.s || (window._ ? window._.string : null) || null;
+
+require('./lib/Jii.js');
+require('./lib/application/Environment.js');
+require('./lib/application/WebApplication.js');
+require('./lib/base/Action.js');
+require('./lib/base/ActionEvent.js');
+require('./lib/base/Application.js');
+require('./lib/base/Behavior.js');
+require('./lib/base/Component.js');
+require('./lib/base/Context.js');
+require('./lib/base/Controller.js');
+require('./lib/base/Event.js');
+require('./lib/base/HttpRequest.js');
+require('./lib/base/ModelEvent.js');
+require('./lib/base/Module.js');
+require('./lib/base/Object.js');
+require('./lib/base/Request.js');
+require('./lib/base/Response.js');
+require('./lib/base/UnitTest.js');
+require('./lib/exceptions/ApplicationException.js');
+require('./lib/exceptions/InvalidCallException.js');
+require('./lib/exceptions/InvalidConfigException.js');
+require('./lib/exceptions/InvalidParamException.js');
+require('./lib/exceptions/InvalidRouteException.js');
+require('./lib/exceptions/NotSupportedException.js');
+require('./lib/exceptions/UnknownPropertyException.js');
+require('./lib/helpers/File.js');
+require('./lib/helpers/String.js');
+require('./lib/helpers/Url.js');
+require('./lib/request/AnonymousAction.js');
+require('./lib/request/HeaderCollection.js');
+require('./lib/request/InlineAction.js');

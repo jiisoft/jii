@@ -25,7 +25,6 @@
   },
   "dependencies": {
     "neatness": "^1.1.10",
-    "require-all": "0.0.8",
     "underscore": "^1.8.3",
     "underscore.string": "^2.4.0"
   },

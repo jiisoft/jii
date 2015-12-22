@@ -13,7 +13,7 @@ require('./bootstrap');
  */
 var self = Jii.defineClass('tests.unit.AliasesTest', {
 
-	__extends: Jii.base.UnitTest,
+	__extends: 'Jii.base.UnitTest',
 
     aliasesTest: function (test) {
         var jiiPath = require('fs').realpathSync(__dirname + '/../../lib');

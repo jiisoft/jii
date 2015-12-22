@@ -15,7 +15,7 @@ var tests = Jii.namespace('tests');
  */
 var self = Jii.defineClass('tests.unit.BehaviorTest', {
 
-	__extends: Jii.base.UnitTest,
+	__extends: 'Jii.base.UnitTest',
 
 	testOn: function (test) {
 		var bar = new tests.unit.BarClass();
@@ -42,7 +42,7 @@ var self = Jii.defineClass('tests.unit.BehaviorTest', {
  * @extends Jii.base.Component
  */
 Jii.defineClass('tests.unit.BarClass', {
-	__extends: Jii.base.Component
+	__extends: 'Jii.base.Component'
 });
 
 /**
@@ -50,7 +50,7 @@ Jii.defineClass('tests.unit.BarClass', {
  * @extends Jii.base.Component
  */
 Jii.defineClass('tests.unit.FooClass', {
-	__extends: Jii.base.Component,
+	__extends: 'Jii.base.Component',
 	behaviors: function() {
 		return {
 			foo: 'tests.unit.BarBehavior'
@@ -63,7 +63,7 @@ Jii.defineClass('tests.unit.FooClass', {
  * @extends Jii.base.Behavior
  */
 Jii.defineClass('tests.unit.BarBehavior', {
-	__extends: Jii.base.Behavior,
+	__extends: 'Jii.base.Behavior',
 	behaviorProperty: 'behavior property',
 	behaviorMethod: function() {
 		return 'behavior method';

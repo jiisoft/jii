@@ -2,23 +2,18 @@
 # TODO jii
 - automerge objects in configure()
 - Docs: Readme.md
-- Auto require classes
 - Access behavior properties via get(), set() method
 - Response.redirect()
-- #15 Logger
-- #11 Tests for controller
-- Manual implement JSON.* methods for browsers
-- #3 sqlite driver
 - Валидация форм в браузере и на сервере
-- #8 Console - Migrations command
 - React Views
 - MongoDB driver
-- es6 классы
-- #7 Implement Internationalization
-- #6 Active Record - transactions
-- #5 httpserver - Request and Response todos
-- #2 Docs: models, views
-- #17 WebUser
-- Client models
-- Show error on not found jii-* npm package
+- issue #15 Logger
+- issue #11 Tests for controller
+- issue #3 sqlite driver
+- issue #8 Console - Migrations command
+- issue #7 Implement Internationalization
+- issue #6 Active Record - transactions
+- issue #5 httpserver - Request and Response todos
+- issue #2 Docs: models, views
+- issue #17 WebUser
 - Fix AliasesTest

@@ -46,11 +46,15 @@
         "lib/server/BaseConnection.js": "Jii.sql.BaseConnection",
         "lib/server/BaseSchema.js": "Jii.sql.BaseSchema",
         "lib/server/ColumnSchema.js": "Jii.sql.ColumnSchema",
+        "lib/server/ColumnSchemaBuilder.js": "Jii.sql.ColumnSchemaBuilder",
         "lib/server/Command.js": "Jii.sql.Command",
+        "lib/server/Migration.js": "Jii.sql.Migration",
         "lib/server/Query.js": "Jii.sql.Query",
         "lib/server/QueryBuilder.js": "Jii.sql.QueryBuilder",
         "lib/server/SqlQueryException.js": "Jii.sql.SqlQueryException",
         "lib/server/TableSchema.js": "Jii.sql.TableSchema",
+        "lib/server/controllers/BaseMigrateController.js": "Jii.sql.controllers.BaseMigrateController",
+        "lib/server/controllers/MigrateController.js": "Jii.sql.controllers.MigrateController",
         "lib/server/mysql/Connection.js": "Jii.sql.mysql.Connection",
         "lib/server/mysql/QueryBuilder.js": "Jii.sql.mysql.QueryBuilder",
         "lib/server/mysql/Schema.js": "Jii.sql.mysql.Schema"
@@ -147,6 +151,6 @@
         "lib/server/ChildWorker.js": "Jii.workers.ChildWorker",
         "lib/server/Manager.js": "Jii.workers.Manager",
         "lib/server/MasterWorker.js": "Jii.workers.MasterWorker",
-        "lib/server/Service.js": "Jii.workers.Service"
+        "lib/server/controllers/ServiceController.js": "Jii.workers.controllers.ServiceController"
     }
 }

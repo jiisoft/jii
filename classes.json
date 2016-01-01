@@ -102,6 +102,7 @@
         "lib/server/Response.js": "Jii.console.Response",
         "lib/server/application/ConsoleApplication.js": "Jii.application.ConsoleApplication",
         "lib/server/controllers/HelpController.js": "Jii.console.controllers.HelpController",
+        "lib/server/controllers/ServiceController.js": "Jii.workers.controllers.ServiceController",
         "lib/server/helpers/Console.js": "Jii.helpers.Console"
     },
     "jii-httpserver": {
@@ -163,7 +164,6 @@
     "jii-workers": {
         "lib/server/ChildWorker.js": "Jii.workers.ChildWorker",
         "lib/server/Manager.js": "Jii.workers.Manager",
-        "lib/server/MasterWorker.js": "Jii.workers.MasterWorker",
-        "lib/server/controllers/ServiceController.js": "Jii.workers.controllers.ServiceController"
+        "lib/server/MasterWorker.js": "Jii.workers.MasterWorker"
     }
 }

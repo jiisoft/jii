@@ -67,11 +67,13 @@
     },
     "jii-comet": {
         "lib/ChannelEvent.js": "Jii.comet.ChannelEvent",
+        "lib/INeatContextProfiles.js": "Jii.comet.INeatContextProfiles",
         "lib/LogEvent.js": "Jii.comet.LogEvent",
         "lib/client/Client.js": "Jii.comet.client.Client",
         "lib/client/LogMessageEvent.js": "Jii.comet.client.LogMessageEvent",
         "lib/client/MessageEvent.js": "Jii.comet.client.MessageEvent",
         "lib/client/NeatClient.js": "Jii.comet.client.NeatClient",
+        "lib/client/NeatContextProfiles.js": "Jii.comet.client.NeatContextProfiles",
         "lib/client/RequestEvent.js": "Jii.comet.client.RequestEvent",
         "lib/client/plugin/AutoReconnect.js": "Jii.comet.client.plugin.AutoReconnect",
         "lib/client/plugin/PluginInterface.js": "Jii.comet.client.plugin.PluginInterface",
@@ -81,6 +83,7 @@
         "lib/server/ConnectionEvent.js": "Jii.comet.server.ConnectionEvent",
         "lib/server/HubServer.js": "Jii.comet.server.HubServer",
         "lib/server/MessageEvent.js": "Jii.comet.server.MessageEvent",
+        "lib/server/NeatContextProfiles.js": "Jii.comet.server.NeatContextProfiles",
         "lib/server/NeatServer.js": "Jii.comet.server.NeatServer",
         "lib/server/Request.js": "Jii.comet.server.Request",
         "lib/server/Response.js": "Jii.comet.server.Response",
@@ -139,13 +142,23 @@
         "lib/UrlRule.js": "Jii.urlManager.UrlRule"
     },
     "jii-view": {
-        "lib/Theme.js": "Jii.view.Theme",
+        "lib/IRenderer.js": "Jii.view.IRenderer",
         "lib/View.js": "Jii.view.View",
         "lib/ViewEvent.js": "Jii.view.ViewEvent",
-        "lib/ViewRenderer.js": "Jii.view.ViewRenderer",
         "lib/WebView.js": "Jii.view.WebView",
         "lib/client/ClientWebView.js": "Jii.view.ClientWebView",
-        "lib/server/ServerWebView.js": "Jii.view.ServerWebView"
+        "lib/react/LayoutView.js": "Jii.view.react.LayoutView",
+        "lib/react/ReactRenderer.js": "Jii.view.react.ReactRenderer",
+        "lib/react/ReactView.js": "Jii.view.react.ReactView",
+        "lib/react/form/ActiveForm.js": "Jii.view.react.form.ActiveForm",
+        "lib/react/form/Input.js": "Jii.view.react.form.Input",
+        "lib/react/grid/Column.js": "Jii.view.react.grid.Column",
+        "lib/react/grid/DataColumn.js": "Jii.view.react.grid.DataColumn",
+        "lib/react/grid/GridView.js": "Jii.view.react.grid.GridView",
+        "lib/react/server/ReactServerRenderer.js": "Jii.view.react.ReactServerRenderer",
+        "lib/react/widgets/BaseListView.js": "Jii.view.react.widgets.BaseListView",
+        "lib/server/ServerWebView.js": "Jii.view.ServerWebView",
+        "lib/server/underscore/UnderscoreRenderer.js": "Jii.view.underscore.UnderscoreRenderer"
     },
     "jii-workers": {
         "lib/server/ChildWorker.js": "Jii.workers.ChildWorker",

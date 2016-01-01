@@ -4,6 +4,7 @@ Jii.isNode = true;
 Jii._ = require('underscore');
 Jii._s = require('underscore.string');
 
+// AUTO-GENERATED Package files list
 require('./lib/Jii.js');
 require('./lib/application/Environment.js');
 require('./lib/application/WebApplication.js');

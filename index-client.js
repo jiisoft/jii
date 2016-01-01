@@ -2,9 +2,11 @@ var Jii = module.exports = require('./lib/Jii');
 Jii.isNode = false;
 
 window.Jii = Jii;
+Jii.namespaceMoveContext(window);
 Jii._ = window._ || null;
 Jii._s = window._s || window.s || (window._ ? window._.string : null) || null;
 
+// AUTO-GENERATED Package files list
 require('./lib/Jii.js');
 require('./lib/application/Environment.js');
 require('./lib/application/WebApplication.js');

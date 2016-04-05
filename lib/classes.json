@@ -17,7 +17,6 @@
         "lib/base/Object.js": "Jii.base.Object",
         "lib/base/Request.js": "Jii.base.Request",
         "lib/base/Response.js": "Jii.base.Response",
-        "lib/base/UnitTest.js": "Jii.base.UnitTest",
         "lib/exceptions/ApplicationException.js": "Jii.exceptions.ApplicationException",
         "lib/exceptions/InvalidCallException.js": "Jii.exceptions.InvalidCallException",
         "lib/exceptions/InvalidConfigException.js": "Jii.exceptions.InvalidConfigException",
@@ -31,6 +30,7 @@
         "lib/request/AnonymousAction.js": "Jii.request.AnonymousAction",
         "lib/request/HeaderCollection.js": "Jii.request.HeaderCollection",
         "lib/request/InlineAction.js": "Jii.request.InlineAction",
+        "lib/server/base/UnitTest.js": "Jii.base.UnitTest",
         "lib/server/helpers/ClassLoader.js": "Jii.helpers.ClassLoader"
     },
     "jii-ar-sql": {
@@ -77,7 +77,6 @@
         "lib/client/RequestEvent.js": "Jii.comet.client.RequestEvent",
         "lib/client/plugin/AutoReconnect.js": "Jii.comet.client.plugin.AutoReconnect",
         "lib/client/plugin/PluginInterface.js": "Jii.comet.client.plugin.PluginInterface",
-        "lib/client/transport/Sockjs.js": "Jii.comet.client.transport.Sockjs",
         "lib/client/transport/TransportInterface.js": "Jii.comet.client.transport.TransportInterface",
         "lib/server/Connection.js": "Jii.comet.server.Connection",
         "lib/server/ConnectionEvent.js": "Jii.comet.server.ConnectionEvent",
@@ -113,8 +112,10 @@
     "jii-model": {
         "lib/base/ActiveRecord.js": "Jii.base.ActiveRecord",
         "lib/base/Collection.js": "Jii.base.Collection",
+        "lib/base/CollectionAdapterInterface.js": "Jii.base.CollectionAdapterInterface",
         "lib/base/DataProvider.js": "Jii.base.DataProvider",
         "lib/base/Model.js": "Jii.base.Model",
+        "lib/base/ModelAdapterInterface.js": "Jii.base.ModelAdapterInterface",
         "lib/base/ModelAttributeSchema.js": "Jii.base.ModelAttributeSchema",
         "lib/base/ModelSchema.js": "Jii.base.ModelSchema",
         "lib/model/ArrayDataProvider.js": "Jii.base.ArrayDataProvider",

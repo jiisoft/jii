@@ -24,7 +24,6 @@ require('./lib/base/Module.js');
 require('./lib/base/Object.js');
 require('./lib/base/Request.js');
 require('./lib/base/Response.js');
-require('./lib/base/UnitTest.js');
 require('./lib/exceptions/ApplicationException.js');
 require('./lib/exceptions/InvalidCallException.js');
 require('./lib/exceptions/InvalidConfigException.js');

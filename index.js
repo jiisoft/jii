@@ -22,7 +22,6 @@ require('./lib/base/Module.js');
 require('./lib/base/Object.js');
 require('./lib/base/Request.js');
 require('./lib/base/Response.js');
-require('./lib/base/UnitTest.js');
 require('./lib/exceptions/ApplicationException.js');
 require('./lib/exceptions/InvalidCallException.js');
 require('./lib/exceptions/InvalidConfigException.js');
@@ -36,6 +35,7 @@ require('./lib/helpers/Url.js');
 require('./lib/request/AnonymousAction.js');
 require('./lib/request/HeaderCollection.js');
 require('./lib/request/InlineAction.js');
+require('./lib/server/base/UnitTest.js');
 require('./lib/server/helpers/ClassLoader.js');
 
 Jii.helpers.ClassLoader.packages();

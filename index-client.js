@@ -34,6 +34,7 @@ require('./lib/exceptions/UnknownPropertyException.js');
 require('./lib/helpers/File.js');
 require('./lib/helpers/String.js');
 require('./lib/helpers/Url.js');
+require('./lib/helpers/Util.js');
 require('./lib/request/AnonymousAction.js');
 require('./lib/request/HeaderCollection.js');
 require('./lib/request/InlineAction.js');

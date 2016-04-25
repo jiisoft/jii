@@ -1,8 +1,8 @@
 
 # TODO jii
-- automerge objects in configure()
 - Валидация форм в браузере и на сервере
 - issue #17 WebUser
+- service/install, https://wiki.debian.org/LSBInitScripts, update-rc.d node-chip-stat defaults
 
 # tmp
 - Docs: Readme.md
@@ -20,7 +20,23 @@
 
 
 
+# isomorphic app
 
+model
+collection
+root collection
+RemoteConnection (data)
+read(), save(), delete()
+comet.request()
+
+client
+---------
+server
+
+comet income
+ActiveRecordAction
+model
+read(), save(), delete()
 
 
 

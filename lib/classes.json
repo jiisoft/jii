@@ -10,6 +10,7 @@
         "lib/base/Component.js": "Jii.base.Component",
         "lib/base/Context.js": "Jii.base.Context",
         "lib/base/Controller.js": "Jii.base.Controller",
+        "lib/base/ErrorHandler.js": "Jii.base.ErrorHandler",
         "lib/base/Event.js": "Jii.base.Event",
         "lib/base/HttpRequest.js": "Jii.base.HttpRequest",
         "lib/base/ModelEvent.js": "Jii.base.ModelEvent",

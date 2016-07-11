@@ -15,6 +15,7 @@ require('./lib/base/Behavior.js');
 require('./lib/base/Component.js');
 require('./lib/base/Context.js');
 require('./lib/base/Controller.js');
+require('./lib/base/ErrorHandler.js');
 require('./lib/base/Event.js');
 require('./lib/base/HttpRequest.js');
 require('./lib/base/ModelEvent.js');

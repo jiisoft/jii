@@ -170,6 +170,9 @@
     "jii-workers": {
         "lib/server/ChildWorker.js": "Jii.workers.ChildWorker",
         "lib/server/Manager.js": "Jii.workers.Manager",
-        "lib/server/MasterWorker.js": "Jii.workers.MasterWorker"
+        "lib/server/MasterWorker.js": "Jii.workers.MasterWorker",
+        "lib/server/MessageEvent.js": "Jii.workers.MessageEvent",
+        "lib/server/Request.js": "Jii.workers.Request",
+        "lib/server/Response.js": "Jii.workers.Response"
     }
 }

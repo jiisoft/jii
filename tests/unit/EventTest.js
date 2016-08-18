@@ -77,6 +77,45 @@ var self = Jii.defineClass('tests.unit.EventTest', {
 		test.strictEqual(Jii.base.Event.hasHandlers(tests.unit.ActiveRecord.className(), 'save'), true);
 
 		test.done();
+	},
+
+	instanceTest: function(test) {
+		var eventTriggerCount = 0;
+		var counter = () => {
+			return eventTriggerCount;
+		};
+		var callback = () => {
+			eventTriggerCount++;
+		}
+
+		// Format: callback
+		eventTriggerCount = 0;
+		this._onOff(test, callback, counter, callback);
+
+		// Format object
+		eventTriggerCount = 0;
+		this._onOff(test, {callback: callback, context: this}, counter, callback);
+
+		test.done();
+	},
+
+	_onOff: function(test, onHandler, counter, offHandler) {
+		var model = new tests.unit.User();
+		test.strictEqual(model.hasEventHandlers('save'), false);
+		test.strictEqual(counter(), 0);
+
+		model.on('save', onHandler);
+		test.strictEqual(model.hasEventHandlers('save'), true);
+		test.strictEqual(counter(), 0);
+
+		model.trigger('save');
+		test.strictEqual(counter(), 1);
+
+		model.off('save', offHandler);
+		test.strictEqual(model.hasEventHandlers('save'), false);
+
+		model.trigger('save');
+		test.strictEqual(counter(), 1);
 	}
 
 });

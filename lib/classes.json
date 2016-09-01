@@ -125,6 +125,7 @@
         "lib/model/ChangeAttributeEvent.js": "Jii.model.ChangeAttributeEvent",
         "lib/model/ChangeEvent.js": "Jii.model.ChangeEvent",
         "lib/model/CollectionEvent.js": "Jii.model.CollectionEvent",
+        "lib/model/ValidateEvent.js": "Jii.model.ValidateEvent",
         "lib/validators/BooleanValidator.js": "Jii.validators.BooleanValidator",
         "lib/validators/CompareValidator.js": "Jii.validators.CompareValidator",
         "lib/validators/DateValidator.js": "Jii.validators.DateValidator",

@@ -24,9 +24,8 @@
     "url": "https://github.com/jiisoft/jii/issues"
   },
   "dependencies": {
-    "neatness": "^1.2.0",
-    "underscore": "^1.8.3",
-    "underscore.string": "^2.4.0"
+    "lodash": "^4.15.0",
+    "neatness": "^1.2.0"
   },
   "devDependencies": {
     "nodeunit": "*"

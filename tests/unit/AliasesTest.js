@@ -16,7 +16,7 @@ var self = Jii.defineClass('tests.unit.AliasesTest', {
 	__extends: 'Jii.base.UnitTest',
 
     aliasesTest: function (test) {
-        var jiiPath = require('fs').realpathSync(__dirname + '/../../lib');
+        var jiiPath = require('fs').realpathSync(__dirname + '/../..');
         test.strictEqual(jiiPath, Jii.getAlias('@jii'));
 
         Jii.aliases = {};

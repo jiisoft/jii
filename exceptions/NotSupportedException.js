@@ -1,0 +1,19 @@
+/**
+ * @author Vladimir Kozhin <affka@affka.ru>
+ * @license MIT
+ */
+
+'use strict';
+
+var Jii = require('../Jii');
+var ApplicationException = require('./ApplicationException');
+
+/**
+ * @class Jii.exceptions.NotSupportedException
+ * @extends Jii.exceptions.ApplicationException
+ */
+module.exports = Jii.defineClass('Jii.exceptions.NotSupportedException', /** @lends Jii.exceptions.NotSupportedException.prototype */{
+
+	__extends: ApplicationException
+
+});

@@ -150,7 +150,7 @@ foreach(find_foreaches($sourceCode) as $for) {
         $key = $matches[3];
         $value = $matches[4];
 
-        $newFor = str_replace($matches[0], 'Jii._.each(' . $list . ', function(' . $value . ($key ? ', ' . $key : '') . ')', $for);
+        $newFor = str_replace($matches[0], '_each(' . $list . ', function(' . $value . ($key ? ', ' . $key : '') . ')', $for);
         $newFor = preg_replace('/}$/', '}.bind(this));', $newFor);
 
         $sourceCode = str_replace($for, $newFor, $sourceCode);
@@ -218,10 +218,10 @@ $replaces = [
     '/class ([^ ]+) extends ([^ ]+).*\n{/' => "Jii.defineClass('" . $namespace . ".$1', {\n\n    __extends: 'Jii.base.$2',\n\n    __static: {\n    },",
     '/public \$([^; ]+).*/' => "$1: null,\n",
     '/(private|protected) function ([^(]+)(.*)/' => "_$1: function $2",
-    '/empty\(/' => 'Jii._.isEmpty(',
-    '/is_array\(/' => 'Jii._.isArray(',
-    '/is_string\(/' => 'Jii._.isString(',
-    '/is_integer\(/' => 'Jii._.isNumber(',
+    '/empty\(/' => '_isEmpty(',
+    '/is_array\(/' => '_isArray(',
+    '/is_string\(/' => '_isString(',
+    '/is_integer\(/' => '_isNumber(',
     '/::/' => '.',
     '/\$/' => '',
     '/\.=/' => '+=',

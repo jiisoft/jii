@@ -6,6 +6,7 @@
 'use strict';
 
 var Jii = require('../Jii');
+var InvalidConfigException = require('../exceptions/InvalidConfigException');
 var _isFunction = require('lodash/isFunction');
 var Object = require('./Object');
 
@@ -56,7 +57,7 @@ module.exports = Jii.defineClass('Jii.base.Action', /** @lends Jii.base.Action.p
 	 */
 	runWithParams(context) {
 		if (!_isFunction(this.run)) {
-			throw new Jii.exceptions.InvalidConfigException(this.debugClassName + ' must define a `run()` method.');
+			throw new InvalidConfigException(this.className() + ' must define a `run()` method.');
 		}
 
 		//Yii::trace('Running action: ' . get_class($this) . '::run()', __METHOD__);

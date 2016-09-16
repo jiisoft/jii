@@ -6,6 +6,7 @@
 'use strict';
 
 var Jii = require('../../Jii');
+var ApplicationException = require('../../exceptions/ApplicationException');
 var _isFunction = require('lodash/isFunction');
 var _extend = require('lodash/extend');
 var Object = require('./../../base/Object');
@@ -37,7 +38,7 @@ module.exports = Jii.defineClass('Jii.base.UnitTest', /** @lends Jii.base.UnitTe
 
 	setUp() {
 		if (process.env.NODE_ENV === 'production') {
-			throw new Jii.exceptions.ApplicationException('Do not run unit tests in production!');
+			throw new ApplicationException('Do not run unit tests in production!');
 		}
 
 		// Remove all data from redis

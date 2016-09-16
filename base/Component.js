@@ -6,6 +6,9 @@
 'use strict';
 
 var Jii = require('../Jii');
+var Behavior = require('./Behavior');
+var Event = require('./Event');
+var UnknownPropertyException = require('../exceptions/UnknownPropertyException');
 var _upperFirst = require('lodash/upperFirst');
 var _isUndefined = require('lodash/isUndefined');
 var _isString = require('lodash/isString');
@@ -130,7 +133,7 @@ module.exports = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compo
             name = name[0];
         }
 
-        handler = Jii.base.Event.normalizeHandler(handler);
+        handler = Event.normalizeHandler(handler);
 
         this.ensureBehaviors();
         if (isAppend || !this._events || !this._events[name]) {
@@ -178,7 +181,7 @@ module.exports = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compo
             return true;
         }
 
-        handler = Jii.base.Event.normalizeHandler(handler);
+        handler = Event.normalizeHandler(handler);
 
         var newEvents = [];
         var isRemoved = false;
@@ -212,10 +215,10 @@ module.exports = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compo
         this.ensureBehaviors();
         if (this._events && this._events[name]) {
             if (event === null) {
-                event = new Jii.base.Event();
+                event = new Event();
             }
-            if (!(event instanceof Jii.base.Event)) {
-                event = new Jii.base.Event({
+            if (!(event instanceof Event)) {
+                event = new Event({
                     params: event
                 });
             }
@@ -244,7 +247,7 @@ module.exports = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compo
         }
 
         // invoke class-level attached handlers
-        Jii.base.Event.trigger(this, name, event);
+        Event.trigger(this, name, event);
     },
 
     /**
@@ -364,7 +367,7 @@ module.exports = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compo
      * @private
      */
     _attachBehaviorInternal(name, behavior) {
-        if (!(behavior instanceof Jii.base.Behavior)) {
+        if (!(behavior instanceof Behavior)) {
             behavior = Jii.createObject(behavior);
         }
 
@@ -448,11 +451,11 @@ module.exports = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compo
         } else if (name.substr(0, 3) === 'on ') {
             this.on(name.substr(3), value);
         } else if (name.substr(0, 3) === 'as ') {
-            this.attachBehavior(name.substr(3), value instanceof Jii.base.Behavior ? value : Jii.createObject(value));
+            this.attachBehavior(name.substr(3), value instanceof Behavior ? value : Jii.createObject(value));
         } else {
             // @todo as, see Component Yii2
 
-            throw new Jii.exceptions.UnknownPropertyException('Setting unknown property: ' + this.className() + '.' + name);
+            throw new UnknownPropertyException('Setting unknown property: ' + this.className() + '.' + name);
         }
     },
 
@@ -479,7 +482,7 @@ module.exports = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compo
         } else if (this.hasOwnProperty(name)) {
             return this[name];
         } else {
-            throw new Jii.exceptions.UnknownPropertyException('Getting unknown property: ' + this.className() + '.' + name);
+            throw new UnknownPropertyException('Getting unknown property: ' + this.className() + '.' + name);
         }
     },
 

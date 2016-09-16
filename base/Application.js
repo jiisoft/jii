@@ -6,6 +6,8 @@
 'use strict';
 
 var Jii = require('../Jii');
+var File = require('../helpers/File');
+var InvalidConfigException = require('../exceptions/InvalidConfigException');
 var _isObject = require('lodash/isObject');
 var _has = require('lodash/has');
 var _each = require('lodash/each');
@@ -151,14 +153,14 @@ module.exports = Jii.defineClass('Jii.base.Application', /** @lends Jii.base.App
 	 */
 	_preInit(config) {
 		if (!_isObject(config)) {
-			throw new Jii.exceptions.InvalidConfigException('Config must be object');
+			throw new InvalidConfigException('Config must be object');
 		}
 
 		if (_has(config, 'basePath')) {
 			this.setBasePath(config.basePath);
 			delete config.basePath;
 		} else if (Jii.isNode) {
-            this.setBasePath(Jii.helpers.File.getFileDirectory(process.argv[1]));
+            this.setBasePath(File.getFileDirectory(process.argv[1]));
 		}
 
         if (_has(config, 'runtimePath')) {
@@ -178,7 +180,7 @@ module.exports = Jii.defineClass('Jii.base.Application', /** @lends Jii.base.App
 			} else if (this.hasModule(id)) {
 				this.getModule(id);
 			} else {
-				throw new Jii.exceptions.InvalidConfigException("Unknown component or module: " + id);
+				throw new InvalidConfigException("Unknown component or module: " + id);
 			}
 		});
 	}

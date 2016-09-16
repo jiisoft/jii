@@ -6,6 +6,14 @@
 'use strict';
 
 var Jii = require('../Jii');
+var Module = require('./Module');
+var Action = require('./Action');
+var Response = require('./Response');
+var Controller = require('./Controller');
+var AnonymousAction = require('../request/AnonymousAction');
+var InvalidRouteException = require('../exceptions/InvalidRouteException');
+var InvalidConfigException = require('../exceptions/InvalidConfigException');
+var ActionEvent = require('./ActionEvent');
 var _trimStart = require('lodash/trimStart');
 var _trim = require('lodash/trim');
 var _lastIndexOf = require('lodash/lastIndexOf');
@@ -321,7 +329,7 @@ module.exports = Jii.defineClass('Jii.base.Module', /** @lends Jii.base.Module.p
 			delete this._modules[id];
         } else {
 			// Create module instance
-            if (!(moduleObject instanceof Jii.base.Module)) {
+            if (!(moduleObject instanceof module.exports)) {
                 moduleObject = Jii.createObject(moduleObject, id, this);
             }
 
@@ -385,9 +393,9 @@ module.exports = Jii.defineClass('Jii.base.Module', /** @lends Jii.base.Module.p
 			.then(() => {
 				var fullRoute = routeParams.id + '/' + (routeParams.route || 'index');
 				if (_has(this.inlineActions, fullRoute)) {
-					var action = this.inlineActions[fullRoute] instanceof Jii.base.Action ?
+					var action = this.inlineActions[fullRoute] instanceof Action ?
 						this.inlineActions[fullRoute] :
-						new Jii.request.AnonymousAction(fullRoute, this, this.inlineActions[fullRoute]);
+						new AnonymousAction(fullRoute, this, this.inlineActions[fullRoute]);
 
 					return this.beforeAction(action, context)
 							.then(result => {
@@ -398,7 +406,7 @@ module.exports = Jii.defineClass('Jii.base.Module', /** @lends Jii.base.Module.p
 								return Promise.resolve().then(() => {
 									return action.runWithParams(context);
 								}).then(data => {
-									if (!_isUndefined(data) && context.response instanceof Jii.base.Response) {
+									if (!_isUndefined(data) && context.response instanceof Response) {
 										context.response.data = data;
 										context.response.send();
 									}
@@ -421,7 +429,7 @@ module.exports = Jii.defineClass('Jii.base.Module', /** @lends Jii.base.Module.p
 
 				var id = this.getUniqueId();
 				var requestName = id ? id + '/' + route : route;
-				//throw new Jii.exceptions.InvalidRouteException('Unable to resolve the request `' + requestName + '`.');
+				//throw new InvalidRouteException('Unable to resolve the request `' + requestName + '`.');
 				Jii.info('Unable to resolve the request `' + requestName + '`.');
 			})
 			.catch(e => {
@@ -515,8 +523,8 @@ module.exports = Jii.defineClass('Jii.base.Module', /** @lends Jii.base.Module.p
                 if (_isFunction(controllerClass)) {
                     this._controllers[className] = new controllerClass(id, this);
 
-                    if (!(this._controllers[className] instanceof Jii.base.Controller)) {
-                        throw new Jii.exceptions.InvalidConfigException("Controller class must extend from Jii.base.Controller.");
+                    if (!(this._controllers[className] instanceof Controller)) {
+                        throw new InvalidConfigException("Controller class must extend from Jii.base.Controller.");
                     }
                 }
 			}
@@ -555,7 +563,7 @@ module.exports = Jii.defineClass('Jii.base.Module', /** @lends Jii.base.Module.p
 	 * @return {Promise}
 	 */
 	beforeAction(action, context) {
-        this.trigger(this.__static.EVENT_BEFORE_ACTION, new Jii.base.ActionEvent({
+        this.trigger(this.__static.EVENT_BEFORE_ACTION, new ActionEvent({
             action: action,
             context: context
         }));
@@ -571,7 +579,7 @@ module.exports = Jii.defineClass('Jii.base.Module', /** @lends Jii.base.Module.p
      * @return {Promise}
 	 */
 	afterAction(action, context) {
-        this.trigger(this.__static.EVENT_AFTER_ACTION, new Jii.base.ActionEvent({
+        this.trigger(this.__static.EVENT_AFTER_ACTION, new ActionEvent({
             action: action,
             context: context
         }));

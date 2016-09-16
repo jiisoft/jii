@@ -6,6 +6,7 @@
 'use strict';
 
 var Jii = require('../Jii');
+var HeaderCollection = require('../request/HeaderCollection');
 var _trimStart = require('lodash/trimStart');
 var _trimEnd = require('lodash/trimEnd');
 var _each = require('lodash/each');
@@ -119,7 +120,7 @@ module.exports = Jii.defineClass('Jii.base.HttpRequest', /** @lends Jii.base.Htt
      */
     getHeaders() {
         if (this._headers === null) {
-            this._headers = new Jii.request.HeaderCollection();
+            this._headers = new HeaderCollection();
 
             _each(this._parseHeaders(), (value, name) => {
                 this._headers.add(name, value);

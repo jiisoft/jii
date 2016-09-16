@@ -5,6 +5,7 @@
  * @ignore
  */
 var Jii = require('../../index');
+var Event = require('../../base/Event');
 require('./bootstrap');
 
 var tests = Jii.namespace('tests');
@@ -23,18 +24,18 @@ var self = Jii.defineClass('tests.unit.EventTest', {
 
 		// Clear
 		this._counter = 0;
-		Jii.base.Event.off(tests.unit.Post.className(), 'save');
-		Jii.base.Event.off(tests.unit.User.className(), 'save');
-		Jii.base.Event.off(tests.unit.ActiveRecord.className(), 'save');
+		Event.off(tests.unit.Post.className(), 'save');
+		Event.off(tests.unit.User.className(), 'save');
+		Event.off(tests.unit.ActiveRecord.className(), 'save');
 
 		return this.__super();
 	},
 
 	onTest: function (test) {
-		Jii.base.Event.on(tests.unit.Post.className(), 'save', function(event) {
+		Event.on(tests.unit.Post.className(), 'save', function(event) {
 			this._counter += 1;
 		}.bind(this));
-		Jii.base.Event.on(tests.unit.ActiveRecord.className(), 'save', function(event) {
+		Event.on(tests.unit.ActiveRecord.className(), 'save', function(event) {
 			this._counter += 3;
 		}.bind(this));
 
@@ -54,27 +55,27 @@ var self = Jii.defineClass('tests.unit.EventTest', {
 	offTest: function(test) {
 		var handler = function() {};
 
-		test.strictEqual(Jii.base.Event.hasHandlers(tests.unit.Post.className(), 'save'), false);
-		Jii.base.Event.on(tests.unit.Post.className(), 'save', handler);
-		test.strictEqual(Jii.base.Event.hasHandlers(tests.unit.Post.className(), 'save'), true);
-		Jii.base.Event.off(tests.unit.Post.className(), 'save', handler);
-		test.strictEqual(Jii.base.Event.hasHandlers(tests.unit.Post.className(), 'save'), false);
+		test.strictEqual(Event.hasHandlers(tests.unit.Post.className(), 'save'), false);
+		Event.on(tests.unit.Post.className(), 'save', handler);
+		test.strictEqual(Event.hasHandlers(tests.unit.Post.className(), 'save'), true);
+		Event.off(tests.unit.Post.className(), 'save', handler);
+		test.strictEqual(Event.hasHandlers(tests.unit.Post.className(), 'save'), false);
 
 		test.done();
 	},
 
 	hasTest: function(test) {
-		test.strictEqual(Jii.base.Event.hasHandlers(tests.unit.Post.className(), 'save'), false);
-		test.strictEqual(Jii.base.Event.hasHandlers(tests.unit.ActiveRecord.className(), 'save'), false);
+		test.strictEqual(Event.hasHandlers(tests.unit.Post.className(), 'save'), false);
+		test.strictEqual(Event.hasHandlers(tests.unit.ActiveRecord.className(), 'save'), false);
 
-		Jii.base.Event.on(tests.unit.Post.className(), 'save', function() {});
-		test.strictEqual(Jii.base.Event.hasHandlers(tests.unit.Post.className(), 'save'), true);
-		test.strictEqual(Jii.base.Event.hasHandlers(tests.unit.ActiveRecord.className(), 'save'), false);
+		Event.on(tests.unit.Post.className(), 'save', function() {});
+		test.strictEqual(Event.hasHandlers(tests.unit.Post.className(), 'save'), true);
+		test.strictEqual(Event.hasHandlers(tests.unit.ActiveRecord.className(), 'save'), false);
 
-		test.strictEqual(Jii.base.Event.hasHandlers(tests.unit.User.className(), 'save'), false);
-		Jii.base.Event.on(tests.unit.ActiveRecord.className(), 'save', function() {});
-		test.strictEqual(Jii.base.Event.hasHandlers(tests.unit.User.className(), 'save'), true);
-		test.strictEqual(Jii.base.Event.hasHandlers(tests.unit.ActiveRecord.className(), 'save'), true);
+		test.strictEqual(Event.hasHandlers(tests.unit.User.className(), 'save'), false);
+		Event.on(tests.unit.ActiveRecord.className(), 'save', function() {});
+		test.strictEqual(Event.hasHandlers(tests.unit.User.className(), 'save'), true);
+		test.strictEqual(Event.hasHandlers(tests.unit.ActiveRecord.className(), 'save'), true);
 
 		test.done();
 	},

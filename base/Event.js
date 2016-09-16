@@ -6,6 +6,7 @@
 'use strict';
 
 var Jii = require('../Jii');
+var ApplicationException = require('../exceptions/ApplicationException');
 var _isObject = require('lodash/isObject');
 var _isArray = require('lodash/isArray');
 var _isFunction = require('lodash/isFunction');
@@ -98,7 +99,7 @@ module.exports = Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.pro
 				};
 			}
 
-			throw new Jii.exceptions.ApplicationException('Wrong handler format:' + JSON.stringify(handler));
+			throw new ApplicationException('Wrong handler format:' + JSON.stringify(handler));
 		},
 
 		_events: {},

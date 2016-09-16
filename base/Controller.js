@@ -6,6 +6,13 @@
 'use strict';
 
 var Jii = require('../Jii');
+var File = require('../helpers/File');
+var Response = require('./Response');
+var Context = require('./Context');
+var WebView = require('jii-view/WebView');
+var InvalidRouteException = require('../exceptions/InvalidRouteException');
+var InlineAction = require('../request/InlineAction');
+var ActionEvent = require('./ActionEvent');
 var _trimStart = require('lodash/trimStart');
 var _isUndefined = require('lodash/isUndefined');
 var _isFunction = require('lodash/isFunction');
@@ -131,7 +138,7 @@ module.exports = Jii.defineClass('Jii.base.Controller', /** @lends Jii.base.Cont
 	runAction(id, context) {
 		var action = this.createAction(id);
 		if (action === null) {
-			throw new Jii.exceptions.InvalidRouteException(Jii.t('jii', 'Unable to resolve the request: ' + this.getUniqueId() + '/' + id));
+			throw new InvalidRouteException(Jii.t('jii', 'Unable to resolve the request: ' + this.getUniqueId() + '/' + id));
 		}
 
 		return Promise.all([
@@ -145,7 +152,7 @@ module.exports = Jii.defineClass('Jii.base.Controller', /** @lends Jii.base.Cont
                 return Promise.resolve().then(() => {
                     return action.runWithParams(context);
                 }).then(data => {
-                    if (!_isUndefined(data) && context.response instanceof Jii.base.Response) {
+                    if (!_isUndefined(data) && context.response instanceof Response) {
                         context.response.data = data;
                     }
 
@@ -153,7 +160,7 @@ module.exports = Jii.defineClass('Jii.base.Controller', /** @lends Jii.base.Cont
                         this.module.afterAction(action, context),
                         this.afterAction(action, context)
                     ]).then(() => {
-                        if (context.response instanceof Jii.base.Response) {
+                        if (context.response instanceof Response) {
                             context.response.send();
                         }
 
@@ -185,7 +192,7 @@ module.exports = Jii.defineClass('Jii.base.Controller', /** @lends Jii.base.Cont
 			var method = 'action' + ('-' + id).replace(/-([a-z])/g, (m, v) => v.toUpperCase());
 
 			if (_isFunction(this[method])) {
-				return new Jii.request.InlineAction(id, this, method);
+				return new InlineAction(id, this, method);
 			}
 		}
 
@@ -219,7 +226,8 @@ module.exports = Jii.defineClass('Jii.base.Controller', /** @lends Jii.base.Cont
 	 * @return string the controller ID that is prefixed with the module ID (if any).
 	 */
 	getUniqueId() {
-		return this.module instanceof Jii.base.Application ? this.id : this.module.getUniqueId() + '/' + this.id;
+		var Application = require('./Application');
+		return this.module instanceof Application ? this.id : this.module.getUniqueId() + '/' + this.id;
 	},
 
 	/**
@@ -229,7 +237,7 @@ module.exports = Jii.defineClass('Jii.base.Controller', /** @lends Jii.base.Cont
      * @return {Promise}
 	 */
 	beforeAction(action, context) {
-        this.trigger(this.__static.EVENT_BEFORE_ACTION, new Jii.base.ActionEvent({
+        this.trigger(this.__static.EVENT_BEFORE_ACTION, new ActionEvent({
             action: action,
             context: context
         }));
@@ -243,7 +251,7 @@ module.exports = Jii.defineClass('Jii.base.Controller', /** @lends Jii.base.Cont
      * @return {Promise}
 	 */
 	afterAction(action, context) {
-        this.trigger(this.__static.EVENT_AFTER_ACTION, new Jii.base.ActionEvent({
+        this.trigger(this.__static.EVENT_AFTER_ACTION, new ActionEvent({
             action: action,
             context: context
         }));
@@ -290,7 +298,7 @@ module.exports = Jii.defineClass('Jii.base.Controller', /** @lends Jii.base.Cont
 	 * @return {Promise} the rendering result.
 	 */
 	render(view, context, params) {
-        if (_isObject(context) && !(context instanceof Jii.base.Context)) {
+        if (_isObject(context) && !(context instanceof Context)) {
             params = context;
             context = null;
 
@@ -301,7 +309,7 @@ module.exports = Jii.defineClass('Jii.base.Controller', /** @lends Jii.base.Cont
 		params = params || {};
 
         return this.getView().render(view, context, params, this).then(output => {
-            if (this.getView() instanceof Jii.view.WebView) {
+            if (this.getView() instanceof WebView) {
                 var layout = this._findLayoutFile(this.getView());
                 if (layout !== false) {
                     return this.getView().renderLayout(layout, context, {content: output}, this);
@@ -320,7 +328,7 @@ module.exports = Jii.defineClass('Jii.base.Controller', /** @lends Jii.base.Cont
 	 * @return {Promise} the rendering result.
 	 */
 	renderPartial(view, context, params) {
-        if (_isObject(context) && !(context instanceof Jii.base.Context)) {
+        if (_isObject(context) && !(context instanceof Context)) {
             params = context;
             context = null;
 
@@ -405,7 +413,7 @@ module.exports = Jii.defineClass('Jii.base.Controller', /** @lends Jii.base.Cont
             file = module.getLayoutPath() + '/' + layout;
         }
 
-        var ext = Jii.helpers.File.getFileExtension(file);
+        var ext = File.getFileExtension(file);
         if (ext !== '') {
             return file;
         }

@@ -6,6 +6,7 @@
 'use strict';
 
 var Jii = require('../Jii');
+var InvalidConfigException = require('../exceptions/InvalidConfigException');
 var _isObject = require('lodash/isObject');
 var _has = require('lodash/has');
 var _each = require('lodash/each');
@@ -77,7 +78,7 @@ module.exports = Jii.defineClass('Jii.base.Context', /** @lends Jii.base.Context
 			delete this._components[id];
 		} else {
 			// Create component instance
-			if (!(component instanceof Jii.base.Component)) {
+			if (!(component instanceof Component)) {
                 // Auto get class name
                 if (!component.className && _has(this._coreComponents, id)) {
                     component.className = _isObject(this._coreComponents[id]) ?
@@ -138,7 +139,7 @@ module.exports = Jii.defineClass('Jii.base.Context', /** @lends Jii.base.Context
 	setComponents(components) {
 		_each(components, (component, id) => {
 			// Extend default class name
-			if (!(component instanceof Jii.base.Component) && this._components[id] && !component.className) {
+			if (!(component instanceof Component) && this._components[id] && !component.className) {
 				component.className = this._components[id].className;
 			}
 
@@ -157,7 +158,7 @@ module.exports = Jii.defineClass('Jii.base.Context', /** @lends Jii.base.Context
 			} else if (this.hasModule(id)) {
 				this.getModule(id);
 			} else {
-				throw new Jii.exceptions.InvalidConfigException("Unknown component or module: " + id);
+				throw new InvalidConfigException("Unknown component or module: " + id);
 			}
 		});
 	}

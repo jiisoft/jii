@@ -6,6 +6,7 @@
 'use strict';
 
 var Jii = require('../Jii');
+var Event = require('./Event');
 var _each = require('lodash/each');
 var Object = require('./Object');
 
@@ -67,7 +68,7 @@ module.exports = Jii.defineClass('Jii.base.Behavior', /** @lends Jii.base.Behavi
 		this.owner = owner;
 
 		_each(this.events(), (handler, event) => {
-			handler = Jii.base.Event.normalizeHandler(handler, this);
+			handler = Event.normalizeHandler(handler, this);
 			this.owner.on(event, handler);
 		});
 	},
@@ -84,7 +85,7 @@ module.exports = Jii.defineClass('Jii.base.Behavior', /** @lends Jii.base.Behavi
 		}
 
 		_each(this.events(), (handler, event) => {
-			handler = Jii.base.Event.normalizeHandler(handler, this);
+			handler = Event.normalizeHandler(handler, this);
 			this.owner.off(event, handler);
 		});
 		this.owner = null;

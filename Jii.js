@@ -149,7 +149,7 @@ Jii = Neatness.defineClass('Jii', {
 
 			var ApplicationClass = this.namespace(className);
 			if (!_isFunction(ApplicationClass)) {
-				throw new InvalidParamException('Not found application class: ' + className);
+				throw new Jii.exceptions.InvalidParamException('Not found application class: ' + className);
 			}
 
 			// Init aliases
@@ -176,7 +176,7 @@ Jii = Neatness.defineClass('Jii', {
 			if (config.className) {
 				var ContextClass = this.namespace(config.className);
 				if (!_isFunction(ContextClass)) {
-					throw new InvalidParamException('Not found context class: ' + className);
+					throw new Jii.exceptions.InvalidParamException('Not found context class: ' + className);
 				}
 
 				return new ContextClass(config);
@@ -246,7 +246,7 @@ Jii = Neatness.defineClass('Jii', {
 			}
 
 			if (throwException) {
-				throw new InvalidParamException('Invalid path alias: ' + alias);
+				throw new Jii.exceptions.InvalidParamException('Invalid path alias: ' + alias);
 			}
 			return false;
 		},
@@ -367,13 +367,13 @@ Jii = Neatness.defineClass('Jii', {
 				className = config.className;
 				delete config.className;
 			} else {
-				throw new ApplicationException('Wrong configuration for create object.');
+				throw new Jii.exceptions.ApplicationException('Wrong configuration for create object.');
 			}
 
 			// Get class
 			var objectClass = Jii.namespace(className);
 			if (!_isFunction(objectClass)) {
-				throw new ApplicationException('Not found class `' + className + '` for create instance.');
+				throw new Jii.exceptions.ApplicationException('Not found class `' + className + '` for create instance.');
 			}
 
 			// Arguments for constructor of class
@@ -408,16 +408,16 @@ Jii = Neatness.defineClass('Jii', {
 
 				if (!_isFunction(object[setter])) {
 					if (_isFunction(object[key])) {
-						throw new InvalidConfigException('You can not replace from config function `' + key + '` in object `' + object.className() + '`.');
+						throw new Jii.exceptions.InvalidConfigException('You can not replace from config function `' + key + '` in object `' + object.className() + '`.');
 					}
 
 					if (_isUndefined(object[key])) {
-						throw new InvalidConfigException('Config param `' + key + '` is undefined in object `' + object.className() + '`.');
+						throw new Jii.exceptions.InvalidConfigException('Config param `' + key + '` is undefined in object `' + object.className() + '`.');
 					}
 				}
 
 				if (!_isUndefined(object[key]) && !_isFunction(object[key]) && _isFunction(object[setter])) {
-					throw new InvalidConfigException('You have two setters (function and public param) for config param `' + key + '` in object `' + object.className() + '`.  Please change param access (to `_' + key + '`) or remove setter method.');
+					throw new Jii.exceptions.InvalidConfigException('You have two setters (function and public param) for config param `' + key + '` in object `' + object.className() + '`.  Please change param access (to `_' + key + '`) or remove setter method.');
 				}
 
 				if (!_isUndefined(object[key]) && !_isFunction(object[key])) {

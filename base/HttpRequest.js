@@ -5,7 +5,7 @@
 
 'use strict';
 
-var Jii = require('../Jii');
+var Jii = require('../BaseJii');
 var HeaderCollection = require('../request/HeaderCollection');
 var _trimStart = require('lodash/trimStart');
 var _trimEnd = require('lodash/trimEnd');

@@ -1,10 +1,7 @@
 'use strict';
 
-/**
- * @namespace Jii
- * @ignore
- */
 var Jii = require('../../index');
+var UnitTest = require('../../server/base/UnitTest');
 require('./bootstrap');
 
 /**
@@ -13,7 +10,7 @@ require('./bootstrap');
  */
 var self = Jii.defineClass('tests.unit.AliasesTest', {
 
-	__extends: 'Jii.base.UnitTest',
+	__extends: UnitTest,
 
     aliasesTest: function (test) {
         var jiiPath = require('fs').realpathSync(__dirname + '/../..');

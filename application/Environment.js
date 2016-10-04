@@ -5,7 +5,7 @@
 
 'use strict';
 
-var Jii = require('../Jii');
+var Jii = require('../BaseJii');
 var Object = require('../base/Object');
 
 /**

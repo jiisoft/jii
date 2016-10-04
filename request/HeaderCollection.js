@@ -5,7 +5,7 @@
 
 'use strict';
 
-var Jii = require('../Jii');
+var Jii = require('../BaseJii');
 var _isUndefined = require('lodash/isUndefined');
 var _isArray = require('lodash/isArray');
 var _has = require('lodash/has');

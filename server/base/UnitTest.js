@@ -5,7 +5,8 @@
 
 'use strict';
 
-var Jii = require('../../Jii');
+var Jii = require('../../BaseJii');
+var WebApplication = require('../../application/WebApplication');
 var ApplicationException = require('../../exceptions/ApplicationException');
 var _isFunction = require('lodash/isFunction');
 var _extend = require('lodash/extend');
@@ -67,7 +68,7 @@ module.exports = Jii.defineClass('Jii.base.UnitTest', /** @lends Jii.base.UnitTe
 	 */
 	mockApplication(config, appClassName) {
 		config = config || {};
-		appClassName = appClassName || 'Jii.application.WebApplication';
+		appClassName = appClassName || WebApplication;
 
 		var defaultConfig = {
 			application: {

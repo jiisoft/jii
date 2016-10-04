@@ -5,7 +5,7 @@
 
 'use strict';
 
-var Jii = require('../Jii');
+var Jii = require('../BaseJii');
 var InvalidConfigException = require('../exceptions/InvalidConfigException');
 var _isObject = require('lodash/isObject');
 var _has = require('lodash/has');

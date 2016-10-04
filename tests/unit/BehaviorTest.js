@@ -1,34 +1,32 @@
 'use strict';
 
-/**
- * @namespace Jii
- * @ignore
- */
 var Jii = require('../../index');
+var UnitTest = require('../../server/base/UnitTest');
+var Component = require('../../base/Component');
+var Behavior = require('../../base/Behavior');
 require('./bootstrap');
 
-var tests = Jii.namespace('tests');
-
 /**
- * @class tests.unit.BehaviorTest
- * @extends Jii.base.UnitTest
+ * @class BehaviorTest
+ * @extends UnitTest
  */
-var self = Jii.defineClass('tests.unit.BehaviorTest', {
+var BehaviorTest = Jii.defineClass('BehaviorTest', {
 
-	__extends: 'Jii.base.UnitTest',
+	__extends: UnitTest,
 
 	testOn: function (test) {
-		var bar = new tests.unit.BarClass();
-		var barBehavior = new tests.unit.BarBehavior();
+		var bar = new BarClass();
+		var barBehavior = new BarBehavior();
 		bar.attachBehavior('bar', barBehavior);
 
+		test.strictEqual(barBehavior instanceof Behavior, true);
 		test.strictEqual(barBehavior.behaviorMethod(), 'behavior method');
 		test.strictEqual(bar.getBehavior('bar').behaviorMethod(), 'behavior method');
 		test.done();
 	},
 
 	testAutomaticAttach: function(test) {
-		var foo = new tests.unit.FooClass();
+		var foo = new FooClass();
 		test.strictEqual(foo.behaviorMethod(), 'behavior method');
 		//test.strictEqual(foo.hasMethod('behaviorMethod'), true);
 
@@ -38,36 +36,36 @@ var self = Jii.defineClass('tests.unit.BehaviorTest', {
 });
 
 /**
- * @class tests.unit.BarClass
- * @extends Jii.base.Component
+ * @class BarClass
+ * @extends Component
  */
-Jii.defineClass('tests.unit.BarClass', {
-	__extends: 'Jii.base.Component'
+var BarClass = Jii.defineClass('BarClass', {
+	__extends: Component
 });
 
 /**
- * @class tests.unit.FooClass
- * @extends Jii.base.Component
+ * @class FooClass
+ * @extends Component
  */
-Jii.defineClass('tests.unit.FooClass', {
-	__extends: 'Jii.base.Component',
+var FooClass = Jii.defineClass('FooClass', {
+	__extends: Component,
 	behaviors: function() {
 		return {
-			foo: 'tests.unit.BarBehavior'
+			foo: BarBehavior
 		};
 	}
 });
 
 /**
- * @class tests.unit.BarBehavior
- * @extends Jii.base.Behavior
+ * @class BarBehavior
+ * @extends Behavior
  */
-Jii.defineClass('tests.unit.BarBehavior', {
-	__extends: 'Jii.base.Behavior',
+var BarBehavior = Jii.defineClass('BarBehavior', {
+	__extends: Behavior,
 	behaviorProperty: 'behavior property',
 	behaviorMethod: function() {
 		return 'behavior method';
 	}
 });
 
-module.exports = new self().exports();
+module.exports = new BehaviorTest().exports();

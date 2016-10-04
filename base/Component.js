@@ -5,7 +5,7 @@
 
 'use strict';
 
-var Jii = require('../Jii');
+var Jii = require('../BaseJii');
 var Behavior = require('./Behavior');
 var Event = require('./Event');
 var UnknownPropertyException = require('../exceptions/UnknownPropertyException');
@@ -354,15 +354,14 @@ module.exports = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compo
      */
     proxyBehaviors() {
         _each(this.behaviors(), (behavior, name) => {
-            var className = _isString(behavior) ? behavior : behavior.className;
-            this._proxyBehaviorInternal(name, className);
+            this._proxyBehaviorInternal(name, behavior);
         });
     },
 
     /**
      * Attaches a behavior to this component.
      * @param {string} name the name of the behavior.
-     * @param {string|Jii.base.Behavior[]|Jii.base.Behavior} behavior the behavior to be attached
+     * @param {string|Jii.base.Behavior} behavior the behavior to be attached
      * @return {Jii.base.Behavior} the attached behavior.
      * @private
      */
@@ -376,7 +375,7 @@ module.exports = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compo
         }
         behavior.attach(this);
 
-        this._proxyBehaviorInternal(name, behavior.className());
+        this._proxyBehaviorInternal(name, behavior.__static);
 
         this._behaviors[name] = behavior;
         return behavior;
@@ -389,10 +388,9 @@ module.exports = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compo
         var behaviorClass = Jii.namespace(className);
 
         while (true) {
-            if (!behaviorClass || !behaviorClass.prototype || className === 'Jii.base.Behavior') {
+            if (!behaviorClass || !behaviorClass.prototype || behaviorClass === Behavior) {
                 break;
             }
-
             for (var name in behaviorClass.prototype) {
                 if (!behaviorClass.prototype.hasOwnProperty(name)) {
                     continue;
@@ -411,8 +409,9 @@ module.exports = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compo
                 this[name] = this._getProxyBehaviorMethod(behaviorName, name);
             }
 
-            className = behaviorClass.parentClassName();
-            behaviorClass = Jii.namespace(className);
+            behaviorClass = behaviorClass.__parentClass;
+            //className = behaviorClass.parentClassName();
+            //behaviorClass = Jii.namespace(className);
         }
     },
 

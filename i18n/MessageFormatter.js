@@ -5,7 +5,7 @@
 
 'use strict';
 
-var Jii = require('../Jii');
+var Jii = require('../BaseJii');
 var Component = require('../base/Component');
 var IntlMessageFormat = require('intl-messageformat');
 

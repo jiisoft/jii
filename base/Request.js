@@ -5,7 +5,7 @@
 
 'use strict';
 
-var Jii = require('../Jii');
+var Jii = require('../BaseJii');
 var _has = require('lodash/has');
 var Component = require('./Component');
 

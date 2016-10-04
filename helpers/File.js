@@ -5,7 +5,7 @@
 
 'use strict';
 
-var Jii = require('../Jii');
+var Jii = require('../BaseJii');
 var _trimEnd = require('lodash/trimEnd');
 var _each = require('lodash/each');
 var Object = require('../base/Object');

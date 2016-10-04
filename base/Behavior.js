@@ -5,7 +5,7 @@
 
 'use strict';
 
-var Jii = require('../Jii');
+var Jii = require('../BaseJii');
 var Event = require('./Event');
 var _each = require('lodash/each');
 var Object = require('./Object');

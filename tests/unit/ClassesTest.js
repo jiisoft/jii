@@ -1,24 +1,19 @@
 'use strict';
 
-/**
- * @namespace Jii
- * @ignore
- */
 var Jii = require('../../index');
+var UnitTest = require('../../server/base/UnitTest');
 require('./bootstrap');
-
-var tests = Jii.namespace('tests');
 
 /**
  * @class tests.unit.ClassesTest
  * @extends Jii.base.UnitTest
  */
-var self = Jii.defineClass('tests.unit.ClassesTest', {
+var ClassesTest = Jii.defineClass('tests.unit.ClassesTest', {
 
-	__extends: 'Jii.base.UnitTest',
+	__extends: UnitTest,
 
     aliasesTest: function (test) {
-		var Foo = Jii.defineClass('tests.Foo', {
+		var Foo = Jii.defineClass('Foo', {
 			__static: {
 				fooStatic: 2
 			},
@@ -29,17 +24,16 @@ var self = Jii.defineClass('tests.unit.ClassesTest', {
 		});
 		var fooInstance = new Foo();
 
-		test.strictEqual(Jii.namespace('tests.Foo'), Foo);
-		test.strictEqual(fooInstance instanceof tests.Foo, true);
-		test.strictEqual(tests.Foo.fooStatic, 2);
+		test.strictEqual(fooInstance instanceof Foo, true);
+		test.strictEqual(Foo.fooStatic, 2);
 		test.strictEqual(fooInstance.foo, 1);
 		test.strictEqual(fooInstance.getVal(), 50);
 		test.strictEqual(fooInstance.__static, Foo);
-		test.strictEqual(fooInstance.__className, 'tests.Foo');
-		test.strictEqual(tests.Foo.__className, 'tests.Foo');
+		test.strictEqual(fooInstance.__className, 'Foo');
+		test.strictEqual(Foo.__className, 'Foo');
 
-		var Bar = Jii.defineClass('tests.Bar', {
-			__extends: 'tests.Foo',
+		var Bar = Jii.defineClass('Bar', {
+			__extends: Foo,
 			__static: {
 				fooStatic: 5,
 				barStatic: 6
@@ -52,19 +46,19 @@ var self = Jii.defineClass('tests.unit.ClassesTest', {
 		});
 		var barInstance = new Bar();
 
-		test.strictEqual(barInstance instanceof tests.Bar, true);
+		test.strictEqual(barInstance instanceof Bar, true);
 		test.strictEqual(barInstance.foo, 3);
 		test.strictEqual(barInstance.bar, 4);
-		test.strictEqual(tests.Bar.fooStatic, 5);
-		test.strictEqual(tests.Bar.barStatic, 6);
+		test.strictEqual(Bar.fooStatic, 5);
+		test.strictEqual(Bar.barStatic, 6);
 		test.strictEqual(barInstance.getVal(), 100);
 		test.strictEqual(barInstance.__static, Bar);
-		test.strictEqual(barInstance.__className, 'tests.Bar');
-		test.strictEqual(tests.Bar.__className, 'tests.Bar');
+		test.strictEqual(barInstance.__className, 'Bar');
+		test.strictEqual(Bar.__className, 'Bar');
 
         test.done();
     }
 
 });
 
-module.exports = new self().exports();
+module.exports = new ClassesTest().exports();

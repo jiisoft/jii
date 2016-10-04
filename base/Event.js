@@ -5,7 +5,7 @@
 
 'use strict';
 
-var Jii = require('../Jii');
+var Jii = require('../BaseJii');
 var ApplicationException = require('../exceptions/ApplicationException');
 var _isObject = require('lodash/isObject');
 var _isArray = require('lodash/isArray');
@@ -123,7 +123,7 @@ module.exports = Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.pro
 		 *
 		 * For more details about how to declare an event handler, please refer to [[Jii.base.Component.on()]].
 		 *
-		 * @param {string} className the fully qualified class name to which the event handler needs to attach.
+		 * @param {function|string} cls the fully qualified class name to which the event handler needs to attach.
 		 * @param {string} name the event name.
 		 * @param {string|function|object} handler the event handler.
 		 * @param {*} [data] the data to be passed to the event handler when the event is triggered.
@@ -133,9 +133,15 @@ module.exports = Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.pro
 		 * handler list.
 		 * @see off()
 		 */
-		on(className, name, handler, data, isAppend) {
+		on(cls, name, handler, data, isAppend) {
 			data = data || null;
 			isAppend = _isUndefined(isAppend) ? true : isAppend;
+
+			if (_isString(cls)) {
+				cls = Jii.namespace(cls);
+			}
+
+			var className = cls.className();
 
 			if (isAppend || !this._events || !this._events[name] || !this._events[name][className]) {
 				this._events = this._events || {};
@@ -152,15 +158,21 @@ module.exports = Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.pro
 		 *
 		 * This method is the opposite of [[on()]].
 		 *
-		 * @param {string} className the fully qualified class name from which the event handler needs to be detached.
+		 * @param {function|string} cls the fully qualified class name from which the event handler needs to be detached.
 		 * @param {string} name the event name.
 		 * @param {string|function|object} [handler] the event handler to be removed.
 		 * If it is null, all handlers attached to the named event will be removed.
 		 * @return boolean whether a handler is found and detached.
 		 * @see on()
 		 */
-		off(className, name, handler) {
+		off(cls, name, handler) {
 			handler = handler || null;
+
+			if (_isString(cls)) {
+				cls = Jii.namespace(cls);
+			}
+
+			var className = cls.className();
 
 			if (!this._events || !this._events[name] || !this._events[name][className]) {
 				return false;
@@ -193,27 +205,29 @@ module.exports = Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.pro
 		 * Returns a value indicating whether there is any handler attached to the specified class-level event.
 		 * Note that this method will also check all parent classes to see if there is any handler attached
 		 * to the named event.
-		 * @param {string|object} className the object or the fully qualified class name specifying the class-level event.
+		 * @param {string|object} cls the object or the fully qualified class name specifying the class-level event.
 		 * @param {string} name the event name.
 		 * @return boolean whether there is any handler attached to the event.
 		 */
-		hasHandlers(className, name) {
+		hasHandlers(cls, name) {
 			if (!this._events || !this._events[name]) {
 				return false;
 			}
 
-			if (_isObject(className)) {
-				className = className.className();
+			if (_isString(cls)) {
+				cls = Jii.namespace(cls);
 			}
 
-			var currentClass = _isObject(className) ? className : Jii.namespace(className);
+			var currentClass = cls;
+			var className = cls.className();
+
 			while (true) {
 				if (this._events[name][className]) {
 					return true;
 				}
 
 				className = currentClass.parentClassName();
-				currentClass = className ? Jii.namespace(className) : null;
+				currentClass = currentClass.__parentClass;
 
 				if (!currentClass) {
 					break;
@@ -227,11 +241,11 @@ module.exports = Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.pro
 		 * Triggers a class-level event.
 		 * This method will cause invocation of event handlers that are attached to the named event
 		 * for the specified class and all its parent classes.
-		 * @param {string|object} className the object or the fully qualified class name specifying the class-level event.
+		 * @param {object|function} cls the object or the fully qualified class name specifying the class-level event.
 		 * @param {string} name the event name.
 		 * @param {Jii.base.Event} [event] the event parameter. If not set, a default [[Event]] object will be created.
 		 */
-		trigger(className, name, event) {
+		trigger(cls, name, event) {
 			event = event || null;
 
 			if (!this._events || !this._events[name]) {
@@ -245,14 +259,17 @@ module.exports = Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.pro
 			event.handled = false;
 			event.name = name;
 
-			if (_isObject(className)) {
-				if (event.sender === null) {
-					event.sender = className;
-				}
-				className = className.className();
+			if (_isString(cls)) {
+				cls = Jii.namespace(cls);
 			}
 
-			var currentClass = _isObject(className) ? className : Jii.namespace(className);
+			var currentClass = cls;
+			var className = cls.className();
+
+			if (_isObject(cls) && event.sender === null) {
+				event.sender = cls;
+			}
+
 			while (true) {
 				if (this._events[name][className]) {
 					for (var handler, i = 0, l = this._events[name][className].length; i < l; i++) {
@@ -269,7 +286,7 @@ module.exports = Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.pro
 				}
 
 				className = currentClass.parentClassName();
-				currentClass = className ? Jii.namespace(className) : null;
+				currentClass = currentClass.__parentClass;
 
 				if (!currentClass) {
 					break;

@@ -5,7 +5,7 @@
 
 'use strict';
 
-var Jii = require('../Jii');
+var Jii = require('../BaseJii');
 var Module = require('./Module');
 var Action = require('./Action');
 var Response = require('./Response');
@@ -472,12 +472,17 @@ module.exports = Jii.defineClass('Jii.base.Module', /** @lends Jii.base.Module.p
 
 		if (/^[a-z0-9-_]+$/.test(id)) {
 			var className = id.charAt(0).toUpperCase() + id.slice(1).replace(/-([a-z])/g, (m, v) => v.toUpperCase()) + 'Controller';
-			className = this.controllerNamespace + '.' + className;
+			if (this.controllerMap[className]) {
+				return true;
+			}
 
-			var controllerClass = Jii.namespace(className);
-			if (_isFunction(controllerClass)) {
-				var controller = new controllerClass(id, this);
-				return controller.hasAction(route);
+			if (!process.env.JII_NO_NAMESPACE) {
+				var controllerClass = Jii.namespace(this.controllerNamespace + '.' + className);
+
+				if (_isFunction(controllerClass)) {
+					var controller = new controllerClass(id, this);
+					return controller.hasAction(route);
+				}
 			}
 		}
 
@@ -514,21 +519,28 @@ module.exports = Jii.defineClass('Jii.base.Module', /** @lends Jii.base.Module.p
         if (/^[a-z0-9-_]+$/.test(id)) {
 
 			var className = id.charAt(0).toUpperCase() + id.slice(1).replace(/-([a-z])/g, (m, v) => v.toUpperCase()) + 'Controller';
-			className = this.controllerNamespace + '.' + className;
-
-            // Cache controller instances
-            if (!this._controllers[className]) {
-
-                var controllerClass = Jii.namespace(className);
-                if (_isFunction(controllerClass)) {
-                    this._controllers[className] = new controllerClass(id, this);
-
-                    if (!(this._controllers[className] instanceof Controller)) {
-                        throw new InvalidConfigException("Controller class must extend from Jii.base.Controller.");
-                    }
-                }
+			if (_has(this.controllerMap, className)) {
+				controller = Jii.createObject(this.controllerMap[className], id, this);
+				return controller !== null ? [controller, route] : null;
 			}
-            controller = this._controllers[className] || null;
+
+			if (!process.env.JII_NO_NAMESPACE) {
+				className = this.controllerNamespace + '.' + className;
+
+				// Cache controller instances
+				if (!this._controllers[className]) {
+
+					var controllerClass = Jii.namespace(className);
+					if (_isFunction(controllerClass)) {
+						this._controllers[className] = new controllerClass(id, this);
+
+						if (!(this._controllers[className] instanceof Controller)) {
+							throw new InvalidConfigException("Controller class must extend from Jii.base.Controller.");
+						}
+					}
+				}
+				controller = this._controllers[className] || null;
+			}
 		}
 
 		return controller !== null ? [controller, route] : null;

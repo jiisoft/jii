@@ -5,11 +5,10 @@
 
 'use strict';
 
-var Jii = require('../Jii');
+var Jii = require('../BaseJii');
 var File = require('../helpers/File');
 var Response = require('./Response');
 var Context = require('./Context');
-var WebView = require('jii-view/WebView');
 var InvalidRouteException = require('../exceptions/InvalidRouteException');
 var InlineAction = require('../request/InlineAction');
 var ActionEvent = require('./ActionEvent');
@@ -309,7 +308,7 @@ module.exports = Jii.defineClass('Jii.base.Controller', /** @lends Jii.base.Cont
 		params = params || {};
 
         return this.getView().render(view, context, params, this).then(output => {
-            if (this.getView() instanceof WebView) {
+            if (_isFunction(this.getView().renderLayout)) {
                 var layout = this._findLayoutFile(this.getView());
                 if (layout !== false) {
                     return this.getView().renderLayout(layout, context, {content: output}, this);
@@ -399,7 +398,7 @@ module.exports = Jii.defineClass('Jii.base.Controller', /** @lends Jii.base.Cont
             return false;
         }
 
-        var layoutView = Jii.namespace(layout);
+        var layoutView = layout.indexOf('.') !== -1 ? Jii.namespace(layout) : null;
         if (_isFunction(layoutView)) {
             return layoutView;
         }

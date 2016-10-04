@@ -1,10 +1,7 @@
 'use strict';
 
-/**
- * @namespace Jii
- * @ignore
- */
 var Jii = require('../../index');
+var UnitTest = require('../../server/base/UnitTest');
 
 /**
  * @class tests.unit.MergeConfigTest
@@ -12,7 +9,7 @@ var Jii = require('../../index');
  */
 var self = Jii.defineClass('tests.unit.MergeConfigTest', {
 
-	__extends: 'Jii.base.UnitTest',
+	__extends: UnitTest,
 
     mergeTest: function (test) {
         var o1 = {

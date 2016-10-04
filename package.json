@@ -1,6 +1,6 @@
 {
   "name": "jii",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "description": "Jii - Full-Stack JavaScript Framework",
   "main": "index.js",
   "browser": "index-client.js",
@@ -26,7 +26,7 @@
   "dependencies": {
     "intl-messageformat": "^1.3.0",
     "lodash": "^4.15.0",
-    "neatness": "^1.2.0"
+    "neatness": "^1.2.1"
   },
   "devDependencies": {
     "nodeunit": "*"

@@ -36,10 +36,8 @@
         "server/helpers/ClassLoader.js": "Jii.helpers.ClassLoader"
     },
     "jii-ar-sql": {
-        "ActiveQuery.js": "Jii.sql.ActiveQuery",
         "ActiveRecord.js": "Jii.sql.ActiveRecord",
         "FilterBuilder.js": "Jii.sql.FilterBuilder",
-        "Query.js": "Jii.sql.Query",
         "client/remote/ActiveRecordAction.js": "Jii.sql.remote.ActiveRecordAction",
         "client/remote/Command.js": "Jii.sql.remote.Command",
         "client/remote/Connection.js": "Jii.sql.remote.Connection",
@@ -111,6 +109,7 @@
         "server/Response.js": "Jii.httpServer.Response"
     },
     "jii-model": {
+        "base/ActiveQuery.js": "Jii.base.ActiveQuery",
         "base/ActiveRecord.js": "Jii.base.ActiveRecord",
         "base/Collection.js": "Jii.base.Collection",
         "base/CollectionAdapterInterface.js": "Jii.base.CollectionAdapterInterface",
@@ -119,6 +118,7 @@
         "base/ModelAdapterInterface.js": "Jii.base.ModelAdapterInterface",
         "base/ModelAttributeSchema.js": "Jii.base.ModelAttributeSchema",
         "base/ModelSchema.js": "Jii.base.ModelSchema",
+        "base/Query.js": "Jii.base.Query",
         "model/AfterSaveEvent.js": "Jii.model.AfterSaveEvent",
         "model/ArrayDataProvider.js": "Jii.base.ArrayDataProvider",
         "model/ChangeAttributeEvent.js": "Jii.model.ChangeAttributeEvent",

@@ -12,7 +12,7 @@ var Event = require('../base/Event');
  * @class Jii.i18n.MissingTranslationEvent
  * @extends Jii.base.Event
  */
-module.exports = Jii.defineClass('Jii.i18n.MissingTranslationEvent', /** @lends Jii.i18n.MissingTranslationEvent.prototype */{
+var MissingTranslationEvent = Jii.defineClass('Jii.i18n.MissingTranslationEvent', /** @lends Jii.i18n.MissingTranslationEvent.prototype */{
 
     __extends: Event,
 
@@ -39,3 +39,5 @@ module.exports = Jii.defineClass('Jii.i18n.MissingTranslationEvent', /** @lends 
     language: null
 
 });
+
+module.exports = MissingTranslationEvent;

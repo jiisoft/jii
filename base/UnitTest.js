@@ -5,18 +5,18 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var WebApplication = require('../../application/WebApplication');
-var ApplicationException = require('../../exceptions/ApplicationException');
+var Jii = require('../BaseJii');
+var WebApplication = require('../application/WebApplication');
+var ApplicationException = require('../exceptions/ApplicationException');
 var _isFunction = require('lodash/isFunction');
 var _extend = require('lodash/extend');
-var Object = require('./../../base/Object');
+var Object = require('./../base/Object');
 
 /**
  * @class Jii.base.UnitTest
  * @extends Jii.base.Object
  */
-module.exports = Jii.defineClass('Jii.base.UnitTest', /** @lends Jii.base.UnitTest.prototype */{
+var UnitTest = Jii.defineClass('Jii.base.UnitTest', /** @lends Jii.base.UnitTest.prototype */{
 
 	__extends: Object,
 
@@ -132,3 +132,5 @@ module.exports = Jii.defineClass('Jii.base.UnitTest', /** @lends Jii.base.UnitTe
 	}
 
 });
+
+module.exports = UnitTest;

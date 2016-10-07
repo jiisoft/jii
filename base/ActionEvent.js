@@ -12,7 +12,7 @@ var Event = require('./Event');
  * @class Jii.base.ActionEvent
  * @extends Jii.base.Event
  */
-module.exports = Jii.defineClass('Jii.base.ActionEvent', /** @lends Jii.base.ActionEvent.prototype */{
+var ActionEvent = Jii.defineClass('Jii.base.ActionEvent', /** @lends Jii.base.ActionEvent.prototype */{
 
 	__extends: Event,
 
@@ -27,3 +27,5 @@ module.exports = Jii.defineClass('Jii.base.ActionEvent', /** @lends Jii.base.Act
 	context: null
 
 });
+
+module.exports = ActionEvent;

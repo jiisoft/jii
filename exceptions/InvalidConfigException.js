@@ -12,8 +12,10 @@ var ApplicationException = require('./ApplicationException');
  * @class Jii.exceptions.InvalidConfigException
  * @extends Jii.exceptions.ApplicationException
  */
-module.exports = Jii.defineClass('Jii.exceptions.InvalidConfigException', /** @lends Jii.exceptions.InvalidConfigException.prototype */{
+var InvalidConfigException = Jii.defineClass('Jii.exceptions.InvalidConfigException', /** @lends Jii.exceptions.InvalidConfigException.prototype */{
 
 	__extends: ApplicationException
 
 });
+
+module.exports = InvalidConfigException;

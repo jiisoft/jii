@@ -12,7 +12,7 @@ var _isObject = require('lodash/isObject');
  *
  * @class Jii.base.Object
  */
-module.exports = Jii.defineClass('Jii.base.Object', /** @lends Jii.base.Object.prototype */{
+var Object = Jii.defineClass('Jii.base.Object', /** @lends Jii.base.Object.prototype */{
 
 	__static: /** @lends Jii.base.Object */{
 
@@ -81,3 +81,5 @@ module.exports = Jii.defineClass('Jii.base.Object', /** @lends Jii.base.Object.p
 	}
 
 });
+
+module.exports = Object;

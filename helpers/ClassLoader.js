@@ -15,7 +15,7 @@ var fs = require('fs');
  * @class Jii.helpers.ClassLoader
  * @extends Jii.base.Object
  */
-module.exports = Jii.defineClass('Jii.helpers.ClassLoader', /** @lends Jii.helpers.ClassLoader.prototype */{
+var ClassLoader = Jii.defineClass('Jii.helpers.ClassLoader', /** @lends Jii.helpers.ClassLoader.prototype */{
 
 	__extends: Object,
 
@@ -97,3 +97,5 @@ module.exports = Jii.defineClass('Jii.helpers.ClassLoader', /** @lends Jii.helpe
 	}
 
 });
+
+module.exports = ClassLoader;

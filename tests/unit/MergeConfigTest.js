@@ -1,7 +1,7 @@
 'use strict';
 
 var Jii = require('../../index');
-var UnitTest = require('../../server/base/UnitTest');
+var UnitTest = require('../../base/UnitTest');
 
 /**
  * @class tests.unit.MergeConfigTest

@@ -19,7 +19,7 @@ var MissingTranslationEvent = require('./MissingTranslationEvent');
  * @class Jii.i18n.MessageSource
  * @extends Jii.base.Component
  */
-module.exports = Jii.defineClass('Jii.i18n.MessageSource', /** @lends Jii.i18n.MessageSource.prototype */{
+var MessageSource = Jii.defineClass('Jii.i18n.MessageSource', /** @lends Jii.i18n.MessageSource.prototype */{
 
     __extends: Component,
 
@@ -139,3 +139,5 @@ module.exports = Jii.defineClass('Jii.i18n.MessageSource', /** @lends Jii.i18n.M
     }
 
 });
+
+module.exports = MessageSource;

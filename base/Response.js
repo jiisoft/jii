@@ -12,7 +12,7 @@ var Component = require('./Component');
  * @class Jii.base.Response
  * @extends Jii.base.Component
  */
-module.exports = Jii.defineClass('Jii.base.Response', {
+var Response = Jii.defineClass('Jii.base.Response', {
 
 	__extends: Component,
 
@@ -34,3 +34,5 @@ module.exports = Jii.defineClass('Jii.base.Response', {
 	}
 
 });
+
+module.exports = Response;

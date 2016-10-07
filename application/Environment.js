@@ -12,7 +12,7 @@ var Object = require('../base/Object');
  * @class Jii.application.Environment
  * @extends Jii.base.Object
  */
-module.exports = Jii.defineClass('Jii.application.Environment', /** @lends Jii.application.Environment.prototype */{
+var Environment = Jii.defineClass('Jii.application.Environment', /** @lends Jii.application.Environment.prototype */{
 
 	__extends: Object,
 
@@ -116,3 +116,5 @@ module.exports = Jii.defineClass('Jii.application.Environment', /** @lends Jii.a
 	}
 
 });
+
+module.exports = Environment;

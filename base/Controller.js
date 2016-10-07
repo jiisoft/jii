@@ -24,7 +24,7 @@ var Component = require('./Component');
  * @class Jii.base.Controller
  * @extends Jii.base.Component
  */
-module.exports = Jii.defineClass('Jii.base.Controller', /** @lends Jii.base.Controller.prototype */{
+var Controller = Jii.defineClass('Jii.base.Controller', /** @lends Jii.base.Controller.prototype */{
 
 	__extends: Component,
 
@@ -422,3 +422,4 @@ module.exports = Jii.defineClass('Jii.base.Controller', /** @lends Jii.base.Cont
 
 });
 
+module.exports = Controller;

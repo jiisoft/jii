@@ -13,7 +13,7 @@ var Object = require('../base/Object');
  * @class Jii.helpers.Util
  * @extends Jii.base.Object
  */
-module.exports = Jii.defineClass('Jii.helpers.Util', /** @lends Jii.helpers.Util.prototype */{
+var Util = Jii.defineClass('Jii.helpers.Util', /** @lends Jii.helpers.Util.prototype */{
 
 	__extends: Object,
 
@@ -38,3 +38,5 @@ module.exports = Jii.defineClass('Jii.helpers.Util', /** @lends Jii.helpers.Util
 	}
 
 });
+
+module.exports = Util;

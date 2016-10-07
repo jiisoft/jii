@@ -16,7 +16,7 @@ var Component = require('./Component');
  * @class Jii.base.Context
  * @extends Jii.base.Component
  */
-module.exports = Jii.defineClass('Jii.base.Context', /** @lends Jii.base.Context.prototype */{
+var Context = Jii.defineClass('Jii.base.Context', /** @lends Jii.base.Context.prototype */{
 
 	__extends: Component,
 
@@ -42,6 +42,25 @@ module.exports = Jii.defineClass('Jii.base.Context', /** @lends Jii.base.Context
 	_components: {},
 
     _coreComponents: require('../components.json'),
+
+	/**
+	 * @type {string|null}
+	 */
+	_route: null,
+
+	/**
+	 * @returns {string}
+	 */
+	getRoute() {
+    	return this._route;
+	},
+
+	/**
+	 * @param {string} value
+	 */
+	setRoute(value) {
+    	this._route = value;
+	},
 
 	/**
 	 * Checks whether the named component exists.
@@ -164,3 +183,5 @@ module.exports = Jii.defineClass('Jii.base.Context', /** @lends Jii.base.Context
 	}
 
 });
+
+module.exports = Context;

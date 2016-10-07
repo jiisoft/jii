@@ -12,8 +12,10 @@ var ApplicationException = require('./ApplicationException');
  * @class Jii.exceptions.InvalidParamException
  * @extends Jii.exceptions.ApplicationException
  */
-module.exports = Jii.defineClass('Jii.exceptions.InvalidParamException', /** @lends Jii.exceptions.InvalidParamException.prototype */{
+var InvalidParamException = Jii.defineClass('Jii.exceptions.InvalidParamException', /** @lends Jii.exceptions.InvalidParamException.prototype */{
 
 	__extends: ApplicationException
 
 });
+
+module.exports = InvalidParamException;

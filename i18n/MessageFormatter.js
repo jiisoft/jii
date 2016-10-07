@@ -13,7 +13,7 @@ var IntlMessageFormat = require('intl-messageformat');
  * @class Jii.i18n.MessageFormatter
  * @extends Jii.base.Component
  */
-module.exports = Jii.defineClass('Jii.i18n.MessageFormatter', /** @lends Jii.i18n.MessageFormatter.prototype */{
+var MessageFormatter = Jii.defineClass('Jii.i18n.MessageFormatter', /** @lends Jii.i18n.MessageFormatter.prototype */{
 
     __extends: Component,
 
@@ -49,3 +49,5 @@ module.exports = Jii.defineClass('Jii.i18n.MessageFormatter', /** @lends Jii.i18
     }
 
 });
+
+module.exports = MessageFormatter;

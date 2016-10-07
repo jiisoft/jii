@@ -30,7 +30,7 @@ var Context = require('./Context');
  * @class Jii.base.Module
  * @extends Jii.base.Context
  */
-module.exports = Jii.defineClass('Jii.base.Module', /** @lends Jii.base.Module.prototype */{
+var Module = Jii.defineClass('Jii.base.Module', /** @lends Jii.base.Module.prototype */{
 
 	__extends: Context,
 
@@ -617,3 +617,5 @@ module.exports = Jii.defineClass('Jii.base.Module', /** @lends Jii.base.Module.p
 	}
 
 });
+
+module.exports = Module;

@@ -20,7 +20,7 @@ var Object = require('./Object');
  * @class Jii.base.Event
  * @extends Jii.base.Object
  */
-module.exports = Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.prototype */{
+var Event = Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.prototype */{
 
 	__extends: Object,
 
@@ -296,3 +296,5 @@ module.exports = Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.pro
 	}
 
 });
+
+module.exports = Event;

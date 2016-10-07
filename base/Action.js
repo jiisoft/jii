@@ -14,7 +14,7 @@ var Object = require('./Object');
  * @class Jii.base.Action
  * @extends Jii.base.Object
  */
-module.exports = Jii.defineClass('Jii.base.Action', /** @lends Jii.base.Action.prototype */{
+var Action = Jii.defineClass('Jii.base.Action', /** @lends Jii.base.Action.prototype */{
 
 	__extends: Object,
 
@@ -94,3 +94,5 @@ module.exports = Jii.defineClass('Jii.base.Action', /** @lends Jii.base.Action.p
 	}
 
 });
+
+module.exports = Action;

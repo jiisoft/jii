@@ -12,7 +12,7 @@ var Application = require('../base/Application');
  * @class Jii.application.WebApplication
  * @extends Jii.base.Application
  */
-module.exports = Jii.defineClass('Jii.application.WebApplication', /** @lends Jii.application.WebApplication.prototype */{
+var WebApplication = Jii.defineClass('Jii.application.WebApplication', /** @lends Jii.application.WebApplication.prototype */{
 
 	__extends: Application,
 
@@ -61,3 +61,5 @@ module.exports = Jii.defineClass('Jii.application.WebApplication', /** @lends Ji
 	}
 
 });
+
+module.exports = WebApplication;

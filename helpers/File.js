@@ -18,7 +18,7 @@ var Object = require('../base/Object');
  * @class Jii.helpers.File
  * @extends Jii.base.Object
  */
-module.exports = Jii.defineClass('Jii.helpers.File', /** @lends Jii.helpers.File.prototype */{
+var File = Jii.defineClass('Jii.helpers.File', /** @lends Jii.helpers.File.prototype */{
 
 	__extends: Object,
 
@@ -92,3 +92,5 @@ module.exports = Jii.defineClass('Jii.helpers.File', /** @lends Jii.helpers.File
 	}
 
 });
+
+module.exports = File;

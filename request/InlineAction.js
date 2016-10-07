@@ -12,7 +12,7 @@ var Action = require('../base/Action');
  * @class Jii.request.InlineAction
  * @extends Jii.base.Action
  */
-module.exports = Jii.defineClass('Jii.request.InlineAction', /** @lends Jii.request.InlineAction */{
+var InlineAction = Jii.defineClass('Jii.request.InlineAction', /** @lends Jii.request.InlineAction */{
 
 	__extends: Action,
 
@@ -38,3 +38,5 @@ module.exports = Jii.defineClass('Jii.request.InlineAction', /** @lends Jii.requ
         });
 	}
 });
+
+module.exports = InlineAction;

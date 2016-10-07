@@ -12,8 +12,10 @@ var ApplicationException = require('./ApplicationException');
  * @class Jii.exceptions.UnknownPropertyException
  * @extends Jii.exceptions.ApplicationException
  */
-module.exports = Jii.defineClass('Jii.exceptions.UnknownPropertyException', /** @lends Jii.exceptions.UnknownPropertyException.prototype */{
+var UnknownPropertyException = Jii.defineClass('Jii.exceptions.UnknownPropertyException', /** @lends Jii.exceptions.UnknownPropertyException.prototype */{
 
 	__extends: ApplicationException
 
 });
+
+module.exports = UnknownPropertyException;

@@ -19,7 +19,7 @@ var MessageFormatter = require('./MessageFormatter');
  * @class Jii.i18n.I18N
  * @extends Jii.base.Component
  */
-module.exports = Jii.defineClass('Jii.i18n.I18N', /** @lends Jii.i18n.I18N.prototype */{
+var I18N = Jii.defineClass('Jii.i18n.I18N', /** @lends Jii.i18n.I18N.prototype */{
 
     __extends: Component,
 
@@ -143,3 +143,5 @@ module.exports = Jii.defineClass('Jii.i18n.I18N', /** @lends Jii.i18n.I18N.proto
     }
 
 });
+
+module.exports = I18N;

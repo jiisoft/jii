@@ -12,8 +12,10 @@ var ApplicationException = require('./ApplicationException');
  * @class Jii.exceptions.InvalidRouteException
  * @extends Jii.exceptions.ApplicationException
  */
-module.exports = Jii.defineClass('Jii.exceptions.InvalidRouteException', /** @lends Jii.exceptions.InvalidRouteException.prototype */{
+var InvalidRouteException = Jii.defineClass('Jii.exceptions.InvalidRouteException', /** @lends Jii.exceptions.InvalidRouteException.prototype */{
 
 	__extends: ApplicationException
 
 });
+
+module.exports = InvalidRouteException;

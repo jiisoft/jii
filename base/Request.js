@@ -13,7 +13,7 @@ var Component = require('./Component');
  * @class Jii.base.Request
  * @extends Jii.base.Component
  */
-module.exports = Jii.defineClass('Jii.base.Request', /** @lends Jii.base.Request.prototype */{
+var Request = Jii.defineClass('Jii.base.Request', /** @lends Jii.base.Request.prototype */{
 
 	__extends: Component,
 
@@ -78,3 +78,5 @@ module.exports = Jii.defineClass('Jii.base.Request', /** @lends Jii.base.Request
     }
 
 });
+
+module.exports = Request;

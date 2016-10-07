@@ -21,7 +21,7 @@ var Object = require('./Object');
  * @class Jii.base.Component
  * @extends Jii.base.Object
  */
-module.exports = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Component.prototype */{
+var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Component.prototype */{
 
     __extends: Object,
 
@@ -500,3 +500,5 @@ module.exports = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compo
     }
 
 });
+
+module.exports = Component;

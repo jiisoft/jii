@@ -1,7 +1,7 @@
 'use strict';
 
 var Jii = require('../../index');
-var UnitTest = require('../../server/base/UnitTest');
+var UnitTest = require('../../base/UnitTest');
 var Event = require('../../base/Event');
 var Component = require('../../base/Component');
 require('./bootstrap');
@@ -22,7 +22,7 @@ var EventTest = Jii.defineClass('EventTest', {
 		this._counter = 0;
 		Event.off(Post, 'save');
 		Event.off(User, 'save');
-		Event.off(ActiveRecord, 'save');
+		Event.off(TestActiveRecord, 'save');
 
 		return this.__super();
 	},
@@ -31,7 +31,7 @@ var EventTest = Jii.defineClass('EventTest', {
 		Event.on(Post, 'save', function(event) {
 			this._counter += 1;
 		}.bind(this));
-		Event.on(ActiveRecord, 'save', function(event) {
+		Event.on(TestActiveRecord, 'save', function(event) {
 			this._counter += 3;
 		}.bind(this));
 
@@ -62,16 +62,16 @@ var EventTest = Jii.defineClass('EventTest', {
 
 	hasTest: function(test) {
 		test.strictEqual(Event.hasHandlers(Post, 'save'), false);
-		test.strictEqual(Event.hasHandlers(ActiveRecord, 'save'), false);
+		test.strictEqual(Event.hasHandlers(TestActiveRecord, 'save'), false);
 
 		Event.on(Post, 'save', function() {});
 		test.strictEqual(Event.hasHandlers(Post, 'save'), true);
-		test.strictEqual(Event.hasHandlers(ActiveRecord, 'save'), false);
+		test.strictEqual(Event.hasHandlers(TestActiveRecord, 'save'), false);
 
 		test.strictEqual(Event.hasHandlers(User, 'save'), false);
-		Event.on(ActiveRecord, 'save', function() {});
+		Event.on(TestActiveRecord, 'save', function() {});
 		test.strictEqual(Event.hasHandlers(User, 'save'), true);
-		test.strictEqual(Event.hasHandlers(ActiveRecord, 'save'), true);
+		test.strictEqual(Event.hasHandlers(TestActiveRecord, 'save'), true);
 
 		test.done();
 	},
@@ -118,10 +118,10 @@ var EventTest = Jii.defineClass('EventTest', {
 });
 
 /**
- * @class ActiveRecord
+ * @class TestActiveRecord
  * @extends Jii.base.Component
  */
-var ActiveRecord = Jii.defineClass('ActiveRecord', {
+var TestActiveRecord = Jii.defineClass('TestActiveRecord', {
 	__extends: Component,
 	save: function() {
 		this.trigger('save');
@@ -130,18 +130,18 @@ var ActiveRecord = Jii.defineClass('ActiveRecord', {
 
 /**
  * @class User
- * @extends ActiveRecord
+ * @extends TestActiveRecord
  */
 var User = Jii.defineClass('User', {
-	__extends: ActiveRecord
+	__extends: TestActiveRecord
 });
 
 /**
  * @class Post
- * @extends ActiveRecord
+ * @extends TestActiveRecord
  */
 var Post = Jii.defineClass('Post', {
-	__extends: ActiveRecord
+	__extends: TestActiveRecord
 });
 
 module.exports = new EventTest().exports();

@@ -17,7 +17,7 @@ var Module = require('./Module');
  * @class Jii.base.Application
  * @extends Jii.base.Module
  */
-module.exports = Jii.defineClass('Jii.base.Application', /** @lends Jii.base.Application.prototype */{
+var Application = Jii.defineClass('Jii.base.Application', /** @lends Jii.base.Application.prototype */{
 
 	__extends: Module,
 
@@ -185,3 +185,5 @@ module.exports = Jii.defineClass('Jii.base.Application', /** @lends Jii.base.App
 		});
 	}
 });
+
+module.exports = Application;

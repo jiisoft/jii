@@ -19,7 +19,7 @@ var Object = require('../base/Object');
  * @class Jii.request.HeaderCollection
  * @extends Jii.base.Object
  */
-module.exports = Jii.defineClass('Jii.request.HeaderCollection', /** @lends Jii.request.HeaderCollection */{
+var HeaderCollection = Jii.defineClass('Jii.request.HeaderCollection', /** @lends Jii.request.HeaderCollection */{
 
 	__extends: Object,
 
@@ -151,3 +151,5 @@ module.exports = Jii.defineClass('Jii.request.HeaderCollection', /** @lends Jii.
     }
 
 });
+
+module.exports = HeaderCollection;

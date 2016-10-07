@@ -14,7 +14,7 @@ var Object = require('./Object');
  * @class Jii.base.Behavior
  * @extends Jii.base.Object
  */
-module.exports = Jii.defineClass('Jii.base.Behavior', /** @lends Jii.base.Behavior.prototype */{
+var Behavior = Jii.defineClass('Jii.base.Behavior', /** @lends Jii.base.Behavior.prototype */{
 
 	__extends: Object,
 
@@ -92,3 +92,5 @@ module.exports = Jii.defineClass('Jii.base.Behavior', /** @lends Jii.base.Behavi
 	}
 
 });
+
+module.exports = Behavior;

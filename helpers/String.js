@@ -16,7 +16,7 @@ var Object = require('../base/Object');
  * @class Jii.helpers.String
  * @extends Jii.base.Object
  */
-module.exports = Jii.defineClass('Jii.helpers.String', /** @lends Jii.helpers.String.prototype */{
+var String = Jii.defineClass('Jii.helpers.String', /** @lends Jii.helpers.String.prototype */{
 
 	__extends: Object,
 
@@ -46,3 +46,5 @@ module.exports = Jii.defineClass('Jii.helpers.String', /** @lends Jii.helpers.St
 	}
 
 });
+
+module.exports = String;

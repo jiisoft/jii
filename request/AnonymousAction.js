@@ -12,7 +12,7 @@ var Action = require('../base/Action');
  * @class Jii.request.AnonymousAction
  * @extends Jii.base.Action
  */
-module.exports = Jii.defineClass('Jii.request.AnonymousAction', /** @lends Jii.request.AnonymousAction.prototype */{
+var AnonymousAction = Jii.defineClass('Jii.request.AnonymousAction', /** @lends Jii.request.AnonymousAction.prototype */{
 
 	__extends: Action,
 
@@ -60,3 +60,5 @@ module.exports = Jii.defineClass('Jii.request.AnonymousAction', /** @lends Jii.r
         });
 	}
 });
+
+module.exports = AnonymousAction;

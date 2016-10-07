@@ -21,6 +21,7 @@ if (!process.env.JII_NO_NAMESPACE) {
     require('./base/Object.js');
     require('./base/Request.js');
     require('./base/Response.js');
+    require('./base/UnitTest.js');
     require('./exceptions/ApplicationException.js');
     require('./exceptions/InvalidCallException.js');
     require('./exceptions/InvalidConfigException.js');
@@ -28,6 +29,7 @@ if (!process.env.JII_NO_NAMESPACE) {
     require('./exceptions/InvalidRouteException.js');
     require('./exceptions/NotSupportedException.js');
     require('./exceptions/UnknownPropertyException.js');
+    require('./helpers/ClassLoader.js');
     require('./helpers/File.js');
     require('./helpers/String.js');
     require('./helpers/Url.js');
@@ -35,8 +37,6 @@ if (!process.env.JII_NO_NAMESPACE) {
     require('./request/AnonymousAction.js');
     require('./request/HeaderCollection.js');
     require('./request/InlineAction.js');
-    require('./server/base/UnitTest.js');
-    require('./server/helpers/ClassLoader.js');
 
     Jii.helpers.ClassLoader.packages();
 }

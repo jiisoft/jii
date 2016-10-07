@@ -12,8 +12,10 @@ var ApplicationException = require('./ApplicationException');
  * @class Jii.exceptions.NotSupportedException
  * @extends Jii.exceptions.ApplicationException
  */
-module.exports = Jii.defineClass('Jii.exceptions.NotSupportedException', /** @lends Jii.exceptions.NotSupportedException.prototype */{
+var NotSupportedException = Jii.defineClass('Jii.exceptions.NotSupportedException', /** @lends Jii.exceptions.NotSupportedException.prototype */{
 
 	__extends: ApplicationException
 
 });
+
+module.exports = NotSupportedException;

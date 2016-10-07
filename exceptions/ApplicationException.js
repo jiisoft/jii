@@ -11,7 +11,7 @@ var Jii = require('../BaseJii');
  * @class Jii.exceptions.ApplicationException
  * @extends Error
  */
-module.exports = Jii.defineClass('Jii.exceptions.ApplicationException', /** @lends Jii.exceptions.ApplicationException.prototype */ {
+var ApplicationException = Jii.defineClass('Jii.exceptions.ApplicationException', /** @lends Jii.exceptions.ApplicationException.prototype */ {
 
 	__extends: Error,
 
@@ -23,3 +23,5 @@ module.exports = Jii.defineClass('Jii.exceptions.ApplicationException', /** @len
 		this.message = message || '';
 	}
 });
+
+module.exports = ApplicationException;

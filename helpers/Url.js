@@ -17,7 +17,7 @@ var Object = require('../base/Object');
  * @class Jii.helpers.Url
  * @extends Jii.base.Object
  */
-module.exports = Jii.defineClass('Jii.helpers.Url', /** @lends Jii.helpers.Url.prototype */{
+var Url = Jii.defineClass('Jii.helpers.Url', /** @lends Jii.helpers.Url.prototype */{
 
 	__extends: Object,
 
@@ -148,3 +148,5 @@ module.exports = Jii.defineClass('Jii.helpers.Url', /** @lends Jii.helpers.Url.p
 	}
 
 });
+
+module.exports = Url;

@@ -5,10 +5,10 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
+var Jii = require('../BaseJii');
 var _isString = require('lodash/isString');
 var _each = require('lodash/each');
-var Object = require('../../base/Object');
+var Object = require('../base/Object');
 var fs = require('fs');
 
 /**
@@ -21,7 +21,7 @@ var ClassLoader = Jii.defineClass('Jii.helpers.ClassLoader', /** @lends Jii.help
 
 	__static: /** @lends Jii.helpers.ClassLoader */{
 
-        classesMap: require('../../classes.json'),
+        classesMap: require('../classes.json'),
 
         APP_NAMESPACE: 'app',
 

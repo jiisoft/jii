@@ -24,7 +24,7 @@ var Url = Jii.defineClass('Jii.helpers.Url', /** @lends Jii.helpers.Url.prototyp
 	__static: /** @lends Jii.helpers.Url */{
 
         /**
-         * @type {Jii.urlManager.UrlManager}
+         * @type {Jii.request.UrlManager}
          */
         urlManager: null,
 
@@ -87,7 +87,7 @@ var Url = Jii.defineClass('Jii.helpers.Url', /** @lends Jii.helpers.Url.prototyp
 
         /**
          *
-         * @returns {Jii.urlManager.UrlManager}
+         * @returns {Jii.request.UrlManager}
          * @private
          */
         _getUrlManager() {

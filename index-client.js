@@ -38,4 +38,6 @@ if (!process.env.JII_NO_NAMESPACE) {
     require('./request/AnonymousAction.js');
     require('./request/HeaderCollection.js');
     require('./request/InlineAction.js');
+    require('./request/UrlManager');
+    require('./request/UrlRule');
 }

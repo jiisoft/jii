@@ -1,6 +1,7 @@
 {
     "jii": {
         "Jii.js": "Jii",
+        "application/ConsoleApplication.js": "Jii.application.ConsoleApplication",
         "application/Environment.js": "Jii.application.Environment",
         "application/WebApplication.js": "Jii.application.WebApplication",
         "base/Action.js": "Jii.base.Action",
@@ -19,6 +20,12 @@
         "base/Request.js": "Jii.base.Request",
         "base/Response.js": "Jii.base.Response",
         "base/UnitTest.js": "Jii.base.UnitTest",
+        "console/Controller.js": "Jii.console.Controller",
+        "console/Exception.js": "Jii.console.Exception",
+        "console/Request.js": "Jii.console.Request",
+        "console/Response.js": "Jii.console.Response",
+        "console/controllers/HelpController.js": "Jii.console.controllers.HelpController",
+        "console/controllers/ServiceController.js": "Jii.console.controllers.ServiceController",
         "exceptions/ApplicationException.js": "Jii.exceptions.ApplicationException",
         "exceptions/InvalidCallException.js": "Jii.exceptions.InvalidCallException",
         "exceptions/InvalidConfigException.js": "Jii.exceptions.InvalidConfigException",
@@ -27,13 +34,22 @@
         "exceptions/NotSupportedException.js": "Jii.exceptions.NotSupportedException",
         "exceptions/UnknownPropertyException.js": "Jii.exceptions.UnknownPropertyException",
         "helpers/ClassLoader.js": "Jii.helpers.ClassLoader",
+        "helpers/Console.js": "Jii.helpers.Console",
         "helpers/File.js": "Jii.helpers.File",
         "helpers/String.js": "Jii.helpers.String",
         "helpers/Url.js": "Jii.helpers.Url",
         "helpers/Util.js": "Jii.helpers.Util",
         "request/AnonymousAction.js": "Jii.request.AnonymousAction",
         "request/HeaderCollection.js": "Jii.request.HeaderCollection",
-        "request/InlineAction.js": "Jii.request.InlineAction"
+        "request/InlineAction.js": "Jii.request.InlineAction",
+        "request/UrlManager.js": "Jii.request.UrlManager",
+        "request/UrlRule.js": "Jii.request.UrlRule",
+        "workers/ChildWorker.js": "Jii.workers.ChildWorker",
+        "workers/Manager.js": "Jii.workers.Manager",
+        "workers/MasterWorker.js": "Jii.workers.MasterWorker",
+        "workers/MessageEvent.js": "Jii.workers.MessageEvent",
+        "workers/Request.js": "Jii.workers.Request",
+        "workers/Response.js": "Jii.workers.Response"
     },
     "jii-ar-sql": {
         "ActiveRecord.js": "Jii.sql.ActiveRecord",
@@ -93,16 +109,6 @@
         "server/transport/Sockjs.js": "Jii.comet.server.transport.SockJs",
         "server/transport/TransportInterface.js": "Jii.comet.server.transport.TransportInterface"
     },
-    "jii-console": {
-        "server/Controller.js": "Jii.console.Controller",
-        "server/Exception.js": "Jii.console.Exception",
-        "server/Request.js": "Jii.console.Request",
-        "server/Response.js": "Jii.console.Response",
-        "server/application/ConsoleApplication.js": "Jii.application.ConsoleApplication",
-        "server/controllers/HelpController.js": "Jii.console.controllers.HelpController",
-        "server/controllers/ServiceController.js": "Jii.workers.controllers.ServiceController",
-        "server/helpers/Console.js": "Jii.helpers.Console"
-    },
     "jii-httpserver": {
         "server/HttpServer.js": "Jii.httpServer.HttpServer",
         "server/Request.js": "Jii.httpServer.Request",
@@ -141,10 +147,6 @@
         "validators/UrlValidator.js": "Jii.validators.UrlValidator",
         "validators/Validator.js": "Jii.validators.Validator"
     },
-    "jii-urlmanager": {
-        "UrlManager.js": "Jii.urlManager.UrlManager",
-        "UrlRule.js": "Jii.urlManager.UrlRule"
-    },
     "jii-view": {
         "IRenderer.js": "Jii.view.IRenderer",
         "View.js": "Jii.view.View",
@@ -170,13 +172,5 @@
         "react/widgets/BaseListView.js": "Jii.view.react.widgets.BaseListView",
         "server/ServerWebView.js": "Jii.view.ServerWebView",
         "server/underscore/UnderscoreRenderer.js": "Jii.view.underscore.UnderscoreRenderer"
-    },
-    "jii-workers": {
-        "server/ChildWorker.js": "Jii.workers.ChildWorker",
-        "server/Manager.js": "Jii.workers.Manager",
-        "server/MasterWorker.js": "Jii.workers.MasterWorker",
-        "server/MessageEvent.js": "Jii.workers.MessageEvent",
-        "server/Request.js": "Jii.workers.Request",
-        "server/Response.js": "Jii.workers.Response"
     }
 }

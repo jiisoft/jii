@@ -1,5 +1,5 @@
 {
-    "urlManager": "Jii.urlManager.UrlManager",
+    "urlManager": "Jii.request.UrlManager",
     "view": {
         "client": "Jii.view.ClientWebView",
         "server": "Jii.view.ServerWebView"

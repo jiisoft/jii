@@ -134,7 +134,7 @@ var ConsoleApplication = Jii.defineClass('Jii.application.ConsoleApplication', /
     coreCommands() {
         var commands = {
             help: {
-                className: require('../controllers/HelpController')
+                className: require('../console/controllers/HelpController')
             }
         };
 

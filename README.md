@@ -1,4 +1,4 @@
-Jii
+Jii [![Build Status](https://travis-ci.org/jiisoft/jii.svg)](https://travis-ci.org/jiisoft/jii)
 ====
 
 [Jii](http://www.jiiframework.ru/) (JavaScript Yii) — Full-Stack JavaScript Framework architecture based on PHP Yii Framework v2

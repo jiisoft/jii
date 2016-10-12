@@ -5,14 +5,14 @@
 
 'use strict';
 
-var Jii = require('jii');
-var String = require('jii/helpers/String');
-var InvalidConfigException = require('jii/exceptions/InvalidConfigException');
+var Jii = require('../index');
+var String = require('../helpers/String');
+var InvalidConfigException = require('../exceptions/InvalidConfigException');
 var MessageEvent = require('./MessageEvent');
 var _isFunction = require('lodash/isFunction');
 var _isArray = require('lodash/isArray');
 var _has = require('lodash/has');
-var Component = require('jii/base/Component');
+var Component = require('../base/Component');
 var cluster = require('cluster');
 
 /**

@@ -1,1 +1,1 @@
-module.exports = require('jii');
+module.exports = require('./index');

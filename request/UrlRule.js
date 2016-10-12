@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('jii');
-var InvalidConfigException = require('jii/exceptions/InvalidConfigException');
+var Jii = require('../index');
+var InvalidConfigException = require('../exceptions/InvalidConfigException');
 var _trim = require('lodash/trim');
 var _trimEnd = require('lodash/trimEnd');
 var _trimStart = require('lodash/trimStart');
@@ -17,7 +17,7 @@ var _isObject = require('lodash/isObject');
 var _each = require('lodash/each');
 var _has = require('lodash/has');
 var _clone = require('lodash/clone');
-var Object = require('jii/base/Object');
+var Object = require('../base/Object');
 
 /**
  * UrlRule represents a rule used by [[Jii.request.UrlManager]] for parsing and generating URLs.

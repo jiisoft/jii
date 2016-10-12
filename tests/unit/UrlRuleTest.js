@@ -1,10 +1,10 @@
 require('./bootstrap');
 
-var Jii = require('jii');
-var UnitTest = require('jii/base/UnitTest');
-var UrlManager = require('jii/request/UrlManager');
-var UrlRule = require('jii/request/UrlRule');
-var HttpRequest = require('jii/base/HttpRequest');
+var Jii = require('../../index');
+var UnitTest = require('../../base/UnitTest');
+var UrlManager = require('../../request/UrlManager');
+var UrlRule = require('../../request/UrlRule');
+var HttpRequest = require('../../base/HttpRequest');
 
 /**
  * @class UrlRuleTest

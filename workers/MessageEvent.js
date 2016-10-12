@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('jii');
-var Event = require('jii/base/Event');
+var Jii = require('../index');
+var Event = require('../base/Event');
 
 /**
  * @class Jii.workers.MessageEvent

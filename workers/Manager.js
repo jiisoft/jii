@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('jii');
-var Environment = require('jii/application/Environment');
+var Jii = require('../index');
+var Environment = require('../application/Environment');
 var MasterWorker = require('./MasterWorker');
 var ChildWorker = require('./ChildWorker');
 var _isFunction = require('lodash/isFunction');
@@ -15,9 +15,9 @@ var _uniqueId = require('lodash/uniqueId');
 var _isString = require('lodash/isString');
 var _isEmpty = require('lodash/isEmpty');
 var _each = require('lodash/each');
-var Object = require('jii/base/Object');
+var Object = require('../base/Object');
 var cluster = require('cluster');
-var ConsoleApplication = require('jii/application/ConsoleApplication');
+var ConsoleApplication = require('../application/ConsoleApplication');
 
 /**
  * @class Jii.workers.Manager
@@ -108,7 +108,7 @@ var Manager = Jii.defineClass('Jii.workers.Manager', /** @lends Jii.workers.Mana
                     application: {
                         basePath: process.cwd(),
                         controllerMap: {
-                            service: require('jii/console/controllers/ServiceController')
+                            service: require('../console/controllers/ServiceController')
                         }
                     }
                 },

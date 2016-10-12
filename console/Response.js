@@ -3,8 +3,8 @@
  * @license MIT
  */
 
-var Jii = require('jii');
-var BaseResponse = require('jii/base/Response');
+var Jii = require('../index');
+var BaseResponse = require('../base/Response');
 
 /**
  * @class Jii.console.Response

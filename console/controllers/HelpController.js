@@ -5,10 +5,10 @@
 
 'use strict';
 
-var Jii = require('jii');
+var Jii = require('../../index');
 var Console = require('../../helpers/Console');
 var ConsoleApplication = require('../../application/ConsoleApplication');
-var Application = require('jii/base/Application');
+var Application = require('../../base/Application');
 var Exception = require('../Exception');
 var _trim = require('lodash/trim');
 var _isFunction = require('lodash/isFunction');

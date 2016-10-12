@@ -5,17 +5,17 @@
 
 'use strict';
 
-var Jii = require('jii');
+var Jii = require('../index');
 var UrlRule = require('./UrlRule');
-var Url = require('jii/helpers/Url');
-var HttpRequest = require('jii/base/HttpRequest');
+var Url = require('../helpers/Url');
+var HttpRequest = require('../base/HttpRequest');
 var _trimStart = require('lodash/trimStart');
 var _isObject = require('lodash/isObject');
 var _isEmpty = require('lodash/isEmpty');
 var _isString = require('lodash/isString');
 var _each = require('lodash/each');
 var _has = require('lodash/has');
-var Component = require('jii/base/Component');
+var Component = require('../base/Component');
 
 /**
  * UrlManager handles HTTP request parsing and creation of URLs based on a set of rules.

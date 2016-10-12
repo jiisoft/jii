@@ -1,8 +1,8 @@
 'use strict';
 
-var Jii = require('jii');
+var Jii = require('../index');
 var _each = require('lodash/each');
-var BaseRequest = require('jii/base/Request');
+var BaseRequest = require('../base/Request');
 var minimist = require('minimist');
 
 /**

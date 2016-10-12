@@ -5,9 +5,9 @@
 
 'use strict';
 
-var Jii = require('jii');
+var Jii = require('../index');
 var Console = require('../helpers/Console');
-var ClassLoader = require('jii/helpers/ClassLoader');
+var ClassLoader = require('../helpers/ClassLoader');
 var Exception = require('./Exception');
 var _trim = require('lodash/trim');
 var _isEmpty = require('lodash/isEmpty');
@@ -19,7 +19,7 @@ var _isUndefined = require('lodash/isUndefined');
 var _each = require('lodash/each');
 var _values = require('lodash/values');
 var _compact = require('lodash/compact');
-var BaseController = require('jii/base/Controller');
+var BaseController = require('../base/Controller');
 var fs = require('fs');
 var extract = require('extract-comments');
 

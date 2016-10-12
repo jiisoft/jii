@@ -5,13 +5,13 @@
 
 'use strict';
 
-var Jii = require('jii');
-var File = require('jii/helpers/File');
+var Jii = require('../index');
+var File = require('../helpers/File');
 var Request = require('../console/Request');
 var Exception = require('../console/Exception');
 var Response = require('../console/Response');
 var _isEmpty = require('lodash/isEmpty');
-var Application = require('jii/base/Application');
+var Application = require('../base/Application');
 
 /**
  * @class Jii.application.ConsoleApplication

@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('jii');
-var ApplicationException = require('jii/exceptions/ApplicationException');
+var Jii = require('../index');
+var ApplicationException = require('../exceptions/ApplicationException');
 
 /**
  * @class Jii.console.Exception

@@ -1,6 +1,6 @@
 'use strict';
 
-var Jii = require('jii');
+var Jii = require('../../index');
 var Console = require('../../helpers/Console');
 var Controller = require('../Controller');
 var fs = require('fs');

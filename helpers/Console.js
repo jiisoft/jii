@@ -5,14 +5,14 @@
 
 'use strict';
 
-var Jii = require('jii');
+var Jii = require('../index');
 var _trim = require('lodash/trim');
 var _isString = require('lodash/isString');
 var _extend = require('lodash/extend');
 var _keys = require('lodash/keys');
 var _each = require('lodash/each');
 var _has = require('lodash/has');
-var Object = require('jii/base/Object');
+var Object = require('../base/Object');
 var keypress = require('keypress');
 
 /**

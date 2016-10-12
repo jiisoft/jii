@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('jii');
-var BaseRequest = require('jii/base/Request');
+var Jii = require('../index');
+var BaseRequest = require('../base/Request');
 
 /**
  * @class Jii.workers.Request

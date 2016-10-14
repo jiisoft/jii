@@ -383,13 +383,13 @@ var Controller = Jii.defineClass('Jii.base.Controller', /** @lends Jii.base.Cont
         var module = this.module;
         var layout = null;
 
-        if (_isString(this.layout)) {
+        if (_isString(this.layout) || _isFunction(this.layout)) {
             layout = this.layout;
         } else if (this.layout === null) {
             while (module !== null && module.layout === null) {
                 module = module.module;
             }
-            if (module !== null && _isString(module.layout)) {
+            if (module !== null && (_isString(module.layout) || _isFunction(module.layout))) {
                 layout = module.layout;
             }
         }
@@ -398,7 +398,7 @@ var Controller = Jii.defineClass('Jii.base.Controller', /** @lends Jii.base.Cont
             return false;
         }
 
-        var layoutView = layout.indexOf('.') !== -1 ? Jii.namespace(layout) : null;
+        var layoutView = _isFunction(layout) || layout.indexOf('.') !== -1 ? Jii.namespace(layout) : null;
         if (_isFunction(layoutView)) {
             return layoutView;
         }

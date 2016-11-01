@@ -2,7 +2,7 @@
 
 var Jii = require('../../index');
 var UnitTest = require('../../base/UnitTest');
-require('./bootstrap');
+require('../bootstrap');
 
 /**
  * @class tests.unit.ClassesTest

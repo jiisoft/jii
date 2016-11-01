@@ -1,4 +1,4 @@
-require('./bootstrap');
+require('../bootstrap');
 
 var Jii = require('../../index');
 var UnitTest = require('../../base/UnitTest');

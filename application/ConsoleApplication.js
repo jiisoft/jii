@@ -132,24 +132,14 @@ var ConsoleApplication = Jii.defineClass('Jii.application.ConsoleApplication', /
      * @returns {object} the configuration of the built-in commands.
      */
     coreCommands() {
-        var commands = {
+        return {
             help: {
                 className: require('../console/controllers/HelpController')
-            }
+            },
+            migrate: {
+                className: require('../console/controllers/MigrateController')
+            },
         };
-
-        var isArSqlExists = false;
-        try {
-            require('jii-ar-sql'); // @todo Create helper for check
-            isArSqlExists = true;
-        } catch (e) {}
-        if (isArSqlExists) {
-            commands.migrate = {
-                className: require('jii-ar-sql/server/controllers/MigrateController')
-            };
-        }
-
-        return commands;
     }
 });
 

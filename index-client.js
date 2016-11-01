@@ -24,6 +24,13 @@ if (!process.env.JII_NO_NAMESPACE) {
     require('./base/Object.js');
     require('./base/Request.js');
     require('./base/Response.js');
+    require('./data/ActiveRecord.js');
+    require('./data/FilterBuilder.js');
+    require('./data/http/ActiveRecordAction.js');
+    require('./data/http/Command.js');
+    require('./data/http/Connection.js');
+    require('./data/http/Schema.js');
+    require('./data/http/TransportInterface.js');
     require('./exceptions/ApplicationException.js');
     require('./exceptions/InvalidCallException.js');
     require('./exceptions/InvalidConfigException.js');
@@ -40,4 +47,9 @@ if (!process.env.JII_NO_NAMESPACE) {
     require('./request/InlineAction.js');
     require('./request/UrlManager');
     require('./request/UrlRule');
+    require('./view/ClientWebView');
+    require('./view/IRenderer.js');
+    require('./view/View.js');
+    require('./view/ViewEvent.js');
+    require('./view/WebView.js');
 }

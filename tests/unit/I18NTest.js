@@ -9,29 +9,40 @@ var UnitTest = require('../../base/UnitTest');
  */
 var I18NTest = Jii.defineClass('I18NTest', {
 
-	__extends: UnitTest,
+    __extends: UnitTest,
+
+    setUp() {
+        Jii.createWebApplication({
+            application: {
+                components: {
+                    i18n: {
+                        className: require('../../i18n/I18N'),
+                        translations: {
+                            app: {
+                                className: require('../../i18n/MessageSource'),
+                                forceTranslation: true,
+                                messages: {
+                                    'ru/app': {
+                                        'You have {n, plural, =0 {no photos} =1 {one photo} other {# photos}}': 'У вас {n, plural, =0 {нет фотографий} =1 {одна фотография} few {# фотографии} many {# фотографий} other {# фотографий}}'
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        return this.__super();
+    },
+
+    tearDown() {
+    	Jii.app = null;
+
+        return this.__super();
+    },
 
 	formatTest: function (test) {
-		Jii.createWebApplication({
-			application: {
-				components: {
-					i18n: {
-						className: require('../../i18n/I18N'),
-						translations: {
-							app: {
-								className: require('../../i18n/MessageSource'),
-								forceTranslation: true,
-								messages: {
-									'ru/app': {
-										'You have {n, plural, =0 {no photos} =1 {one photo} other {# photos}}': 'У вас {n, plural, =0 {нет фотографий} =1 {одна фотография} few {# фотографии} many {# фотографий} other {# фотографий}}'
-									}
-								}
-							}
-						}
-					}
-				}
-			}
-		});
 
 		test.strictEqual(
 			Jii.t('app', 'You have {n, plural, =0 {no photos} =1 {one photo} other {# photos}}', {n: 10}),

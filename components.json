@@ -13,9 +13,9 @@
         "server": "Jii.comet.server.NeatServer"
     },
     "db": {
-        "client": "Jii.sql.remote.Connection",
-        "server": "Jii.sql.mysql.Connection"
+        "client": "Jii.data.http.Connection",
+        "server": "Jii.mysql.Connection"
     },
-    "clientRouter": "Jii.clientRouter.Router",
-    "http": "Jii.httpServer.HttpServer"
+    "clientRouter": "Jii.request.client.Router",
+    "http": "Jii.request.http.HttpServer"
 }

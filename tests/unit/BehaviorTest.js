@@ -4,7 +4,7 @@ var Jii = require('../../index');
 var UnitTest = require('../../base/UnitTest');
 var Component = require('../../base/Component');
 var Behavior = require('../../base/Behavior');
-require('./bootstrap');
+require('../bootstrap');
 
 /**
  * @class BehaviorTest

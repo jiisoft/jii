@@ -14,7 +14,7 @@ var _isString = require('lodash/isString');
 var _isUndefined = require('lodash/isUndefined');
 var _has = require('lodash/has');
 var _each = require('lodash/each');
-var Object = require('./Object');
+var BaseObject = require('./Object');
 
 /**
  * @class Jii.base.Event
@@ -22,7 +22,7 @@ var Object = require('./Object');
  */
 var Event = Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.prototype */{
 
-    __extends: Object,
+    __extends: BaseObject,
 
     /**
      * @var {string} the event name. This property is set by [[Jii.base.Component.trigger()]] and [[trigger()]].
@@ -63,6 +63,10 @@ var Event = Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.prototyp
          */
         normalizeHandler(handler, context) {
             context = context || null;
+
+            if (!handler) {
+                return null;
+            }
 
             if (_isObject(handler) && _has(handler, 'callback') && _has(handler, 'context')) {
                 return handler;
@@ -114,7 +118,7 @@ var Event = Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.prototyp
          * `afterInsert` event:
          *
          * ~~~
-         * Jii.base.Event.on(ActiveRecord.className(), ActiveRecord.EVENT_AFTER_INSERT, function (event) {
+         * Jii.base.Event.on(ActiveRecord, ActiveRecord.EVENT_AFTER_INSERT, function (event) {
 		 *     console.log(event.sender.className() + ' is inserted.');
 		 * });
          * ~~~
@@ -141,15 +145,17 @@ var Event = Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.prototyp
                 cls = Jii.namespace(cls);
             }
 
-            var className = cls.className();
+            handler = this.normalizeHandler(handler);
 
-            if (isAppend || !this._events || !this._events[name] || !this._events[name][className]) {
+            if (isAppend || !this._events || !this._events[name]) {
                 this._events = this._events || {};
-                this._events[name] = this._events[name] || {};
-                this._events[name][className] = this._events[name][className] || [];
-                this._events[name][className].push([handler, data]);
+                this._events[name] = this._events[name] || [];
+
+                if (!this._events[name].find(item => item[0] === cls)) {
+                    this._events[name].push([cls, handler, data]);
+                }
             } else {
-                this._events[name].unshift([handler, data]);
+                this._events[name].unshift([cls, handler, data]);
             }
         },
 
@@ -172,33 +178,19 @@ var Event = Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.prototyp
                 cls = Jii.namespace(cls);
             }
 
-            var className = cls.className();
+            handler = this.normalizeHandler(handler);
 
-            if (!this._events || !this._events[name] || !this._events[name][className]) {
+            if (!this._events || !this._events[name]) {
                 return false;
             }
 
-            if (handler === null) {
-                delete this._events[name][className];
-                return true;
-            }
+            const previousLength = this._events[name].length;
 
-            var newEvents = [];
-            var isRemoved = false;
-            _each(this._events[name][className], event => {
-                if (event[0] !== handler) {
-                    newEvents.push(event);
-                } else {
-                    isRemoved = true;
-                }
+            this._events[name] = this._events[name].filter(item => {
+                return item[0] !== cls
+                    && (!handler || item[1].callback === handler.callback)
             });
-            if (newEvents.length === 0) {
-                delete this._events[name][className];
-            } else {
-                this._events[name][className] = newEvents;
-            }
-
-            return isRemoved;
+            return this._events[name].length !== previousLength;
         },
 
         /**
@@ -218,18 +210,14 @@ var Event = Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.prototyp
                 cls = Jii.namespace(cls);
             }
 
-            var currentClass = cls;
-            var className = cls.className();
-
             while (true) {
-                if (this._events[name][className]) {
+                if (this._events[name].find(item => item[0] === cls)) {
                     return true;
                 }
 
-                className = currentClass.parentClassName();
-                currentClass = currentClass.__parentClass;
-
-                if (!currentClass) {
+                //cls = Object.getPrototypeOf(cls);
+                cls = cls.__parentClass;
+                if (!cls) {
                     break;
                 }
             }
@@ -263,32 +251,35 @@ var Event = Jii.defineClass('Jii.base.Event', /** @lends Jii.base.Event.prototyp
                 cls = Jii.namespace(cls);
             }
 
-            var currentClass = cls;
-            var className = cls.className();
-
             if (_isObject(cls) && event.sender === null) {
                 event.sender = cls;
             }
 
+            if (_isObject(cls)) {
+                cls = cls.__static;
+            }
+
             while (true) {
-                if (this._events[name][className]) {
-                    for (var handler, i = 0, l = this._events[name][className].length; i < l; i++) {
-                        handler = this._events[name][className][i];
 
-                        event.data = handler[1];
-                        handler[0] = this.normalizeHandler(handler[0]);
-                        handler[0].callback.call(handler[0].context, event);
-
-                        if (event.handled) {
-                            return;
-                        }
+                let isHandled = false;
+                this._events[name].forEach(item => {
+                    if (isHandled || item[0] !== cls) {
+                        return;
                     }
+
+                    event.data = item[2];
+                    item[1].callback.call(item[1].context, event);
+
+                    isHandled = event.handled;
+                });
+
+                if (isHandled) {
+                    return;
                 }
 
-                className = currentClass.parentClassName();
-                currentClass = currentClass.__parentClass;
-
-                if (!currentClass) {
+                //cls = Object.getPrototypeOf(cls);
+                cls = cls.__parentClass;
+                if (!cls) {
                     break;
                 }
             }

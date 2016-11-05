@@ -11,6 +11,7 @@ var Connection = require('../../comet/server/Connection');
 var Request = require('../../comet/server/Request');
 var HubInterface = require('../../comet/server/hub/HubInterface');
 var UnitTest = require('../../base/UnitTest');
+var SiteController = require('../controllers/SiteController');
 
 require('../bootstrap');
 
@@ -27,30 +28,38 @@ var CometServerTest = Jii.defineClass('tests.unit.CometServerTest', /** @lends t
 	},
 
 	init: function() {
-		Jii.app.setComponents({
-			comet: {
-				className: Server,
-				port: this.__static.SERVER_PORT,
-				transport: {
-					className: require('../../comet/server/transport/Sockjs')
-				},
-				hub: {
-					className: require('../../comet/server/hub/Blank')
-				},
-				queue: {
-					className: require('../../comet/server/queue/Blank')
-				},
-			},
-			cometListener: {
-				className: HubServer,
-				hub: {
-					className: require('../../comet/server/hub/Blank')
-				},
-				queue: {
-					className: require('../../comet/server/queue/Blank')
-				},
-			}
-		});
+        Jii.createWebApplication({
+            application: {
+                basePath: __dirname,
+                controllerMap: {
+                    SiteController: SiteController
+                },
+				components: {
+                    comet: {
+                        className: Server,
+                        port: this.__static.SERVER_PORT,
+                        transport: {
+                            className: require('../../comet/server/transport/Sockjs')
+                        },
+                        hub: {
+                            className: require('../../comet/server/hub/Blank')
+                        },
+                        queue: {
+                            className: require('../../comet/server/queue/Blank')
+                        },
+                    },
+                    cometListener: {
+                        className: HubServer,
+                        hub: {
+                            className: require('../../comet/server/hub/Blank')
+                        },
+                        queue: {
+                            className: require('../../comet/server/queue/Blank')
+                        },
+                    }
+				}
+            }
+        });
 	},
 
 	setUp: function() {

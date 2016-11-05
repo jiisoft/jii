@@ -244,7 +244,7 @@ var Query = Jii.defineClass('Jii.data.Query', /** @lends Jii.data.Query.prototyp
 		db = db || null;
 
 		return Jii.createObject({
-			class: Jii.sql.BatchQueryResult.className(),
+			className: Jii.sql.BatchQueryResult,
 			query: this,
 			batchSize: batchSize,
 			db: db,
@@ -273,7 +273,7 @@ var Query = Jii.defineClass('Jii.data.Query', /** @lends Jii.data.Query.prototyp
 		db = db || null;
 
 		return Jii.createObject({
-			class: Jii.sql.BatchQueryResult.className(),
+			className: Jii.sql.BatchQueryResult,
 			query: this,
 			batchSize: batchSize,
 			db: db,

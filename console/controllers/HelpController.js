@@ -171,7 +171,7 @@ var HelpController = Jii.defineClass('Jii.console.controllers.HelpController', /
      */
     _validateControllerClass(className) {
         if (className !== undefined) {
-            return className.__parentClassName === 'Jii.console.Controller'; // @todo
+            //return className.__parentClassName === 'Jii.console.Controller'; // TODO
         } else {
             return false;
         }

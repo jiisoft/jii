@@ -572,7 +572,9 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      * @param {Jii.base.Collection} [className]
      * @returns {Jii.base.Collection}
      */
-    createChild(filter = null, params = {}, className = null) {
+    createChild(filter, params, className) {
+        filter = filter || null;
+        params = params || {};
         className = className || this.__static;
 
         var models = params.models || null;
@@ -603,7 +605,8 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      * @param {Jii.data.DataProvider} [className]
      * @returns {Jii.base.Collection}
      */
-    createDataProvider(params = {}, className = null) {
+    createDataProvider(params, className) {
+        params = params || {};
         className = className || require('../data/DataProvider');
         return this.createChild(null, params, className);
     },

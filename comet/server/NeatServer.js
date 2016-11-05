@@ -108,9 +108,9 @@ var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
         Jii.app.inlineActions['neat/close'] = this._actionCloseProfile.bind(this);
 
         if (this.listenModels && ActiveRecord) {
-            Event.on(ActiveRecord.className(), ActiveRecord.EVENT_AFTER_INSERT, this._onModelInsert.bind(this));
-            Event.on(ActiveRecord.className(), ActiveRecord.EVENT_AFTER_UPDATE, this._onModelUpdate.bind(this));
-            Event.on(ActiveRecord.className(), ActiveRecord.EVENT_AFTER_DELETE, this._onModelDelete.bind(this));
+            Event.on(ActiveRecord, ActiveRecord.EVENT_AFTER_INSERT, this._onModelInsert.bind(this));
+            Event.on(ActiveRecord, ActiveRecord.EVENT_AFTER_UPDATE, this._onModelUpdate.bind(this));
+            Event.on(ActiveRecord, ActiveRecord.EVENT_AFTER_DELETE, this._onModelDelete.bind(this));
         }
     },
 

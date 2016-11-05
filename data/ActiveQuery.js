@@ -756,7 +756,7 @@ var ActiveQuery = Jii.defineClass('Jii.data.ActiveQuery', /** @lends Jii.data.Ac
 	 * ```js
 	 * public function getActiveUsers()
 	 * {
-     *     return this.hasMany(User.className(), {id: 'user_id'}).onCondition({active: true});
+     *     return this.hasMany(User, {id: 'user_id'}).onCondition({active: true});
      * }
 	 * ```
 	 *
@@ -824,7 +824,7 @@ var ActiveQuery = Jii.defineClass('Jii.data.ActiveQuery', /** @lends Jii.data.Ac
 	 * ```js
 	 * public function getItems()
 	 * {
-     *     return this.hasMany(Item.className(), {id: 'item_id'})
+     *     return this.hasMany(Item, {id: 'item_id'})
      *                 .viaTable('order_item', {order_id: 'id'});
      * }
 	 * ```
@@ -863,12 +863,12 @@ var ActiveQuery = Jii.defineClass('Jii.data.ActiveQuery', /** @lends Jii.data.Ac
 	 * ```js
 	 * public function getOrders()
 	 * {
-     *     return this.hasOne(Order.className(), {id: 'order_id'});
+     *     return this.hasOne(Order, {id: 'order_id'});
      * }
 	 *
 	 * public function getOrderItems()
 	 * {
-     *     return this.hasMany(Item.className(), {id: 'item_id'})
+     *     return this.hasMany(Item, {id: 'item_id'})
      *                 .via('orders');
      * }
 	 * ```
@@ -910,7 +910,7 @@ var ActiveQuery = Jii.defineClass('Jii.data.ActiveQuery', /** @lends Jii.data.Ac
 	 * ```js
 	 * public function getOrders()
 	 * {
-     *     return this.hasMany(Order.className(), {customer_id: 'id'}).inverseOf('customer');
+     *     return this.hasMany(Order, {customer_id: 'id'}).inverseOf('customer');
      * }
 	 * ```
 	 *

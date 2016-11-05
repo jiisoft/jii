@@ -104,7 +104,7 @@ var DataProvider = Jii.defineClass('Jii.data.DataProvider', /** @lends Jii.data.
      * @param {boolean} [force]
      * @return {*}
      */
-    fetch(force = false) {
+    fetch(force) {
         // Queue promises when fetch in process
         if (this._fetchCallbacks !== null) {
             return new Promise(resolve => {

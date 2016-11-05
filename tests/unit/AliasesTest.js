@@ -12,7 +12,7 @@ var self = Jii.defineClass('tests.unit.AliasesTest', {
 
 	__extends: UnitTest,
 
-    aliasesTest: function (test) {
+    aliasesTest(test) {
         var jiiPath = require('fs').realpathSync(__dirname + '/../..');
         test.strictEqual(jiiPath, Jii.getAlias('@jii'));
 

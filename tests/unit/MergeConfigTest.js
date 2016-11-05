@@ -11,7 +11,7 @@ var self = Jii.defineClass('tests.unit.MergeConfigTest', {
 
 	__extends: UnitTest,
 
-    mergeTest: function (test) {
+    mergeTest(test) {
         var o1 = {
             a: '1',
             b: [1, 2],

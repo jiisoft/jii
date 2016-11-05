@@ -15,7 +15,7 @@ var TestActiveRecord = Jii.defineClass('tests.unit.models.ActiveRecord', {
 
 		db: null,
 
-		getDb: function () {
+		getDb() {
 			return ActiveRecord.db;
 		}
 

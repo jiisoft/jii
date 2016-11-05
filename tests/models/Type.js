@@ -13,7 +13,7 @@ var Type = Jii.defineClass('tests.unit.models.Type', {
 
 	__static: {
 
-		tableName: function () {
+		tableName() {
 			return 'type';
 		}
 

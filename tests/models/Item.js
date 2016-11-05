@@ -13,13 +13,13 @@ var Item = Jii.defineClass('tests.unit.models.Item', {
 
 	__static: {
 
-		tableName: function () {
+		tableName() {
 			return 'item';
 		}
 
 	},
 
-	getCategory: function () {
+	getCategory() {
 		var Category = require('./Category');
 		return this.hasOne(Category, {id: 'category_id'});
 	}

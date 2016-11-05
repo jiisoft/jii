@@ -13,7 +13,7 @@ var OrderWithNullFK = Jii.defineClass('tests.unit.models.OrderWithNullFK', {
 
 	__static: {
 
-		tableName: function () {
+		tableName() {
 			return 'order_with_null_fk';
 		}
 

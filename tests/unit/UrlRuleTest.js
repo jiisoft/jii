@@ -14,7 +14,7 @@ var UrlRuleTest = Jii.defineClass('UrlRuleTest', {
 
 	__extends: UnitTest,
 
-    createUrlTest: function (test) {
+    createUrlTest(test) {
         var manager = new UrlManager({cache: null});
         var suites = this._getTestsForCreateUrl();
         suites.forEach(function(suite, i) {
@@ -65,7 +65,7 @@ var UrlRuleTest = Jii.defineClass('UrlRuleTest', {
         test.done();
     },
 
-    _getTestsForCreateUrl: function () {
+    _getTestsForCreateUrl() {
         // structure of each test
         //   message for the test
         //   config for the URL rule
@@ -198,7 +198,7 @@ var UrlRuleTest = Jii.defineClass('UrlRuleTest', {
         ];
     },
 
-    _getTestsForParseRequest: function () {
+    _getTestsForParseRequest() {
         // structure of each test
         //   message for the test
         //   config for the URL rule

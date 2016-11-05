@@ -13,7 +13,7 @@ var NullValues = Jii.defineClass('tests.unit.models.NullValues', {
 
 	__static: {
 
-		tableName: function () {
+		tableName() {
 			return 'null_values';
 		}
 

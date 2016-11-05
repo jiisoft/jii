@@ -19,7 +19,7 @@ var Article = Jii.defineClass('Article', {
         /**
          * @returns {{}}
          */
-        modelSchema: function() {
+        modelSchema() {
             return {
                 primaryKey: ['id'],
                 columns: {
@@ -36,25 +36,25 @@ var Article = Jii.defineClass('Article', {
             };
         },
 
-        tableName: function() {
+        tableName() {
             return 'articles';
         }
 
 	},
 
-	getUser: function () {
+	getUser () {
 		return this.hasOne(User, {id: 'userId'});
 	},
 
-	getLinks: function () {
+	getLinks () {
 		return this.hasMany(Link, {articleId: 'id'});
 	},
 
-	getLinksJunction: function () {
+	getLinksJunction () {
 		return this.hasMany(LinkJunction, {articleId: 'id'});
 	},
 
-    getLinksVia: function () {
+    getLinksVia () {
         return this.hasMany(Link, {id: 'linkId'}).via('linksJunction');
     }
 

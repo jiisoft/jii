@@ -29,7 +29,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 
 	__extends: DatabaseTestCase,
 
-	setUp: function () {
+	setUp() {
 
 		return Promise.all([
 				this.__super(),
@@ -40,39 +40,39 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 			});
 	},
 
-    tearDown: function () {
+    tearDown() {
         ActiveRecord.db = null;
         return this.__super();
     },
 
-	getCustomerClass: function () {
+	getCustomerClass() {
 		return Customer;
 	},
 
-	getItemClass: function () {
+	getItemClass() {
 		return Item;
 	},
 
-	getOrderClass: function () {
+	getOrderClass() {
 		return Order;
 	},
 
-	getOrderItemClass: function () {
+	getOrderItemClass() {
 		return OrderItem;
 	},
 
-	getOrderWithNullFKClass: function () {
+	getOrderWithNullFKClass() {
 		return OrderWithNullFK;
 	},
 	
-	getOrderItemWithNullFKmClass: function () {
+	getOrderItemWithNullFKmClass() {
 		return OrderItemWithNullFK;
 	},
 
 	afterSave: function() {
 	},
 	
-	testFind: function (test) {
+	testFind(test) {
 		/** @typedef Jii.data.ActiveRecord customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -148,7 +148,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindAsArray: function (test) {
+	testFindAsArray(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -188,7 +188,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindScalar: function (test) {
+	testFindScalar(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -212,7 +212,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindColumn: function (test) {
+	testFindColumn(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -227,7 +227,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindIndexBy: function (test) {
+	testFindIndexBy(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -252,7 +252,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindIndexByAsArray: function (test) {
+	testFindIndexByAsArray(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -301,7 +301,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testRefresh: function (test) {
+	testRefresh(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -323,7 +323,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testEquals: function (test) {
+	testEquals(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -369,7 +369,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindCount: function (test) {
+	testFindCount(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -413,7 +413,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindLimit: function (test) {
+	testFindLimit(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -471,7 +471,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindComplexCondition: function (test) {
+	testFindComplexCondition(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -502,7 +502,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindNullValues: function (test) {
+	testFindNullValues(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -521,7 +521,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		}.bind(this));
 	},
 
-	testExists: function (test) {
+	testExists(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -556,7 +556,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindLazy: function (test) {
+	testFindLazy(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -596,7 +596,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindEager: function (test) {
+	testFindEager(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -659,7 +659,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindLazyVia: function (test) {
+	testFindLazyVia(test) {
 		/** @typedef {Jii.data.ActiveRecord} orderClass */
 		var orderClass = this.getOrderClass();
 
@@ -681,7 +681,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindLazyVia2: function (test) {
+	testFindLazyVia2(test) {
 		/** @typedef {Jii.data.ActiveRecord} orderClass */
 		var orderClass = this.getOrderClass();
 
@@ -698,7 +698,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindEagerViaRelation: function (test) {
+	testFindEagerViaRelation(test) {
 		/** @typedef {Jii.data.ActiveRecord} orderClass */
 		var orderClass = this.getOrderClass();
 
@@ -721,7 +721,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindNestedRelation: function (test) {
+	testFindNestedRelation(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -750,7 +750,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 	 * Ensure ActiveRelationTrait does preserve order of items on find via()
 	 * https://github.com/yiisoft/yii2/issues/1310
 	 */
-	testFindEagerViaRelationPreserveOrder: function (test) {
+	testFindEagerViaRelationPreserveOrder(test) {
 		/** @typedef {Jii.data.ActiveRecord} orderClass */
 		var orderClass = this.getOrderClass();
 
@@ -815,7 +815,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 	},
 
 	// different order in via table
-	testFindEagerViaRelationPreserveOrderB: function (test) {
+	testFindEagerViaRelationPreserveOrderB(test) {
 		/** @typedef {Jii.data.ActiveRecord} orderClass */
 		var orderClass = this.getOrderClass();
 
@@ -849,7 +849,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testLink: function (test) {
+	testLink(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -952,7 +952,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		}.bind(this));
 	},
 
-	testUnlink: function (test) {
+	testUnlink(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -1044,7 +1044,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testUnlinkAll: function (test) {
+	testUnlinkAll(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -1203,7 +1203,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		// via table is covered in ActiveRecordTest.testUnlinkAllViaTable()
 	},
 
-	testUnlinkAllAndConditionSetNull: function (test) {
+	testUnlinkAllAndConditionSetNull(test) {
 		/** @typedef {ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -1263,7 +1263,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testUnlinkAllAndConditionDelete: function (test) {
+	testUnlinkAllAndConditionDelete(test) {
 
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
@@ -1324,7 +1324,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testInsert: function (test) {
+	testInsert(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -1350,7 +1350,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testUpdate: function (test) {
+	testUpdate(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -1415,7 +1415,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		}.bind(this));
 	},
 
-	testUpdateAttributes: function (test) {
+	testUpdateAttributes(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -1468,7 +1468,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testUpdateCounters: function (test) {
+	testUpdateCounters(test) {
 		/** @typedef {Jii.data.ActiveRecord} orderItemClass */
 		var orderItemClass = this.getOrderItemClass();
 
@@ -1515,7 +1515,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testDelete: function (test) {
+	testDelete(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -1559,7 +1559,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 	 * Some PDO implementations(e.g. cubrid) do not support boolean values.
 	 * Make sure this does not affect AR layer.
 	 */
-	testBooleanAttribute: function (test) {
+	testBooleanAttribute(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -1594,7 +1594,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testAfterFind: function (test) {
+	testAfterFind(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -1654,7 +1654,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindEmptyInCondition: function (test) {
+	testFindEmptyInCondition(test) {
 		/** @typedef {Jii.data.ActiveRecord} customerClass */
 		var customerClass = this.getCustomerClass();
 
@@ -1677,7 +1677,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindEagerIndexBy: function (test) {
+	testFindEagerIndexBy(test) {
 		/** @typedef {Jii.data.ActiveRecord} orderClass */
 		var orderClass = this.getOrderClass();
 
@@ -1706,7 +1706,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testCustomColumns: function (test) {
+	testCustomColumns(test) {
 		// find custom column
 		Customer.find()
 			.select(['*', '(status*2) AS status2'])
@@ -1718,7 +1718,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 			});
 	},
 
-	testStatisticalFind: function (test) {
+	testStatisticalFind(test) {
 		// find count, sum, average, min, max, scalar
 		Customer.find().count().then(function(count) {
 			test.strictEqual(3, count);
@@ -1751,7 +1751,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindBySql: function (test) {
+	testFindBySql(test) {
 		// find one
 		Customer.findBySql('SELECT * FROM customer ORDER BY id DESC').one().then(function(customer) {
 			test.ok(customer instanceof Customer);
@@ -1772,7 +1772,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindLazyViaTable: function (test) {
+	testFindLazyViaTable(test) {
 		/** @typedef {Order} order */
 		var order = null;
 
@@ -1808,7 +1808,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testFindEagerViaTable: function (test) {
+	testFindEagerViaTable(test) {
 		/** @typedef {Order[]} order */
 		var orders = null;
 
@@ -1859,7 +1859,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 	},
 
 	// deeply nested table relation
-	testDeeplyNestedTableRelation: function (test) {
+	testDeeplyNestedTableRelation(test) {
 		/** @typedef {Customer} customer */
 		Customer.findOne(1).then(function(customer) {
 			test.notStrictEqual(customer);
@@ -1883,7 +1883,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 	 * Issue:     Plan     1 -- * Account * -- * User
 	 * Our Tests: Category 1 -- * Item    * -- * Order
 	 */
-	testDeeplyNestedTableRelation2: function (test) {
+	testDeeplyNestedTableRelation2(test) {
 		/** @typedef {Category} category */
 		Category.findOne(1).then(function(category) {
 			test.notStrictEqual(category);
@@ -1912,7 +1912,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testStoreNull: function (test) {
+	testStoreNull(test) {
 		var record = new NullValues();
 		test.strictEqual(null, record.get('var1'));
 		test.strictEqual(null, record.get('var2'));
@@ -1975,7 +1975,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testStoreEmpty: function (test) {
+	testStoreEmpty(test) {
 		var record = new NullValues();
 		record.set('id', 1);
 
@@ -1999,7 +1999,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testIsPrimaryKey: function (test) {
+	testIsPrimaryKey(test) {
 		test.ok(!Customer.isPrimaryKey([]));
 		test.ok(Customer.isPrimaryKey(['id']));
 		test.ok(!Customer.isPrimaryKey(['id', 'name']));
@@ -2017,7 +2017,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		test.done();
 	},
 
-	testJoinWith: function (test) {
+	testJoinWith(test) {
 		var query = null;
 
 		// left join and eager loading
@@ -2032,7 +2032,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 
 			// inner join filtering and eager loading
 			return Order.find().innerJoinWith({
-				customer: function (query) {
+				customer(query) {
 					query.where('customer.id=2');
 				}
 			}).orderBy('order.id').all();
@@ -2045,7 +2045,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 
 			// inner join filtering, eager loading, conditions on both primary and relation
 			return Order.find().innerJoinWith({
-				customer: function (query) {
+				customer(query) {
 					query.where({'customer.id': 2});
 				}
 			}).where({'order.id': [1, 2]}).orderBy('order.id').all();
@@ -2056,7 +2056,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 
 			// inner join filtering without eager loading
 			return Order.find().innerJoinWith({
-				customer: function (query) {
+				customer(query) {
 					query.where('customer.id=2');
 				}
 			}, false).orderBy('order.id').all();
@@ -2069,7 +2069,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 
 			// inner join filtering without eager loading, conditions on both primary and relation
 			return Order.find().innerJoinWith({
-				customer: function (query) {
+				customer(query) {
 					query.where({'customer.id': 2});
 				}
 			}, false).where({'order.id': [1, 2]}).orderBy('order.id').all();
@@ -2098,10 +2098,10 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 
 			// join with sub-relation
 			return Order.find().innerJoinWith({
-				items: function (q) {
+				items(q) {
 					q.orderBy('item.id');
 				},
-				'items.category': function (q) {
+				'items.category'(q) {
 					q.where('category.id = 2');
 				}
 			}).orderBy('order.id').all();
@@ -2121,7 +2121,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 
 			// join with table alias
 			return Order.find().joinWith({
-				customer: function (q) {
+				customer(q) {
 					q.from('customer c');
 				}
 			}).orderBy('c.id DESC, order.id').all();
@@ -2198,14 +2198,14 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 			// https://github.com/yiisoft/yii2/issues/2880
 			return Order.findOne(1).then(function(order) {
 				return order.getCustomer().joinWith({
-					orders: function (q) { q.orderBy([]); }
+					orders(q) { q.orderBy([]); }
 				}).one();
 			});
 		}).then(function(customer) {
 			test.equal(1, customer.get('id'));
 
 			return Order.find().joinWith({
-				items: function (q) {
+				items(q) {
 					q.from({items: 'item'})
 						.orderBy('items.id');
 				}
@@ -2214,10 +2214,10 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 
 			// join with sub-relation called inside Closure
 			return Order.find().joinWith({
-				items: function (q) {
+				items(q) {
 					q.orderBy('item.id');
 					q.joinWith({
-						category: function (q) {
+						category(q) {
 							q.where('category.id = 2');
 						}
 					});
@@ -2236,7 +2236,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testJoinWithAndScope: function (test) {
+	testJoinWithAndScope(test) {
 		// hasOne inner join
 		Customer.find().active().innerJoinWith('profile').orderBy('customer.id').all().then(function(customers) {
 			test.strictEqual(1, customers.length);
@@ -2257,7 +2257,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 
 			// hasMany
 			return Customer.find().active().joinWith({
-				orders: function (q) {
+				orders(q) {
 					q.orderBy('order.id');
 				}
 			}).orderBy('customer.id DESC, order.id').all();
@@ -2272,7 +2272,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testInverseOf: function (test) {
+	testInverseOf(test) {
 		var order = null;
 		var orders = null;
 		var customer = null;
@@ -2405,7 +2405,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testDefaultValues: function (test) {
+	testDefaultValues(test) {
 		var model = new Type();
 		model.loadDefaultValues();
 		test.equal(1, model.get('int_col2'));
@@ -2430,7 +2430,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		test.done();
 	},
 
-	testUnlinkAllViaTable: function (test) {
+	testUnlinkAllViaTable(test) {
 		/** @typedef {Jii.data.ActiveRecord} orderClass */
 		var orderClass = this.getOrderClass();
 
@@ -2515,7 +2515,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testCastValues: function (test) {
+	testCastValues(test) {
 		var model = new Type();
 		model.set('int_col', 123);
 		model.set('int_col2', 456);
@@ -2549,7 +2549,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		});
 	},
 
-	testIssues: function (test) {
+	testIssues(test) {
 		// https://github.com/yiisoft/yii2/issues/4938
 
 		var category = null;
@@ -2592,7 +2592,7 @@ var self = Jii.defineClass('tests.unit.ActiveRecordTest', {
 		}).then(function(orderItems) {
 			test.strictEqual(1, orderItems.length);
 
-			return Order.find().with({orderItems: function (q) { q.indexBy('item_id'); }}).orderBy('id').all();
+			return Order.find().with({orderItems(q) { q.indexBy('item_id'); }}).orderBy('id').all();
 		}).then(function(o) {
 			orders = o;
 

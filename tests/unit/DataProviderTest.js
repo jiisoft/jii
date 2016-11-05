@@ -19,7 +19,7 @@ var DataProviderTest = Jii.defineClass('tests.unit.DataProviderTest', {
 
     __extends: UnitTest,
 
-    fetchTest: function (test) {
+    fetchTest(test) {
         var fetchCount = 0;
         var collection = new Collection(null, {modelClass: Article});
         test.strictEqual(collection.isFetched(), false);

@@ -11,3 +11,8 @@ Jii.createWebApplication({
         }
     }
 });
+
+// AR: display errors in callbacks defined within the tests
+process.on('uncaughtException', function (e) {
+    console.log("Uncaught exception:\n" + e.stack);
+});

@@ -21,7 +21,7 @@ var Customer = Jii.defineClass('tests.unit.models.Customer', {
 		STATUS_ACTIVE: 1,
 		STATUS_INACTIVE: 2,
 
-		tableName: function () {
+		tableName() {
 			return 'customer';
 		},
 
@@ -29,7 +29,7 @@ var Customer = Jii.defineClass('tests.unit.models.Customer', {
 		 * @inheritdoc
 		 * @returns {CustomerQuery}
 		 */
-		find: function () {
+		find() {
 			return new CustomerQuery(this);
 		}
 
@@ -37,32 +37,32 @@ var Customer = Jii.defineClass('tests.unit.models.Customer', {
 
 	status2: null,
 
-	getProfile: function () {
+	getProfile() {
 		return this.hasOne(Profile, {id: 'profile_id'});
 	},
 
-	getOrders: function () {
+	getOrders() {
 		return this.hasMany(Order, {customer_id: 'id'}).orderBy('id');
 	},
 
-	getExpensiveOrders: function () {
+	getExpensiveOrders() {
 		return this.hasMany(Order, {customer_id: 'id'}).andWhere('total > 50').orderBy('id');
 	},
 
-	getExpensiveOrdersWithNullFK: function () {
+	getExpensiveOrdersWithNullFK() {
 		return this.hasMany(OrderWithNullFK, {customer_id: 'id'}).andWhere('total > 50').orderBy('id');
 	},
 
-	getOrdersWithNullFK: function () {
+	getOrdersWithNullFK() {
 		return this.hasMany(OrderWithNullFK, {customer_id: 'id'}).orderBy('id');
 	},
 
-	getOrders2: function () {
+	getOrders2() {
 		return this.hasMany(Order, {customer_id: 'id'}).inverseOf('customer2').orderBy('id');
 	},
 
 	// deeply nested table relation
-	getOrderItems: function () {
+	getOrderItems() {
 		/** @typedef {Jii.data.ActiveQuery} rel */
 		var rel = this.hasMany(Item, {id: 'item_id'});
 
@@ -72,7 +72,7 @@ var Customer = Jii.defineClass('tests.unit.models.Customer', {
 		}).orderBy('id');
 	},
 
-	afterSave: function (insert, changedAttributes) {
+	afterSave(insert, changedAttributes) {
 		Jii.__afterSaveInsert = insert;
         Jii.__afterSaveNewRecord = this.isNewRecord();
 		return this.__super(insert, changedAttributes);

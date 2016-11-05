@@ -11,7 +11,7 @@ var CustomerQuery = Jii.defineClass('tests.unit.models.CustomerQuery', {
 
 	__extends: ActiveQuery,
 
-	active: function () {
+	active() {
 		this.andWhere('status=1');
 
 		return this;

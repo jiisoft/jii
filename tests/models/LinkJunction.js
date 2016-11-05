@@ -29,7 +29,7 @@ var LinkJunction = Jii.defineClass('tests.unit.models.LinkJunction', {
 
 	},
 
-    getLink: function () {
+    getLink() {
         return this.hasOne(Link, {id: 'linkId'});
     }
 

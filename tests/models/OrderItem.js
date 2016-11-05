@@ -14,18 +14,18 @@ var OrderItem = Jii.defineClass('tests.unit.models.OrderItem', {
 
 	__static: {
 
-		tableName: function () {
+		tableName() {
 			return 'order_item';
 		}
 
 	},
 
-	getOrder: function () {
+	getOrder() {
 		var Order = require('./Order');
 		return this.hasOne(Order, {id: 'order_id'});
 	},
 
-	getItem: function () {
+	getItem() {
 		return this.hasOne(Item, {id: 'item_id'});
 	}
 

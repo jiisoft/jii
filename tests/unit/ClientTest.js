@@ -17,7 +17,7 @@ var ClientTest = Jii.defineClass('tests.unit.ClientTest', {
 
     __extends: UnitTest,
 
-    relationTest: function (test) {
+    relationTest(test) {
         var article = new Article();
 
         // Object set

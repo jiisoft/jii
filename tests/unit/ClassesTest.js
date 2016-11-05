@@ -12,7 +12,7 @@ var ClassesTest = Jii.defineClass('tests.unit.ClassesTest', {
 
 	__extends: UnitTest,
 
-    aliasesTest: function (test) {
+    aliasesTest(test) {
 		var Foo = Jii.defineClass('Foo', {
 			__static: {
 				fooStatic: 2

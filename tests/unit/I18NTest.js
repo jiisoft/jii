@@ -42,7 +42,7 @@ var I18NTest = Jii.defineClass('I18NTest', {
         return this.__super();
     },
 
-	formatTest: function (test) {
+	formatTest(test) {
 
 		test.strictEqual(
 			Jii.t('app', 'You have {n, plural, =0 {no photos} =1 {one photo} other {# photos}}', {n: 10}),

@@ -27,13 +27,13 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
 
     __extends: UnitTest,
 
-    _getModelInstances: function () {
+    _getModelInstances() {
         return [
             new SampleModel()
         ];
     },
 
-    setterTest: function (test) {
+    setterTest(test) {
         _each(this._getModelInstances(), function (sampleModel) {
             // Check insert scenario (set name and description)
             sampleModel.setScenario('insert');
@@ -62,7 +62,7 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         test.done();
     },
 
-    validateTest: function (test) {
+    validateTest(test) {
         _each(this._getModelInstances(), function (sampleModel) {
             sampleModel.setScenario('insert');
             sampleModel.set('description', '1234567890+1');

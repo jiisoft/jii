@@ -19,7 +19,7 @@ var self = Jii.defineClass('tests.unit.QueryBuilderTest', {
 
 	__extends: DatabaseTestCase,
 
-	testGetTableNames: function (test) {
+	testGetTableNames(test) {
 		this.getConnection().then(function(db) {
 			return db.getSchema().loadTableNames();
 		}).then(function(tables) {
@@ -35,7 +35,7 @@ var self = Jii.defineClass('tests.unit.QueryBuilderTest', {
 		});
 	},
 
-	testGetTableSchemas: function (test) {
+	testGetTableSchemas(test) {
 		var schema = null;
 		var tableSchemas = null;
 		var tableNames = null;
@@ -60,7 +60,7 @@ var self = Jii.defineClass('tests.unit.QueryBuilderTest', {
 		});
 	},
 
-	testGetNonExistingTableSchema: function (test) {
+	testGetNonExistingTableSchema(test) {
 		this.getConnection().then(function(db) {
 			db.getSchema().loadTableSchema('nonexisting_table').then(function(table) {
 				test.strictEqual(table, null);
@@ -69,7 +69,7 @@ var self = Jii.defineClass('tests.unit.QueryBuilderTest', {
 		});
 	},
 
-	testCompositeFk: function (test) {
+	testCompositeFk(test) {
 		this.getConnection().then(function(db) {
 			var schema = db.getSchema();
 			schema.loadTableSchema('composite_fk').then(function(table) {
@@ -85,7 +85,7 @@ var self = Jii.defineClass('tests.unit.QueryBuilderTest', {
 		});
 	},
 
-	getExpectedColumns: function () {
+	getExpectedColumns() {
 		return {
 			'int_col': {
 				type: 'integer',
@@ -282,7 +282,7 @@ var self = Jii.defineClass('tests.unit.QueryBuilderTest', {
 		};
 	},
 
-	testColumnSchema: function (test) {
+	testColumnSchema(test) {
 		var columns = this.getExpectedColumns();
 
 		this.getConnection().then(function(db) {

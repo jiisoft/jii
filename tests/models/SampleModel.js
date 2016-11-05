@@ -17,7 +17,7 @@ var SampleModel = Jii.defineClass('tests.unit.models.SampleModel', {
         description: null
     },
 
-    rules: function () {
+    rules() {
         return [
             // insert
             ['name', 'required', {on: 'insert'}],

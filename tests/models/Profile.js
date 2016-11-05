@@ -13,7 +13,7 @@ var Profile = Jii.defineClass('tests.unit.models.Profile', {
 
 	__static: {
 
-		tableName: function () {
+		tableName() {
 			return 'profile';
 		}
 

@@ -16,25 +16,25 @@ var Category = Jii.defineClass('tests.unit.models.Category', {
 
 	__static: {
 
-		tableName: function () {
+		tableName() {
 			return 'category';
 		}
 
 	},
 
-	getItems: function () {
+	getItems() {
 		return this.hasMany(Item, {category_id: 'id'});
 	},
 
-	getLimitedItems: function () {
+	getLimitedItems() {
 		return this.hasMany(Item, {category_id: 'id'}).onCondition({'item.id': [1, 2, 3]});
 	},
 
-	getOrderItems: function () {
+	getOrderItems() {
 		return this.hasMany(OrderItem, {item_id: 'id'}).via('items');
 	},
 
-	getOrders: function () {
+	getOrders() {
 		return this.hasMany(Order, {id: 'order_id'}).via('orderItems');
 	}
 

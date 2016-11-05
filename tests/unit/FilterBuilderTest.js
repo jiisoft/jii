@@ -17,7 +17,7 @@ var self = Jii.defineClass('tests.unit.FilterBuilderTest', {
 
     __extends: UnitTest,
 
-    conditionHashTest: function (test) {
+    conditionHashTest(test) {
         var filterBuilder = new FilterBuilder();
 
         var query = new Query();
@@ -32,7 +32,7 @@ var self = Jii.defineClass('tests.unit.FilterBuilderTest', {
         test.done();
     },
 
-    conditionAndTest: function (test) {
+    conditionAndTest(test) {
         var filterBuilder = new FilterBuilder();
 
         var query = new Query();
@@ -50,7 +50,7 @@ var self = Jii.defineClass('tests.unit.FilterBuilderTest', {
         test.done();
     },
 
-    conditionNotTest: function (test) {
+    conditionNotTest(test) {
         var filterBuilder = new FilterBuilder();
 
         var query = new Query();
@@ -66,7 +66,7 @@ var self = Jii.defineClass('tests.unit.FilterBuilderTest', {
         test.done();
     },
 
-    conditionBetweenTest: function (test) {
+    conditionBetweenTest(test) {
         var filterBuilder = new FilterBuilder();
 
         var query = new Query();
@@ -84,7 +84,7 @@ var self = Jii.defineClass('tests.unit.FilterBuilderTest', {
         test.done();
     },
 
-    conditionInTest: function (test) {
+    conditionInTest(test) {
         var filterBuilder = new FilterBuilder();
 
         var query = new Query();

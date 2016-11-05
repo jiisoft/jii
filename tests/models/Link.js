@@ -35,7 +35,7 @@ var Link = Jii.defineClass('tests.unit.models.Link', {
 
 	},
 
-    getData: function () {
+    getData() {
         return this.hasOne(LinkData, {dataId: 'id'});
     }
 

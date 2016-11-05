@@ -52,7 +52,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         this._assertValidation(test, validator, values, true);
     },
 
-    booleanValidatorTest: function (test) {
+    booleanValidatorTest(test) {
         var validator = new BooleanValidator();
         this._assertTrue(test, validator, [true, false, 1, 0, '1', '0']);
         this._assertFalse(test, validator, ['text..', [], null]);
@@ -63,7 +63,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.done();
     },
 
-    compareValidatorTest: function (test) {
+    compareValidatorTest(test) {
         var model = new FakeValidationModel();
         model.set('foo', 'test');
 
@@ -89,7 +89,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.done();
     },
 
-    dateValidatorTest: function (test) {
+    dateValidatorTest(test) {
         var validator = new DateValidator();
         this._assertTrue(test, validator, ['2013-03-04']);
         this._assertFalse(test, validator, ['text..']);
@@ -119,7 +119,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.done();
     },
 
-    emailValidatorTest: function (test) {
+    emailValidatorTest(test) {
         var validator = new EmailValidator();
         this._assertTrue(test, validator, ['test@example.com']);
         this._assertFalse(test, validator, ['text..']);
@@ -127,7 +127,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.done();
     },
 
-    filterValidatorTest: function (test) {
+    filterValidatorTest(test) {
         var model = new FakeValidationModel();
         var validator = new FilterValidator({
             filter: function(value) {
@@ -142,7 +142,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.done();
     },
 
-    inlineValidatorTest: function (test) {
+    inlineValidatorTest(test) {
         var model = new FakeValidationModel();
         model.checkFoo = function(attribute, params) {
             test.strictEqual(params.param1, 'value1');
@@ -161,7 +161,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.done();
     },
 
-    numberValidatorTest: function (test) {
+    numberValidatorTest(test) {
 		var validator;
 
         validator = new NumberValidator();
@@ -183,7 +183,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.done();
     },
 
-    rangeValidatorTest: function (test) {
+    rangeValidatorTest(test) {
         var validator = new RangeValidator({
             range: [1, 2, 'test']
         });
@@ -201,7 +201,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.done();
     },
 
-    regularExpressionValidatorTest: function (test) {
+    regularExpressionValidatorTest(test) {
         var validator = new RegularExpressionValidator({
             pattern: /^[a-z]+[0-9]$/
         });
@@ -215,7 +215,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.done();
     },
 
-    requiredValidatorTest: function (test) {
+    requiredValidatorTest(test) {
         var model = new FakeValidationModel();
         var validator = new RequiredValidator();
 
@@ -230,7 +230,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.done();
     },
 
-    safeValidatorTest: function (test) {
+    safeValidatorTest(test) {
         var model = new FakeValidationModel();
         var validator = new SafeValidator();
 
@@ -240,7 +240,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.done();
     },
 
-    stringValidatorTest: function (test) {
+    stringValidatorTest(test) {
 		var validator;
 
         validator = new StringValidator({
@@ -272,7 +272,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.done();
     },
 
-    urlValidatorTest: function (test) {
+    urlValidatorTest(test) {
 		var validator;
 
         validator = new UrlValidator();

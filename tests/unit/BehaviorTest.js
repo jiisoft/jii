@@ -14,7 +14,7 @@ var BehaviorTest = Jii.defineClass('BehaviorTest', {
 
 	__extends: UnitTest,
 
-	testOn: function (test) {
+	testOn(test) {
 		var bar = new BarClass();
 		var barBehavior = new BarBehavior();
 		bar.attachBehavior('bar', barBehavior);

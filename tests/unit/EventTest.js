@@ -16,7 +16,7 @@ var EventTest = Jii.defineClass('EventTest', {
 
 	_counter: null,
 
-	setUp: function () {
+	setUp() {
 
 		// Clear
 		this._counter = 0;
@@ -27,7 +27,7 @@ var EventTest = Jii.defineClass('EventTest', {
 		return this.__super();
 	},
 
-	onTest: function (test) {
+	onTest(test) {
 		Event.on(Post, 'save', function(event) {
 			this._counter += 1;
 		}.bind(this));

@@ -24,6 +24,18 @@ if (!process.env.JII_NO_NAMESPACE) {
     require('./base/Object.js');
     require('./base/Request.js');
     require('./base/Response.js');
+    require('./comet/ChannelEvent.js');
+    require('./comet/INeatContextProfiles.js');
+    require('./comet/LogEvent.js');
+    require('./comet/client/Client.js');
+    require('./comet/client/LogMessageEvent.js');
+    require('./comet/client/MessageEvent.js');
+    require('./comet/client/NeatClient.js');
+    require('./comet/client/NeatContextProfiles.js');
+    require('./comet/client/RequestEvent.js');
+    require('./comet/client/plugin/AutoReconnect.js');
+    require('./comet/client/plugin/PluginInterface.js');
+    require('./comet/client/transport/TransportInterface.js');
     require('./data/ActiveRecord.js');
     require('./data/FilterBuilder.js');
     require('./data/http/ActiveRecordAction.js');

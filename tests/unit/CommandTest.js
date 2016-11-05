@@ -12,7 +12,7 @@ var self = Jii.defineClass('tests.unit.CommandTest', {
 
 	__extends: DatabaseTestCase,
 
-	testConstruct: function (test) {
+	testConstruct(test) {
 		this.getConnection(false).then(function(db) {
 
 			// null
@@ -28,7 +28,7 @@ var self = Jii.defineClass('tests.unit.CommandTest', {
 		});
 	},
 
-	testGetSetSql: function (test) {
+	testGetSetSql(test) {
 		this.getConnection(false).then(function(db) {
 
 			var sql = 'SELECT * FROM customer';
@@ -43,7 +43,7 @@ var self = Jii.defineClass('tests.unit.CommandTest', {
 		});
 	},
 
-	testAutoQuoting: function (test) {
+	testAutoQuoting(test) {
 		this.getConnection(false).then(function(db) {
 			var sql = 'SELECT [[id]], [[t.name]] FROM {{customer}} t';
 			var command = db.createCommand(sql);
@@ -53,7 +53,7 @@ var self = Jii.defineClass('tests.unit.CommandTest', {
 		});
 	},
 
-	testExecute: function (test) {
+	testExecute(test) {
 		var db = null;
 
 		this.getConnection(false).then(function(d) {
@@ -84,7 +84,7 @@ var self = Jii.defineClass('tests.unit.CommandTest', {
 		});
 	},
 
-	testQuery: function (test) {
+	testQuery(test) {
 		var db = null;
 
 		this.getConnection(true).then(function(d) {
@@ -138,7 +138,7 @@ var self = Jii.defineClass('tests.unit.CommandTest', {
 		});
 	},
 
-	testBindValue: function (test) {
+	testBindValue(test) {
 		var db = null;
 		var email = 'user5@example.com';
 
@@ -163,7 +163,7 @@ var self = Jii.defineClass('tests.unit.CommandTest', {
 		});
 	},
 
-	testBatchInsert: function (test) {
+	testBatchInsert(test) {
 		this.getConnection(false).then(function(db) {
 			var command = db.createCommand();
 
@@ -180,7 +180,7 @@ var self = Jii.defineClass('tests.unit.CommandTest', {
 		});
 	},
 
-	testIntegrityViolation: function (test) {
+	testIntegrityViolation(test) {
 		var command = null;
 		this.getConnection(false).then(function(db) {
 			command = db.createCommand('INSERT INTO profile(id, description) VALUES (123, \'duplicate\')');

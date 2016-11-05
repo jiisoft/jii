@@ -16,92 +16,92 @@ var Order = Jii.defineClass('tests.unit.models.Order', {
 
 	__static: {
 
-		tableName: function () {
+		tableName() {
 			return 'order';
 		}
 
 	},
 
-	getCustomer: function () {
+	getCustomer() {
 		var Customer = require('./Customer');
 		return this.hasOne(Customer, {id: 'customer_id'});
 	},
 
-	getCustomer2: function () {
+	getCustomer2() {
 		var Customer = require('./Customer');
 		return this.hasOne(Customer, {id: 'customer_id'}).inverseOf('orders2');
 	},
 
-	getOrderItems: function () {
+	getOrderItems() {
 		return this.hasMany(OrderItem, {order_id: 'id'});
 	},
 
-	getOrderItemsWithNullFK: function () {
+	getOrderItemsWithNullFK() {
 		return this.hasMany(OrderItemWithNullFK, {order_id: 'id'});
 	},
 
-	getItems: function () {
+	getItems() {
 		return this.hasMany(Item, {id: 'item_id'})
 			.via('orderItems', function (q) {
 				// additional query configuration
 			}).orderBy('item.id');
 	},
 
-	getItemsIndexed: function () {
+	getItemsIndexed() {
 		return this.hasMany(Item, {id: 'item_id'})
 			.via('orderItems').indexBy('id');
 	},
 
-	getItemsWithNullFK: function () {
+	getItemsWithNullFK() {
 		return this.hasMany(Item, {id: 'item_id'})
 			.viaTable('order_item_with_null_fk', {order_id: 'id'});
 	},
 
-	getItemsInOrder1: function () {
+	getItemsInOrder1() {
 		return this.hasMany(Item, {id: 'item_id'})
 			.via('orderItems', function (q) {
 				q.orderBy({subtotal: 'asc'});
 			}).orderBy('name');
 	},
 
-	getItemsInOrder2: function () {
+	getItemsInOrder2() {
 		return this.hasMany(Item, {id: 'item_id'})
 			.via('orderItems', function (q) {
 				q.orderBy({subtotal: 'desc'});
 			}).orderBy('name');
 	},
 
-	getBooks: function () {
+	getBooks() {
 		return this.hasMany(Item, {id: 'item_id'})
 			.via('orderItems')
 			.where({category_id: 1});
 	},
 
-	getBooksWithNullFK: function () {
+	getBooksWithNullFK() {
 		return this.hasMany(Item, {id: 'item_id'})
 			.via('orderItemsWithNullFK')
 			.where({category_id: 1});
 	},
 
-	getBooksViaTable: function () {
+	getBooksViaTable() {
 		return this.hasMany(Item, {id: 'item_id'})
 			.viaTable('order_item', {order_id: 'id'})
 			.where({category_id: 1});
 	},
 
-	getBooksWithNullFKViaTable: function () {
+	getBooksWithNullFKViaTable() {
 		return this.hasMany(Item, {id: 'item_id'})
 			.viaTable('order_item_with_null_fk', {order_id: 'id'})
 			.where({category_id: 1});
 	},
 
-	getBooks2: function () {
+	getBooks2() {
 		return this.hasMany(Item, {id: 'item_id'})
 			.onCondition({category_id: 1})
 			.viaTable('order_item', {order_id: 'id'});
 	},
 
-	beforeSave: function (insert) {
+	beforeSave(insert) {
 		return this.__super(insert).then(function(success) {
 			if (!success) {
 				return false;

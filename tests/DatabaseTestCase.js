@@ -26,7 +26,7 @@ var DatabaseTestCase = Jii.defineClass('tests.unit.DatabaseTestCase', {
 	 */
 	db: null,
 
-	setUp: function () {
+	setUp() {
 		this.database = _clone(config[this.driverName]);
 
 		this.mockApplication();
@@ -34,7 +34,7 @@ var DatabaseTestCase = Jii.defineClass('tests.unit.DatabaseTestCase', {
 		return this.__super();
 	},
 
-	tearDown: function () {
+	tearDown() {
 		if (this.db) {
 			this.db.close();
 		}
@@ -48,7 +48,7 @@ var DatabaseTestCase = Jii.defineClass('tests.unit.DatabaseTestCase', {
 	 * @param {boolean} [open]  whether to open and populate test database
 	 * @returns {Jii.sql.Connection}
 	 */
-	getConnection: function (reset, open) {
+	getConnection(reset, open) {
 		reset = !_isUndefined(reset) ? reset : true;
 		open = !_isUndefined(open) ? open : true;
 
@@ -75,7 +75,7 @@ var DatabaseTestCase = Jii.defineClass('tests.unit.DatabaseTestCase', {
 		});
 	},
 
-	prepareDatabase: function (config, fixture, open) {
+	prepareDatabase(config, fixture, open) {
 		open = open || true;
 
 		var db = Jii.createObject(config);

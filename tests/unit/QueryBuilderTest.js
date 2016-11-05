@@ -25,7 +25,7 @@ var self = Jii.defineClass('tests.unit.QueryBuilderTest', {
 	 * @throws \Exception
 	 * @returns {Jii.data.QueryBuilder}
 	 */
-	_getQueryBuilder: function () {
+	_getQueryBuilder() {
 		var queryBuilder = null;
 
 		switch (this.driverName) {
@@ -56,7 +56,7 @@ var self = Jii.defineClass('tests.unit.QueryBuilderTest', {
 	 * this is not used as a dataprovider for testGetColumnType to speed up the test
 	 * when used as dataprovider every single line will cause a reconnect with the database which is not needed here
 	 */
-	columnTypes: function () {
+	columnTypes() {
 		return [
 			[BaseSchema.TYPE_PK, 'int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY'],
 			[BaseSchema.TYPE_PK + '(8)', 'int(8) NOT NULL AUTO_INCREMENT PRIMARY KEY'],
@@ -118,7 +118,7 @@ var self = Jii.defineClass('tests.unit.QueryBuilderTest', {
 		];
 	},
 
-	testGetColumnType: function (test) {
+	testGetColumnType(test) {
 		this._getQueryBuilder().then(function(queryBuilder) {
 			_each(this.columnTypes(), function(item) {
 				var column = item[0];
@@ -131,7 +131,7 @@ var self = Jii.defineClass('tests.unit.QueryBuilderTest', {
 		}.bind(this));
 	},
 
-	testCreateTableColumnTypes: function (test) {
+	testCreateTableColumnTypes(test) {
 		var columns = {};
 		var queryBuilder = null;
 
@@ -181,7 +181,7 @@ var self = Jii.defineClass('tests.unit.QueryBuilderTest', {
 		});
 	},
 
-	testBuildCondition: function (test) {
+	testBuildCondition(test) {
 		var conditions = [
 			// empty values
 			[ ['like', 'name', []], '0=1', [] ],
@@ -294,7 +294,7 @@ var self = Jii.defineClass('tests.unit.QueryBuilderTest', {
 		});
 	},
 
-	testBuildFilterCondition: function (test) {
+	testBuildFilterCondition(test) {
 		var conditions = [
 			// like
 			[ ['like', 'name', []], '', [] ],
@@ -366,7 +366,7 @@ var self = Jii.defineClass('tests.unit.QueryBuilderTest', {
 		});
 	},
 
-	testAddDropPrimaryKey: function (test) {
+	testAddDropPrimaryKey(test) {
 		var tableName = 'constraints';
 		var pkeyName = tableName + "_pkey";
 		var queryBuilder = null;
@@ -512,7 +512,7 @@ var self = Jii.defineClass('tests.unit.QueryBuilderTest', {
 	 * This test contains three select queries connected with UNION and UNION ALL constructions.
 	 * It could be useful to use "phpunit --group=db --filter testBuildUnion" command for run it.
 	 */
-	testBuildUnion: function (test)	{
+	testBuildUnion(test)	{
 		var expectedQuerySql = this._replaceQuotes(
 			"(SELECT `id` FROM `TotalExample` `t1` WHERE (w > 0) AND (x < 2)) UNION ( SELECT `id` FROM `TotalTotalExample` `t2` WHERE w > 5 ) UNION ALL ( SELECT `id` FROM `TotalTotalExample` `t3` WHERE w = 3 )"
 		);
@@ -545,7 +545,7 @@ var self = Jii.defineClass('tests.unit.QueryBuilderTest', {
 		});
 	},
 
-	testSelectSubquery: function (test)	{
+	testSelectSubquery(test)	{
 		var expected = this._replaceQuotes('SELECT *, (SELECT COUNT(*) FROM `operations` WHERE account_id = accounts.id) AS `operations_count` FROM `accounts`');
 
 		var subquery = (new Query())

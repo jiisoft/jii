@@ -56,7 +56,7 @@ var HttpServerTest = Jii.defineClass('tests.unit.HttpServerTest', {
 		this.__super(callback);
 	},
 
-	echoTest: function (test) {
+	echoTest(test) {
 		var testValue = new Date().getTime();
 		request('http://localhost:' + this.__static.SERVER_PORT + '/?testParam=' + testValue, function(err, response, body) {
 			test.strictEqual(response.headers['content-type'], 'text/html; charset=utf-8');
@@ -66,7 +66,7 @@ var HttpServerTest = Jii.defineClass('tests.unit.HttpServerTest', {
 		});
 	},
 
-	requestTest: function (test) {
+	requestTest(test) {
 		var testValue = new Date().getTime();
 		SiteController.prototype.actionTest = function(context) {
 			var request = context.getComponent('request');

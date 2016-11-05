@@ -24,7 +24,7 @@ var self = Jii.defineClass('tests.unit.CollectionTest', {
 
     __extends: UnitTest,
 
-    arrayInstanceOfTest: function (test) {
+    arrayInstanceOfTest(test) {
         var collection = new Collection([], {modelClass: false});
         collection.push(222);
         collection.push(3636);
@@ -485,7 +485,7 @@ var self = Jii.defineClass('tests.unit.CollectionTest', {
     },
 
 
-    cloneTest: function (test) {
+    cloneTest(test) {
         var root = new Collection([], {modelClass: Article});
         root.add({id: 55, title: 'Test article'});
 

@@ -6,7 +6,6 @@
 'use strict';
 
 var Jii = require('../BaseJii');
-var Module = require('./Module');
 var Action = require('./Action');
 var Response = require('./Response');
 var Controller = require('./Controller');

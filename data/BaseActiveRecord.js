@@ -1780,25 +1780,25 @@ var BaseActiveRecord = Jii.defineClass('Jii.data.BaseActiveRecord', /** @lends J
 
 			var relatedModel = this;
 			_each(attributeParts, relationName => {
-                this._fetchRelationFromRoot(relationName);
+				this._fetchRelationFromRoot(relationName);
 
-				if (_has(this._related, relationName) && this._related[relationName] instanceof this.__static) {
+				if (_has(this._related, relationName) && _isFunction(this._related[relationName].attributeLabels)) {
 					relatedModel = this._related[relationName];
 				} else {
 					// @todo
 					/*try {
-						relation = relatedModel.getRelation(relationName);
-					} catch (InvalidParamException e) {
-						return this.generateAttributeLabel(attribute);
-					}
-					relatedModel = new relation.modelClass();*/
+					 relation = relatedModel.getRelation(relationName);
+					 } catch (InvalidParamException e) {
+					 return this.generateAttributeLabel(attribute);
+					 }
+					 relatedModel = new relation.modelClass();*/
 				}
 			});
 
 			labels = relatedModel.attributeLabels();
 
-			if (_has(labels[attribute])) {
-				return labels[attribute];
+			if (_has(labels, neededAttribute)) {
+				return labels[neededAttribute];
 			}
 		}
 

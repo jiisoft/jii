@@ -2,49 +2,32 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
 var Object = require('../base/Object');
+class String extends Object {
 
-/**
- * BaseFileHelper provides concrete implementation for [[FileHelper]].
- *
- * Do not use BaseFileHelper. Use [[FileHelper]] instead.
- *
- * @class Jii.helpers.String
- * @extends Jii.base.Object
- */
-var String = Jii.defineClass('Jii.helpers.String', /** @lends Jii.helpers.String.prototype */{
+    /**
+         * Generate unique hash for string. http://jsperf.com/hashcodelordvlad
+         * @param {String} str
+         * @returns {String}
+         */
+    static hashCode(str) {
+        return str.split('').reduce((a, b) => {
+            a = (a << 5) - a + b.charCodeAt(0);
+            return a & a;
+        }, 0).toString().replace(/-/g, '1');
+    }
 
-	__extends: Object,
+    static generateUid() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+            var r = Math.random() * 16 | 0;
+            var v = c == 'x' ? r : r & 3 | 8;
 
-	__static: /** @lends Jii.helpers.String */{
+            return v.toString(16);
+        });
+    }
 
-		/**
-		 * Generate unique hash for string. http://jsperf.com/hashcodelordvlad
-		 * @param {String} str
-		 * @returns {String}
-		 */
-		hashCode(str){
-			return str.split("").reduce((a, b) => {
-				a = ((a << 5) - a) + b.charCodeAt(0);
-				return a & a;
-			}, 0).toString().replace(/-/g, '1');
-		},
-
-		generateUid() {
-			return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-				var r = Math.random()*16|0;
-				var v = c == 'x' ? r : (r&0x3|0x8);
-
-				return v.toString(16);
-			});
-		}
-
-	}
-
-});
-
+}
 module.exports = String;

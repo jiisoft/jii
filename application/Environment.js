@@ -2,119 +2,109 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
 var Object = require('../base/Object');
+class Environment extends Object {
 
-/**
- * @class Jii.application.Environment
- * @extends Jii.base.Object
- */
-var Environment = Jii.defineClass('Jii.application.Environment', /** @lends Jii.application.Environment.prototype */{
+    preInit() {
+        /**
+     * @type {string}
+     */
+        this._name = null;
+        super.preInit(...arguments);
+    }
 
-	__extends: Object,
+    /**
+     *
+     * @param {string} name
+     */
+    setName(name) {
+        this._name = name;
+    }
 
-	__static: /** @lends Jii.application.Environment */{
+    /**
+     *
+     * @returns {string}
+     */
+    getName() {
+        return this._name;
+    }
 
-		NAME_TEST: 'test',
-		NAME_DEVELOPMENT: 'development',
-		NAME_PREVIEW: 'preview',
-		NAME_STAGE: 'stage',
-		NAME_BETA: 'beta',
-		NAME_PRODUCTION: 'production'
+    /**
+     * @returns {boolean}
+     */
+    isTest() {
+        return this._name === this.constructor.NAME_TEST;
+    }
 
-	},
+    /**
+     * @returns {boolean}
+     */
+    isDevelopment() {
+        return this._name === this.constructor.NAME_DEVELOPMENT;
+    }
 
-	/**
-	 * @type {string}
-	 */
-	_name: null,
+    /**
+     * @returns {boolean}
+     */
+    isPreview() {
+        return this._name === this.constructor.NAME_DEVELOPMENT;
+    }
 
-	/**
-	 *
-	 * @param {string} name
-	 */
-	setName(name) {
-		this._name = name;
-	},
+    /**
+     * @returns {boolean}
+     */
+    isStage() {
+        return this._name === this.constructor.NAME_DEVELOPMENT;
+    }
 
-	/**
-	 *
-	 * @returns {string}
-	 */
-	getName() {
-		return this._name;
-	},
+    /**
+     * @returns {boolean}
+     */
+    isBeta() {
+        return this._name === this.constructor.NAME_DEVELOPMENT;
+    }
 
-	/**
-	 * @returns {boolean}
-	 */
-	isTest() {
-		return this._name === this.__static.NAME_TEST;
-	},
+    /**
+     * @returns {boolean}
+     */
+    isProduction() {
+        return this._name === this.constructor.NAME_DEVELOPMENT;
+    }
 
-	/**
-	 * @returns {boolean}
-	 */
-	isDevelopment() {
-		return this._name === this.__static.NAME_DEVELOPMENT;
-	},
+    /**
+     * @returns {boolean}
+     */
+    isPreviewOrStage() {
+        return this.isPreview() || this.isStage();
+    }
 
-	/**
-	 * @returns {boolean}
-	 */
-	isPreview() {
-		return this._name === this.__static.NAME_DEVELOPMENT;
-	},
+    /**
+     * @returns {boolean}
+     */
+    isBetaOrProduction() {
+        return this.isBeta() || this.isBetaOrProduction();
+    }
 
-	/**
-	 * @returns {boolean}
-	 */
-	isStage() {
-		return this._name === this.__static.NAME_DEVELOPMENT;
-	},
+    /**
+     * @returns {boolean}
+     */
+    is(name) {
+        return this._name === name;
+    }
 
-	/**
-	 * @returns {boolean}
-	 */
-	isBeta() {
-		return this._name === this.__static.NAME_DEVELOPMENT;
-	},
+    toString() {
+        return this._name;
+    }
 
-	/**
-	 * @returns {boolean}
-	 */
-	isProduction() {
-		return this._name === this.__static.NAME_DEVELOPMENT;
-	},
+}
+Environment.NAME_PRODUCTION = 'production';
+Environment.NAME_BETA = 'beta';
+Environment.NAME_STAGE = 'stage';
+Environment.NAME_PREVIEW = 'preview';
+Environment.NAME_DEVELOPMENT = 'development';
 
-	/**
-	 * @returns {boolean}
-	 */
-	isPreviewOrStage() {
-		return this.isPreview() || this.isStage();
-	},
-
-	/**
-	 * @returns {boolean}
-	 */
-	isBetaOrProduction() {
-		return this.isBeta() || this.isBetaOrProduction();
-	},
-
-	/**
-	 * @returns {boolean}
-	 */
-	is(name) {
-		return this._name === name;
-	},
-
-	toString() {
-		return this._name;
-	}
-
-});
-
+Environment.NAME_TEST = 'test';
 module.exports = Environment;

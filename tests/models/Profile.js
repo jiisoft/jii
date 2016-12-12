@@ -2,23 +2,11 @@
 
 var Jii = require('../../BaseJii');
 var ActiveRecord = require('./ActiveRecord.js');
+class Profile extends ActiveRecord {
 
-/**
- * @class tests.unit.models.Profile
- * @extends tests.unit.models.ActiveRecord
- */
-var Profile = Jii.defineClass('tests.unit.models.Profile', {
+    static tableName() {
+        return 'profile';
+    }
 
-	__extends: ActiveRecord,
-
-	__static: {
-
-		tableName() {
-			return 'profile';
-		}
-
-	}
-
-});
-
+}
 module.exports = Profile;

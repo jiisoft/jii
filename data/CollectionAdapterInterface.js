@@ -2,24 +2,16 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
-
-/**
- * @class Jii.data.CollectionAdapterInterface
- */
-var CollectionAdapterInterface = Jii.defineClass('Jii.data.CollectionAdapterInterface', /** @lends Jii.data.CollectionAdapterInterface.prototype */{
-
+class CollectionAdapterInterface {
 
     /**
      *
      * @param {Jii.base.Collection} original
      */
-    instance(original) {
-
-    },
+    instance(original) {}
 
     /**
      *
@@ -27,9 +19,7 @@ var CollectionAdapterInterface = Jii.defineClass('Jii.data.CollectionAdapterInte
      * @param {*} cloned
      * @param {Jii.base.Model[]} models
      */
-	add(original, cloned, models) {
-
-    },
+    add(original, cloned, models) {}
 
     /**
      *
@@ -37,10 +27,7 @@ var CollectionAdapterInterface = Jii.defineClass('Jii.data.CollectionAdapterInte
      * @param {*} cloned
      * @param {Jii.base.Model[]} models
      */
-    remove(original, cloned, models) {
+    remove(original, cloned, models) {}
 
-    }
-
-});
-
+}
 module.exports = CollectionAdapterInterface;

@@ -2,19 +2,15 @@
 
 var Jii = require('../../index');
 var UnitTest = require('../../base/UnitTest');
-
-/**
- * @class tests.unit.MergeConfigTest
- * @extends Jii.base.UnitTest
- */
-var self = Jii.defineClass('tests.unit.MergeConfigTest', {
-
-	__extends: UnitTest,
+class self extends UnitTest {
 
     mergeTest(test) {
         var o1 = {
             a: '1',
-            b: [1, 2],
+            b: [
+                1,
+                2
+            ],
             c: {
                 d: 'q',
                 e: {
@@ -23,7 +19,10 @@ var self = Jii.defineClass('tests.unit.MergeConfigTest', {
             }
         };
         var o2 = {
-            b: [3, 4],
+            b: [
+                3,
+                4
+            ],
             c: {
                 d: {
                     y: 'u'
@@ -42,7 +41,10 @@ var self = Jii.defineClass('tests.unit.MergeConfigTest', {
 
         test.deepEqual(Jii.mergeConfigs(o1, o2, o3), {
             a: '1',
-            b: [3, 4],
+            b: [
+                3,
+                4
+            ],
             c: {
                 d: {
                     y: 'u',
@@ -52,10 +54,9 @@ var self = Jii.defineClass('tests.unit.MergeConfigTest', {
             },
             z: 'e'
         });
-        
+
         test.done();
     }
 
-});
-
+}
 module.exports = new self().exports();

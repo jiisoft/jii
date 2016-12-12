@@ -2,7 +2,6 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -10,23 +9,17 @@ var ApplicationException = require('../exceptions/ApplicationException');
 var _isArray = require('lodash/isArray');
 var _each = require('lodash/each');
 var Validator = require('./Validator');
+class RangeValidator extends Validator {
 
-/**
- * @class Jii.validators.RangeValidator
- * @extends Jii.validators.Validator
- */
-var RangeValidator = Jii.defineClass('Jii.validators.RangeValidator', /** @lends Jii.validators.RangeValidator.prototype */{
-
-    __extends: Validator,
-
-	range: null,
-
-    strict: false,
-
-    not: false,
+    preInit() {
+        this.not = false;
+        this.strict = false;
+        this.range = null;
+        super.preInit(...arguments);
+    }
 
     init() {
-        this.__super();
+        super.init();
 
         if (!_isArray(this.range)) {
             throw new ApplicationException('The `range` property must be set.');
@@ -35,14 +28,14 @@ var RangeValidator = Jii.defineClass('Jii.validators.RangeValidator', /** @lends
         if (this.message === null) {
             this.message = Jii.t('jii', '{attribute} is invalid.');
         }
-    },
+    }
 
     validateAttribute(object, attribute) {
         var value = object.get(attribute);
         if (!this.validateValue(value)) {
             this.addError(object, attribute, this.message);
         }
-    },
+    }
 
     validateValue(value) {
         var isFined = false;
@@ -62,6 +55,5 @@ var RangeValidator = Jii.defineClass('Jii.validators.RangeValidator', /** @lends
         return !this.not ? isFined : !isFined;
     }
 
-});
-
+}
 module.exports = RangeValidator;

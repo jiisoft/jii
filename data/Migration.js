@@ -2,65 +2,32 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
 var Component = require('../base/Component');
 var BaseSchema = require('./BaseSchema');
+class Migration extends Component {
 
-/**
- * Migration is the base class for representing a database migration.
- *
- * Migration is designed to be used together with the "jii migrate" command.
- *
- * Each child class of Migration represents an individual database migration which
- * is identified by the child class name.
- *
- * Within each migration, the [[up()]] method should be overridden to contain the logic
- * for "upgrading" the database; while the [[down()]] method for the "downgrading"
- * logic. The "jii migrate" command manages all available migrations in an application.
- *
- * If the database supports transactions, you may also override [[safeUp()]] and
- * [[safeDown()]] so that if anything wrong happens during the upgrading or downgrading,
- * the whole migration can be reverted in a whole.
- *
- * Migration provides a set of convenient methods for manipulating database data and schema.
- * For example, the [[insert()]] method can be used to easily insert a row of data into
- * a database table; the [[createTable()]] method can be used to create a database table.
- * Compared with the same methods in [[Command]], these methods will display extra
- * information showing the method parameters and execution time, which may be useful when
- * applying migrations.
- *
- * @class Jii.data.Migration
- * @extends Component
- */
-var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migration.prototype */{
-
-	__extends: Component,
-
-    /**
+    preInit() {
+        /**
      * @type {Jii.data.BaseConnection|object|string} the DB connection object or the application component ID of the DB connection
      * that this migration should work with. Starting from version 2.0.2, this can also be a configuration array
      * for creating the object.
      */
-    db: null,
+        this.db = null;
+        super.preInit(...arguments);
+    }
 
     /**
      * Initializes the migration.
      * This method will set [[db]] to be the 'db' application component, if it is `null`.
      */
     init() {
-        this.__super();
+        super.init();
 
-        this.db = this.db === null ?
-            Jii.app.get('db') :
-            (
-                this.db instanceof Component ?
-                    this.db :
-                    Jii.createObject(this.db)
-            );
-    },
+        this.db = this.db === null ? Jii.app.get('db') : this.db instanceof Component ? this.db : Jii.createObject(this.db);
+    }
 
     /**
      * This method contains the logic to be executed when applying this migration.
@@ -70,7 +37,7 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
      */
     up() {
         return false;
-    },
+    }
 
     /**
      * This method contains the logic to be executed when removing this migration.
@@ -81,7 +48,7 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
      */
     down() {
         return false;
-    },
+    }
 
     /**
      * Executes a SQL statement.
@@ -95,9 +62,9 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
         console.log('    > execute SQL: sql ...');
         var time = this._time();
         return this.db.createCommand(sql).bindValues(params).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
+    }
 
     /**
      * Creates and executes an INSERT SQL statement.
@@ -106,12 +73,12 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
      * @param {object} columns the column data (name => value) to be inserted into the table.
      */
     insert(table, columns) {
-        console.log(`    > insert into ${table} ...`);
+        console.log(`    > insert into ${ table } ...`);
         var time = this._time();
         return this.db.createCommand().insert(table, columns).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
+    }
 
     /**
      * Creates and executes an batch INSERT SQL statement.
@@ -121,12 +88,12 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
      * @param {[]} rows the rows to be batch inserted into the table
      */
     batchInsert(table, columns, rows) {
-        console.log(`    > insert into ${table} ...`);
+        console.log(`    > insert into ${ table } ...`);
         var time = this._time();
         return this.db.createCommand().batchInsert(table, columns, rows).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
+    }
 
     /**
      * Creates and executes an UPDATE SQL statement.
@@ -141,12 +108,12 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
         condition = condition || '';
         params = params || {};
 
-        console.log(`    > update ${table} ...`);
+        console.log(`    > update ${ table } ...`);
         var time = this._time();
         return this.db.createCommand().update(table, columns, condition, params).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
+    }
 
     /**
      * Creates and executes a DELETE SQL statement.
@@ -159,12 +126,12 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
         condition = condition || '';
         params = params || {};
 
-        console.log(`    > delete from ${table} ...`);
+        console.log(`    > delete from ${ table } ...`);
         var time = this._time();
         return this.db.createCommand().delete(table, condition, params).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
+    }
 
     /**
      * Builds and executes a SQL statement for creating a new DB() table.
@@ -185,12 +152,12 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
     createTable(table, columns, options) {
         options = options || null;
 
-        console.log(`    > create table ${table} ...`);
+        console.log(`    > create table ${ table } ...`);
         var time = this._time();
         return this.db.createCommand().createTable(table, columns, options).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
+    }
 
     /**
      * Builds and executes a SQL statement for renaming a DB table.
@@ -198,36 +165,36 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
      * @param {string} newName the new table() name. The name will be properly quoted by the method.
      */
     renameTable(table, newName) {
-        console.log(`    > rename table ${table} to newName ...`);
+        console.log(`    > rename table ${ table } to newName ...`);
         var time = this._time();
         return this.db.createCommand().renameTable(table, newName).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
+    }
 
     /**
      * Builds and executes a SQL statement for dropping a DB table.
      * @param {string} table the table to be dropped. The name will be properly quoted by the method.
      */
     dropTable(table) {
-        console.log(`    > drop table ${table} ...`);
+        console.log(`    > drop table ${ table } ...`);
         var time = this._time();
         return this.db.createCommand().dropTable(table).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
+    }
 
     /**
      * Builds and executes a SQL statement for truncating a DB table.
      * @param {string} table the table to be truncated. The name will be properly quoted by the method.
      */
     truncateTable(table) {
-        console.log(`    > truncate table ${table} ...`);
+        console.log(`    > truncate table ${ table } ...`);
         var time = this._time();
         return this.db.createCommand().truncateTable(table).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
+    }
 
     /**
      * Builds and executes a SQL statement for adding a new DB() column.
@@ -238,12 +205,12 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
      * For example, 'string' will be turned into 'varchar(255)', while 'string not null' will become 'varchar(255) not null'.
      */
     addColumn(table, column, type) {
-        console.log(`    > add column column type to table ${table} ...`);
+        console.log(`    > add column column type to table ${ table } ...`);
         var time = this._time();
         return this.db.createCommand().addColumn(table, column, type).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
+    }
 
     /**
      * Builds and executes a SQL statement for dropping a DB column.
@@ -251,12 +218,12 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
      * @param {string} column the name of the column to be dropped. The name will be properly quoted by the method.
      */
     dropColumn(table, column) {
-        console.log(`    > drop column column from table ${table} ...`);
+        console.log(`    > drop column column from table ${ table } ...`);
         var time = this._time();
         return this.db.createCommand().dropColumn(table, column).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
+    }
 
     /**
      * Builds and executes a SQL statement for renaming a column.
@@ -265,12 +232,12 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
      * @param {string} newName the new name() of the column. The name will be properly quoted by the method.
      */
     renameColumn(table, name, newName) {
-        console.log(`    > rename column name in table ${table} to newName ...`);
+        console.log(`    > rename column name in table ${ table } to newName ...`);
         var time = this._time();
         return this.db.createCommand().renameColumn(table, name, newName).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
+    }
 
     /**
      * Builds and executes a SQL statement for changing the definition of a column.
@@ -281,12 +248,12 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
      * For example, 'string' will be turned into 'varchar(255)', while 'string not null' will become 'varchar(255) not null'.
      */
     alterColumn(table, column, type) {
-        console.log(`    > alter column column in table ${table} to type ...`);
+        console.log(`    > alter column column in table ${ table } to type ...`);
         var time = this._time();
         return this.db.createCommand().alterColumn(table, column, type).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
+    }
 
     /**
      * Builds and executes a SQL statement for creating a primary key.
@@ -296,12 +263,12 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
      * @param {string|[]} columns comma separated string or array of columns that the primary key will consist of.
      */
     addPrimaryKey(name, table, columns) {
-        console.log(`    > add primary key name on ${table} (' + [].concat(columns).join(',') + ') ...`);
+        console.log(`    > add primary key name on ${ table } (' + [].concat(columns).join(',') + ') ...`);
         var time = this._time();
         return this.db.createCommand().addPrimaryKey(name, table, columns).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
+    }
 
     /**
      * Builds and executes a SQL statement for dropping a primary key.
@@ -312,9 +279,9 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
         console.log('    > drop primary key name ...');
         var time = this._time();
         return this.db.createCommand().dropPrimaryKey(name, table).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
+    }
 
     /**
      * Builds a SQL statement for adding a foreign key constraint to an existing table.
@@ -333,10 +300,10 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
 
         console.log('    > add foreign key name: table (' + [].concat(columns).join(',') + ') references refTable (' + [].concat(refColumns).join(',') + ') ...');
         var time = this._time();
-            return this.db.createCommand().addForeignKey(name, table, columns, refTable, refColumns, isDelete, isUpdate).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+        return this.db.createCommand().addForeignKey(name, table, columns, refTable, refColumns, isDelete, isUpdate).then(() => {
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
+    }
 
     /**
      * Builds a SQL statement for dropping a foreign key constraint.
@@ -344,12 +311,12 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
      * @param {string} table the table whose foreign is to be dropped. The name will be properly quoted by the method.
      */
     dropForeignKey(name, table) {
-        console.log(`    > drop foreign key name from table ${table} ...`);
+        console.log(`    > drop foreign key name from table ${ table } ...`);
         var time = this._time();
         return this.db.createCommand().dropForeignKey(name, table).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
+    }
 
     /**
      * Builds and executes a SQL statement for creating a new index.()
@@ -366,9 +333,9 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
         console.log('    > create' + (unique ? ' unique' : '') + ' index name on table (' + [].concat(columns).join(',') + ') ...');
         var time = this._time();
         return this.db.createCommand().createIndex(name, table, columns, unique).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
+    }
 
     /**
      * Builds and executes a SQL statement for dropping an index.
@@ -379,14 +346,11 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
         console.log('    > drop index name ...');
         var time = this._time();
         return this.db.createCommand().dropIndex(name, table).then(() => {
-            console.log(' done (time: ' + ((this._time() - time) / 1000)+ 's)\n');
+            console.log(' done (time: ' + (this._time() - time) / 1000 + 's)\n');
         });
-    },
-
+    }
 
     // SchemaBuildTrait
-
-
     /**
      * Creates a primary key column.
      * @param {number} [length] column size or precision definition.
@@ -398,7 +362,7 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
         length = length || null;
 
         return this.db.getSchema().createColumnSchemaBuilder(BaseSchema.TYPE_PK, length);
-    },
+    }
 
     /**
      * Creates a big primary key column.
@@ -411,7 +375,7 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
         length = length || null;
 
         return this.db.getSchema().createColumnSchemaBuilder(BaseSchema.TYPE_BIGPK, length);
-    },
+    }
 
     /**
      * Creates a string column.
@@ -422,9 +386,8 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
      */
     string(length) {
         length = length || null;
-
         return this.db.getSchema().createColumnSchemaBuilder(BaseSchema.TYPE_STRING, length);
-    },
+    }
 
     /**
      * Creates a text column.
@@ -433,7 +396,7 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
      */
     text() {
         return this.db.getSchema().createColumnSchemaBuilder(BaseSchema.TYPE_TEXT);
-    },
+    }
 
     /**
      * Creates a smallint column.
@@ -446,7 +409,7 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
         length = length || null;
 
         return this.db.getSchema().createColumnSchemaBuilder(BaseSchema.TYPE_SMALLINT, length);
-    },
+    }
 
     /**
      * Creates an integer column.
@@ -459,7 +422,7 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
         length = length || null;
 
         return this.db.getSchema().createColumnSchemaBuilder(BaseSchema.TYPE_INTEGER, length);
-    },
+    }
 
     /**
      * Creates a bigint column.
@@ -472,7 +435,7 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
         length = length || null;
 
         return this.db.getSchema().createColumnSchemaBuilder(BaseSchema.TYPE_BIGINT, length);
-    },
+    }
 
     /**
      * Creates a float column.
@@ -485,7 +448,7 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
         precision = precision || null;
 
         return this.db.getSchema().createColumnSchemaBuilder(BaseSchema.TYPE_FLOAT, precision);
-    },
+    }
 
     /**
      * Creates a double column.
@@ -498,7 +461,7 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
         precision = precision || null;
 
         return this.db.getSchema().createColumnSchemaBuilder(BaseSchema.TYPE_DOUBLE, precision);
-    },
+    }
 
     /**
      * Creates a decimal column.
@@ -523,7 +486,7 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
             length.push(scale);
         }
         return this.db.getSchema().createColumnSchemaBuilder(BaseSchema.TYPE_DECIMAL, length);
-    },
+    }
 
     /**
      * Creates a datetime column.
@@ -536,7 +499,7 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
         precision = precision || null;
 
         return this.db.getSchema().createColumnSchemaBuilder(BaseSchema.TYPE_DATETIME, precision);
-    },
+    }
 
     /**
      * Creates a timestamp column.
@@ -549,7 +512,7 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
         precision = precision || null;
 
         return this.db.getSchema().createColumnSchemaBuilder(BaseSchema.TYPE_TIMESTAMP, precision);
-    },
+    }
 
     /**
      * Creates a time column.
@@ -562,7 +525,7 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
         precision = precision || null;
 
         return this.db.getSchema().createColumnSchemaBuilder(BaseSchema.TYPE_TIME, precision);
-    },
+    }
 
     /**
      * Creates a date column.
@@ -571,7 +534,7 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
      */
     date() {
         return this.db.getSchema().createColumnSchemaBuilder(BaseSchema.TYPE_DATE);
-    },
+    }
 
     /**
      * Creates a binary column.
@@ -584,7 +547,7 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
         length = length || null;
 
         return this.db.getSchema().createColumnSchemaBuilder(BaseSchema.TYPE_BINARY, length);
-    },
+    }
 
     /**
      * Creates a boolean column.
@@ -593,7 +556,7 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
      */
     boolean() {
         return this.db.getSchema().createColumnSchemaBuilder(BaseSchema.TYPE_BOOLEAN);
-    },
+    }
 
     /**
      * Creates a money column.
@@ -618,12 +581,11 @@ var Migration = Jii.defineClass('Jii.data.Migration', /** @lends Jii.data.Migrat
             length.push(scale);
         }
         return this.db.getSchema().createColumnSchemaBuilder(BaseSchema.TYPE_MONEY, length);
-    },
-
-    _time() {
-        return (new Date()).getTime();
     }
 
-});
+    _time() {
+        return new Date().getTime();
+    }
 
+}
 module.exports = Migration;

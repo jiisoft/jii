@@ -2,7 +2,6 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -11,150 +10,55 @@ var _trim = require('lodash/trim');
 var _isFunction = require('lodash/isFunction');
 var _has = require('lodash/has');
 var View = require('./View');
+class WebView extends View {
 
-/**
- * View represents a view object in the MVC pattern.
- *
- * View provides a set of methods (e.g. [[render()]]) for rendering purpose.
- *
- * View is configured as an application component in [[\yii\base\Application]] by default.
- * You can access that instance via `Yii::$app->view`.
- *
- * You can modify its configuration by adding an array to your application config under `components`
- * as it is shown in the following example:
- *
- * ~~~
- * 'view' => [
- *     'theme' => 'app\themes\MyTheme',
- *     'renderers' => [
- *         // you may add Smarty or Twig renderer here
- *     ]
- *     // ...
- * ]
- * ~~~
- *
- * @class Jii.view.WebView
- * @extends Jii.view.View
- */
-var WebView = Jii.defineClass('Jii.view.WebView', /** @lends Jii.view.WebView.prototype */{
-
-    __extends: View,
-
-    __static: /** @lends Jii.view.WebView */{
-
+    preInit() {
         /**
-         * @event Event an event that is triggered by [[beginBody()]].
-         */
-        EVENT_BEGIN_BODY: 'beginBody',
-
-        /**
-         * @event Event an event that is triggered by [[endBody()]].
-         */
-        EVENT_END_BODY: 'endBody',
-
-        /**
-         * The location of registered JavaScript code block or files.
-         * This means the location is in the head section.
-         */
-        POS_HEAD: 'head',
-
-        /**
-         * The location of registered JavaScript code block or files.
-         * This means the location is at the beginning of the body section.
-         */
-        POS_BEGIN: 'begin',
-
-        /**
-         * The location of registered JavaScript code block or files.
-         * This means the location is at the end of the body section.
-         */
-        POS_END: 'end',
-
-        /**
-         * The location of registered JavaScript code block.
-         * This means the JavaScript code block will be enclosed within `jQuery(document).ready()`.
-         */
-        POS_READY: 'ready',
-
-        /**
-         * The location of registered JavaScript code block.
-         * This means the JavaScript code block will be enclosed within `jQuery(window).load()`.
-         */
-        POS_LOAD: 'load',
-
-        /**
-         * @type {string}
-         */
-        DATA_KEY_NAME: 'data-jiiwebview',
-
-        /**
-         * This is internally used as the placeholder for receiving the content registered for the head section.
-         */
-        PH_HEAD: '<![CDATA[JII-BLOCK-HEAD]]>',
-
-        /**
-         * This is internally used as the placeholder for receiving the content registered for the beginning of the body section.
-         */
-        PH_BODY_BEGIN: '<![CDATA[JII-BLOCK-BODY-BEGIN]]>',
-
-        /**
-         * This is internally used as the placeholder for receiving the content registered for the end of the body section.
-         */
-        PH_BODY_END: '<![CDATA[JII-BLOCK-BODY-END]]>'
-
-    },
-
-    /**
-     * @type {string}
-     */
-    docType: '<!DOCTYPE html>',
-
-    /**
-     * @type {string} the page title
-     */
-    title: '',
-
-    /**
-     * @type {object} the registered meta tags.
-     * @see registerMetaTag()
-     */
-    metaTags: {},
-
-    /**
-     * @type {object} the registered link tags.
-     * @see registerLinkTag()
-     */
-    linkTags: {},
-
-    /**
-     * @type {object} the registered CSS code blocks.
-     * @see registerCss()
-     */
-    css: {},
-
-    /**
-     * @type {object} the registered CSS files.
-     * @see registerCssFile()
-     */
-    cssFiles: {},
-
-    /**
-     * @type {object} the registered JS code blocks
-     * @see registerJs()
-     */
-    js: {
-        head: {},
-        begin: {},
-        end: {},
-        ready: {},
-        load: {}
-    },
-
-    /**
      * @type {object} the registered JS files.
      * @see registerJsFile()
      */
-    jsFiles: {},
+        this.jsFiles = {};
+        /**
+     * @type {object} the registered JS code blocks
+     * @see registerJs()
+     */
+        this.js = {
+            head: {},
+            begin: {},
+            end: {},
+            ready: {},
+            load: {}
+        };
+        /**
+     * @type {object} the registered CSS files.
+     * @see registerCssFile()
+     */
+        this.cssFiles = {};
+        /**
+     * @type {object} the registered CSS code blocks.
+     * @see registerCss()
+     */
+        this.css = {};
+        /**
+     * @type {object} the registered link tags.
+     * @see registerLinkTag()
+     */
+        this.linkTags = {};
+        /**
+     * @type {object} the registered meta tags.
+     * @see registerMetaTag()
+     */
+        this.metaTags = {};
+        /**
+     * @type {string} the page title
+     */
+        this.title = '';
+        /**
+     * @type {string}
+     */
+        this.docType = '<!DOCTYPE html>';
+        super.preInit(...arguments);
+    }
 
     /**
      * Registers a meta tag.
@@ -168,10 +72,10 @@ var WebView = Jii.defineClass('Jii.view.WebView', /** @lends Jii.view.WebView.pr
         key = key || String.hashCode(JSON.stringify(options));
 
         if (!_has(this.metaTags, key)) {
-            options[this.__static.DATA_KEY_NAME] = key;
+            options[WebView.DATA_KEY_NAME] = key;
             this.metaTags[key] = this._registerMetaTagInternal(key, options);
         }
-    },
+    }
 
     /**
      * Registers a link tag.
@@ -185,10 +89,10 @@ var WebView = Jii.defineClass('Jii.view.WebView', /** @lends Jii.view.WebView.pr
         key = key || String.hashCode(JSON.stringify(options));
 
         if (!_has(this.linkTags, key)) {
-            options[this.__static.DATA_KEY_NAME] = key;
+            options[WebView.DATA_KEY_NAME] = key;
             this.linkTags[key] = this._registerLinkTagInternal(key, options);
         }
-    },
+    }
 
     /**
      * Registers a CSS code block.
@@ -203,10 +107,10 @@ var WebView = Jii.defineClass('Jii.view.WebView', /** @lends Jii.view.WebView.pr
         key = key || String.hashCode(css);
 
         if (!_has(this.css, key)) {
-            options[this.__static.DATA_KEY_NAME] = key;
+            options[WebView.DATA_KEY_NAME] = key;
             this.css[key] = this._registerCssInternal(key, css, options);
         }
-    },
+    }
 
     /**
      * Registers a CSS file.
@@ -228,7 +132,7 @@ var WebView = Jii.defineClass('Jii.view.WebView', /** @lends Jii.view.WebView.pr
         if (!_has(this.cssFiles, key)) {
             options.href = url;
             options.rel = options.rel || 'stylesheet';
-            options[this.__static.DATA_KEY_NAME] = key;
+            options[WebView.DATA_KEY_NAME] = key;
 
             var condition = options.condition || null;
             delete options.condition;
@@ -238,7 +142,7 @@ var WebView = Jii.defineClass('Jii.view.WebView', /** @lends Jii.view.WebView.pr
 
             this.cssFiles[key] = this._registerCssFileInternal(key, condition, noscript, options);
         }
-    },
+    }
 
     /**
      * Registers a JS code block.
@@ -263,7 +167,7 @@ var WebView = Jii.defineClass('Jii.view.WebView', /** @lends Jii.view.WebView.pr
             js = _trim(js.toString().replace(/^[^{]+\{/, '').replace(/}$/, ''));
         }
 
-        position = position || this.__static.POS_READY;
+        position = position || WebView.POS_READY;
         key = key || String.hashCode(js);
 
         this.js[position] = this.js[position] || {};
@@ -272,10 +176,10 @@ var WebView = Jii.defineClass('Jii.view.WebView', /** @lends Jii.view.WebView.pr
                 type: 'text/javascript'
             };
 
-            options[this.__static.DATA_KEY_NAME] = key;
+            options[WebView.DATA_KEY_NAME] = key;
             this.js[position][key] = this._registerJsInternal(key, position, js, options);
         }
-    },
+    }
 
     /**
      * Registers a JS file.
@@ -299,20 +203,20 @@ var WebView = Jii.defineClass('Jii.view.WebView', /** @lends Jii.view.WebView.pr
         options = options || {};
         key = key || String.hashCode(url);
 
-        var position = options.position || this.__static.POS_END;
+        var position = options.position || WebView.POS_END;
         delete options.position;
 
         options.src = url;
         this.jsFiles[position] = this.jsFiles[position] || {};
         if (!_has(this.jsFiles[position], key)) {
-            options[this.__static.DATA_KEY_NAME] = key;
+            options[WebView.DATA_KEY_NAME] = key;
 
             var condition = options.condition || null;
             delete options.condition;
 
             this.jsFiles[position][key] = this._registerJsFileInternal(key, position, condition, options);
         }
-    },
+    }
 
     /**
      *
@@ -325,40 +229,98 @@ var WebView = Jii.defineClass('Jii.view.WebView', /** @lends Jii.view.WebView.pr
     renderLayout(view, context, params, controller) {
         params = params || {};
         return Promise.resolve(this.getRenderer(view).renderLayout(view, context, params, controller, this));
-    },
+    }
 
-    clear() {
-    },
+    clear() {}
 
     _registerMetaTagInternal(key, options) {
         return '';
-    },
+    }
 
     _registerLinkTagInternal(key, options) {
         return '';
-    },
+    }
 
     _registerCssInternal(key, code, options) {
         return '';
-    },
+    }
 
     _registerCssFileInternal(key, condition, noscript, options) {
         return '';
-    },
+    }
 
     _registerJsInternal(key, position, code, options) {
         return '';
-    },
+    }
 
     _registerJsFileInternal(key, position, condition, options) {
         return '';
-    },
+    }
 
     // @todo
     renderFile(view, params) {
         return this.renderers.underscore.renderFile(view, params, null, this);
     }
 
-});
+}
 
+/**
+         * This is internally used as the placeholder for receiving the content registered for the end of the body section.
+         */
+WebView.PH_BODY_END = '<![CDATA[JII-BLOCK-BODY-END]]>';
+
+/**
+         * This is internally used as the placeholder for receiving the content registered for the beginning of the body section.
+         */
+WebView.PH_BODY_BEGIN = '<![CDATA[JII-BLOCK-BODY-BEGIN]]>';
+
+/**
+         * This is internally used as the placeholder for receiving the content registered for the head section.
+         */
+WebView.PH_HEAD = '<![CDATA[JII-BLOCK-HEAD]]>';
+
+/**
+         * @type {string}
+         */
+WebView.DATA_KEY_NAME = 'data-jiiwebview';
+
+/**
+         * The location of registered JavaScript code block.
+         * This means the JavaScript code block will be enclosed within `jQuery(window).load()`.
+         */
+WebView.POS_LOAD = 'load';
+
+/**
+         * The location of registered JavaScript code block.
+         * This means the JavaScript code block will be enclosed within `jQuery(document).ready()`.
+         */
+WebView.POS_READY = 'ready';
+
+/**
+         * The location of registered JavaScript code block or files.
+         * This means the location is at the end of the body section.
+         */
+WebView.POS_END = 'end';
+
+/**
+         * The location of registered JavaScript code block or files.
+         * This means the location is at the beginning of the body section.
+         */
+WebView.POS_BEGIN = 'begin';
+
+/**
+         * The location of registered JavaScript code block or files.
+         * This means the location is in the head section.
+         */
+WebView.POS_HEAD = 'head';
+
+/**
+         * @event Event an event that is triggered by [[endBody()]].
+         */
+WebView.EVENT_END_BODY = 'endBody';
+
+/**
+         * @event Event an event that is triggered by [[beginBody()]].
+         */
+WebView.EVENT_BEGIN_BODY = 'beginBody';
 module.exports = WebView;

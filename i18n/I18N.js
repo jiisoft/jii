@@ -2,7 +2,6 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -14,18 +13,13 @@ var Component = require('../base/Component');
 var InvalidConfigException = require('../exceptions/InvalidConfigException');
 var MessageSource = require('./MessageSource');
 var MessageFormatter = require('./MessageFormatter');
+class I18N extends Component {
 
-/**
- * @class Jii.i18n.I18N
- * @extends Jii.base.Component
- */
-var I18N = Jii.defineClass('Jii.i18n.I18N', /** @lends Jii.i18n.I18N.prototype */{
-
-    __extends: Component,
-
-    translations: {},
-
-    _messageFormatter: null,
+    preInit() {
+        this._messageFormatter = null;
+        this.translations = {};
+        super.preInit(...arguments);
+    }
 
     /**
      * Translates a message to the specified language.
@@ -48,7 +42,7 @@ var I18N = Jii.defineClass('Jii.i18n.I18N', /** @lends Jii.i18n.I18N.prototype *
         } else {
             return this.format(translation, params, language);
         }
-    },
+    }
 
     /**
      * Formats a message using [[MessageFormatter]].
@@ -68,7 +62,7 @@ var I18N = Jii.defineClass('Jii.i18n.I18N', /** @lends Jii.i18n.I18N.prototype *
             let result = formatter.format(message, params, language);
             if (result === false) {
                 let errorMessage = formatter.getErrorMessage();
-                Jii.warning(`Formatting message for language '${language}' failed with error: ${errorMessage}. The message being formatted was: ${message}.`);
+                Jii.warning(`Formatting message for language '${ language }' failed with error: ${ errorMessage }. The message being formatted was: ${ message }.`);
             } else {
                 return result;
             }
@@ -78,7 +72,7 @@ var I18N = Jii.defineClass('Jii.i18n.I18N', /** @lends Jii.i18n.I18N.prototype *
             message = message.replace(new RegExp('{' + key + '}', 'g'), params[key]);
         });
         return message;
-    },
+    }
 
     /**
      * Returns the message source for the given category.
@@ -116,8 +110,8 @@ var I18N = Jii.defineClass('Jii.i18n.I18N', /** @lends Jii.i18n.I18N.prototype *
             return this.translations['*'];
         }
 
-        throw new InvalidConfigException(`Unable to locate message source for category '${category}'.`);
-    },
+        throw new InvalidConfigException(`Unable to locate message source for category '${ category }'.`);
+    }
 
     /**
      * Returns the message formatter instance.
@@ -131,7 +125,7 @@ var I18N = Jii.defineClass('Jii.i18n.I18N', /** @lends Jii.i18n.I18N.prototype *
         }
 
         return this._messageFormatter;
-    },
+    }
 
     /**
      * @param {string|array|Jii.i18n.MessageFormatter} value the message formatter to be used to format message via ICU message format.
@@ -142,6 +136,5 @@ var I18N = Jii.defineClass('Jii.i18n.I18N', /** @lends Jii.i18n.I18N.prototype *
         this._messageFormatter = value;
     }
 
-});
-
+}
 module.exports = I18N;

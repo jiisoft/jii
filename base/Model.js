@@ -2,7 +2,6 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -28,68 +27,21 @@ var _map = require('lodash/map');
 var _keys = require('lodash/keys');
 var _startCase = require('lodash/startCase');
 var Component = require('./Component');
+class Model extends Component {
 
-/**
- * @class Jii.base.Model
- * @extends Jii.base.Component
- */
-var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototype */{
-
-    __extends: Component,
-
-    _attributes: {},
-    _errors: {},
-    _validators: null,
-    _scenario: 'default',
-
-    _editedLevel: 0,
-    _editedSubModels: [],
-    _editedChanges: {},
-
-    __static: /** Jii.base.Model */{
-
-        /**
-         * @event Jii.base.Model#change
-         * @property {Jii.data.ChangeEvent} event
-         */
-        EVENT_CHANGE: 'change',
-
-        /**
-         * @event Jii.base.Model#change:
-         * @property {Jii.data.ChangeAttributeEvent} event
-         */
-        EVENT_CHANGE_NAME: 'change:',
-
-        /**
-         * @event Jii.base.Model#before_validate
-         * @property {Jii.data.ValidateEvent} event
-         */
-        EVENT_BEFORE_VALIDATE: 'before_validate',
-
-        /**
-         * @event Jii.base.Model#change_errors
-         * @property {Jii.data.ValidateEvent} event
-         */
-        EVENT_CHANGE_ERRORS: 'change_errors',
-
-        /**
-         * @event Jii.base.Model#after_validate
-         * @property {Jii.data.ValidateEvent} event
-         */
-        EVENT_AFTER_VALIDATE: 'after_validate'
-
-    },
-
-    /**
-     * @constructor
-     */
-    constructor(attributes, config) {
+    preInit(attributes, config) {
+        this._editedChanges = {};
+        this._editedSubModels = [];
+        this._editedLevel = 0;
+        this._scenario = 'default';
+        this._validators = null;
+        this._errors = {};
+        this._attributes = {};
         if (_isObject(attributes)) {
             this.set(attributes);
         }
-
-        this.__super(config);
-    },
+        super.preInit(config);
+    }
 
     /**
      * Validation rules
@@ -97,14 +49,14 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
      */
     rules() {
         return [];
-    },
+    }
 
     /**
      * Begin change operation
      */
     beginEdit() {
         this._editedLevel++;
-    },
+    }
 
     /**
      * Cancel all changes after beginEdit() call
@@ -125,7 +77,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
                 this._attributes[name] = values[0];
             });
         }
-    },
+    }
 
     /**
      * End change operation - trigger change events
@@ -144,7 +96,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
             // Trigger change attribute events
             if (!_isEmpty(this._editedChanges)) {
                 _each(this._editedChanges, (values, name) => {
-                    this.trigger(this.__static.EVENT_CHANGE_NAME + name, new ChangeAttributeEvent({
+                    this.trigger(Model.EVENT_CHANGE_NAME + name, new ChangeAttributeEvent({
                         sender: this,
                         attribute: name,
                         oldValue: values[0],
@@ -154,7 +106,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
                 });
 
                 // Trigger change event
-                this.trigger(this.__static.EVENT_CHANGE, new ChangeEvent({
+                this.trigger(Model.EVENT_CHANGE, new ChangeEvent({
                     sender: this,
                     changedAttributes: this._editedChanges
                 }));
@@ -164,7 +116,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
             this._editedSubModels = [];
             this._editedChanges = {};
         }
-    },
+    }
 
     /**
      * Get attribute value
@@ -179,28 +131,24 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
         // Sub models support: foo[0]
         var collectionFormat = this._detectKeyFormatCollection(name, '', true);
         if (collectionFormat) {
-            return collectionFormat.subName ?
-                collectionFormat.model.get(collectionFormat.subName) :
-                collectionFormat.model;
+            return collectionFormat.subName ? collectionFormat.model.get(collectionFormat.subName) : collectionFormat.model;
         }
 
         // Sub models support: foo.bar
         var modelFormat = this._detectKeyFormatModel(name);
         if (modelFormat) {
-            return modelFormat.model ?
-                modelFormat.model.get(modelFormat.subName) :
-                null;
+            return modelFormat.model ? modelFormat.model.get(modelFormat.subName) : null;
         }
 
         try {
-            return this.__super(name);
+            return super.get(name);
         } catch (e) {
             if (!(e instanceof UnknownPropertyException)) {
                 throw e;
             }
             return null;
         }
-    },
+    }
 
     /**
      * Set attribute value
@@ -253,15 +201,18 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
             this._attributes[name] = value;
 
             if (isAttributeChanged) {
-                this._editedChanges[name] = [oldValue, value];
+                this._editedChanges[name] = [
+                    oldValue,
+                    value
+                ];
             }
 
             this.endEdit();
             return isAttributeChanged;
         }
 
-        this.__super(name, value);
-    },
+        super.set(name, value);
+    }
 
     /**
      *
@@ -302,7 +253,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
         }
 
         return null;
-    },
+    }
 
     /**
      *
@@ -331,7 +282,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
             name: relationName,
             subName: prefix + name.substr(dotIndex + 1)
         };
-    },
+    }
 
     /**
      * Returns the named attribute value.
@@ -343,7 +294,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
      */
     getAttribute(name) {
         return _has(this._attributes, name) ? this._attributes[name] : null;
-    },
+    }
 
     /**
      * Sets the named attribute value.
@@ -358,7 +309,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
         } else {
             throw new InvalidParamException(this.className() + ' has no attribute named "' + name + '".');
         }
-    },
+    }
 
     /**
      * Update model attributes. This method run change
@@ -384,7 +335,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
         });
 
         return this.set(filteredAttributes);
-    },
+    }
 
     /**
      *
@@ -410,19 +361,16 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
 
         // Subscribe for sync
         _each(attributes, (name, alias) => {
-            this.on(
-                this.__static.EVENT_CHANGE_NAME + name,
-                /** @param {Jii.data.ChangeAttributeEvent} event */
+            this.on(Model.EVENT_CHANGE_NAME + name, /** @param {Jii.data.ChangeAttributeEvent} event */
                 event => {
                     var obj = {};
                     obj[alias] = event.newValue;
-                    adapter.setValues(this, cloned, obj)
-                }
-            );
+                    adapter.setValues(this, cloned, obj);
+                });
         });
 
         return cloned;
-    },
+    }
 
     /**
      * This method is invoked when an unsafe attribute is being massively assigned.
@@ -435,7 +383,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
         if (Jii.debug) {
             Jii.trace('Failed to set unsafe attribute `' + name + '` in ' + this.className() + '`');
         }
-    },
+    }
 
     /**
      * Returns attribute values.
@@ -457,7 +405,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
         });
 
         return values;
-    },
+    }
 
     /**
      * @param {string[]} names
@@ -476,7 +424,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
         });
 
         return this._buildTree(treeNames, this);
-    },
+    }
 
     _buildTree(names, model) {
         var obj = {};
@@ -492,11 +440,11 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
             }
         });
         return obj;
-    },
+    }
 
     formName() {
         return this.className().replace(/^.*\.([^.]+)$/, '$1');
-    },
+    }
 
     /**
      * Get attributes list for this model
@@ -504,7 +452,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
      */
     attributes() {
         return _keys(this._attributes);
-    },
+    }
 
     /**
      * Check attribute exists in this model
@@ -514,7 +462,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
     hasAttribute(name) {
         //return true;
         return _indexOf(this.attributes(), name) !== -1;
-    },
+    }
 
     /**
      * Format: attribute => label
@@ -522,7 +470,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
      */
     attributeLabels() {
         return {};
-    },
+    }
 
     /**
      * Get label by attribute name
@@ -532,7 +480,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
     getAttributeLabel(name) {
         var attributes = this.attributeLabels();
         return _has(attributes, name) ? attributes[name] : this.generateAttributeLabel(name);
-    },
+    }
 
     /**
      * Format: attribute => hint
@@ -540,7 +488,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
      */
     attributeHints() {
         return {};
-    },
+    }
 
     /**
      * Get hint by attribute name
@@ -550,7 +498,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
     getAttributeHint(name) {
         var attributes = this.attributeHints();
         return _has(attributes, name) ? attributes[name] : '';
-    },
+    }
 
     /**
      *
@@ -558,7 +506,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
      */
     setScenario(scenario) {
         this._scenario = scenario;
-    },
+    }
 
     /**
      *
@@ -566,7 +514,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
      */
     getScenario() {
         return this._scenario;
-    },
+    }
 
     safeAttributes() {
         var scenario = this.getScenario();
@@ -577,13 +525,13 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
         }
 
         var attributes = [];
-        _each(scenarios[scenario], (attribute) => {
+        _each(scenarios[scenario], attribute => {
             if (attribute.substr(0, 1) !== '!') {
                 attributes.push(attribute);
             }
         });
         return attributes;
-    },
+    }
 
     /**
      *
@@ -605,7 +553,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
         });
 
         return attributes;
-    },
+    }
 
     /**
      *
@@ -648,7 +596,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
         });
 
         return scenarios;
-    },
+    }
 
     /**
      *
@@ -674,7 +622,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
             }
         });
         return validators;
-    },
+    }
 
     /**
      *
@@ -685,7 +633,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
             this._validators = this.createValidators();
         }
         return this._validators;
-    },
+    }
 
     /**
      *
@@ -709,7 +657,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
         });
 
         return validators;
-    },
+    }
 
     /**
      * Validate model by rules, see rules() method.
@@ -734,27 +682,24 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
             this.clearErrors();
         }
 
-        return Promise.resolve(this.beforeValidate())
-            .then(bool => {
-                if (!bool) {
-                    return Promise.resolve(false);
-                }
+        return Promise.resolve(this.beforeValidate()).then(bool => {
+            if (!bool) {
+                return Promise.resolve(false);
+            }
 
-                var promises = _map(this.getActiveValidators(), validator => {
-                    return validator.validate(this, attributes);
-                });
-                return Promise.all(promises);
-            })
-            .then(() => this.afterValidate())
-            .then(() => {
-                if (this.hasErrors()) {
-                    return Promise.resolve(false);
-                }
-
-                // Return result
-                return Promise.resolve(true);
+            var promises = _map(this.getActiveValidators(), validator => {
+                return validator.validate(this, attributes);
             });
-    },
+            return Promise.all(promises);
+        }).then(() => this.afterValidate()).then(() => {
+            if (this.hasErrors()) {
+                return Promise.resolve(false);
+            }
+
+            // Return result
+            return Promise.resolve(true);
+        });
+    }
 
     addError(attribute, error) {
         if (!this._errors[attribute]) {
@@ -763,18 +708,18 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
 
         this._errors[attribute].push(error);
 
-        this.trigger(this.__static.EVENT_CHANGE_ERRORS, new ValidateEvent({
+        this.trigger(Model.EVENT_CHANGE_ERRORS, new ValidateEvent({
             errors: this._errors
         }));
-    },
+    }
 
     setErrors(errors) {
         this._errors = errors;
 
-        this.trigger(this.__static.EVENT_CHANGE_ERRORS, new ValidateEvent({
+        this.trigger(Model.EVENT_CHANGE_ERRORS, new ValidateEvent({
             errors: this._errors
         }));
-    },
+    }
 
     /**
      *
@@ -783,7 +728,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
      */
     getErrors(attribute) {
         return !attribute ? this._errors : this._errors[attribute] || [];
-    },
+    }
 
     /**
      *
@@ -792,7 +737,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
      */
     hasErrors(attribute) {
         return attribute ? _has(this._errors, attribute) : !_isEmpty(this._errors);
-    },
+    }
 
     /**
      *
@@ -806,21 +751,21 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
             delete this._errors[attribute];
         }
 
-        this.trigger(this.__static.EVENT_CHANGE_ERRORS, new ValidateEvent({
+        this.trigger(Model.EVENT_CHANGE_ERRORS, new ValidateEvent({
             errors: this._errors
         }));
-    },
+    }
 
     beforeValidate() {
-        this.trigger(this.__static.EVENT_BEFORE_VALIDATE, new ValidateEvent());
+        this.trigger(Model.EVENT_BEFORE_VALIDATE, new ValidateEvent());
         return true;
-    },
+    }
 
     afterValidate() {
-        this.trigger(this.__static.EVENT_AFTER_VALIDATE, new ValidateEvent({
+        this.trigger(Model.EVENT_AFTER_VALIDATE, new ValidateEvent({
             errors: this._errors
         }));
-    },
+    }
 
     /**
      * Returns a value indicating whether the attribute is required.
@@ -844,7 +789,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
             }
         });
         return bool;
-    },
+    }
 
     /**
      * Returns a value indicating whether the attribute is safe for massive assignments.
@@ -854,7 +799,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
      */
     isAttributeSafe(attribute) {
         return _indexOf(this.safeAttributes(), attribute) !== -1;
-    },
+    }
 
     /**
      * Returns a value indicating whether the attribute is active in the current scenario.
@@ -864,7 +809,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
      */
     isAttributeActive(attribute) {
         return _indexOf(this.activeAttributes(), attribute) !== -1;
-    },
+    }
 
     /**
      * Returns the first error of every attribute in the model.
@@ -886,7 +831,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
         });
 
         return errors;
-    },
+    }
 
     /**
      * Returns the first error of the specified attribute.
@@ -897,7 +842,7 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
      */
     getFirstError(attribute) {
         return _has(this._errors, attribute) ? this._errors[attribute][0] : null;
-    },
+    }
 
     /**
      * Generates a user friendly attribute label based on the give attribute name.
@@ -911,6 +856,35 @@ var Model = Jii.defineClass('Jii.base.Model', /** @lends Jii.base.Model.prototyp
         return _startCase(name);
     }
 
-});
+}
 
+/**
+         * @event Jii.base.Model#after_validate
+         * @property {Jii.data.ValidateEvent} event
+         */
+Model.EVENT_AFTER_VALIDATE = 'after_validate';
+
+/**
+         * @event Jii.base.Model#change_errors
+         * @property {Jii.data.ValidateEvent} event
+         */
+Model.EVENT_CHANGE_ERRORS = 'change_errors';
+
+/**
+         * @event Jii.base.Model#before_validate
+         * @property {Jii.data.ValidateEvent} event
+         */
+Model.EVENT_BEFORE_VALIDATE = 'before_validate';
+
+/**
+         * @event Jii.base.Model#change:
+         * @property {Jii.data.ChangeAttributeEvent} event
+         */
+Model.EVENT_CHANGE_NAME = 'change:';
+
+/**
+         * @event Jii.base.Model#change
+         * @property {Jii.data.ChangeEvent} event
+         */
+Model.EVENT_CHANGE = 'change';
 module.exports = Model;

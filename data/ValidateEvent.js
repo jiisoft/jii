@@ -2,22 +2,16 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
 var Event = require('../base/Event');
+class ValidateEvent extends Event {
 
-/**
- * @class Jii.data.ValidateEvent
- * @extends Jii.base.Event
- */
-var ValidateEvent = Jii.defineClass('Jii.data.ValidateEvent', /** @lends Jii.data.ValidateEvent.prototype */{
+    preInit() {
+        this.errors = {};
+        super.preInit(...arguments);
+    }
 
-	__extends: Event,
-
-    errors: {}
-
-});
-
+}
 module.exports = ValidateEvent;

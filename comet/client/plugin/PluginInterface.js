@@ -1,22 +1,16 @@
-
 'use strict';
 
 var Jii = require('../../../BaseJii');
 var Object = require('../../../base/Object');
+class PluginInterface extends Object {
 
-/**
- * @class Jii.comet.client.plugin.PluginInterface
- * @extends Jii.base.Object
- */
-var PluginInterface = Jii.defineClass('Jii.comet.client.plugin.PluginInterface', /** @lends Jii.comet.client.plugin.PluginInterface.prototype */{
+    preInit() {
+        /**
+     * @type {Jii.comet.client.Client}
+     */
+        this.comet = null;
+        super.preInit(...arguments);
+    }
 
-	__extends: Object,
-
-	/**
-	 * @type {Jii.comet.client.Client}
-	 */
-	comet: null
-
-});
-
+}
 module.exports = PluginInterface;

@@ -4,21 +4,17 @@ var Jii = require('../../index');
 var Console = require('../../helpers/Console');
 var Controller = require('../Controller');
 var fs = require('fs');
+class ServiceController extends Controller {
 
-/**
- * @class Jii.console.controllers.ServiceController
- * @extends Jii.console.Controller
- */
-var ServiceController = Jii.defineClass('Jii.console.controllers.ServiceController', /** @lends Jii.console.controllers.ServiceController.prototype */{
-
-    __extends: Controller,
-
-    _forever: null,
+    preInit() {
+        this._forever = null;
+        super.preInit(...arguments);
+    }
 
     init() {
-        this.__super();
+        super.init();
         this._forever = require('forever');
-    },
+    }
 
     /**
      *
@@ -34,7 +30,7 @@ var ServiceController = Jii.defineClass('Jii.console.controllers.ServiceControll
         this.stdout('Start as service without install\n', Console.BOLD);
         this.stdout('  Run index.js file with argument `service/start`, `service/stop` or `service/restart`:\n');
         this.stdout('    node jii service/start\n\n', Console.FG_YELLOW);
-    },
+    }
 
     /**
      *
@@ -97,7 +93,7 @@ var ServiceController = Jii.defineClass('Jii.console.controllers.ServiceControll
         monitor.on('start', () => {
             this._forever.startServer(monitor);
         });
-    },
+    }
 
     /**
      *
@@ -105,7 +101,7 @@ var ServiceController = Jii.defineClass('Jii.console.controllers.ServiceControll
      */
     actionRestart(context) {
         this._forever.cli.restart(this._getScriptFile());
-    },
+    }
 
     /**
      *
@@ -113,7 +109,7 @@ var ServiceController = Jii.defineClass('Jii.console.controllers.ServiceControll
      */
     actionStop(context) {
         this._forever.cli.stop(this._getScriptFile());
-    },
+    }
 
     /**
      *
@@ -121,12 +117,11 @@ var ServiceController = Jii.defineClass('Jii.console.controllers.ServiceControll
      */
     actionStatus(context) {
         this._forever.cli.list();
-    },
+    }
 
     _getScriptFile() {
         return process.argv[1];
     }
 
-});
-
+}
 module.exports = ServiceController;

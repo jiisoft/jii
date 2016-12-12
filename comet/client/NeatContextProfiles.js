@@ -2,7 +2,6 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -10,30 +9,25 @@ var InvalidConfigException = require('../../exceptions/InvalidConfigException');
 var Collection = require('../../base/Collection');
 var _clone = require('lodash/clone');
 var INeatContextProfiles = require('../INeatContextProfiles');
+class NeatContextProfiles extends INeatContextProfiles {
 
-/**
- * @class Jii.comet.client.NeatContextProfiles
- * @extends Jii.comet.INeatContextProfiles
- */
-var NeatContextProfiles = Jii.defineClass('Jii.comet.client.NeatContextProfiles', /** @lends Jii.comet.client.NeatContextProfiles.prototype */{
-
-    __extends: INeatContextProfiles,
-
-    /**
-     * @type {Jii.comet.client.NeatClient}
-     */
-    neat: 'neat',
-
-    /**
+    preInit() {
+        /**
      * @type {object}
      */
-    data: {},
+        this.data = {};
+        /**
+     * @type {Jii.comet.client.NeatClient}
+     */
+        this.neat = 'neat';
+        super.preInit(...arguments);
+    }
 
     init() {
-        this.__super();
+        super.init();
 
         this.neat = Jii.app.get(this.neat);
-    },
+    }
 
     /**
      *
@@ -65,15 +59,13 @@ var NeatContextProfiles = Jii.defineClass('Jii.comet.client.NeatContextProfiles'
                 collection.each(model => {
                     model.setOldAttributes(_clone(model.getAttributes()));
                 });
-
-                /*return new Collection(this.data[collectionName], {
-                    modelClass: binding.serverModel || binding.clientModel
-                })*/
+            /*return new Collection(this.data[collectionName], {
+                        modelClass: binding.serverModel || binding.clientModel
+                    })*/
             }
             return collection;
         });
     }
 
-});
-
+}
 module.exports = NeatContextProfiles;

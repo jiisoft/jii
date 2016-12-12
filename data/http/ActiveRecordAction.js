@@ -4,14 +4,7 @@ var Jii = require('../../BaseJii');
 var InvalidParamException = require('../../exceptions/InvalidParamException');
 var Action = require('../../base/Action');
 var Command = require('./Command');
-
-/**
- * @class Jii.data.http.ActiveRecordAction
- * @extends Jii.base.Action
- */
-var ActiveRecordAction = Jii.defineClass('Jii.data.http.ActiveRecordAction', /** @lends Jii.data.http.ActiveRecordAction.prototype */{
-
-    __extends: Action,
+class ActiveRecordAction extends Action {
 
     /**
      * Runs this action with the specified parameters.
@@ -49,7 +42,7 @@ var ActiveRecordAction = Jii.defineClass('Jii.data.http.ActiveRecordAction', /**
                             success: success,
                             errors: model.getErrors()
                         };
-                    })
+                    });
                 });
 
             case Command.METHOD_DELETE:
@@ -65,7 +58,5 @@ var ActiveRecordAction = Jii.defineClass('Jii.data.http.ActiveRecordAction', /**
         throw new InvalidParamException('Unknown method `' + context.request.get('method') + '` in ' + this.className());
     }
 
-
-});
-
+}
 module.exports = ActiveRecordAction;

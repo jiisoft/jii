@@ -2,32 +2,26 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
 var ApplicationException = require('../exceptions/ApplicationException');
 var _isFunction = require('lodash/isFunction');
 var Validator = require('./Validator');
+class InlineValidator extends Validator {
 
-/**
- * @class Jii.validators.InlineValidator
- * @extends Jii.validators.Validator
- */
-var InlineValidator = Jii.defineClass('Jii.validators.InlineValidator', /** @lends Jii.validators.InlineValidator.prototype */{
-
-    __extends: Validator,
-
-	method: null,
-
-    params: null,
+    preInit() {
+        this.params = null;
+        this.method = null;
+        super.preInit(...arguments);
+    }
 
     init() {
-        this.__super();
+        super.init();
         if (this.message === null) {
             this.message = ''; // @todo
         }
-    },
+    }
 
     validateAttribute(object, attribute) {
         var method = object[this.method];
@@ -39,6 +33,5 @@ var InlineValidator = Jii.defineClass('Jii.validators.InlineValidator', /** @len
         return method.call(object, attribute, this.params || {});
     }
 
-});
-
+}
 module.exports = InlineValidator;

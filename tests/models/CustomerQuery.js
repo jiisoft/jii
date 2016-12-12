@@ -2,21 +2,13 @@
 
 var Jii = require('../../BaseJii');
 var ActiveQuery = require('../../data/ActiveQuery');
+class CustomerQuery extends ActiveQuery {
 
-/**
- * @class tests.unit.models.CustomerQuery
- * @extends Jii.data.ActiveQuery
- */
-var CustomerQuery = Jii.defineClass('tests.unit.models.CustomerQuery', {
+    active() {
+        this.andWhere('status=1');
 
-	__extends: ActiveQuery,
+        return this;
+    }
 
-	active() {
-		this.andWhere('status=1');
-
-		return this;
-	}
-
-});
-
+}
 module.exports = CustomerQuery;

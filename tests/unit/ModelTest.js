@@ -1,6 +1,6 @@
 'use strict';
 
-var Jii = require('../../BaseJii');
+var Jii = require('../../index');
 var SampleModel = require('../models/SampleModel');
 var Article = require('../models/Article');
 var User = require('../models/User');
@@ -16,25 +16,15 @@ var Collection = require('../../base/Collection');
 var CollectionEvent = require('../../data/CollectionEvent');
 var FilterBuilder = require('../../data/FilterBuilder');
 var UnitTest = require('../../base/UnitTest');
-
 require('../bootstrap');
-
-/**
- * @class tests.unit.ModelTest
- * @extends Jii.base.UnitTest
- */
-var self = Jii.defineClass('tests.unit.ModelTest', {
-
-    __extends: UnitTest,
+class self extends UnitTest {
 
     _getModelInstances() {
-        return [
-            new SampleModel()
-        ];
-    },
+        return [new SampleModel()];
+    }
 
     setterTest(test) {
-        _each(this._getModelInstances(), function (sampleModel) {
+        _each(this._getModelInstances(), function(sampleModel) {
             // Check insert scenario (set name and description)
             sampleModel.setScenario('insert');
             sampleModel.setAttributes({
@@ -54,26 +44,30 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
             test.strictEqual(sampleModel.get('description'), 'Project manager');
 
             // Check try set unknow attribute
-            test.throws(function () {
+            test.throws(function() {
                 sampleModel.set('unknow', '...');
             }, ApplicationException);
         });
 
         test.done();
-    },
+    }
 
     validateTest(test) {
-        _each(this._getModelInstances(), function (sampleModel) {
+        _each(this._getModelInstances(), function(sampleModel) {
             sampleModel.setScenario('insert');
             sampleModel.set('description', '1234567890+1');
-            sampleModel.validate().then(function (isValid) {
+            sampleModel.validate().then(function(isValid) {
 
                 // Check validation errors
                 test.strictEqual(isValid, false);
                 test.strictEqual(sampleModel.hasErrors(), true);
                 test.strictEqual(Object.keys(sampleModel.getErrors()).length, 2);
-                test.strictEqual(sampleModel.getErrors().name.length, 1); // Required error
-                test.strictEqual(sampleModel.getErrors().description.length, 1); // Length error
+
+
+                test.strictEqual(sampleModel.getErrors().name.length, 1);
+                // Required error
+                test.strictEqual(sampleModel.getErrors().description.length, 1);
+                // Length error
 
                 // Add custom error
                 sampleModel.addError('uid', 'Error text..');
@@ -88,9 +82,9 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         });
 
         test.done();
-    },
+    }
 
-    eventsTest: function(test) {
+    eventsTest(test) {
         var user = new User({
             id: 533,
             email: 'aaa@example.com',
@@ -136,9 +130,9 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         test.strictEqual(counter, 0);
 
         test.done();
-    },
+    }
 
-    eventsSubModelTest: function(test) {
+    eventsSubModelTest(test) {
         var article;
         var events = [];
 
@@ -225,16 +219,20 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
 
         test.deepEqual(events, ['user']);
         article.set('user.email', 'piter@gmail.com');
-        test.deepEqual(events, ['user', 'email', 'email']);
+        test.deepEqual(events, [
+            'user',
+            'email',
+            'email'
+        ]);
         events = [];
         article.off('change:user change:user.email', eventsFn);
         article.set('user.email', 'qweqe@mail.ru');
         test.deepEqual(events, []);
 
         test.done();
-    },
+    }
 
-    eventsSubCollectionTest: function(test) {
+    eventsSubCollectionTest(test) {
         var article;
         var events = [];
 
@@ -261,31 +259,52 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         article = new Article();
         events = [];
         article.on('change:links', eventsFn);
-        article.set('links', {id: 10, url: 'u1.com'});
+        article.set('links', {
+            id: 10,
+            url: 'u1.com'
+        });
         test.strictEqual(article.get('links').length, 1);
         test.deepEqual(events, ['added-10']);
         events = [];
         article.off('change:links', eventsFn);
-        article.set('links', {id: 11, url: 'u2.com'});
+        article.set('links', {
+            id: 11,
+            url: 'u2.com'
+        });
         test.strictEqual(article.get('links').length, 2);
         test.deepEqual(events, []);
 
         // Sub-collection, change index, exists: change:links[0]
         article = new Article({
             links: [
-                {id: 10, url: 'u1.com'},
-                {id: 11, url: 'u2.com'}
+                {
+                    id: 10,
+                    url: 'u1.com'
+                },
+                {
+                    id: 11,
+                    url: 'u2.com'
+                }
             ]
         });
         events = [];
         article.on('change:links[0]', eventsFn);
-        article.set('links', {id: 10, url: 'u1.net'});
+        article.set('links', {
+            id: 10,
+            url: 'u1.net'
+        });
         test.deepEqual(events, ['url']);
-        article.set('links', {id: 11, url: 'u2.net'});
+        article.set('links', {
+            id: 11,
+            url: 'u2.net'
+        });
         test.deepEqual(events, ['url']);
         events = [];
         article.off('change:links', eventsFn);
-        article.set('links', {id: 11, url: 'qwe'});
+        article.set('links', {
+            id: 11,
+            url: 'qwe'
+        });
         test.deepEqual(events, []);
 
         // Sub-collection, change index, not exists: change:links[0]
@@ -297,17 +316,29 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         // Sub-collection, change:key any, exists: change:links.url
         article = new Article({
             links: [
-                {id: 10, url: 'u1.com'},
-                {id: 11, url: 'u2.com'}
+                {
+                    id: 10,
+                    url: 'u1.com'
+                },
+                {
+                    id: 11,
+                    url: 'u2.com'
+                }
             ]
         });
         events = [];
         article.on('change:links.url', eventsFn);
-        article.set('links', {id: 10, url: 'u1.net'});
+        article.set('links', {
+            id: 10,
+            url: 'u1.net'
+        });
         test.deepEqual(events, ['url']);
         events = [];
         article.off('change:links.url', eventsFn);
-        article.set('links', {id: 10, url: 'qweqwe.net'});
+        article.set('links', {
+            id: 10,
+            url: 'qweqwe.net'
+        });
         test.deepEqual(events, []);
 
         // Sub-collection, change:key any, not exists: change:links.url
@@ -316,11 +347,20 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         article.on('change:links.url', eventsFn);
         article.set({
             links: [
-                {id: 10, url: 'u1.com'},
-                {id: 11, url: 'u2.com'}
+                {
+                    id: 10,
+                    url: 'u1.com'
+                },
+                {
+                    id: 11,
+                    url: 'u2.com'
+                }
             ]
         });
-        article.set('links', {id: 10, url: 'u1.net'});
+        article.set('links', {
+            id: 10,
+            url: 'u1.net'
+        });
         test.deepEqual(events, ['url']);
 
         // Sub-collection, change:key any, not exists: change:links.url (off)
@@ -328,23 +368,38 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         article = new Article();
         article.on('change:links.url', eventsFn);
         article.off('change:links.url', eventsFn);
-        article.set('links', {id: 10, url: 'qweqwe.net'});
+        article.set('links', {
+            id: 10,
+            url: 'qweqwe.net'
+        });
         test.deepEqual(events, []);
 
         // Sub-collection, change:key index, exists: change:links[0].url
         article = new Article({
             links: [
-                {id: 10, url: 'u1.com'},
-                {id: 11, url: 'u2.com'}
+                {
+                    id: 10,
+                    url: 'u1.com'
+                },
+                {
+                    id: 11,
+                    url: 'u2.com'
+                }
             ]
         });
         events = [];
         article.on('change:links[1].url', eventsFn);
-        article.set('links', {id: 11, url: 'uu.net'});
+        article.set('links', {
+            id: 11,
+            url: 'uu.net'
+        });
         test.deepEqual(events, ['url']);
         events = [];
         article.off('change:links.url', eventsFn);
-        article.set('links', {id: 11, url: 'qweqwe.net'});
+        article.set('links', {
+            id: 11,
+            url: 'qweqwe.net'
+        });
         test.deepEqual(events, []);
 
         // Sub-collection, change:key index, not exists: change:links[0].url
@@ -356,8 +411,24 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         // Sub-collection, change:key.subKey any, exists: change:links.url.data
         article = new Article({
             links: [
-                {id: 10, url: 'u1.com', dataId: 75, data: {id: 75, value: 'u1'}},
-                {id: 11, url: 'u2.com', dataId: 79, data: {id: 79, value: 'u2'}}
+                {
+                    id: 10,
+                    url: 'u1.com',
+                    dataId: 75,
+                    data: {
+                        id: 75,
+                        value: 'u1'
+                    }
+                },
+                {
+                    id: 11,
+                    url: 'u2.com',
+                    dataId: 79,
+                    data: {
+                        id: 79,
+                        value: 'u2'
+                    }
+                }
             ]
         });
         events = [];
@@ -375,8 +446,24 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         article.on('change:links.data', eventsFn);
         article.set({
             links: [
-                {id: 10, url: 'u1.com', dataId: 75, data: {id: 75, value: 'u1'}},
-                {id: 11, url: 'u2.com', dataId: 79, data: {id: 79, value: 'u2'}}
+                {
+                    id: 10,
+                    url: 'u1.com',
+                    dataId: 75,
+                    data: {
+                        id: 75,
+                        value: 'u1'
+                    }
+                },
+                {
+                    id: 11,
+                    url: 'u2.com',
+                    dataId: 79,
+                    data: {
+                        id: 79,
+                        value: 'u2'
+                    }
+                }
             ]
         });
         article.set('links[0].data.value', 'upd 1');
@@ -389,17 +476,33 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         article.off('change:links.data', eventsFn);
         article.set({
             links: [
-                {id: 10, url: 'u1.com', dataId: 75, data: {id: 75, value: 'u1'}},
-                {id: 11, url: 'u2.com', dataId: 79, data: {id: 79, value: 'u2'}}
+                {
+                    id: 10,
+                    url: 'u1.com',
+                    dataId: 75,
+                    data: {
+                        id: 75,
+                        value: 'u1'
+                    }
+                },
+                {
+                    id: 11,
+                    url: 'u2.com',
+                    dataId: 79,
+                    data: {
+                        id: 79,
+                        value: 'u2'
+                    }
+                }
             ]
         });
         article.set('links[0].data.value', 'upd 1');
         test.deepEqual(events, []);
 
         test.done();
-    },
+    }
 
-    proxyTest: function(test) {
+    proxyTest(test) {
         var article = new Article({
             id: 18,
             title: 'Test title'
@@ -410,7 +513,7 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
                 return {};
             },
             setValues: function(original, proxy, values) {
-                _extend(proxy, values)
+                _extend(proxy, values);
             }
         });
         test.deepEqual(obj, article.getAttributes());
@@ -419,9 +522,9 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         test.strictEqual(obj.title, 'Changed title');
 
         test.done();
-    },
+    }
 
-    manyManyBindingEventsTest: function(test) {
+    manyManyBindingEventsTest(test) {
         var events = [];
         /**
          *
@@ -462,9 +565,9 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         test.deepEqual(events, ['link']);
 
         test.done();
-    },
+    }
 
-    hasOneRelationChangeTest: function(test) {
+    hasOneRelationChangeTest(test) {
         var events = [];
         /**
          *
@@ -491,22 +594,39 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         article.on('change:user', eventsFn);
         article.set('user', user);
         user.set('name', 'Bond');
-        test.deepEqual(events, ['user', 'name']);
+        test.deepEqual(events, [
+            'user',
+            'name'
+        ]);
 
         article.set('user', null);
-        test.deepEqual(events, ['user', 'name', 'user']);
+        test.deepEqual(events, [
+            'user',
+            'name',
+            'user'
+        ]);
 
         user.set('name', 'Bobrik');
-        test.deepEqual(events, ['user', 'name', 'user']);
+        test.deepEqual(events, [
+            'user',
+            'name',
+            'user'
+        ]);
 
         article.set('user', user);
         user.set('name', 'John');
-        test.deepEqual(events, ['user', 'name', 'user', 'user', 'name']);
+        test.deepEqual(events, [
+            'user',
+            'name',
+            'user',
+            'user',
+            'name'
+        ]);
 
         test.done();
-    },
+    }
 
-    hasOneWithRootCollectionTest: function(test) {
+    hasOneWithRootCollectionTest(test) {
         var events = [];
         /**
          *
@@ -524,7 +644,9 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         Article.getDb = User.getDb = function() {
             return {
                 getRootCollection: function(name) {
-                    rootCollections[name] = rootCollections[name] || new Collection([], {modelClass: name});
+                    rootCollections[name] = rootCollections[name] || new Collection([], {
+                        modelClass: name
+                    });
                     return rootCollections[name];
                 },
                 getSchema: function() {
@@ -532,10 +654,10 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
                         getFilterBuilder: function() {
                             return new FilterBuilder();
                         }
-                    }
+                    };
                 }
-            }
-        }
+            };
+        };
 
         var article = new Article({
             id: 4,
@@ -563,7 +685,10 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
 
         // change in root
         user.set('id', 11);
-        test.deepEqual(events, ['user', 'user']);
+        test.deepEqual(events, [
+            'user',
+            'user'
+        ]);
         test.strictEqual(article.get('user'), null);
 
         // Check unsubscribe
@@ -584,9 +709,9 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         test.deepEqual(events, ['name']);
 
         test.done();
-    },
+    }
 
-    hasManyWithRootCollectionTest: function(test) {
+    hasManyWithRootCollectionTest(test) {
         var events = [];
         /**
          *
@@ -611,7 +736,9 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         Article.getDb = Link.getDb = function() {
             return {
                 getRootCollection: function(name) {
-                    rootCollections[name] = rootCollections[name] || new Collection([], {modelClass: name});
+                    rootCollections[name] = rootCollections[name] || new Collection([], {
+                        modelClass: name
+                    });
                     return rootCollections[name];
                 },
                 getSchema: function() {
@@ -619,10 +746,10 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
                         getFilterBuilder: function() {
                             return new FilterBuilder();
                         }
-                    }
+                    };
                 }
-            }
-        }
+            };
+        };
 
         var article = new Article({
             id: 4,
@@ -651,7 +778,10 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         });
 
         test.strictEqual(article.get('links[0].url'), 'http://example.ru');
-        test.deepEqual(events, ['added-10', 'added-11']);
+        test.deepEqual(events, [
+            'added-10',
+            'added-11'
+        ]);
 
         events = [];
         article.get('links').remove(10);
@@ -659,9 +789,9 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         test.deepEqual(events, ['removed-10']);
 
         test.done();
-    },
+    }
 
-    attributesTreeTest: function(test) {
+    attributesTreeTest(test) {
         var data = {
             id: 4,
             title: 'My article',
@@ -670,12 +800,22 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
                 name: 'Piter'
             },
             links: [
-                {id: 10, articleId: 4, url: 'u1.com'},
-                {id: 11, articleId: 4, url: 'u2.com'}
+                {
+                    id: 10,
+                    articleId: 4,
+                    url: 'u1.com'
+                },
+                {
+                    id: 11,
+                    articleId: 4,
+                    url: 'u2.com'
+                }
             ]
         };
         var article = new Article(data);
-        article.get('links').sortBy(function(m){ return m.getPrimaryKey(); });
+        article.get('links').sortBy(function(m) {
+            return m.getPrimaryKey();
+        });
 
         test.deepEqual(article.getAttributesTree([
             'id',
@@ -690,6 +830,5 @@ var self = Jii.defineClass('tests.unit.ModelTest', {
         test.done();
     }
 
-});
-
+}
 module.exports = new self().exports();

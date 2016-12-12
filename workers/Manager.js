@@ -2,7 +2,6 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../index');
@@ -18,41 +17,29 @@ var _each = require('lodash/each');
 var Object = require('../base/Object');
 var cluster = require('cluster');
 var ConsoleApplication = require('../application/ConsoleApplication');
+class Manager extends Object {
 
-/**
- * @class Jii.workers.Manager
- * @extends Jii.base.Object
- */
-var Manager = Jii.defineClass('Jii.workers.Manager', /** @lends Jii.workers.Manager.prototype */{
-
-    __extends: Object,
-
-    __static: /** @lends Jii.workers.Manager */{
-
-        CONSOLE_APP_NAME: 'console'
-
-    },
-
-    /**
-     * @type {Jii.application.Environment}
-     */
-    _environment: null,
-
-    /**
-     * @type {object}
-     */
-    _applicationConfigs: {},
-
-    /**
+    preInit() {
+        /**
      * @type {Jii.workers.Service}
      */
-    _service: null,
+        this._service = null;
+        /**
+     * @type {object}
+     */
+        this._applicationConfigs = {};
+        /**
+     * @type {Jii.application.Environment}
+     */
+        this._environment = null;
+        super.preInit(...arguments);
+    }
 
     init() {
         this._environment = new Environment({
             name: Environment.NAME_PRODUCTION
         });
-    },
+    }
 
     /**
      *
@@ -62,14 +49,13 @@ var Manager = Jii.defineClass('Jii.workers.Manager', /** @lends Jii.workers.Mana
     setEnvironment(name) {
         this._environment.setName(name);
         return this;
-    },
+    }
 
     /**
      * Callback function to be called when folder loaded from server.
      * @callback Jii.workers.Manager~applicationConfigCallback
      * @param {Jii.application.Environment} environment
      */
-
     /**
      *
      * @param {object|function|string|string[]} names
@@ -98,22 +84,19 @@ var Manager = Jii.defineClass('Jii.workers.Manager', /** @lends Jii.workers.Mana
         });
 
         return this;
-    },
+    }
 
     _start() {
         // Run as console application
         if (process.argv.length > 2) {
-            var cliConfig = Jii.mergeConfigs(
-                {
-                    application: {
-                        basePath: process.cwd(),
-                        controllerMap: {
-                            service: require('../console/controllers/ServiceController')
-                        }
+            var cliConfig = Jii.mergeConfigs({
+                application: {
+                    basePath: process.cwd(),
+                    controllerMap: {
+                        service: require('../console/controllers/ServiceController')
                     }
-                },
-                this._applicationConfigs[this.__static.CONSOLE_APP_NAME] || {}
-            );
+                }
+            }, this._applicationConfigs[this.constructor.CONSOLE_APP_NAME] || {});
             Jii.createApplication(ConsoleApplication, cliConfig).start();
         } else {
 
@@ -121,7 +104,7 @@ var Manager = Jii.defineClass('Jii.workers.Manager', /** @lends Jii.workers.Mana
             if (cluster.isMaster) {
                 var master = new MasterWorker();
                 _each(this._applicationConfigs, (config, name) => {
-                    if (name === this.__static.CONSOLE_APP_NAME) {
+                    if (name === this.constructor.CONSOLE_APP_NAME) {
                         return;
                     }
 
@@ -133,7 +116,7 @@ var Manager = Jii.defineClass('Jii.workers.Manager', /** @lends Jii.workers.Mana
                 });
             } else {
                 var name = process.env.JII_APPLICATION_NAME;
-                if (name !== this.__static.CONSOLE_APP_NAME) {
+                if (name !== this.constructor.CONSOLE_APP_NAME) {
                     var childWorker = new ChildWorker({
                         name: name,
                         index: process.env.JII_WORKER_INDEX,
@@ -145,6 +128,7 @@ var Manager = Jii.defineClass('Jii.workers.Manager', /** @lends Jii.workers.Mana
         }
     }
 
-});
+}
 
+Manager.CONSOLE_APP_NAME = 'console';
 module.exports = Manager;

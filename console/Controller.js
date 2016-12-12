@@ -2,7 +2,6 @@
  * @author Ihor Skliar <skliar.ihor@gmail.com>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../index');
@@ -22,42 +21,28 @@ var _compact = require('lodash/compact');
 var BaseController = require('../base/Controller');
 var fs = require('fs');
 var extract = require('extract-comments');
+class Controller extends BaseController {
 
-/**
- * @class Jii.console.Controller
- * @extends Jii.base.Controller
- */
-var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.console.Controller.prototype */{
-
-    __extends: BaseController,
-
-    __static: /** @lends Jii.console.Controller */{
-
-        EXIT_CODE_NORMAL: 0,
-        EXIT_CODE_ERROR: 1
-
-    },
-
-    /**
-     * @type {boolean} whether to run the command interactively.
+    preInit() {
+        /**
+     * @type {string[]} the options passed during execution.
      */
-    interactive: true,
-
-    /**
+        this._passedOptions = [];
+        /**
+     * @type {{main: {help: string, description: string}, properties: object, actions: object}}
+     */
+        this._comments = null;
+        /**
      * If not set, ANSI color will only be enabled for terminals that support it.
      * @type {boolean} whether to enable ANSI color in the output.
      */
-    color: true,
-
-    /**
-     * @type {{main: {help: string, description: string}, properties: object, actions: object}}
+        this.color = true;
+        /**
+     * @type {boolean} whether to run the command interactively.
      */
-    _comments: null,
-
-    /**
-     * @type {string[]} the options passed during execution.
-     */
-    _passedOptions:[],
+        this.interactive = true;
+        super.preInit(...arguments);
+    }
 
     /**
      * Returns a value indicating whether ANSI color is enabled.
@@ -69,7 +54,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
      */
     isColorEnabled() {
         return this.color;
-    },
+    }
 
     /**
      * Runs an action with the specified action ID and parameters.
@@ -90,14 +75,16 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
                     this.name = _isArray(defaultAction) ? value.split(/\s*,\s*/) : value;
                     delete params[name];
                 } else if (Number(name) != name) {
-                    throw new Exception(Jii.t('jii', 'Unknown option: --{name}', {name: name}));
+                    throw new Exception(Jii.t('jii', 'Unknown option: --{name}', {
+                        name: name
+                    }));
                 }
                 this._passedOptions.push(name);
             });
         }
 
-        return this.__super(id, context);
-    },
+        return super.runAction(id, context);
+    }
 
     /**
      * Formats a string with ANSI codes
@@ -118,7 +105,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
             string = Console.ansiFormat(string, _toArray(arguments).slice(1));
         }
         return string;
-    },
+    }
 
     /**
      * Prints a string to STDOUT
@@ -140,7 +127,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
             string = Console.ansiFormat(string, _toArray(arguments).slice(1));
         }
         Console.stdout(string);
-    },
+    }
 
     /**
      * Prints a string to STDERR
@@ -162,7 +149,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
             string = Console.ansiFormat(string, _toArray(arguments).slice(1));
         }
         Console.stderr(string);
-    },
+    }
 
     /**
      * Prompts the user for input and validates it
@@ -186,7 +173,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
         } else {
             return Promise.resolve(options['default'] || '');
         }
-    },
+    }
 
     /**
      * Asks user to confirm by typing y or n.
@@ -203,7 +190,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
         } else {
             return Promise.resolve(true);
         }
-    },
+    }
 
     /**
      * Gives the user an option to choose from. Giving '?' as an input will show
@@ -218,7 +205,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
         options = options || [];
 
         return Console.select(prompt, options);
-    },
+    }
 
     /**
      * Returns the names of valid options for the action (id)
@@ -234,8 +221,11 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
      */
     options(actionID) {
         // actionId might be used in subclasses to provide options specific to action id
-        return ['color', 'interactive'];
-    },
+        return [
+            'color',
+            'interactive'
+        ];
+    }
 
     /**
      * Returns properties corresponding to the options for the action id
@@ -251,7 +241,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
             properties[property] = this.get(property);
         });
         return properties;
-    },
+    }
 
     /**
      * Returns the names of valid options passed during execution.
@@ -260,7 +250,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
      */
     getPassedOptions() {
         return this._passedOptions;
-    },
+    }
 
     /**
      * Returns the properties corresponding to the passed options
@@ -273,7 +263,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
             properties[property] = this.get(property);
         });
         return properties;
-    },
+    }
 
     /**
      * Returns one-line short summary describing this controller.
@@ -285,7 +275,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
      */
     getHelpSummary() {
         return this._parseDocCommentSummary();
-    },
+    }
 
     /**
      * Returns help information for this controller.
@@ -296,7 +286,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
      */
     getHelp() {
         return this._parseDocCommentDetail();
-    },
+    }
 
     /**
      * Returns a one-line short summary describing the specified action.
@@ -305,7 +295,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
      */
     getActionHelpSummary(action) {
         return this._parseDocCommentSummaryForAction(action.id);
-    },
+    }
 
     /**
      * Returns the detailed help information for the specified action.
@@ -314,7 +304,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
      */
     getActionHelp(action) {
         return this._parseDocCommentDetailForAction(action.id);
-    },
+    }
 
     /**
      * Returns the help information for the anonymous arguments for the action.
@@ -334,7 +324,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
      */
     getActionArgsHelp(action) {
         return this.getActionHelp(action).params;
-    },
+    }
 
     /**
      * Returns the help information for the options for the action.
@@ -379,7 +369,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
         });
 
         return options;
-    },
+    }
 
     /**
      * Returns the first line of docblock.
@@ -389,7 +379,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
     _parseDocCommentSummary() {
         this._loadComments();
         return this._comments.main && this._comments.main.help || '';
-    },
+    }
 
     /**
      * Returns the first line of docblock for some action.
@@ -400,7 +390,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
     _parseDocCommentSummaryForAction(id) {
         this._loadComments();
         return this._comments.actions[id] && this._comments.actions[id].help || '';
-    },
+    }
 
     /**
      * Returns full description from the main docblock.
@@ -410,7 +400,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
     _parseDocCommentDetail() {
         this._loadComments();
         return this._comments.main && this._comments.main.description || '';
-    },
+    }
 
     /**
      * Returns full description from the action docblock.
@@ -421,7 +411,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
     _parseDocCommentDetailForAction(id) {
         this._loadComments();
         return this._comments.actions[id] && this._comments.actions[id].description || '';
-    },
+    }
 
     /**
      * Returns object of information about some property from the docblock.
@@ -432,7 +422,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
     _parseDocCommentTags(property) {
         this._loadComments();
         return this._comments.properties[property] || null;
-    },
+    }
 
     /**
      *
@@ -446,7 +436,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
         var classPath = ClassLoader.getClassPath(this.className());
         var comments = _values(extract(fs.readFileSync(classPath, 'utf-8')));
         var exp = /^action(.*)(:|\()(.*)/i;
-        var exp2 = /\n@/ig;
+        var exp2 = /\n@/gi;
         var exp3 = /^@/i;
         var propertyDataExp = /^@(var|property) (\w+) ((.|[\s\S])*)/;
         var propertyExp = /^@(var|property)(.*)/i;
@@ -463,7 +453,7 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
         };
 
         _each(comments, (comment, i) => {
-            var content = comment.content.split("\n");
+            var content = comment.content.split('\n');
             var fakeContent = comment.content.replace(exp2, '\n@@');
             var fakeArr = fakeContent.split(exp2);
             var description = _compact(fakeArr.map(line => exp3.test(line) ? '' : line)).join('\n');
@@ -473,7 +463,8 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
                 this._comments.main.help = content[0];
                 this._comments.main.description = description;
             } else if (comment.code && exp.test(comment.code)) {
-                var actionId = comment.code.replace(exp, "$1").toLowerCase(); // @todo lowercase is wrong. need convert AaBb to aa-bb.
+                var actionId = comment.code.replace(exp, '$1').toLowerCase();
+                // @todo lowercase is wrong. need convert AaBb to aa-bb.
                 if (this._comments.actions[actionId] === undefined) {
                     this._comments.actions[actionId] = {
                         help: '',
@@ -512,6 +503,8 @@ var Controller = Jii.defineClass('Jii.console.Controller', /** @lends Jii.consol
         });
     }
 
-});
+}
+Controller.EXIT_CODE_ERROR = 1;
 
+Controller.EXIT_CODE_NORMAL = 0;
 module.exports = Controller;

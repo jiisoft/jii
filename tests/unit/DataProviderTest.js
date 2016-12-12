@@ -1,6 +1,6 @@
 'use strict';
 
-var Jii = require('../../BaseJii');
+var Jii = require('../../index');
 var Article = require('../models/Article');
 var Pagination = require('../../data/Pagination');
 var Collection = require('../../base/Collection');
@@ -8,31 +8,25 @@ var InvalidParamException = require('../../exceptions/InvalidParamException');
 var ChangeEvent = require('../../data/ChangeEvent');
 var Query = require('../../data/Query');
 var UnitTest = require('../../base/UnitTest');
-
 require('../bootstrap');
-
-/**
- * @class tests.unit.DataProviderTest
- * @extends Jii.base.UnitTest
- */
-var DataProviderTest = Jii.defineClass('tests.unit.DataProviderTest', {
-
-    __extends: UnitTest,
+class DataProviderTest extends UnitTest {
 
     fetchTest(test) {
         var fetchCount = 0;
-        var collection = new Collection(null, {modelClass: Article});
+        var collection = new Collection(null, {
+            modelClass: Article
+        });
         test.strictEqual(collection.isFetched(), false);
 
         var dataProvider = collection.createDataProvider({
-            query: (pagination) => {
+            query: pagination => {
                 fetchCount++;
                 return new Promise(resolve => {
                     resolve({
                         totalCount: 14,
                         models: this._generateData(pagination.getPage() * 10, pagination.getPage() === 0 ? 10 : 14)
                     });
-                })
+                });
             },
             pagination: {
                 pageSize: 10
@@ -77,7 +71,9 @@ var DataProviderTest = Jii.defineClass('tests.unit.DataProviderTest', {
             test.strictEqual(fetchCount, 2);
 
             // Remove from parent and fetch
-            collection.remove({id: 'id5'});
+            collection.remove({
+                id: 'id5'
+            });
             test.strictEqual(dataProvider.length, 4);
             dataProvider.getPagination().setPage(0);
             test.strictEqual(dataProvider.length, 9);
@@ -111,19 +107,18 @@ var DataProviderTest = Jii.defineClass('tests.unit.DataProviderTest', {
 
             test.done();
         });
-    },
+    }
 
     _generateData(from, to) {
         var data = [];
         for (var i = from; i < to; i++) {
             data.push({
                 id: 'id' + i,
-                title: 'test' +i,
+                title: 'test' + i
             });
         }
         return data;
-    },
+    }
 
-});
-
+}
 module.exports = new DataProviderTest().exports();

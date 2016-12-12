@@ -2,32 +2,25 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
 var Validator = require('./Validator');
+class BooleanValidator extends Validator {
 
-/**
- * @class Jii.validators.BooleanValidator
- * @extends Jii.validators.Validator
- */
-var BooleanValidator = Jii.defineClass('Jii.validators.BooleanValidator', /** @lends Jii.validators.BooleanValidator.prototype */{
-
-	__extends: Validator,
-
-    trueValue: '1',
-
-    falseValue: '0',
-
-    strict: false,
+    preInit() {
+        this.strict = false;
+        this.falseValue = '0';
+        this.trueValue = '1';
+        super.preInit(...arguments);
+    }
 
     init() {
-        this.__super();
+        super.init();
         if (this.message === null) {
             this.message = ''; // @todo
         }
-    },
+    }
 
     validateAttribute(object, attribute) {
         var value = object.get(attribute);
@@ -37,7 +30,7 @@ var BooleanValidator = Jii.defineClass('Jii.validators.BooleanValidator', /** @l
                 falseValue: this.falseValue
             });
         }
-    },
+    }
 
     validateValue(value) {
         if (this.strict) {
@@ -47,6 +40,5 @@ var BooleanValidator = Jii.defineClass('Jii.validators.BooleanValidator', /** @l
         }
     }
 
-});
-
+}
 module.exports = BooleanValidator;

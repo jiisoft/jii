@@ -2,7 +2,6 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -12,22 +11,16 @@ var _has = require('lodash/has');
 var _first = require('lodash/first');
 var _each = require('lodash/each');
 var Object = require('../base/Object');
+class HeaderCollection extends Object {
 
-/**
- * HeaderCollection is used by [[Jii.base.Response]] to maintain the currently registered HTTP headers.
- *
- * @class Jii.request.HeaderCollection
- * @extends Jii.base.Object
- */
-var HeaderCollection = Jii.defineClass('Jii.request.HeaderCollection', /** @lends Jii.request.HeaderCollection */{
-
-	__extends: Object,
-
-    _headers: null,
+    preInit() {
+        this._headers = null;
+        super.preInit(...arguments);
+    }
 
     init() {
         this._headers = {};
-    },
+    }
 
     /**
      * Returns the named header(s).
@@ -50,7 +43,7 @@ var HeaderCollection = Jii.defineClass('Jii.request.HeaderCollection', /** @lend
         }
 
         return defaultValue;
-    },
+    }
 
     /**
      * Adds a new header.
@@ -66,7 +59,7 @@ var HeaderCollection = Jii.defineClass('Jii.request.HeaderCollection', /** @lend
         this._headers[name] = _isArray(value) ? value : [value];
 
         return this;
-    },
+    }
 
     /**
      * Adds a new header.
@@ -85,7 +78,7 @@ var HeaderCollection = Jii.defineClass('Jii.request.HeaderCollection', /** @lend
         }
 
         return this;
-    },
+    }
 
     /**
      * Sets a new header only if it does not exist yet.
@@ -103,7 +96,7 @@ var HeaderCollection = Jii.defineClass('Jii.request.HeaderCollection', /** @lend
         }
 
         return this;
-    },
+    }
 
     /**
      * Returns a value indicating whether the named header exists.
@@ -113,7 +106,7 @@ var HeaderCollection = Jii.defineClass('Jii.request.HeaderCollection', /** @lend
     has(name) {
         name = name.toLowerCase();
         return _has(this._headers, name) && this._headers[name].length > 0;
-    },
+    }
 
     /**
      * Removes a header.
@@ -129,14 +122,14 @@ var HeaderCollection = Jii.defineClass('Jii.request.HeaderCollection', /** @lend
             return value;
         }
         return null;
-    },
+    }
 
     /**
      * Removes all headers.
      */
     removeAll() {
         this._headers = {};
-    },
+    }
 
     /**
      * Returns the collection as a key-value object.
@@ -150,6 +143,5 @@ var HeaderCollection = Jii.defineClass('Jii.request.HeaderCollection', /** @lend
         return headers;
     }
 
-});
-
+}
 module.exports = HeaderCollection;

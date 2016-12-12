@@ -2,42 +2,35 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
 var Validator = require('./Validator');
+class RequiredValidator extends Validator {
 
-/**
- * @class Jii.validators.RequiredValidator
- * @extends Jii.validators.Validator
- */
-var RequiredValidator = Jii.defineClass('Jii.validators.RequiredValidator', /** @lends Jii.validators.RequiredValidator.prototype */{
-
-    __extends: Validator,
-
-	skipOnEmpty: false,
-
-    requiredValue: null,
-
-    strict: false,
+    preInit() {
+        super.preInit(...arguments);
+        this.strict = false;
+        this.requiredValue = null;
+        this.skipOnEmpty = false;
+    }
 
     init() {
-        this.__super();
+        super.init();
         if (this.message === null) {
-            this.message = this.requiredValue === null ?
-                Jii.t('jii', '{attribute} cannot be blank.') :
-                Jii.t('jii', '{attribute} must be `{requiredValue}`.');
+            this.message = this.requiredValue === null ? Jii.t('jii', '{attribute} cannot be blank.') : Jii.t('jii', '{attribute} must be `{requiredValue}`.');
         }
-    },
+    }
 
     validateAttribute(object, attribute) {
         var value = object.get(attribute);
         if (!this.validateValue(value)) {
-            var params = this.requiredValue !== null ? {requiredValue: this.requiredValue} : {};
+            var params = this.requiredValue !== null ? {
+                requiredValue: this.requiredValue
+            } : {};
             this.addError(object, attribute, this.message, params);
         }
-    },
+    }
 
     validateValue(value) {
         if (this.requiredValue === null) {
@@ -46,6 +39,5 @@ var RequiredValidator = Jii.defineClass('Jii.validators.RequiredValidator', /** 
         return this.strict ? value !== this.requiredValue : value != this.requiredValue;
     }
 
-});
-
+}
 module.exports = RequiredValidator;

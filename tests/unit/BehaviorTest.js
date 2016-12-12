@@ -5,67 +5,50 @@ var UnitTest = require('../../base/UnitTest');
 var Component = require('../../base/Component');
 var Behavior = require('../../base/Behavior');
 require('../bootstrap');
+class BehaviorTest extends UnitTest {
 
-/**
- * @class BehaviorTest
- * @extends UnitTest
- */
-var BehaviorTest = Jii.defineClass('BehaviorTest', {
+    testOn(test) {
+        var bar = new BarClass();
+        var barBehavior = new BarBehavior();
+        bar.attachBehavior('bar', barBehavior);
 
-	__extends: UnitTest,
+        test.strictEqual(barBehavior instanceof Behavior, true);
+        test.strictEqual(barBehavior.behaviorMethod(), 'behavior method');
+        test.strictEqual(bar.getBehavior('bar').behaviorMethod(), 'behavior method');
+        test.done();
+    }
 
-	testOn(test) {
-		var bar = new BarClass();
-		var barBehavior = new BarBehavior();
-		bar.attachBehavior('bar', barBehavior);
+    testAutomaticAttach(test) {
+        var foo = new FooClass();
+        test.strictEqual(foo.behaviorMethod(), 'behavior method');
+        //test.strictEqual(foo.hasMethod('behaviorMethod'), true);
 
-		test.strictEqual(barBehavior instanceof Behavior, true);
-		test.strictEqual(barBehavior.behaviorMethod(), 'behavior method');
-		test.strictEqual(bar.getBehavior('bar').behaviorMethod(), 'behavior method');
-		test.done();
-	},
+        test.done();
+    }
 
-	testAutomaticAttach: function(test) {
-		var foo = new FooClass();
-		test.strictEqual(foo.behaviorMethod(), 'behavior method');
-		//test.strictEqual(foo.hasMethod('behaviorMethod'), true);
+}
+class BarClass extends Component {
 
-		test.done();
-	}
+}
+class FooClass extends Component {
 
-});
+    behaviors() {
+        return {
+            foo: BarBehavior
+        };
+    }
 
-/**
- * @class BarClass
- * @extends Component
- */
-var BarClass = Jii.defineClass('BarClass', {
-	__extends: Component
-});
+}
+class BarBehavior extends Behavior {
 
-/**
- * @class FooClass
- * @extends Component
- */
-var FooClass = Jii.defineClass('FooClass', {
-	__extends: Component,
-	behaviors: function() {
-		return {
-			foo: BarBehavior
-		};
-	}
-});
+    preInit() {
+        this.behaviorProperty = 'behavior property';
+        super.preInit(...arguments);
+    }
 
-/**
- * @class BarBehavior
- * @extends Behavior
- */
-var BarBehavior = Jii.defineClass('BarBehavior', {
-	__extends: Behavior,
-	behaviorProperty: 'behavior property',
-	behaviorMethod: function() {
-		return 'behavior method';
-	}
-});
+    behaviorMethod() {
+        return 'behavior method';
+    }
 
+}
 module.exports = new BehaviorTest().exports();

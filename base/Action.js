@@ -2,37 +2,25 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
 var InvalidConfigException = require('../exceptions/InvalidConfigException');
 var _isFunction = require('lodash/isFunction');
 var Object = require('./Object');
+class Action extends Object {
 
-/**
- * @class Jii.base.Action
- * @extends Jii.base.Object
- */
-var Action = Jii.defineClass('Jii.base.Action', /** @lends Jii.base.Action.prototype */{
-
-    __extends: Object,
-
-    /**
+    preInit(id, controller, config) {
+        /**
      * @type {string} ID of the action
      */
-    id: null,
-
-    /**
+        this.id = id;
+        /**
      * @type {Jii.base.Controller} the controller that owns this action
      */
-    controller: null,
-
-    constructor(id, controller, config) {
-        this.id = id;
         this.controller = controller;
-        this.__super(config);
-    },
+        super.preInit(config);
+    }
 
     /**
      * Returns the unique ID of this action among the whole application.
@@ -40,13 +28,12 @@ var Action = Jii.defineClass('Jii.base.Action', /** @lends Jii.base.Action.proto
      */
     getUniqueId() {
         return this.controller.getUniqueId() + '/' + this.id;
-    },
+    }
 
     /**
      * @param {Jii.base.Context} context
      */
-    run(context) {
-    },
+    run(context) {}
 
     /**
      * Runs this action with the specified parameters.
@@ -62,18 +49,16 @@ var Action = Jii.defineClass('Jii.base.Action', /** @lends Jii.base.Action.proto
 
         //Yii::trace('Running action: ' . get_class($this) . '::run()', __METHOD__);
 
-        return Promise.resolve(this.beforeRun(context))
-            .then(bool => {
-                if (!bool) {
-                    return Promise.reject();
-                }
+        return Promise.resolve(this.beforeRun(context)).then(bool => {
+            if (!bool) {
+                return Promise.reject();
+            }
 
-                return this.run(context);
-            })
-            .then(result => {
-                return Promise.resolve(this.afterRun()).then(() => result);
-            });
-    },
+            return this.run(context);
+        }).then(result => {
+            return Promise.resolve(this.afterRun()).then(() => result);
+        });
+    }
 
     /**
      * This method is called right before `run()` is executed.
@@ -84,15 +69,13 @@ var Action = Jii.defineClass('Jii.base.Action', /** @lends Jii.base.Action.proto
      */
     beforeRun(context) {
         return true;
-    },
+    }
 
     /**
      * This method is called right after `run()` is executed.
      * You may override this method to do post-processing work for the action run.
      */
-    afterRun() {
-    }
+    afterRun() {}
 
-});
-
+}
 module.exports = Action;

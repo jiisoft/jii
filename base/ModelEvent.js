@@ -2,26 +2,20 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
 var Event = require('./Event');
+class ModelEvent extends Event {
 
-/**
- * @class Jii.base.ModelEvent
- * @extends Jii.base.Event
- */
-var ModelEvent = Jii.defineClass('Jii.base.ModelEvent', /** @lends Jii.base.ModelEvent.prototype */{
+    preInit() {
+        /**
+     * A model is in valid status if it passes validations or certain checks.
+     * @type {boolean} Whether the model is in valid status. Defaults to true.
+     */
+        this.isValid = true;
+        super.preInit(...arguments);
+    }
 
-	__extends: Event,
-
-	/**
-	 * A model is in valid status if it passes validations or certain checks.
-	 * @type {boolean} Whether the model is in valid status. Defaults to true.
-	 */
-	isValid: true
-
-});
-
+}
 module.exports = ModelEvent;

@@ -2,36 +2,26 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
 var _isArray = require('lodash/isArray');
 var _isString = require('lodash/isString');
 var Validator = require('./Validator');
+class StringValidator extends Validator {
 
-/**
- * @class Jii.validators.StringValidator
- * @extends Jii.validators.Validator
- */
-var StringValidator = Jii.defineClass('Jii.validators.StringValidator', /** @lends Jii.validators.StringValidator.prototype */{
-
-    __extends: Validator,
-
-	length: null,
-
-    max: null,
-
-    min: null,
-
-    tooLong: null,
-
-    tooShort: null,
-
-    notEqual: null,
+    preInit() {
+        this.notEqual = null;
+        this.tooShort = null;
+        this.tooLong = null;
+        this.min = null;
+        this.max = null;
+        this.length = null;
+        super.preInit(...arguments);
+    }
 
     init() {
-        this.__super();
+        super.init();
 
         if (_isArray(this.length)) {
             if (this.length[0]) {
@@ -55,7 +45,7 @@ var StringValidator = Jii.defineClass('Jii.validators.StringValidator', /** @len
         if (this.length !== null && this.notEqual === null) {
             this.notEqual = Jii.t('jii', '{attribute} should contain {length} characters.');
         }
-    },
+    }
 
     validateAttribute(object, attribute) {
         var value = object.get(attribute);
@@ -82,7 +72,7 @@ var StringValidator = Jii.defineClass('Jii.validators.StringValidator', /** @len
                 length: this.length
             });
         }
-    },
+    }
 
     validateValue(value) {
         if (!_isString(value)) {
@@ -90,11 +80,8 @@ var StringValidator = Jii.defineClass('Jii.validators.StringValidator', /** @len
         }
 
         var length = value.length;
-        return (this.min === null || length >= this.min) &&
-            (this.max === null || length <= this.max) &&
-            (this.length === null || length === this.length);
+        return (this.min === null || length >= this.min) && (this.max === null || length <= this.max) && (this.length === null || length === this.length);
     }
 
-});
-
+}
 module.exports = StringValidator;

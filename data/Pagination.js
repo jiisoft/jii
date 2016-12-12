@@ -6,59 +6,57 @@ var InvalidConfigException = require('../exceptions/InvalidConfigException');
 var _isObject = require('lodash/isObject');
 var _isEmpty = require('lodash/isEmpty');
 var _isArray = require('lodash/isArray');
+class Pagination extends Component {
 
-/**
- * @class Jii.data.Pagination
- * @extends Jii.base.Component
- */
-var Pagination = Jii.defineClass('Jii.data.Pagination', /** @lends Jii.data.Pagination.prototype */{
-
-    __extends: Component,
-
-    __static: /** @lends exports */{
-
+    preInit() {
         /**
-         * @event Jii.data.Pagination#change
-         * @property {Jii.base.Event} event
-         */
-        EVENT_CHANGE: 'change',
-
-        REL_SELF: 'self',
-        LINK_NEXT: 'next',
-        LINK_PREV: 'prev',
-        LINK_FIRST: 'first',
-        LINK_LAST: 'last',
-
-        MODE_PAGES: 'pages',
-        MODE_LOAD_MORE: 'load_more',
-
-    },
-
-    /**
-     * @type {string} name of the parameter storing the current page index.
-     * @see params
+     * @type {Jii.base.Context}
      */
-    pageParam: 'page',
-
-    /**
-     * @type {string} name of the parameter storing the page size.
-     * @see params
+        this._context = null;
+        /**
+     * @type {number|null}
      */
-    pageSizeParam: 'per-page',
-
-    /**
-     * @type {boolean} whether to always have the page parameter in the URL created by [[createUrl()]].
-     * If false and [[page]] is 0, the page parameter will not be put in the URL.
+        this._page = null;
+        /**
+     * @type {number|null} number of items on each page.
+     * If it is less than 1, it means the page size is infinite, and thus a single page contains all items.
      */
-    forcePageParam: true,
-
-    /**
-     * @type {string|null} the route of the controller action for displaying the paged contents.
-     * If not set, it means using the currently requested route.
+        this._pageSize = null;
+        /**
+     * @type {string}
      */
-    route: null,
-
-    /**
+        this.mode = 'pages';
+        /**
+     * @type {[]|boolean} the page size limits. The first array element stands for the minimal page size, and the second
+     * the maximal page size. If this is false, it means [[pageSize]] should always return the value of [[defaultPageSize]].
+     */
+        this.pageSizeLimit = [
+            1,
+            50
+        ];
+        /**
+     * @type {number} the default page size. This property will be returned by [[pageSize]] when page size
+     * cannot be determined by [[pageSizeParam]] from [[params]].
+     */
+        this.defaultPageSize = 20;
+        /**
+     * @type {number} total number of items.
+     */
+        this.totalCount = 0;
+        /**
+     * @type {boolean} whether to check if [[page]] is within valid range.
+     * When this property is true, the value of [[page]] will always be between 0 and ([[pageCount]]-1).
+     * Because [[pageCount]] relies on the correct value of [[totalCount]] which may not be available
+     * in some cases (e.g. MongoDB), you may want to set this property to be false to disable the page
+     * number validation. By doing so, [[page]] will return the value indexed by [[pageParam]] in [[params]].
+     */
+        this.validatePage = true;
+        /**
+     * @type {Jii.request.UrlManager|null} the URL manager used for creating pagination URLs. If not set,
+     * the "urlManager" application component will be used.
+     */
+        this.urlManager = null;
+        /**
      * @type {[]} parameters (name => value) that should be used to obtain the current page number
      * and to create new pagination() URLs. If not set, all parameters from _GET will be used instead.
      *
@@ -67,60 +65,29 @@ var Pagination = Jii.defineClass('Jii.data.Pagination', /** @lends Jii.data.Pagi
      * The array element indexed by [[pageParam]] is considered to be the current page number (defaults to 0);
      * while the element indexed by [[pageSizeParam]] is treated as the page size (defaults to [[defaultPageSize]]).
      */
-    params: null,
-
-    /**
-     * @type {Jii.request.UrlManager|null} the URL manager used for creating pagination URLs. If not set,
-     * the "urlManager" application component will be used.
+        this.params = null;
+        /**
+     * @type {string|null} the route of the controller action for displaying the paged contents.
+     * If not set, it means using the currently requested route.
      */
-    urlManager: null,
-
-    /**
-     * @type {boolean} whether to check if [[page]] is within valid range.
-     * When this property is true, the value of [[page]] will always be between 0 and ([[pageCount]]-1).
-     * Because [[pageCount]] relies on the correct value of [[totalCount]] which may not be available
-     * in some cases (e.g. MongoDB), you may want to set this property to be false to disable the page
-     * number validation. By doing so, [[page]] will return the value indexed by [[pageParam]] in [[params]].
+        this.route = null;
+        /**
+     * @type {boolean} whether to always have the page parameter in the URL created by [[createUrl()]].
+     * If false and [[page]] is 0, the page parameter will not be put in the URL.
      */
-    validatePage: true,
-
-    /**
-     * @type {number} total number of items.
+        this.forcePageParam = true;
+        /**
+     * @type {string} name of the parameter storing the page size.
+     * @see params
      */
-    totalCount: 0,
-
-    /**
-     * @type {number} the default page size. This property will be returned by [[pageSize]] when page size
-     * cannot be determined by [[pageSizeParam]] from [[params]].
+        this.pageSizeParam = 'per-page';
+        /**
+     * @type {string} name of the parameter storing the current page index.
+     * @see params
      */
-    defaultPageSize: 20,
-
-    /**
-     * @type {[]|boolean} the page size limits. The first array element stands for the minimal page size, and the second
-     * the maximal page size. If this is false, it means [[pageSize]] should always return the value of [[defaultPageSize]].
-     */
-    pageSizeLimit: [1, 50],
-
-    /**
-     * @type {string}
-     */
-    mode: 'pages',
-
-    /**
-     * @type {number|null} number of items on each page.
-     * If it is less than 1, it means the page size is infinite, and thus a single page contains all items.
-     */
-    _pageSize: null,
-
-    /**
-     * @type {number|null}
-     */
-    _page: null,
-
-    /**
-     * @type {Jii.base.Context}
-     */
-    _context: null,
+        this.pageParam = 'page';
+        super.preInit(...arguments);
+    }
 
     /**
      *
@@ -136,9 +103,9 @@ var Pagination = Jii.defineClass('Jii.data.Pagination', /** @lends Jii.data.Pagi
             this._pageSize = null;
             this.getPageSize();
 
-            this.trigger(this.__static.EVENT_CHANGE);
+            this.trigger(Pagination.EVENT_CHANGE);
         }
-    },
+    }
 
     /**
      *
@@ -146,7 +113,7 @@ var Pagination = Jii.defineClass('Jii.data.Pagination', /** @lends Jii.data.Pagi
      */
     getContext() {
         return this._context;
-    },
+    }
 
     /**
      * @returns {number} number of pages
@@ -159,7 +126,7 @@ var Pagination = Jii.defineClass('Jii.data.Pagination', /** @lends Jii.data.Pagi
 
         let totalCount = Math.max(0, this.totalCount);
         return Math.floor((totalCount + pageSize - 1) / pageSize);
-    },
+    }
 
     /**
      * Returns the zero-based current page number.
@@ -175,7 +142,7 @@ var Pagination = Jii.defineClass('Jii.data.Pagination', /** @lends Jii.data.Pagi
         }
 
         return this._page;
-    },
+    }
 
     /**
      * Sets the current page number.
@@ -185,8 +152,8 @@ var Pagination = Jii.defineClass('Jii.data.Pagination', /** @lends Jii.data.Pagi
      */
     setPage(value, validatePage = false) {
         this._setPageInternal(value, validatePage);
-        this.trigger(this.__static.EVENT_CHANGE);
-    },
+        this.trigger(Pagination.EVENT_CHANGE);
+    }
 
     /**
      * Returns the number of items per page.
@@ -206,7 +173,7 @@ var Pagination = Jii.defineClass('Jii.data.Pagination', /** @lends Jii.data.Pagi
         }
 
         return this._pageSize;
-    },
+    }
 
     /**
      * @param {number} value the number of items per page.
@@ -214,8 +181,8 @@ var Pagination = Jii.defineClass('Jii.data.Pagination', /** @lends Jii.data.Pagi
      */
     setPageSize(value, validatePageSize) {
         this._setPageSizeInternal(value, validatePageSize);
-        this.trigger(this.__static.EVENT_CHANGE);
-    },
+        this.trigger(Pagination.EVENT_CHANGE);
+    }
 
     _setPageInternal(value, validatePage = false) {
         validatePage = validatePage || false;
@@ -234,7 +201,7 @@ var Pagination = Jii.defineClass('Jii.data.Pagination', /** @lends Jii.data.Pagi
             }
             this._page = value;
         }
-    },
+    }
 
     _setPageSizeInternal(value, validatePageSize = false) {
         validatePageSize = validatePageSize || false;
@@ -247,7 +214,7 @@ var Pagination = Jii.defineClass('Jii.data.Pagination', /** @lends Jii.data.Pagi
             }
             this._pageSize = value;
         }
-    },
+    }
 
     /**
      * Creates the URL suitable for pagination with the specified page number.
@@ -268,7 +235,7 @@ var Pagination = Jii.defineClass('Jii.data.Pagination', /** @lends Jii.data.Pagi
         let route = this.route || this._context.getRoute();
         let params = this.params || this._context.request ? this._context.request.get() : {};
 
-        if (page > 0 || (page >= 0 && this.forcePageParam)) {
+        if (page > 0 || page >= 0 && this.forcePageParam) {
             params[this.pageParam] = page + 1;
         } else {
             delete params[this.pageParam];
@@ -284,10 +251,14 @@ var Pagination = Jii.defineClass('Jii.data.Pagination', /** @lends Jii.data.Pagi
         }
 
         const urlManager = this.urlManager || Jii.app.urlManager;
-        return isAbsolute ?
-            urlManager.createAbsoluteUrl([route, params], this._context) :
-            urlManager.createUrl([route, params], this._context);
-    },
+        return isAbsolute ? urlManager.createAbsoluteUrl([
+            route,
+            params
+        ], this._context) : urlManager.createUrl([
+            route,
+            params
+        ], this._context);
+    }
 
     /**
      * @returns {number} the offset of the data. This may be used to set the
@@ -296,7 +267,7 @@ var Pagination = Jii.defineClass('Jii.data.Pagination', /** @lends Jii.data.Pagi
     getOffset() {
         let pageSize = this.getPageSize();
         return pageSize < 1 ? 0 : this.getPage() * pageSize;
-    },
+    }
 
     /**
      * @returns {number} the limit of the data. This may be used to set the
@@ -306,15 +277,15 @@ var Pagination = Jii.defineClass('Jii.data.Pagination', /** @lends Jii.data.Pagi
     getLimit() {
         let pageSize = this.getPageSize();
         return pageSize < 1 ? -1 : pageSize;
-    },
+    }
 
     /**
      * @return {number[]}
      */
     getIndexes() {
         let indexes = [];
-        let offset = this.mode === this.__static.MODE_PAGES ? this.getOffset() : 0;
-        let limit = this.mode === this.__static.MODE_PAGES ? this.getLimit() : (this.getPage() + 1) * this.getLimit();
+        let offset = this.mode === this.constructor.MODE_PAGES ? this.getOffset() : 0;
+        let limit = this.mode === this.constructor.MODE_PAGES ? this.getLimit() : (this.getPage() + 1) * this.getLimit();
 
         if (offset >= 0 && limit > 0) {
             for (let i = offset; i < offset + limit; i++) {
@@ -323,7 +294,7 @@ var Pagination = Jii.defineClass('Jii.data.Pagination', /** @lends Jii.data.Pagi
         }
 
         return indexes;
-    },
+    }
 
     /**
      * Returns a whole set of links for navigating to the first, last, next and previous pages.
@@ -338,26 +309,26 @@ var Pagination = Jii.defineClass('Jii.data.Pagination', /** @lends Jii.data.Pagi
         let pageCount = this.getPageCount();
 
         let links = {
-            [this.__static.REL_SELF]: this.createUrl(currentPage, null, isAbsolute)
+            [this.constructor.REL_SELF]: this.createUrl(currentPage, null, isAbsolute)
         };
         if (currentPage > 0) {
-            links[this.__static.LINK_FIRST] = this.createUrl(0, null, isAbsolute);
-            links[this.__static.LINK_PREV] = this.createUrl(currentPage - 1, null, isAbsolute);
+            links[this.constructor.LINK_FIRST] = this.createUrl(0, null, isAbsolute);
+            links[this.constructor.LINK_PREV] = this.createUrl(currentPage - 1, null, isAbsolute);
         }
         if (currentPage < pageCount - 1) {
-            links[this.__static.LINK_NEXT] = this.createUrl(currentPage + 1, null, isAbsolute);
-            links[this.__static.LINK_LAST] = this.createUrl(pageCount - 1, null, isAbsolute);
+            links[this.constructor.LINK_NEXT] = this.createUrl(currentPage + 1, null, isAbsolute);
+            links[this.constructor.LINK_LAST] = this.createUrl(pageCount - 1, null, isAbsolute);
         }
 
         return links;
-    },
+    }
 
     toJSON() {
         return {
             page: this.getPage(),
-            pageSize: this.getPageSize(),
+            pageSize: this.getPageSize()
         };
-    },
+    }
 
     /**
      * Returns the value of the specified query parameter.
@@ -373,6 +344,20 @@ var Pagination = Jii.defineClass('Jii.data.Pagination', /** @lends Jii.data.Pagi
         return params[name] && !_isObject(params[name]) ? params[name] : defaultValue;
     }
 
-});
+}
+Pagination.MODE_LOAD_MORE = 'load_more';
 
+Pagination.MODE_PAGES = 'pages';
+Pagination.LINK_LAST = 'last';
+Pagination.LINK_FIRST = 'first';
+Pagination.LINK_PREV = 'prev';
+Pagination.LINK_NEXT = 'next';
+
+Pagination.REL_SELF = 'self';
+
+/**
+         * @event Jii.data.Pagination#change
+         * @property {Jii.base.Event} event
+         */
+Pagination.EVENT_CHANGE = 'change';
 module.exports = Pagination;

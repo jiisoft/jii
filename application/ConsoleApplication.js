@@ -2,7 +2,6 @@
  * @author Ihor Skliar <skliar.ihor@gmail.com>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../index');
@@ -12,69 +11,41 @@ var Exception = require('../console/Exception');
 var Response = require('../console/Response');
 var _isEmpty = require('lodash/isEmpty');
 var Application = require('../base/Application');
+class ConsoleApplication extends Application {
 
-/**
- * @class Jii.application.ConsoleApplication
- * @extends Jii.base.Application
- */
-var ConsoleApplication = Jii.defineClass('Jii.application.ConsoleApplication', /** @lends Jii.application.ConsoleApplication.prototype */{
-
-    __extends: Application,
-
-
-    __static: /** @lends Jii.application.ConsoleApplication */{
-
+    preInit(config) {
         /**
-         * The option name for specifying the application configuration file path.
-         */
-        OPTION_APPCONFIG: 'appconfig'
-
-    },
-
-    /**
-     * @type {string} the default route of this application. Defaults to 'help',
-     * meaning the `help` command.
+     * @type {Jii.console.Controller} the currently active controller instance
      */
-    defaultRoute: 'help',
-
-    /**
+        this.controller = null;
+        /**
      * @type {boolean} whether to enable the commands provided by the core framework.
      * Defaults to true.
      */
-    enableCoreCommands: true,
-
-    /**
-     * @type {Jii.console.Controller} the currently active controller instance
+        this.enableCoreCommands = true;
+        /**
+     * @type {string} the default route of this application. Defaults to 'help',
+     * meaning the `help` command.
      */
-    controller: null,
-
-    _request: null,
-
-    /**
-     *
-     * @param {object} [config]
-     */
-    constructor(config) {
+        this.defaultRoute = 'help';
         config = config || {};
-
         this._request = new Request(this.defaultRoute);
         config = this._loadConfig(config);
-
-        this.__super(config);
-    },
+        super.preInit(config);
+    }
 
     /**
      * Run console app
      */
     start() {
-        return this.__super().then(() => {
+        return super.start().then(() => {
             return this.handleRequest(this._request);
         }).then(() => {
 
             // Stop worker after handle request
             this.stop();
         });
-    },
+    }
 
     /**
      * Loads the configuration.
@@ -87,20 +58,21 @@ var ConsoleApplication = Jii.defineClass('Jii.application.ConsoleApplication', /
     _loadConfig(config) {
         if (!_isEmpty(process.argv)) {
             var params = this._request.getParams();
-            if (params[this.__static.OPTION_APPCONFIG] !== undefined) {
-                var path = params[this.__static.OPTION_APPCONFIG];
+            if (params[this.constructor.OPTION_APPCONFIG] !== undefined) {
+                var path = params[this.constructor.OPTION_APPCONFIG];
                 var file = Jii.getAlias(path);
                 if (!_isEmpty(path) && File.isFile(file)) {
                     return require(file);
                 } else {
-                    throw new Exception(Jii.t('jii', "The configuration file does not exist: {path}", {path: path}));
+                    throw new Exception(Jii.t('jii', 'The configuration file does not exist: {path}', {
+                        path: path
+                    }));
                 }
             }
         }
 
         return config;
-    },
-
+    }
 
     init() {
         if (this.enableCoreCommands) {
@@ -110,7 +82,7 @@ var ConsoleApplication = Jii.defineClass('Jii.application.ConsoleApplication', /
         if (!this.controllerMap['help']) {
             this.controllerMap['help'] = this.coreCommands().help;
         }
-    },
+    }
 
     /**
      * Handles the specified request.
@@ -120,12 +92,14 @@ var ConsoleApplication = Jii.defineClass('Jii.application.ConsoleApplication', /
     handleRequest(request) {
         var result = request.resolve();
 
-        var context = Jii.createContext({route: result[0]});
+        var context = Jii.createContext({
+            route: result[0]
+        });
         context.setComponent('request', request);
         context.setComponent('response', new Response());
 
         return this.runAction(result[0], context);
-    },
+    }
 
     /**
      * Returns the configuration of the built-in commands.
@@ -138,9 +112,14 @@ var ConsoleApplication = Jii.defineClass('Jii.application.ConsoleApplication', /
             },
             migrate: {
                 className: require('../console/controllers/MigrateController')
-            },
+            }
         };
     }
-});
 
+}
+
+/**
+         * The option name for specifying the application configuration file path.
+         */
+ConsoleApplication.OPTION_APPCONFIG = 'appconfig';
 module.exports = ConsoleApplication;

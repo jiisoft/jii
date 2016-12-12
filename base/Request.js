@@ -2,33 +2,28 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
 var _has = require('lodash/has');
 var Component = require('./Component');
+class Request extends Component {
 
-/**
- * @class Jii.base.Request
- * @extends Jii.base.Component
- */
-var Request = Jii.defineClass('Jii.base.Request', /** @lends Jii.base.Request.prototype */{
-
-	__extends: Component,
-
-    /**
+    preInit() {
+        /**
      * @type {object}
      */
-    _params: null,
+        this._params = null;
+        super.preInit(...arguments);
+    }
 
-	/**
-	 * Resolves the current request into a route and the associated parameters.
-	 * @returns {[]|null} the first element is the route, and the second is the associated parameters.
-	 */
-	resolve() {
-		return null;
-	},
+    /**
+     * Resolves the current request into a route and the associated parameters.
+     * @returns {[]|null} the first element is the route, and the second is the associated parameters.
+     */
+    resolve() {
+        return null;
+    }
 
     /**
      * @return {object}
@@ -38,14 +33,14 @@ var Request = Jii.defineClass('Jii.base.Request', /** @lends Jii.base.Request.pr
             this._params = this._parseParams();
         }
         return this._params;
-    },
+    }
 
     /**
      * @param {object} values
      */
     setParams(values) {
         this._params = values;
-    },
+    }
 
     /**
      * Returns the named GET parameter value.
@@ -58,7 +53,7 @@ var Request = Jii.defineClass('Jii.base.Request', /** @lends Jii.base.Request.pr
 
         var params = this.getParams();
         return _has(params, name) ? params[name] : defaultValue;
-    },
+    }
 
     /**
      * Returns the named GET parameter value.
@@ -72,11 +67,9 @@ var Request = Jii.defineClass('Jii.base.Request', /** @lends Jii.base.Request.pr
         defaultValue = defaultValue || null;
 
         return name === null ? this.getParams() : this.getParam(name, defaultValue);
-    },
-
-    _parseParams() {
     }
 
-});
+    _parseParams() {}
 
+}
 module.exports = Request;

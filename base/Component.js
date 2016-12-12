@@ -2,7 +2,6 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -15,40 +14,26 @@ var _isString = require('lodash/isString');
 var _isFunction = require('lodash/isFunction');
 var _isObject = require('lodash/isObject');
 var _each = require('lodash/each');
-var Object = require('./Object');
+var BaseObject = require('./Object');
+class Component extends BaseObject {
 
-/**
- * @class Jii.base.Component
- * @extends Jii.base.Object
- */
-var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Component.prototype */{
-
-    __extends: Object,
-
-    /**
-     * @var {Jii.base.Context|Jii.base.Module}
-     */
-    owner: null,
-
-    /**
-     * @var {object} the attached event handlers (event name: handlers)
-     */
-    _events: null,
-
-    /**
+    preInit() {
+        /**
      * @var {object} the attached behaviors (behavior name: behavior)
      */
-    _behaviors: null,
-
-    /**
-     * @constructor
+        this._behaviors = null;
+        /**
+     * @var {object} the attached event handlers (event name: handlers)
      */
-    constructor() {
+        this._events = null;
+        /**
+     * @var {Jii.base.Context|Jii.base.Module}
+     */
+        this.owner = null;
         // Proxy behaviour methods
         this.proxyBehaviors();
-
-        this.__super.apply(this, arguments);
-    },
+        super.preInit(...arguments);
+    }
 
     /**
      * Returns a list of behaviors that this component should behave as.
@@ -61,10 +46,10 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
      *
      * ~~~
      * behaviorName: {
-	 *     class: 'BehaviorClass',
-	 *     property1: 'value1',
-	 *     property2: 'value2'
-	 * }
+     *     class: 'BehaviorClass',
+     *     property1: 'value1',
+     *     property2: 'value2'
+     * }
      * ~~~
      *
      * Note that a behavior class must extend from [[Jii.base.Behavior]]. Behavior names can be strings
@@ -78,7 +63,7 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
      */
     behaviors() {
         return {};
-    },
+    }
 
     /**
      * Returns a value indicating whether there is any handler attached to the named event.
@@ -88,8 +73,8 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
     hasEventHandlers(name) {
         this.ensureBehaviors();
 
-        return this._events && this._events[name] && this._events[name].length > 0 ? true : false;// @todo || Event::hasHandlers(this, name);
-    },
+        return this._events && this._events[name] && this._events[name].length > 0 ? true : false; // @todo || Event::hasHandlers(this, name);
+    }
 
     /**
      * Attaches an event handler to an event.
@@ -126,7 +111,7 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
         name = this._normalizeEventNames(name);
         if (name.length > 1) {
             _each(name, n => {
-                this.on(n, handler, data, isAppend)
+                this.on(n, handler, data, isAppend);
             });
             return;
         } else {
@@ -139,11 +124,17 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
         if (isAppend || !this._events || !this._events[name]) {
             this._events = this._events || {};
             this._events[name] = this._events[name] || [];
-            this._events[name].push([handler, data]);
+            this._events[name].push([
+                handler,
+                data
+            ]);
         } else {
-            this._events[name].unshift([handler, data]);
+            this._events[name].unshift([
+                handler,
+                data
+            ]);
         }
-    },
+    }
 
     /**
      * Detaches an existing event handler from this component.
@@ -186,8 +177,7 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
         var newEvents = [];
         var isRemoved = false;
         _each(this._events[name], event => {
-            if (handler.callback === event[0].callback
-                && (handler.context === null || handler.context === event[0].context)) {
+            if (handler.callback === event[0].callback && (handler.context === null || handler.context === event[0].context)) {
                 isRemoved = true;
             } else {
                 newEvents.push(event);
@@ -196,13 +186,11 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
         this._events[name] = newEvents;
 
         return isRemoved;
-    },
+    }
 
     _normalizeEventNames(names) {
-        return _isString(names) ?
-            names.split(/[ ,]+/) :
-            names;
-    },
+        return _isString(names) ? names.split(/[ ,]+/) : names;
+    }
 
     /**
      * Triggers an event.
@@ -248,7 +236,7 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
 
         // invoke class-level attached handlers
         Event.trigger(this, name, event);
-    },
+    }
 
     /**
      * Returns the named behavior object.
@@ -259,7 +247,7 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
         this.ensureBehaviors();
 
         return this._behaviors && this._behaviors[name] ? this._behaviors[name] : null;
-    },
+    }
 
     /**
      * Returns all behaviors attached to this component.
@@ -269,7 +257,7 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
         this.ensureBehaviors();
 
         return this._behaviors;
-    },
+    }
 
     /**
      * Attaches a behavior to this component.
@@ -290,7 +278,7 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
         this.ensureBehaviors();
 
         return this._attachBehaviorInternal(name, behavior);
-    },
+    }
 
     /**
      * Attaches a list of behaviors to the component.
@@ -305,7 +293,7 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
         _each(behaviors, (behavior, name) => {
             this._attachBehaviorInternal(name, behavior);
         });
-    },
+    }
 
     /**
      * Detaches a behavior from the component.
@@ -324,7 +312,7 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
         }
 
         return null;
-    },
+    }
 
     /**
      * Detaches all behaviors from the component.
@@ -333,7 +321,7 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
         this.ensureBehaviors();
 
         _each(_keys(this._behaviors), this.detachBehavior.bind(this));
-    },
+    }
 
     /**
      * Makes sure that the behaviors declared in [[behaviors()]] are attached to this component.
@@ -347,7 +335,7 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
         _each(this.behaviors(), (behavior, name) => {
             this._attachBehaviorInternal(name, behavior);
         });
-    },
+    }
 
     /**
      *
@@ -356,7 +344,7 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
         _each(this.behaviors(), (behavior, name) => {
             this._proxyBehaviorInternal(name, behavior);
         });
-    },
+    }
 
     /**
      * Attaches a behavior to this component.
@@ -375,11 +363,11 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
         }
         behavior.attach(this);
 
-        this._proxyBehaviorInternal(name, behavior.__static);
+        this._proxyBehaviorInternal(name, behavior.constructor);
 
         this._behaviors[name] = behavior;
         return behavior;
-    },
+    }
 
     /**
      *
@@ -391,13 +379,10 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
             if (!behaviorClass || !behaviorClass.prototype || behaviorClass === Behavior) {
                 break;
             }
-            for (var name in behaviorClass.prototype) {
-                if (!behaviorClass.prototype.hasOwnProperty(name)) {
-                    continue;
-                }
 
+            for (let name of Object.getOwnPropertyNames(behaviorClass.prototype)) {
                 // Skip constructor and non-public methods
-                if (name === 'constructor' || name.substr(0, 1) === '_') {
+                if (name === 'constructor' || name === 'preInit' || name.substr(0, 1) === '_') {
                     continue;
                 }
 
@@ -409,11 +394,9 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
                 this[name] = this._getProxyBehaviorMethod(behaviorName, name);
             }
 
-            behaviorClass = behaviorClass.__parentClass;
-            //className = behaviorClass.parentClassName();
-            //behaviorClass = Jii.namespace(className);
+            behaviorClass = Object.getPrototypeOf(behaviorClass);
         }
-    },
+    }
 
     _getProxyBehaviorMethod(behaviorName, methodName) {
         var context = this;
@@ -421,14 +404,14 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
         return () => {
             return context.getBehavior(behaviorName)[methodName].apply(context, arguments);
         };
-    },
+    }
 
     hasProperty(name, checkVars, checkBehaviors) {
         checkVars = checkVars !== false;
         checkBehaviors = checkBehaviors !== false;
 
         return this.canGetProperty(name, checkVars, checkBehaviors) || this.canSetProperty(name, false, checkBehaviors);
-    },
+    }
 
     // @todo move get, set to Object
     set(name, value) {
@@ -456,21 +439,20 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
 
             throw new UnknownPropertyException('Setting unknown property: ' + this.className() + '.' + name);
         }
-    },
+    }
 
     canSetProperty(name, checkVars, checkBehaviors) {
         checkVars = checkVars !== false;
         checkBehaviors = checkBehaviors !== false;
 
         var setter = 'set' + _upperFirst(name);
-        if (_isFunction(this[setter]) || (checkVars && this.hasOwnProperty(name))) {
+        if (_isFunction(this[setter]) || checkVars && this.hasOwnProperty(name)) {
             return true;
         } else if (checkBehaviors) {
-
         }
 
         return false;
-    },
+    }
 
     get(name) {
         // Generate getter name
@@ -483,22 +465,20 @@ var Component = Jii.defineClass('Jii.base.Component', /** @lends Jii.base.Compon
         } else {
             throw new UnknownPropertyException('Getting unknown property: ' + this.className() + '.' + name);
         }
-    },
+    }
 
     canGetProperty(name, checkVars, checkBehaviors) {
         checkVars = checkVars !== false;
         checkBehaviors = checkBehaviors !== false;
 
-        var getter = 'get' + _upperFirst(key);
-        if (_isFunction(this[getter]) || (checkVars && this.hasOwnProperty(name))) {
+        var getter = 'get' + _upperFirst(name);
+        if (_isFunction(this[getter]) || checkVars && this.hasOwnProperty(name)) {
             return true;
         } else if (checkBehaviors) {
-
         }
 
         return false;
     }
 
-});
-
+}
 module.exports = Component;

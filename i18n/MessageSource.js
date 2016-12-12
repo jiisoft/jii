@@ -2,59 +2,36 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
 var Component = require('../base/Component');
 var MissingTranslationEvent = require('./MissingTranslationEvent');
+class MessageSource extends Component {
 
-/**
- * MessageSource is the base class for message translation repository classes.
- *
- * A message source stores message translations in some persistent storage.
- *
- * Child classes should override [[loadMessages()]] to provide translated messages.
- *
- * @class Jii.i18n.MessageSource
- * @extends Jii.base.Component
- */
-var MessageSource = Jii.defineClass('Jii.i18n.MessageSource', /** @lends Jii.i18n.MessageSource.prototype */{
-
-    __extends: Component,
-
-    __static: /** @lends Jii.i18n.MessageSource */{
-
+    preInit() {
+        this._messages = {};
         /**
-         * @event Jii.i18n.MessageSource#change
-         * @property {Jii.i18n.MissingTranslationEvent} event
-         */
-        EVENT_MISSING_TRANSLATION: 'missingTranslation'
-
-    },
-
-    /**
+     * the language that the original messages are in. If not set, it will use the value of [[Jii.base.Application.sourceLanguage]]
+     * @type string|null
+     */
+        this.sourceLanguage = null;
+        /**
      * whether to force message translation when the source and target languages are the same.
      * Defaults to false, meaning translation is only performed when source and target languages are different
      * @type boolean
      */
-    forceTranslation: false,
-
-    /**
-     * the language that the original messages are in. If not set, it will use the value of [[Jii.base.Application.sourceLanguage]]
-     * @type string|null
-     */
-    sourceLanguage: null,
-
-    _messages: {},
+        this.forceTranslation = false;
+        super.preInit(...arguments);
+    }
 
     init() {
-        this.__super();
+        super.init();
 
         if (this.sourceLanguage === null) {
             this.sourceLanguage = Jii.app.sourceLanguage;
         }
-    },
+    }
 
     /**
      * Translates a message to the specified language.
@@ -76,7 +53,7 @@ var MessageSource = Jii.defineClass('Jii.i18n.MessageSource', /** @lends Jii.i18
         } else {
             return false;
         }
-    },
+    }
 
     /**
      *
@@ -84,7 +61,7 @@ var MessageSource = Jii.defineClass('Jii.i18n.MessageSource', /** @lends Jii.i18
      */
     setMessages(value) {
         this._messages = value;
-    },
+    }
 
     /**
      * Loads the message translation for the specified language and category.
@@ -98,7 +75,7 @@ var MessageSource = Jii.defineClass('Jii.i18n.MessageSource', /** @lends Jii.i18
      */
     _loadMessages(category, language) {
         return [];
-    },
+    }
 
     /**
      * Translates the specified message.
@@ -111,22 +88,21 @@ var MessageSource = Jii.defineClass('Jii.i18n.MessageSource', /** @lends Jii.i18
      * @return {string|boolean} the translated message or false if translation wasn't found.
      */
     _translateMessage(category, message, language) {
-        let key = `${language}/${category}`;
+        let key = `${ language }/${ category }`;
 
         if (!this._messages[key]) {
             this._messages[key] = this._loadMessages(category, language);
         }
 
-
         if (this._messages[key] && this._messages[key][message]) {
             return this._messages[key][message];
-        } else if (this.hasEventHandlers(this.__static.EVENT_MISSING_TRANSLATION)) {
+        } else if (this.hasEventHandlers(MessageSource.EVENT_MISSING_TRANSLATION)) {
             const event = new MissingTranslationEvent({
                 category: category,
                 message: message,
                 language: language
             });
-            this.trigger(this.__static.EVENT_MISSING_TRANSLATION, event);
+            this.trigger(MessageSource.EVENT_MISSING_TRANSLATION, event);
 
             if (event.translatedMessage !== null) {
                 this._messages[key][message] = event.translatedMessage;
@@ -138,6 +114,11 @@ var MessageSource = Jii.defineClass('Jii.i18n.MessageSource', /** @lends Jii.i18
         return this._messages[key][message];
     }
 
-});
+}
 
+/**
+         * @event Jii.i18n.MessageSource#change
+         * @property {Jii.i18n.MissingTranslationEvent} event
+         */
+MessageSource.EVENT_MISSING_TRANSLATION = 'missingTranslation';
 module.exports = MessageSource;

@@ -7,110 +7,101 @@ var _isUndefined = require('lodash/isUndefined');
 var fs = require('fs');
 var config = require('./config');
 var UnitTest = require('../base/UnitTest');
-
 require('./bootstrap');
+class DatabaseTestCase extends UnitTest {
 
-/**
- * @class tests.unit.DatabaseTestCase
- * @extends Jii.base.UnitTest
- */
-var DatabaseTestCase = Jii.defineClass('tests.unit.DatabaseTestCase', {
+    preInit() {
+        /**
+     * @type {Jii.sql.Connection}
+     */
+        this.db = null;
+        this.driverName = 'mysql';
+         this.database = _clone(config[this.driverName]);
 
-	__extends: UnitTest,
+        super.preInit(...arguments);
+    }
 
-	database: null,
-	driverName: 'mysql',
+    setUp() {
+        this.mockApplication();
 
-	/**
-	 * @type {Jii.sql.Connection}
-	 */
-	db: null,
+        return super.setUp();
+    }
 
-	setUp() {
-		this.database = _clone(config[this.driverName]);
+    tearDown() {
+        if (this.db) {
+            this.db.close();
+        }
+        this.destroyApplication();
 
-		this.mockApplication();
+        return super.tearDown();
+    }
 
-		return this.__super();
-	},
+    /**
+     * @param {boolean} [reset] whether to clean up the test database
+     * @param {boolean} [open]  whether to open and populate test database
+     * @returns {Jii.sql.Connection}
+     */
+    getConnection(reset, open) {
+        reset = !_isUndefined(reset) ? reset : true;
+        open = !_isUndefined(open) ? open : true;
 
-	tearDown() {
-		if (this.db) {
-			this.db.close();
-		}
-		this.destroyApplication();
+        if (!reset && this.db && this.db.getIsActive()) {
+            return Promise.resolve(this.db);
+        }
 
-		return this.__super();
-	},
+        if (this.db) {
+            this.db.close();
+        }
 
-	/**
-	 * @param {boolean} [reset] whether to clean up the test database
-	 * @param {boolean} [open]  whether to open and populate test database
-	 * @returns {Jii.sql.Connection}
-	 */
-	getConnection(reset, open) {
-		reset = !_isUndefined(reset) ? reset : true;
-		open = !_isUndefined(open) ? open : true;
+        var fixture = null;
+        var config = _clone(this.database);
 
-		if (!reset && this.db && this.db.getIsActive()) {
-			return Promise.resolve(this.db);
-		}
+        if (config.fixture) {
+            fixture = config.fixture;
+            delete config.fixture;
+        }
 
-		if (this.db) {
-			this.db.close();
-		}
+        return this.prepareDatabase(config, fixture, open).then(db => {
+            this.db = db;
+            return this.db.getSchema().refresh().then(() => db);
+        });
+    }
 
-		var fixture = null;
-		var config = _clone(this.database);
+    prepareDatabase(config, fixture, open) {
+        open = open || true;
 
-		if (config.fixture) {
-			fixture = config.fixture;
-			delete config.fixture;
-		}
+        var db = Jii.createObject(config);
+        if (!open) {
+            return Promise.resolve(db);
+        }
 
-		return this.prepareDatabase(config, fixture, open).then(db => {
-			this.db = db;
-			return this.db.getSchema().refresh()
-				.then(() => db);
-		});
-	},
+        return db.open().then(function() {
+            return new Promise(function(resolve, reject) {
+                if (fixture === null) {
+                    resolve(db);
+                    return;
+                }
 
-	prepareDatabase(config, fixture, open) {
-		open = open || true;
+                var lines = fs.readFileSync(fixture).toString().split(';');
+                var i = -1;
+                var execLine = function() {
+                    i++;
+                    if (i === lines.length) {
+                        resolve(db);
+                        return;
+                    }
 
-		var db = Jii.createObject(config);
-		if (!open) {
-			return Promise.resolve(db);
-		}
+                    var sql = lines[i];
+                    if (_trim(sql) !== '') {
+                        db.exec(sql).then(execLine, execLine);
+                    } else {
+                        execLine();
+                    }
+                };
+                execLine();
+            });
+        })
+    }
 
-		return db.open().then(function() {
-			return new Promise(function(resolve, reject) {
-				if (fixture === null) {
-					resolve(db);
-					return;
-				}
-
-				var lines = fs.readFileSync(fixture).toString().split(';');
-				var i = -1;
-				var execLine = function() {
-					i++;
-					if (i === lines.length) {
-						resolve(db);
-						return;
-					}
-
-					var sql = lines[i];
-					if (_trim(sql) !== '') {
-						db.exec(sql).then(execLine, execLine);
-					} else {
-						execLine();
-					}
-				};
-				execLine();
-			});
-		});
-	}
-
-});
-
+}
 module.exports = DatabaseTestCase;

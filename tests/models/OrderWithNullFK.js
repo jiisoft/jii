@@ -2,23 +2,11 @@
 
 var Jii = require('../../BaseJii');
 var ActiveRecord = require('./ActiveRecord.js');
+class OrderWithNullFK extends ActiveRecord {
 
-/**
- * @class tests.unit.models.OrderWithNullFK
- * @extends tests.unit.models.ActiveRecord
- */
-var OrderWithNullFK = Jii.defineClass('tests.unit.models.OrderWithNullFK', {
+    static tableName() {
+        return 'order_with_null_fk';
+    }
 
-	__extends: ActiveRecord,
-
-	__static: {
-
-		tableName() {
-			return 'order_with_null_fk';
-		}
-
-	}
-
-});
-
+}
 module.exports = OrderWithNullFK;

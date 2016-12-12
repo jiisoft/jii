@@ -2,25 +2,19 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../../BaseJii');
 var Event = require('../../base/Event');
+class MessageEvent extends Event {
 
-/**
- * @class Jii.comet.client.MessageEvent
- * @extends Jii.base.Event
- */
-var MessageEvent = Jii.defineClass('Jii.comet.client.MessageEvent', /** @lends Jii.comet.client.MessageEvent.prototype */{
+    preInit() {
+        /**
+     * @type {string}
+     */
+        this.message = null;
+        super.preInit(...arguments);
+    }
 
-	__extends: Event,
-
-	/**
-	 * @type {string}
-	 */
-	message: null
-
-});
-
+}
 module.exports = MessageEvent;

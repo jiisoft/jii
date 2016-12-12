@@ -1,21 +1,13 @@
 'use strict';
 
-var Jii = require('../../BaseJii');
+var Jii = require('../../index');
 var Article = require('../models/Article');
 var Collection = require('../../base/Collection');
 var UnknownPropertyException = require('../../exceptions/UnknownPropertyException');
 var InvalidParamException = require('../../exceptions/InvalidParamException');
 var UnitTest = require('../../base/UnitTest');
-
 require('../bootstrap');
-
-/**
- * @class tests.unit.ClientTest
- * @extends Jii.base.UnitTest
- */
-var ClientTest = Jii.defineClass('tests.unit.ClientTest', {
-
-    __extends: UnitTest,
+class ClientTest extends UnitTest {
 
     relationTest(test) {
         var article = new Article();
@@ -26,7 +18,7 @@ var ClientTest = Jii.defineClass('tests.unit.ClientTest', {
             title: 'My Article',
             text: '..text..',
             userId: 223,
-            createTime: (new Date()).getTime(),
+            createTime: new Date().getTime(),
             user: {
                 id: 223,
                 name: 'John',
@@ -52,7 +44,7 @@ var ClientTest = Jii.defineClass('tests.unit.ClientTest', {
         test.strictEqual(article.get('user').get('id'), 223);
         test.strictEqual(article.get('user').get('name'), 'John');
         test.strictEqual(article.get('links').length, 2);
-        test.strictEqual(article.get('links').className(), 'Jii.base.Collection');
+        test.strictEqual(article.get('links').className(), 'Collection');
         test.strictEqual(article.get('links') instanceof Collection, true);
         test.strictEqual(article.get('links').at(0).get('title'), 'Example');
         test.strictEqual(article.get('links').at(1).get('id'), 11);
@@ -92,9 +84,9 @@ var ClientTest = Jii.defineClass('tests.unit.ClientTest', {
         }, InvalidParamException);
 
         test.done();
-    },
+    }
 
-    eventsTest: function(test) {
+    eventsTest(test) {
         var article = new Article();
 
         // Object set
@@ -103,7 +95,7 @@ var ClientTest = Jii.defineClass('tests.unit.ClientTest', {
             title: 'My Article',
             text: '..text..',
             userId: 223,
-            createTime: (new Date()).getTime(),
+            createTime: new Date().getTime(),
             user: {
                 id: 223,
                 name: 'John',
@@ -125,9 +117,7 @@ var ClientTest = Jii.defineClass('tests.unit.ClientTest', {
             ]
         });
 
-        article.on('change:title', function() {
-
-        });
+        article.on('change:title', function() {});
         /*article.on('change:user', function() {
 
         });
@@ -147,6 +137,5 @@ var ClientTest = Jii.defineClass('tests.unit.ClientTest', {
         test.done();
     }
 
-});
-
+}
 module.exports = new ClientTest().exports();

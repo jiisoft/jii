@@ -3,14 +3,7 @@
 var Jii = require('../../index');
 var UnitTest = require('../../base/UnitTest');
 require('../bootstrap');
-
-/**
- * @class tests.unit.AliasesTest
- * @extends Jii.base.UnitTest
- */
-var self = Jii.defineClass('tests.unit.AliasesTest', {
-
-	__extends: UnitTest,
+class self extends UnitTest {
 
     aliasesTest(test) {
         var jiiPath = require('fs').realpathSync(__dirname + '/../..');
@@ -38,10 +31,9 @@ var self = Jii.defineClass('tests.unit.AliasesTest', {
 
         Jii.setAlias('@some/alias', '/www');
         test.strictEqual(Jii.getAlias('@some/alias'), '/www');
-        
+
         test.done();
     }
 
-});
-
+}
 module.exports = new self().exports();

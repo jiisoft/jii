@@ -2,22 +2,17 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
 var Component = require('../base/Component');
 var IntlMessageFormat = require('intl-messageformat');
+class MessageFormatter extends Component {
 
-/**
- * @class Jii.i18n.MessageFormatter
- * @extends Jii.base.Component
- */
-var MessageFormatter = Jii.defineClass('Jii.i18n.MessageFormatter', /** @lends Jii.i18n.MessageFormatter.prototype */{
-
-    __extends: Component,
-
-    _errorMessage: '',
+    preInit() {
+        this._errorMessage = '';
+        super.preInit(...arguments);
+    }
 
     /**
      * Get the error text from the last operation
@@ -25,7 +20,7 @@ var MessageFormatter = Jii.defineClass('Jii.i18n.MessageFormatter', /** @lends J
      */
     getErrorMessage() {
         return this._errorMessage;
-    },
+    }
 
     /**
      * Formats a message via [ICU message format](http://userguide.icu-project.org/formatparse/messages)
@@ -48,6 +43,5 @@ var MessageFormatter = Jii.defineClass('Jii.i18n.MessageFormatter', /** @lends J
         return output;
     }
 
-});
-
+}
 module.exports = MessageFormatter;

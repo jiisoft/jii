@@ -1,65 +1,49 @@
-
 'use strict';
 
 var Jii = require('jii');
 var Component = require('jii/base/Component');
+class TransportInterface extends Component {
+
+    /**
+     * Open connection
+     * @param {string} url
+     */
+    open(url) {}
+
+    /**
+     * Close connection
+     */
+    close() {}
+
+    /**
+     * Send message to server
+     * @param {string} message
+     */
+    send(message) {}
+
+}
 
 /**
- * @class Jii.comet.client.transport.TransportInterface
- * @extends Jii.base.Component
- */
-var TransportInterface = Jii.defineClass('Jii.comet.client.transport.TransportInterface', /** @lends Jii.comet.client.transport.TransportInterface.prototype */{
+         * @event Jii.comet.client.transport.TransportInterface#log
+         * @property {Jii.comet.client.LogMessageEvent} event
+         */
+TransportInterface.EVENT_LOG = 'log';
 
-	__extends: Component,
+/**
+         * @event Jii.comet.client.transport.TransportInterface#message
+         * @property {Jii.comet.client.MessageEvent} event
+         */
+TransportInterface.EVENT_MESSAGE = 'message';
 
-	__static: /** @lends Jii.comet.client.transport.TransportInterface */{
+/**
+         * @event Jii.comet.client.transport.TransportInterface#close
+         * @property {Jii.base.Event} event
+         */
+TransportInterface.EVENT_CLOSE = 'close';
 
-		/**
-		 * @event Jii.comet.client.transport.TransportInterface#open
-		 * @property {Jii.base.Event} event
-		 */
-		EVENT_OPEN: 'open',
-
-		/**
-		 * @event Jii.comet.client.transport.TransportInterface#close
-		 * @property {Jii.base.Event} event
-		 */
-		EVENT_CLOSE: 'close',
-
-		/**
-		 * @event Jii.comet.client.transport.TransportInterface#message
-		 * @property {Jii.comet.client.MessageEvent} event
-		 */
-		EVENT_MESSAGE: 'message',
-
-		/**
-		 * @event Jii.comet.client.transport.TransportInterface#log
-		 * @property {Jii.comet.client.LogMessageEvent} event
-		 */
-		EVENT_LOG: 'log'
-
-	},
-
-	/**
-	 * Open connection
-	 * @param {string} url
-	 */
-	open(url) {
-	},
-
-	/**
-	 * Close connection
-	 */
-	close() {
-	},
-
-	/**
-	 * Send message to server
-	 * @param {string} message
-	 */
-	send(message) {
-	}
-
-});
-
+/**
+         * @event Jii.comet.client.transport.TransportInterface#open
+         * @property {Jii.base.Event} event
+         */
+TransportInterface.EVENT_OPEN = 'open';
 module.exports = TransportInterface;

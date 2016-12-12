@@ -2,23 +2,11 @@
 
 var Jii = require('../../BaseJii');
 var ActiveRecord = require('./ActiveRecord.js');
+class NullValues extends ActiveRecord {
 
-/**
- * @class tests.unit.models.NullValues
- * @extends tests.unit.models.ActiveRecord
- */
-var NullValues = Jii.defineClass('tests.unit.models.NullValues', {
+    static tableName() {
+        return 'null_values';
+    }
 
-	__extends: ActiveRecord,
-
-	__static: {
-
-		tableName() {
-			return 'null_values';
-		}
-
-	}
-
-});
-
+}
 module.exports = NullValues;

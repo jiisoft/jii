@@ -2,84 +2,62 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
 var _isObject = require('lodash/isObject');
+class BaseObject {
 
-/**
- *
- * @class Jii.base.Object
- */
-var Object = Jii.defineClass('Jii.base.Object', /** @lends Jii.base.Object.prototype */{
+    constructor() {
+        this.preInit(...arguments);
 
-	__static: /** @lends Jii.base.Object */{
+        // Run custom init method
+        this.init();
+    }
 
-		/**
-		 * Return full class name with namespace
-		 * @returns {string}
-		 */
-		className() {
-			return this.__className;
-		},
+    preInit(config) {
+        // Apply configuration to instance
+        if (_isObject(config)) {
+            Jii.configure(this, config);
+        }
+    }
 
-		/**
-		 * Return extended class name with namespace
-		 * @returns {string}
-		 */
-		parentClassName() {
-			return this.__parentClassName;
-		}
+    /**
+         * Return full class name with namespace
+         * @returns {string}
+         */
+    static className() {
+        return this.name;
+    }
 
-	},
+    /**
+         * Return extended class name with namespace
+         * @returns {string}
+         */
+    static parentClassName() {
+        return Object.getPrototypeOf(this).name;
+    }
 
-	/**
-	 * @param {object} [config]
-	 * @constructor
-	 */
-	constructor(config) {
-		this.__super.apply(this, arguments);
+    /**
+     * Customized initialize method
+     */
+    init() {}
 
-		// Apply configuration to instance
-		if (_isObject(config)) {
-			Jii.configure(this, config);
-		}
+    /**
+     * Return full class name with namespace
+     * @returns {string}
+     */
+    className() {
+        return this.constructor.name;
+    }
 
-		// Run custom init method
-		this.init();
-	},
+    /**
+     * Return extended class name with namespace
+     * @returns {string}
+     */
+    parentClassName() {
+        return Object.getPrototypeOf(this).name;
+    }
 
-	/**
-	 * Customized initialize method
-	 */
-	init() {
-	},
-
-	/**
-	 * Method defined jsdoc for hide errors in IDE
-	 * @param {...*} [params]
-	 * @protected
-	 */
-	__super(params) {
-	},
-
-	/**
-	 * Return full class name with namespace
-	 * @returns {string}
-	 */
-	className() {
-		return this.__className;
-	},
-
-	/**
-	 * Return extended class name with namespace
-	 * @returns {string}
-	 */
-	parentClassName() {
-		return this.__parentClassName;
-	}
-
-});
-
-module.exports = Object;
+}
+module.exports = BaseObject;

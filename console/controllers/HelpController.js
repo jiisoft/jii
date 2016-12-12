@@ -2,7 +2,6 @@
  * @author Ihor Skliar <skliar.ihor@gmail.com>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../../index');
@@ -22,30 +21,7 @@ var _repeat = require('lodash/repeat');
 var _endsWith = require('lodash/endsWith');
 var Controller = require('../Controller');
 var fs = require('fs');
-
-/**
- * Provides help information about console commands.
- *
- * This command displays the available command list in
- * the application or the detailed instructions about using
- * a specific command.
- *
- * This command can be used as follows on command line:
- *
- * ~~~
- * jii help [command name]
- * ~~~
- *
- * In the above, if the command name is not provided, all
- * available commands will be displayed.
- *
- * @property array commands All available command names. This property is read-only.
- * @class Jii.console.controllers.HelpController
- * @extends Jii.console.Controller
- */
-var HelpController = Jii.defineClass('Jii.console.controllers.HelpController', /** @lends Jii.console.controllers.HelpController.prototype */{
-
-    __extends: Controller,
+class HelpController extends Controller {
 
     /**
      * Displays available commands or the detailed information
@@ -62,7 +38,9 @@ var HelpController = Jii.defineClass('Jii.console.controllers.HelpController', /
         if (command) {
             var result = Jii.app.createController(command);
             if (!result) {
-                throw new Exception(Jii.t('jii', 'No help for unknown command "{name}".', {name: command}));
+                throw new Exception(Jii.t('jii', 'No help for unknown command "{name}".', {
+                    name: command
+                }));
             }
 
             var controller = result[0];
@@ -77,7 +55,7 @@ var HelpController = Jii.defineClass('Jii.console.controllers.HelpController', /
         } else {
             this._getDefaultHelp();
         }
-    },
+    }
 
     /**
      * Returns all available command names.
@@ -87,7 +65,7 @@ var HelpController = Jii.defineClass('Jii.console.controllers.HelpController', /
         var commands = this._getModuleCommands(Jii.app);
         commands = commands.sort();
         return _uniq(commands);
-    },
+    }
 
     /**
      * Returns an array of commands an their descriptions.
@@ -101,7 +79,7 @@ var HelpController = Jii.defineClass('Jii.console.controllers.HelpController', /
         });
 
         return descriptions;
-    },
+    }
 
     /**
      * Returns all available actions of the specified controller.
@@ -120,7 +98,7 @@ var HelpController = Jii.defineClass('Jii.console.controllers.HelpController', /
         actions.sort();
 
         return _uniq(actions);
-    },
+    }
 
     /**
      * Returns available commands of a specified module.
@@ -155,14 +133,13 @@ var HelpController = Jii.defineClass('Jii.console.controllers.HelpController', /
                 if (!_isEmpty(file) && file.indexOf('Controller.js') !== -1) {
                     var controllerClass = module.controllerNamespace + '.' + file.substr(0, -4);
                     if (this._validateControllerClass(controllerClass)) {
-                        //commands.push(prefix + Inflector.camel2id(file.substr(0, -14))); // @todo
                     }
                 }
             });
         }
 
         return commands;
-    },
+    }
 
     /**
      * Validates if the given class is a valid console controller class.
@@ -171,11 +148,10 @@ var HelpController = Jii.defineClass('Jii.console.controllers.HelpController', /
      */
     _validateControllerClass(className) {
         if (className !== undefined) {
-            //return className.__parentClassName === 'Jii.console.Controller'; // TODO
         } else {
             return false;
         }
-    },
+    }
 
     /**
      * Displays the overall information of the command.
@@ -184,16 +160,16 @@ var HelpController = Jii.defineClass('Jii.console.controllers.HelpController', /
     _getCommandHelp(controller) {
         controller.color = this.color;
 
-        this.stdout("\nDESCRIPTION\n", Console.BOLD);
+        this.stdout('\nDESCRIPTION\n', Console.BOLD);
 
         var comment = controller.getHelp();
         if (comment !== '') {
-            this.stdout("\n"+comment+"\n\n");
+            this.stdout('\n' + comment + '\n\n');
         }
 
         var actions = this.getActions(controller);
         if (!_isEmpty(actions)) {
-            this.stdout("\nSUB-COMMANDS\n\n", Console.BOLD);
+            this.stdout('\nSUB-COMMANDS\n\n', Console.BOLD);
 
             var prefix = controller.getUniqueId();
 
@@ -216,17 +192,16 @@ var HelpController = Jii.defineClass('Jii.console.controllers.HelpController', /
                 var summary = controller.getActionHelpSummary(controller.createAction(action));
 
                 if (summary !== '') {
-                    this.stdout(new Array( maxlen - len + 2 ).join( ' ' ) + summary);
+                    this.stdout(new Array(maxlen - len + 2).join(' ') + summary);
                 }
 
-                this.stdout("\n");
+                this.stdout('\n');
             });
             var scriptName = this._getScriptName();
-            this.stdout("\nTo see the detailed information about individual sub-commands, enter:\n");
-            this.stdout('\n  ' + scriptName + ' ' + this.ansiFormat('help', Console.FG_YELLOW) + ' '
-                + this.ansiFormat('<command-name>', Console.FG_CYAN) + '\n\n');
+            this.stdout('\nTo see the detailed information about individual sub-commands, enter:\n');
+            this.stdout('\n  ' + scriptName + ' ' + this.ansiFormat('help', Console.FG_YELLOW) + ' ' + this.ansiFormat('<command-name>', Console.FG_CYAN) + '\n\n');
         }
-    },
+    }
 
     /**
      * Displays the detailed information of a command action.
@@ -238,16 +213,18 @@ var HelpController = Jii.defineClass('Jii.console.controllers.HelpController', /
         var action = controller.createAction(actionID);
         if (action === null) {
             var name = controller.getUniqueId() + '/' + actionID;
-            throw new Exception(Jii.t('jii', 'No help for unknown sub-command "{name}".', {name: name}));
+            throw new Exception(Jii.t('jii', 'No help for unknown sub-command "{name}".', {
+                name: name
+            }));
         }
 
         var description = controller.getActionHelp(action);
         if (description !== '') {
-            this.stdout("\nDESCRIPTION\n", Console.BOLD);
-            this.stdout("\n" + description + "\n\n");
+            this.stdout('\nDESCRIPTION\n', Console.BOLD);
+            this.stdout('\n' + description + '\n\n');
         }
 
-        this.stdout("\nUSAGE\n\n", Console.BOLD);
+        this.stdout('\nUSAGE\n\n', Console.BOLD);
 
         var scriptName = this._getScriptName();
         if (action.id === controller.defaultAction) {
@@ -269,41 +246,31 @@ var HelpController = Jii.defineClass('Jii.console.controllers.HelpController', /
         options[ConsoleApplication.OPTION_APPCONFIG] = {
             type: 'string',
             default: null,
-            comment: "custom application configuration file path.\nIf not set, default application configuration is used."
+            comment: 'custom application configuration file path.\nIf not set, default application configuration is used.'
         };
 
         if (!_isEmpty(options)) {
             this.stdout(' [...options...]', Console.FG_RED);
         }
-        this.stdout("\n\n");
+        this.stdout('\n\n');
 
         if (!_isEmpty(args)) {
             _each(args, (arg, name) => {
-                this.stdout(this._formatOptionHelp(
-                        '- ' + this.ansiFormat(arg['required'] ? name + " (required)" : name, Console.FG_CYAN),
-                        arg['required'],
-                        arg['type'],
-                        arg['default'],
-                        arg['comment']));
+                this.stdout(this._formatOptionHelp('- ' + this.ansiFormat(arg['required'] ? name + ' (required)' : name, Console.FG_CYAN), arg['required'], arg['type'], arg['default'], arg['comment']));
 
-                this.stdout("\n\n");
+                this.stdout('\n\n');
             });
         }
 
         if (!_isEmpty(options)) {
-            this.stdout("\nOPTIONS\n\n", Console.BOLD);
+            this.stdout('\nOPTIONS\n\n', Console.BOLD);
             _each(options, (option, name) => {
-                this.stdout(this._formatOptionHelp(
-                        this.ansiFormat('--' + name, Console.FG_RED, !options.required ? Console.FG_RED : Console.BOLD),
-                        option['required'],
-                        option['type'],
-                        option['default'],
-                        option['comment']));
+                this.stdout(this._formatOptionHelp(this.ansiFormat('--' + name, Console.FG_RED, !options.required ? Console.FG_RED : Console.BOLD), option['required'], option['type'], option['default'], option['comment']));
 
-                this.stdout("\n\n");
+                this.stdout('\n\n');
             });
         }
-    },
+    }
 
     /**
      * Generates a well-formed string for an argument or option.
@@ -318,7 +285,7 @@ var HelpController = Jii.defineClass('Jii.console.controllers.HelpController', /
         comment = _trim(comment);
         type = type ? _trim(type) : null;
 
-        if (type && (type.substring(0, 4) === 'bool'.substring(0, 4)) === 0) {
+        if (type && type.substring(0, 4) === 'bool'.substring(0, 4) === 0) {
             type = 'boolean, 0 or 1';
         }
 
@@ -332,7 +299,7 @@ var HelpController = Jii.defineClass('Jii.console.controllers.HelpController', /
                 defaultValue = defaultValue ? 1 : 0;
             }
             if (_isString(defaultValue)) {
-                defaultValue = "'" + defaultValue + "'";
+                defaultValue = '\'' + defaultValue + '\'';
             } else {
                 defaultValue = JSON.stringify(defaultValue);
             }
@@ -344,13 +311,13 @@ var HelpController = Jii.defineClass('Jii.console.controllers.HelpController', /
         if (doc === '') {
             doc = comment;
         } else if (comment !== '') {
-            doc += "\n" + comment.replace(/^/, "  ").replace(/\n/, "\n  ");
+            doc += '\n' + comment.replace(/^/, '  ').replace(/\n/, '\n  ');
         }
 
         name = required ? name + ' (required)' : name;
 
         return doc === '' ? name : name + ': ' + doc;
-    },
+    }
 
     _getDefaultHelp() {
         this.stdout('\nThis is Jii version ' + Jii.getVersion() + '.\n');
@@ -425,13 +392,11 @@ var HelpController = Jii.defineClass('Jii.console.controllers.HelpController', /
 
             var scriptName = this._getScriptName();
             this.stdout('\nTo see the help of each command, enter:\n', Console.BOLD);
-            this.stdout('\n  ' + scriptName + ' ' + this.ansiFormat('help', Console.FG_YELLOW) + ' '
-                + this.ansiFormat('<command-name>', Console.FG_CYAN) + '\n\n');
-
+            this.stdout('\n  ' + scriptName + ' ' + this.ansiFormat('help', Console.FG_YELLOW) + ' ' + this.ansiFormat('<command-name>', Console.FG_CYAN) + '\n\n');
         } else {
             this.stdout('\nNo commands are found.\n\n', Console.BOLD);
         }
-    },
+    }
 
     /**
      * @returns {string} the name of the cli script currently running.
@@ -441,6 +406,5 @@ var HelpController = Jii.defineClass('Jii.console.controllers.HelpController', /
         return matches !== null ? matches[0] : 'jii';
     }
 
-});
-
+}
 module.exports = HelpController;

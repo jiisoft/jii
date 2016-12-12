@@ -3,64 +3,51 @@
 var Jii = require('../../BaseJii');
 var _isEmpty = require('lodash/isEmpty');
 var Component = require('../../base/Component');
+class Command extends Component {
 
-/**
- * @class Jii.data.http.Command
- * @extends Jii.base.Component
- */
-var Command = Jii.defineClass('Jii.data.http.Command', /** @lends Jii.data.http.Command.prototype */{
+    preInit() {
+        /**
+     * @type {Jii.data.BaseConnection} the DB connection that this command is associated with
+     */
+        this.db = null;
+        super.preInit(...arguments);
+    }
 
-	__extends: Component,
+    /**
+     * @returns {Promise}
+     */
+    queryAll() {
+        return this._queryInternal('all');
+    }
 
-    __static: /** @lends Jii.data.http.Command */{
+    /**
+     * @returns {Promise}
+     */
+    queryOne() {
+        return this._queryInternal('one');
+    }
 
-        METHOD_INSERT: 'insert',
-        METHOD_UPDATE: 'update',
-        METHOD_DELETE: 'delete'
+    /**
+     * @returns {Promise}
+     */
+    queryScalar() {
+        return this._queryInternal('scalar');
+    }
 
-    },
+    /**
+     * @returns {Promise}
+     */
+    queryColumn() {
+        return this._queryInternal('column');
+    }
 
-	/**
-	 * @type {Jii.data.BaseConnection} the DB connection that this command is associated with
-	 */
-	db: null,
-
-	/**
-	 * @returns {Promise}
-	 */
-	queryAll() {
-		return this._queryInternal('all');
-	},
-
-	/**
-	 * @returns {Promise}
-	 */
-	queryOne() {
-		return this._queryInternal('one');
-	},
-
-	/**
-	 * @returns {Promise}
-	 */
-	queryScalar() {
-		return this._queryInternal('scalar');
-	},
-
-	/**
-	 * @returns {Promise}
-	 */
-	queryColumn() {
-		return this._queryInternal('column');
-	},
-
-	/**
-	 * Performs the actual DB query of a SQL statement.
-	 * @param {string} method
-	 * @returns {Promise} the method execution result
-	 * @throws Exception if the query causes any problem
-	 */
-	_queryInternal(method) {
-	},
+    /**
+     * Performs the actual DB query of a SQL statement.
+     * @param {string} method
+     * @returns {Promise} the method execution result
+     * @throws Exception if the query causes any problem
+     */
+    _queryInternal(method) {}
 
     /**
      *
@@ -69,7 +56,7 @@ var Command = Jii.defineClass('Jii.data.http.Command', /** @lends Jii.data.http.
      * @returns {Promise}
      */
     insertModel(model, values) {
-        return this.db.exec(this.__static.METHOD_INSERT, model.className(), {
+        return this.db.exec(this.constructor.METHOD_INSERT, model.className(), {
             values: values
         }).then(result => {
             if (!result) {
@@ -88,7 +75,7 @@ var Command = Jii.defineClass('Jii.data.http.Command', /** @lends Jii.data.http.
                 insertId: model.getPrimaryKey()
             };
         });
-    },
+    }
 
     /**
      *
@@ -97,7 +84,7 @@ var Command = Jii.defineClass('Jii.data.http.Command', /** @lends Jii.data.http.
      * @returns {Promise}
      */
     updateModel(model, values) {
-        return this.db.exec(this.__static.METHOD_UPDATE, model.className(), {
+        return this.db.exec(this.constructor.METHOD_UPDATE, model.className(), {
             primaryKey: model.getOldPrimaryKey(true),
             values: values
         }).then(result => {
@@ -112,8 +99,7 @@ var Command = Jii.defineClass('Jii.data.http.Command', /** @lends Jii.data.http.
 
             return result.success ? 1 : 0;
         });
-    },
-
+    }
 
     /**
      *
@@ -121,13 +107,16 @@ var Command = Jii.defineClass('Jii.data.http.Command', /** @lends Jii.data.http.
      * @returns {Promise}
      */
     deleteModel(model) {
-        return this.db.exec(this.__static.METHOD_DELETE, model.className(), {
+        return this.db.exec(this.constructor.METHOD_DELETE, model.className(), {
             primaryKey: model.getOldPrimaryKey(true)
         }).then(result => {
             return result && result.success ? 1 : 0;
         });
     }
 
-});
+}
+Command.METHOD_DELETE = 'delete';
+Command.METHOD_UPDATE = 'update';
 
+Command.METHOD_INSERT = 'insert';
 module.exports = Command;

@@ -2,7 +2,6 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -17,37 +16,35 @@ var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
 var multer = require('multer');
+class HttpServer extends Component {
 
-/**
- * @class Jii.request.http.HttpServer
- * @extends Jii.base.Component
- */
-var HttpServer = Jii.defineClass('Jii.request.http.HttpServer', /** @lends Jii.request.http.HttpServer.prototype */{
-	
-	__extends: Component,
-
-    host: '0.0.0.0',
-    port: 3000,
-
-    /**
-     * @type {Jii.request.UrlManager|string}
-     */
-    urlManager: 'urlManager',
-
-    /**
+    preInit() {
+        this._isExpressSubscribed = false;
+        this._server = null;
+        this._express = null;
+        /**
      * @type {string|string[]|object}
      */
-    staticDirs: null,
-
-    _express: null,
-    _server: null,
-    _isExpressSubscribed: false,
+        this.staticDirs = null;
+        /**
+     * @type {Jii.request.UrlManager|string}
+     */
+        this.urlManager = 'urlManager';
+        this.port = 3000;
+        this.host = '0.0.0.0';
+        super.preInit(...arguments);
+    }
 
     init() {
         this._express = new express();
-        this._express.use(bodyParser.json()); // for parsing application/json
-        this._express.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-        this._express.use(multer()); // for parsing multipart/form-data
+        this._express.use(bodyParser.json());
+        // for parsing application/json
+        this._express.use(bodyParser.urlencoded({
+            extended: true
+        }));
+        // for parsing application/x-www-form-urlencoded
+        this._express.use(multer());
+        // for parsing multipart/form-data
 
         // Static files
         if (_isString(this.staticDirs)) {
@@ -60,7 +57,7 @@ var HttpServer = Jii.defineClass('Jii.request.http.HttpServer', /** @lends Jii.r
         if (_isString(this.urlManager)) {
             this.urlManager = Jii.app.getComponent(this.urlManager);
         }
-    },
+    }
 
     /**
      * Start listen http queries
@@ -74,7 +71,7 @@ var HttpServer = Jii.defineClass('Jii.request.http.HttpServer', /** @lends Jii.r
 
         Jii.info('Start http server, listening `' + this.host + ':' + this.port + '`.');
         this._server = http.createServer(this._express).listen(this.port, this.host);
-    },
+    }
 
     /**
      * Stop listen http port
@@ -82,7 +79,7 @@ var HttpServer = Jii.defineClass('Jii.request.http.HttpServer', /** @lends Jii.r
     stop(c) {
         this._server.close(c);
         Jii.info('Http server is stopped.');
-    },
+    }
 
     /**
      * @param {object} expressRequest
@@ -100,13 +97,15 @@ var HttpServer = Jii.defineClass('Jii.request.http.HttpServer', /** @lends Jii.r
             var queryParams = request.getQueryParams();
             request.setQueryParams(_extend(queryParams, params));
 
-			// Create response component
-			var response = new Response(expressResponse);
+            // Create response component
+            var response = new Response(expressResponse);
 
-			// Create context
-			var context = Jii.createContext({route: route});
-			context.setComponent('request', request);
-			context.setComponent('response', response);
+            // Create context
+            var context = Jii.createContext({
+                route: route
+            });
+            context.setComponent('request', request);
+            context.setComponent('response', response);
 
             Jii.app.runAction(route, context);
             return;
@@ -115,6 +114,6 @@ var HttpServer = Jii.defineClass('Jii.request.http.HttpServer', /** @lends Jii.r
         //throw new InvalidRouteException(Jii.t('jii', 'Page not found.'));
         Jii.info('Page not found.');
     }
-});
 
+}
 module.exports = HttpServer;

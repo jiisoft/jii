@@ -3,34 +3,26 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../../BaseJii');
 var InvalidConfigException = require('../../exceptions/InvalidConfigException');
 var _trimStart = require('lodash/trimStart');
-var HttpRequest = require('../../base/HttpRequest')
+var HttpRequest = require('../../base/HttpRequest');
+class Request extends HttpRequest {
 
-/**
- * @class Jii.request.client.Request
- * @extends Jii.base.HttpRequest
- */
-var Request = Jii.defineClass('Jii.request.client.Request', /** @lends Jii.request.client.Request.prototype */{
-
-	__extends: HttpRequest,
-
-    constructor(location) {
+    preInit(location) {
         if (!(location instanceof Location)) {
             throw new InvalidConfigException('Location is not instanceof class browser Location.');
         }
         this._location = location;
 
         this.init();
-    },
+    }
 
     getMethod() {
         return 'GET';
-    },
+    }
 
     /**
      * Return if the request is sent via secure channel (https).
@@ -38,7 +30,7 @@ var Request = Jii.defineClass('Jii.request.client.Request', /** @lends Jii.reque
      */
     isSecureConnection() {
         return this._location.protocol === 'https:';
-    },
+    }
 
     /**
      * Returns the server name.
@@ -46,7 +38,7 @@ var Request = Jii.defineClass('Jii.request.client.Request', /** @lends Jii.reque
      */
     getServerName() {
         return this._location.hostname;
-    },
+    }
 
     /**
      * Returns the server port number.
@@ -54,7 +46,7 @@ var Request = Jii.defineClass('Jii.request.client.Request', /** @lends Jii.reque
      */
     getServerPort() {
         return this._location.port || 80;
-    },
+    }
 
     /**
      * Returns the URL referrer, null if not present
@@ -62,7 +54,7 @@ var Request = Jii.defineClass('Jii.request.client.Request', /** @lends Jii.reque
      */
     getReferrer() {
         return document.referrer;
-    },
+    }
 
     /**
      * Returns the user agent, null if not present.
@@ -70,7 +62,7 @@ var Request = Jii.defineClass('Jii.request.client.Request', /** @lends Jii.reque
      */
     getUserAgent() {
         return navigator.userAgent;
-    },
+    }
 
     /**
      * Parsing query string to key-value object
@@ -79,11 +71,12 @@ var Request = Jii.defineClass('Jii.request.client.Request', /** @lends Jii.reque
      * @private
      */
     _parseParams() {
-        var spaceRegexp = /\+/g;  // Regex for replacing addition symbol with a space
+        var spaceRegexp = /\+/g;
+        // Regex for replacing addition symbol with a space
         var searchRegexp = /([^&=]+)=?([^&]*)/g;
-        var query  = this._location.search.substring(1);
-        var decode = (s) => {
-            return decodeURIComponent(s.replace(spaceRegexp, " "));
+        var query = this._location.search.substring(1);
+        var decode = s => {
+            return decodeURIComponent(s.replace(spaceRegexp, ' '));
         };
 
         var match;
@@ -93,12 +86,11 @@ var Request = Jii.defineClass('Jii.request.client.Request', /** @lends Jii.reque
         }
 
         return urlParams;
-    },
+    }
 
     _parsePathInfo() {
         return _trimStart(this._location.pathname, '/');
     }
 
-});
-
+}
 module.exports = Request;

@@ -7,77 +7,86 @@ var Profile = require('./Profile.js');
 var Order = require('./Order.js');
 var OrderWithNullFK = require('./OrderWithNullFK.js');
 var Item = require('./Item.js');
+class Customer extends ActiveRecord {
 
-/**
- * @class tests.unit.models.Customer
- * @extends tests.unit.models.ActiveRecord
- */
-var Customer = Jii.defineClass('tests.unit.models.Customer', {
+    preInit() {
+        this.status2 = null;
+        super.preInit(...arguments);
+    }
 
-	__extends: ActiveRecord,
+    static tableName() {
+        return 'customer';
+    }
 
-	__static: {
+    /**
+         * @inheritdoc
+         * @returns {CustomerQuery}
+         */
+    static find() {
+        return new CustomerQuery(this);
+    }
 
-		STATUS_ACTIVE: 1,
-		STATUS_INACTIVE: 2,
+    getProfile() {
+        return this.hasOne(Profile, {
+            id: 'profile_id'
+        });
+    }
 
-		tableName() {
-			return 'customer';
-		},
+    getOrders() {
+        return this.hasMany(Order, {
+            customer_id: 'id'
+        }).orderBy('id');
+    }
 
-		/**
-		 * @inheritdoc
-		 * @returns {CustomerQuery}
-		 */
-		find() {
-			return new CustomerQuery(this);
-		}
+    getExpensiveOrders() {
+        return this.hasMany(Order, {
+            customer_id: 'id'
+        }).andWhere('total > 50').orderBy('id');
+    }
 
-	},
+    getExpensiveOrdersWithNullFK() {
+        return this.hasMany(OrderWithNullFK, {
+            customer_id: 'id'
+        }).andWhere('total > 50').orderBy('id');
+    }
 
-	status2: null,
+    getOrdersWithNullFK() {
+        return this.hasMany(OrderWithNullFK, {
+            customer_id: 'id'
+        }).orderBy('id');
+    }
 
-	getProfile() {
-		return this.hasOne(Profile, {id: 'profile_id'});
-	},
+    getOrders2() {
+        return this.hasMany(Order, {
+            customer_id: 'id'
+        }).inverseOf('customer2').orderBy('id');
+    }
 
-	getOrders() {
-		return this.hasMany(Order, {customer_id: 'id'}).orderBy('id');
-	},
+    // deeply nested table relation
+    getOrderItems() {
+        /** @typedef {Jii.data.ActiveQuery} rel */
+        var rel = this.hasMany(Item, {
+            id: 'item_id'
+        });
 
-	getExpensiveOrders() {
-		return this.hasMany(Order, {customer_id: 'id'}).andWhere('total > 50').orderBy('id');
-	},
+        return rel.viaTable('order_item', {
+            order_id: 'id'
+        }, function(q) {
+            /** @typedef {Jii.data.ActiveQuery} q */
+            q.viaTable('order', {
+                customer_id: 'id'
+            });
+        }).orderBy('id');
+    }
 
-	getExpensiveOrdersWithNullFK() {
-		return this.hasMany(OrderWithNullFK, {customer_id: 'id'}).andWhere('total > 50').orderBy('id');
-	},
-
-	getOrdersWithNullFK() {
-		return this.hasMany(OrderWithNullFK, {customer_id: 'id'}).orderBy('id');
-	},
-
-	getOrders2() {
-		return this.hasMany(Order, {customer_id: 'id'}).inverseOf('customer2').orderBy('id');
-	},
-
-	// deeply nested table relation
-	getOrderItems() {
-		/** @typedef {Jii.data.ActiveQuery} rel */
-		var rel = this.hasMany(Item, {id: 'item_id'});
-
-		return rel.viaTable('order_item', {order_id: 'id'}, function (q) {
-			/** @typedef {Jii.data.ActiveQuery} q */
-			q.viaTable('order', {customer_id: 'id'});
-		}).orderBy('id');
-	},
-
-	afterSave(insert, changedAttributes) {
-		Jii.__afterSaveInsert = insert;
+    afterSave(insert, changedAttributes) {
+        Jii.__afterSaveInsert = insert;
         Jii.__afterSaveNewRecord = this.isNewRecord();
-		return this.__super(insert, changedAttributes);
-	}
+        return super.afterSave(insert, changedAttributes);
+    }
 
-});
+}
+Customer.STATUS_INACTIVE = 2;
 
+Customer.STATUS_ACTIVE = 1;
 module.exports = Customer;

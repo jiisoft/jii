@@ -1,6 +1,6 @@
 'use strict';
 
-var Jii = require('../../BaseJii');
+var Jii = require('../../index');
 var FakeValidationModel = require('../models/FakeValidationModel');
 var BooleanValidator = require('../../validators/BooleanValidator');
 var CompareValidator = require('../../validators/CompareValidator');
@@ -17,18 +17,10 @@ var NumberValidator = require('../../validators/NumberValidator');
 var RangeValidator = require('../../validators/RangeValidator');
 var RegularExpressionValidator = require('../../validators/RegularExpressionValidator');
 var UnitTest = require('../../base/UnitTest');
-
 require('../bootstrap');
+class self extends UnitTest {
 
-/**
- * @class tests.unit.ValidatorTest
- * @extends Jii.base.UnitTest
- */
-var self = Jii.defineClass('tests.unit.ValidatorTest', {
-
-	__extends: UnitTest,
-
-    _assertValidation: function(test, validator, values, hasErrors) {
+    _assertValidation(test, validator, values, hasErrors) {
         var model = new FakeValidationModel();
 
         values.forEach(function(value) {
@@ -42,26 +34,48 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
             // Value
             test.strictEqual(validator.validateValue(value), !hasErrors, validator.className() + ': Value error, value: ' + value);
         });
-    },
+    }
 
-    _assertTrue: function(test, validator, values) {
+    _assertTrue(test, validator, values) {
         this._assertValidation(test, validator, values, false);
-    },
+    }
 
-    _assertFalse: function(test, validator, values) {
+    _assertFalse(test, validator, values) {
         this._assertValidation(test, validator, values, true);
-    },
+    }
 
     booleanValidatorTest(test) {
         var validator = new BooleanValidator();
-        this._assertTrue(test, validator, [true, false, 1, 0, '1', '0']);
-        this._assertFalse(test, validator, ['text..', [], null]);
+        this._assertTrue(test, validator, [
+            true,
+            false,
+            1,
+            0,
+            '1',
+            '0'
+        ]);
+        this._assertFalse(test, validator, [
+            'text..',
+            [],
+            null
+        ]);
         validator.strict = true;
-        this._assertTrue(test, validator, ['1', '0']);
-        this._assertFalse(test, validator, [true, false, 1, 0, 'text..', [], null]);
+        this._assertTrue(test, validator, [
+            '1',
+            '0'
+        ]);
+        this._assertFalse(test, validator, [
+            true,
+            false,
+            1,
+            0,
+            'text..',
+            [],
+            null
+        ]);
 
         test.done();
-    },
+    }
 
     compareValidatorTest(test) {
         var model = new FakeValidationModel();
@@ -87,7 +101,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.strictEqual(validator.validateValue('test'), false);
 
         test.done();
-    },
+    }
 
     dateValidatorTest(test) {
         var validator = new DateValidator();
@@ -101,9 +115,9 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.strictEqual(model.get('bar'), 1362355200);
 
         test.done();
-    },
+    }
 
-    defaultValueValidatorTest: function(test) {
+    defaultValueValidatorTest(test) {
         var model = new FakeValidationModel();
         model.set('foo', 'test');
 
@@ -117,7 +131,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.strictEqual(model.get('foo'), 'test222');
 
         test.done();
-    },
+    }
 
     emailValidatorTest(test) {
         var validator = new EmailValidator();
@@ -125,7 +139,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         this._assertFalse(test, validator, ['text..']);
 
         test.done();
-    },
+    }
 
     filterValidatorTest(test) {
         var model = new FakeValidationModel();
@@ -140,7 +154,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.strictEqual(model.get('foo'), 10);
 
         test.done();
-    },
+    }
 
     inlineValidatorTest(test) {
         var model = new FakeValidationModel();
@@ -159,61 +173,131 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.strictEqual(model.hasErrors('foo'), true);
 
         test.done();
-    },
+    }
 
     numberValidatorTest(test) {
-		var validator;
+        var validator;
 
         validator = new NumberValidator();
-        this._assertTrue(test, validator, [20, 0, -20, '20', 25.45]);
-        this._assertFalse(test, validator, ['25,45', '12:45']);
+        this._assertTrue(test, validator, [
+            20,
+            0,
+            -20,
+            '20',
+            25.45
+        ]);
+        this._assertFalse(test, validator, [
+            '25,45',
+            '12:45'
+        ]);
 
         validator.integerOnly = true;
-        this._assertTrue(test, validator, [20, 0, -20, '20', '020', 0x14]);
-        this._assertFalse(test, validator, [25.45, '25,45', '0x14']);
-
+        this._assertTrue(test, validator, [
+            20,
+            0,
+            -20,
+            '20',
+            '020',
+            20
+        ]);
+        this._assertFalse(test, validator, [
+            25.45,
+            '25,45',
+            '0x14'
+        ]);
 
         validator = new NumberValidator({
             min: -10,
             max: 5
         });
-        this._assertTrue(test, validator, [-10, -3, 0, 3, 5]);
-        this._assertFalse(test, validator, [-11, 6, 100]);
+        this._assertTrue(test, validator, [
+            -10,
+            -3,
+            0,
+            3,
+            5
+        ]);
+        this._assertFalse(test, validator, [
+            -11,
+            6,
+            100
+        ]);
 
         test.done();
-    },
+    }
 
     rangeValidatorTest(test) {
         var validator = new RangeValidator({
-            range: [1, 2, 'test']
+            range: [
+                1,
+                2,
+                'test'
+            ]
         });
-        this._assertTrue(test, validator, [1, 2, '1', '2', 'test']);
-        this._assertFalse(test, validator, [3, 'text..']);
+        this._assertTrue(test, validator, [
+            1,
+            2,
+            '1',
+            '2',
+            'test'
+        ]);
+        this._assertFalse(test, validator, [
+            3,
+            'text..'
+        ]);
 
         validator.strict = true;
-        this._assertTrue(test, validator, [1, 2, 'test']);
-        this._assertFalse(test, validator, ['1', '2', 'text..']);
+        this._assertTrue(test, validator, [
+            1,
+            2,
+            'test'
+        ]);
+        this._assertFalse(test, validator, [
+            '1',
+            '2',
+            'text..'
+        ]);
 
         validator.not = true;
-        this._assertTrue(test, validator, ['1', '2', 'text..']);
-        this._assertFalse(test, validator, [1, 2, 'test']);
+        this._assertTrue(test, validator, [
+            '1',
+            '2',
+            'text..'
+        ]);
+        this._assertFalse(test, validator, [
+            1,
+            2,
+            'test'
+        ]);
 
         test.done();
-    },
+    }
 
     regularExpressionValidatorTest(test) {
         var validator = new RegularExpressionValidator({
             pattern: /^[a-z]+[0-9]$/
         });
-        this._assertTrue(test, validator, ['aaa4', 'a1']);
-        this._assertFalse(test, validator, ['qwe123', 'bbb']);
+        this._assertTrue(test, validator, [
+            'aaa4',
+            'a1'
+        ]);
+        this._assertFalse(test, validator, [
+            'qwe123',
+            'bbb'
+        ]);
 
         validator.not = true;
-        this._assertFalse(test, validator, ['aaa4', 'a1']);
-        this._assertTrue(test, validator, ['qwe123', 'bbb']);
+        this._assertFalse(test, validator, [
+            'aaa4',
+            'a1'
+        ]);
+        this._assertTrue(test, validator, [
+            'qwe123',
+            'bbb'
+        ]);
 
         test.done();
-    },
+    }
 
     requiredValidatorTest(test) {
         var model = new FakeValidationModel();
@@ -228,7 +312,7 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.strictEqual(model.hasErrors('foo'), true);
 
         test.done();
-    },
+    }
 
     safeValidatorTest(test) {
         var model = new FakeValidationModel();
@@ -238,55 +322,98 @@ var self = Jii.defineClass('tests.unit.ValidatorTest', {
         test.strictEqual(model.hasErrors(), false);
 
         test.done();
-    },
+    }
 
     stringValidatorTest(test) {
-		var validator;
+        var validator;
 
         validator = new StringValidator({
             length: 4
         });
-        this._assertTrue(test, validator, ['aaaa', '€€€€']);
-        this._assertFalse(test, validator, ['aa', 'q']);
+        this._assertTrue(test, validator, [
+            'aaaa',
+            '\u20AC\u20AC\u20AC\u20AC'
+        ]);
+        this._assertFalse(test, validator, [
+            'aa',
+            'q'
+        ]);
 
         validator = new StringValidator({
             length: [4]
         });
-        this._assertTrue(test, validator, ['aaaa', 'aaabbb']);
-        this._assertFalse(test, validator, ['aa', '']);
+        this._assertTrue(test, validator, [
+            'aaaa',
+            'aaabbb'
+        ]);
+        this._assertFalse(test, validator, [
+            'aa',
+            ''
+        ]);
 
         validator = new StringValidator({
-            length: [1, 5]
+            length: [
+                1,
+                5
+            ]
         });
-        this._assertTrue(test, validator, ['a', 'aa', 'aaaaa']);
-        this._assertFalse(test, validator, ['', 'aaabbb']);
+        this._assertTrue(test, validator, [
+            'a',
+            'aa',
+            'aaaaa'
+        ]);
+        this._assertFalse(test, validator, [
+            '',
+            'aaabbb'
+        ]);
 
         validator = new StringValidator({
-            length: [3, 8],
+            length: [
+                3,
+                8
+            ],
             min: 1,
             max: 5
         });
-        this._assertTrue(test, validator, ['aaa', 'aaaabbbb']);
-        this._assertFalse(test, validator, ['', 'aa']);
-
-        test.done();
-    },
-
-    urlValidatorTest(test) {
-		var validator;
-
-        validator = new UrlValidator();
-        this._assertTrue(test, validator, ['http://google.de', 'https://google.de', 'https://www.google.de/search?q=yii+framework&ie=utf-8&oe=utf-8&rls=org.mozilla:de:official&client=firefox-a&gws_rd=cr']);
-        this._assertFalse(test, validator, ['google.de', 'htp://yiiframework.com', 'ftp://ftp.ruhr-uni-bochum.de/', 'http://invalid,domain', 'http://äüö?=!"§$%&/()=}][{³²€.edu']);
-
-        validator = new UrlValidator({
-            defaultScheme: 'https'
-        });
-        this._assertTrue(test, validator, ['yiiframework.com', 'http://yiiframework.com']);
+        this._assertTrue(test, validator, [
+            'aaa',
+            'aaaabbbb'
+        ]);
+        this._assertFalse(test, validator, [
+            '',
+            'aa'
+        ]);
 
         test.done();
     }
 
-});
+    urlValidatorTest(test) {
+        var validator;
 
+        validator = new UrlValidator();
+        this._assertTrue(test, validator, [
+            'http://google.de',
+            'https://google.de',
+            'https://www.google.de/search?q=yii+framework&ie=utf-8&oe=utf-8&rls=org.mozilla:de:official&client=firefox-a&gws_rd=cr'
+        ]);
+        this._assertFalse(test, validator, [
+            'google.de',
+            'htp://yiiframework.com',
+            'ftp://ftp.ruhr-uni-bochum.de/',
+            'http://invalid,domain',
+            'http://äüö?=!"\xA7$%&/()=}][{\xB3\xB2\u20AC.edu'
+        ]);
+
+        validator = new UrlValidator({
+            defaultScheme: 'https'
+        });
+        this._assertTrue(test, validator, [
+            'yiiframework.com',
+            'http://yiiframework.com'
+        ]);
+
+        test.done();
+    }
+
+}
 module.exports = new self().exports();

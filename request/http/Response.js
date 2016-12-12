@@ -2,7 +2,6 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 var Jii = require('../../BaseJii');
 var Url = require('../../helpers/Url');
 var InvalidParamException = require('../../exceptions/InvalidParamException');
@@ -14,93 +13,49 @@ var _isString = require('lodash/isString');
 var _each = require('lodash/each');
 var _has = require('lodash/has');
 var BaseResponse = require('../../base/Response');
+class Response extends BaseResponse {
 
-/**
- * @class Jii.request.http.Response
- * @extends Jii.base.Response
- */
-var Response = Jii.defineClass('Jii.request.http.Response', /** @lends Jii.request.http.Response.prototype */{
-
-	__extends: BaseResponse,
-
-	__static: /** @lends Jii.request.http.Response */{
-
-		FORMAT_RAW: 'raw',
-		FORMAT_HTML: 'html',
-		FORMAT_JSON: 'json',
-		FORMAT_JSONP: 'jsonp',
-		FORMAT_XML: 'xml',
-
-		httpStatuses: {
-			100: 'Continue',
-			101: 'Switching Protocols',
-			102: 'Processing',
-			118: 'Connection timed out',
-			200: 'OK',
-			201: 'Created',
-			202: 'Accepted',
-			203: 'Non-Authoritative',
-			204: 'No Content',
-			205: 'Reset Content',
-			206: 'Partial Content',
-			207: 'Multi-Status',
-			208: 'Already Reported',
-			210: 'Content Different',
-			226: 'IM Used',
-			300: 'Multiple Choices',
-			301: 'Moved Permanently',
-			302: 'Found',
-			303: 'See Other',
-			304: 'Not Modified',
-			305: 'Use Proxy',
-			306: 'Reserved',
-			307: 'Temporary Redirect',
-			308: 'Permanent Redirect',
-			310: 'Too many Redirect',
-			400: 'Bad Request',
-			401: 'Unauthorized',
-			402: 'Payment Required',
-			403: 'Forbidden',
-			404: 'Not Found',
-			405: 'Method Not Allowed',
-			406: 'Not Acceptable',
-			407: 'Proxy Authentication Required',
-			408: 'Request Time-out',
-			409: 'Conflict',
-			410: 'Gone',
-			411: 'Length Required',
-			412: 'Precondition Failed',
-			413: 'Request Entity Too Large',
-			414: 'Request-URI Too Long',
-			415: 'Unsupported Media Type',
-			416: 'Requested range unsatisfiable',
-			417: 'Expectation failed',
-			418: 'I\'m a teapot',
-			422: 'Unprocessable entity',
-			423: 'Locked',
-			424: 'Method failure',
-			425: 'Unordered Collection',
-			426: 'Upgrade Required',
-			428: 'Precondition Required',
-			429: 'Too Many Requests',
-			431: 'Request Header Fields Too Large',
-			449: 'Retry With',
-			450: 'Blocked by Windows Parental Controls',
-			500: 'Internal Server Error',
-			501: 'Not Implemented',
-			502: 'Bad Gateway ou Proxy Error',
-			503: 'Service Unavailable',
-			504: 'Gateway Time-out',
-			505: 'HTTP Version not supported',
-			507: 'Insufficient storage',
-			508: 'Loop Detected',
-			509: 'Bandwidth Limit Exceeded',
-			510: 'Not Extended',
-			511: 'Network Authentication Required'
-		}
-	},
-
-    /**
+    preInit(nativeResponse) {
+        /**
+     * @var {object|null}
+     */
+        this._cookies = null;
+        /**
+     * @var {object}
+     */
+        this._headers = null;
+        /**
+     * @var {number} the HTTP status code to send with the response.
+     */
+        this._statusCode = 200;
+        /**
+     * @var {string} the version of the HTTP protocol to use
+     */
+        this.version = null;
+        /**
+     * @var {string} the HTTP status description that comes together with the status code.
+     * @see httpStatuses
+     */
+        this.statusText = 'OK';
+        /**
+     * @var {string} the charset of the text response. If not set, it will use
+     * the value of [[Application::charset]].
+     */
+        this.charset = null;
+        /**
+     * @var {string} the response content. When [[data]] is not null, it will be converted into [[content]]
+     * according to [[format]] when the response is being sent out.
+     * @see data
+     */
+        this.content = null;
+        /**
+     * @var {array} the formatters for converting data into the response content of the specified [[format]].
+     * The array keys are the format names, and the array values are the corresponding configurations
+     * for creating the formatter objects.
+     * @see format
+     */
+        this.formatters = null;
+        /**
      * @var string the response format. This determines how to convert [[data]] into [[content]]
      * when the latter is not set. By default, the following formats are supported:
      *
@@ -120,66 +75,15 @@ var Response = Jii.defineClass('Jii.request.http.Response', /** @lends Jii.reque
      * You may customize the formatting process or support additional formats by configuring [[formatters]].
      * @see formatters
      */
-    format: null,
-
-    /**
-     * @var {array} the formatters for converting data into the response content of the specified [[format]].
-     * The array keys are the format names, and the array values are the corresponding configurations
-     * for creating the formatter objects.
-     * @see format
-     */
-    formatters: null,
-
-    /**
-     * @var {string} the response content. When [[data]] is not null, it will be converted into [[content]]
-     * according to [[format]] when the response is being sent out.
-     * @see data
-     */
-    content: null,
-
-    /**
-     * @var {string} the charset of the text response. If not set, it will use
-     * the value of [[Application::charset]].
-     */
-    charset: null,
-
-    /**
-     * @var {string} the HTTP status description that comes together with the status code.
-     * @see httpStatuses
-     */
-    statusText: 'OK',
-
-    /**
-     * @var {string} the version of the HTTP protocol to use
-     */
-    version: null,
-
-    /**
-     * @var {number} the HTTP status code to send with the response.
-     */
-    _statusCode: 200,
-
-    /**
-     * @var {object}
-     */
-    _headers: null,
-
-    /**
-     * @var {object|null}
-     */
-    _cookies: null,
-
-    _nativeResponse: null,
-
-    constructor(nativeResponse) {
+        this.format = null;
         this._nativeResponse = nativeResponse;
 
         this.init();
-    },
+    }
 
     init() {
         // Set default format
-        this.format = this.__static.FORMAT_HTML;
+        this.format = Response.FORMAT_HTML;
 
         // Detect http version (1.0 or 1.1)
         this.version = this._nativeResponse.req.httpVersion;
@@ -188,14 +92,14 @@ var Response = Jii.defineClass('Jii.request.http.Response', /** @lends Jii.reque
         if (this.charset === null) {
             this.charset = Jii.app.charset;
         }
-    },
+    }
 
     /**
      * @return {number} the HTTP status code to send with the response.
      */
     getStatusCode() {
         return this._statusCode;
-    },
+    }
 
     /**
      * Sets the response status code.
@@ -213,8 +117,8 @@ var Response = Jii.defineClass('Jii.request.http.Response', /** @lends Jii.reque
             throw new InvalidParamException();
         }
 
-        this.statusText = text || this.__static.httpStatuses[this._statusCode] || '';
-    },
+        this.statusText = text || Response.httpStatuses[this._statusCode] || '';
+    }
 
     /**
      * Returns the header collection.
@@ -226,7 +130,7 @@ var Response = Jii.defineClass('Jii.request.http.Response', /** @lends Jii.reque
             this._headers = new HeaderCollection();
         }
         return this._headers;
-    },
+    }
 
     /**
      * Sends the response to the client.
@@ -243,7 +147,7 @@ var Response = Jii.defineClass('Jii.request.http.Response', /** @lends Jii.reque
         this._sendContent();
         //this.trigger(self::EVENT_AFTER_SEND);
         this.isSent = true;
-    },
+    }
 
     /**
      * Clears the headers, cookies, content, status code of the response.
@@ -256,7 +160,7 @@ var Response = Jii.defineClass('Jii.request.http.Response', /** @lends Jii.reque
         this.data = null;
         this.content = null;
         this.isSent = false;
-    },
+    }
 
     /**
      * Sends the response headers to the client
@@ -265,7 +169,7 @@ var Response = Jii.defineClass('Jii.request.http.Response', /** @lends Jii.reque
         this._nativeResponse.status(this.getStatusCode());
         this._nativeResponse.set(this.getHeaders().toJSON());
         this._sendCookies();
-    },
+    }
 
     /**
      * Sends the cookies to the client.
@@ -277,16 +181,15 @@ var Response = Jii.defineClass('Jii.request.http.Response', /** @lends Jii.reque
 
         // @todo Also need set age, path, ..
         _each(this._cookies, (value, key) => {
-            //this._nativeResponse.cookie(key, value);
         });
-    },
+    }
 
     /**
      * Sends the response content to the client
      */
     _sendContent() {
         this._nativeResponse.send(this.content);
-    },
+    }
 
     /**
      * Sends a file to the browser.
@@ -305,7 +208,7 @@ var Response = Jii.defineClass('Jii.request.http.Response', /** @lends Jii.reque
 
         // @todo
         this._nativeResponse.sendFile(filePath);
-    },
+    }
 
     /**
      * Redirects the browser to the specified URL.
@@ -336,86 +239,88 @@ var Response = Jii.defineClass('Jii.request.http.Response', /** @lends Jii.reque
         } elseif (Yii::$app->getRequest()->getIsAjax()) {
             this.getHeaders()->set('X-Redirect', $url);
         } else {*/
-            this.getHeaders().set('Location', url);
+        this.getHeaders().set('Location', url);
         //}
         this.setStatusCode(statusCode);
 
         return null;
-    },
+    }
 
-    refresh() {
-        // @todo
-    },
+    refresh() {}
 
     /**
      * @return {boolean} whether this response has a valid [[statusCode]].
      */
     isInvalid() {
         return this.getStatusCode() < 100 || this.getStatusCode() >= 600;
-    },
+    }
 
     /**
      * @return {boolean} whether this response is informational
      */
     isInformational() {
         return this.getStatusCode() >= 100 && this.getStatusCode() < 200;
-    },
+    }
 
     /**
      * @return {boolean} whether this response is successful
      */
     isSuccessful() {
         return this.getStatusCode() >= 200 && this.getStatusCode() < 300;
-    },
+    }
 
     /**
      * @return {boolean} whether this response is a redirection
      */
     isRedirection() {
         return this.getStatusCode() >= 300 && this.getStatusCode() < 400;
-    },
+    }
 
     /**
      * @return {boolean} whether this response indicates a client error
      */
     isClientError() {
         return this.getStatusCode() >= 400 && this.getStatusCode() < 500;
-    },
+    }
 
     /**
      * @return {boolean} whether this response indicates a server error
      */
     isServerError() {
         return this.getStatusCode() >= 500 && this.getStatusCode() < 600;
-    },
+    }
 
     /**
      * @return {boolean} whether this response is OK
      */
     isOk() {
         return this.getStatusCode() == 200;
-    },
+    }
 
     /**
      * @return {boolean} whether this response indicates the current request is forbidden
      */
     isForbidden() {
         return this.getStatusCode() == 403;
-    },
+    }
 
     /**
      * @return {boolean} whether this response indicates the currently requested resource is not found
      */
     isNotFound() {
         return this.getStatusCode() == 404;
-    },
+    }
 
     /**
      * @return {boolean} whether this response is empty
      */
     isEmpty() {
-        return _indexOf([201, 204, 304], this.getStatusCode()) !== -1;
-    },
+        return _indexOf([
+                201,
+                204,
+                304
+            ], this.getStatusCode()) !== -1;
+    }
 
     /**
      * Prepares for sending the response.
@@ -429,48 +334,46 @@ var Response = Jii.defineClass('Jii.request.http.Response', /** @lends Jii.reque
 
         if (_has(this.formatters, this.format)) {
             var formatter = this.formatters[this.format];
-
             // Lazy create instance
             // @todo
 
         } else {
             switch (this.format) {
-                case this.__static.FORMAT_HTML:
+                case Response.FORMAT_HTML:
                     this.getHeaders().setDefault('Content-Type', 'text/html; charset=' + this.charset);
                     this.content = this.data;
                     break;
 
-                case this.__static.FORMAT_RAW:
+                case Response.FORMAT_RAW:
                     this.content = this.data;
                     break;
 
-                case this.__static.FORMAT_JSON:
+                case Response.FORMAT_JSON:
                     this.getHeaders().set('Content-Type', 'application/json; charset=UTF-8');
                     this.content = JSON.stringify(this.data);
                     break;
 
-                case this.__static.FORMAT_JSONP:
+                case Response.FORMAT_JSONP:
                     this.getHeaders().set('Content-Type', 'text/javascript; charset=' + this.charset);
                     if (_isObject(this.data) && _has(this.data, 'data') && _has(this.data, 'callback')) {
                         this.content = this.data.callback + '(' + JSON.stringify(this.data.data) + ');';
                     } else {
-                        this.content = '';
-                        //Yii::warning("The 'jsonp' response requires that the data be an array consisting of both 'data' and 'callback' elements.", __METHOD__);
+                        this.content = ''; //Yii::warning("The 'jsonp' response requires that the data be an array consisting of both 'data' and 'callback' elements.", __METHOD__);
                     }
                     break;
 
-                case this.__static.FORMAT_XML:
+                case Response.FORMAT_XML:
                     // @todo
                     //Yii::createObject(XmlResponseFormatter::className())->format($this);
                     break;
 
                 default:
-                    throw new InvalidConfigException("Unsupported response format: " + this.format);
+                    throw new InvalidConfigException('Unsupported response format: ' + this.format);
             }
         }
 
         if (!_isString(this.content)) {
-            throw new InvalidParamException("Response content must be a string.");
+            throw new InvalidParamException('Response content must be a string.');
         }
 
         if (_isObject(this.content)) {
@@ -478,6 +381,79 @@ var Response = Jii.defineClass('Jii.request.http.Response', /** @lends Jii.reque
         }
     }
 
-});
+}
 
+Response.httpStatuses = {
+    100: 'Continue',
+    101: 'Switching Protocols',
+    102: 'Processing',
+    118: 'Connection timed out',
+    200: 'OK',
+    201: 'Created',
+    202: 'Accepted',
+    203: 'Non-Authoritative',
+    204: 'No Content',
+    205: 'Reset Content',
+    206: 'Partial Content',
+    207: 'Multi-Status',
+    208: 'Already Reported',
+    210: 'Content Different',
+    226: 'IM Used',
+    300: 'Multiple Choices',
+    301: 'Moved Permanently',
+    302: 'Found',
+    303: 'See Other',
+    304: 'Not Modified',
+    305: 'Use Proxy',
+    306: 'Reserved',
+    307: 'Temporary Redirect',
+    308: 'Permanent Redirect',
+    310: 'Too many Redirect',
+    400: 'Bad Request',
+    401: 'Unauthorized',
+    402: 'Payment Required',
+    403: 'Forbidden',
+    404: 'Not Found',
+    405: 'Method Not Allowed',
+    406: 'Not Acceptable',
+    407: 'Proxy Authentication Required',
+    408: 'Request Time-out',
+    409: 'Conflict',
+    410: 'Gone',
+    411: 'Length Required',
+    412: 'Precondition Failed',
+    413: 'Request Entity Too Large',
+    414: 'Request-URI Too Long',
+    415: 'Unsupported Media Type',
+    416: 'Requested range unsatisfiable',
+    417: 'Expectation failed',
+    418: 'I\'m a teapot',
+    422: 'Unprocessable entity',
+    423: 'Locked',
+    424: 'Method failure',
+    425: 'Unordered Collection',
+    426: 'Upgrade Required',
+    428: 'Precondition Required',
+    429: 'Too Many Requests',
+    431: 'Request Header Fields Too Large',
+    449: 'Retry With',
+    450: 'Blocked by Windows Parental Controls',
+    500: 'Internal Server Error',
+    501: 'Not Implemented',
+    502: 'Bad Gateway ou Proxy Error',
+    503: 'Service Unavailable',
+    504: 'Gateway Time-out',
+    505: 'HTTP Version not supported',
+    507: 'Insufficient storage',
+    508: 'Loop Detected',
+    509: 'Bandwidth Limit Exceeded',
+    510: 'Not Extended',
+    511: 'Network Authentication Required'
+}
+Response.FORMAT_XML = 'xml';
+Response.FORMAT_JSONP = 'jsonp';
+Response.FORMAT_JSON = 'json';
+Response.FORMAT_HTML = 'html';
+
+Response.FORMAT_RAW = 'raw';
 module.exports = Response;

@@ -2,7 +2,6 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -17,49 +16,30 @@ var _clone = require('lodash/clone');
 var _map = require('lodash/map');
 var Component = require('../../base/Component');
 var NeatComet = require('neatcomet');
+class NeatClient extends Component {
 
-/**
- * @class Jii.comet.client.NeatClient
- * @extends Jii.base.Component
- * @implements NeatComet.api.ICometClient
- */
-var NeatClient = Jii.defineClass('Jii.comet.client.NeatClient', /** @lends Jii.comet.client.NeatClient.prototype */{
-
-    __extends: Component,
-
-    __static: /** @lends Jii.comet.client.NeatClient */{
-
-        ROUTE_PREFIX: 'profiles:'
-
-    },
-
-    /**
-     * @type {Jii.comet.client.Client}
-     */
-    comet: null,
-
-    /**
-     * @type {object}
-     */
-    bindings: null,
-
-    /**
+    preInit() {
+        /**
      * @type {NeatComet.NeatCometClient}
      */
-    engine: {
-        className: 'NeatComet.NeatCometClient'
-    },
+        this.engine = {
+            className: 'NeatComet.NeatCometClient'
+        };
+        /**
+     * @type {object}
+     */
+        this.bindings = null;
+        /**
+     * @type {Jii.comet.client.Client}
+     */
+        this.comet = null;
+        super.preInit(...arguments);
+    }
 
     init() {
-        this.__super();
+        super.init();
 
-        this.comet = this.comet === null ?
-            Jii.app.get('comet') :
-            (
-                this.comet instanceof Component ?
-                    this.comet :
-                    Jii.createObject(this.comet)
-            );
+        this.comet = this.comet === null ? Jii.app.get('comet') : this.comet instanceof Component ? this.comet : Jii.createObject(this.comet);
 
         // Move NeatComet to Jii namespace
         _extend(Jii.namespace('NeatComet'), NeatComet);
@@ -69,7 +49,7 @@ var NeatClient = Jii.defineClass('Jii.comet.client.NeatClient', /** @lends Jii.c
         this.engine.createCollection = this.engine.createCollection || this._createCollection.bind(this);
         this.engine.callCollection = this.engine.callCollection || this._callCollection.bind(this);
         this.engine = Jii.createObject(this.engine);
-    },
+    }
 
     /**
      *
@@ -79,7 +59,7 @@ var NeatClient = Jii.defineClass('Jii.comet.client.NeatClient', /** @lends Jii.c
      */
     openProfile(profileId, params) {
         return this.engine.openProfile(profileId, params);
-    },
+    }
 
     /**
      * Allowed to expect that it will be called only once per ICometServer instance
@@ -87,34 +67,38 @@ var NeatClient = Jii.defineClass('Jii.comet.client.NeatClient', /** @lends Jii.c
      */
     bindEvents(eventsHandler) {
         this.comet.on(Client.EVENT_CHANNEL, event => {
-            if (event.channel.indexOf(this.__static.ROUTE_PREFIX) === 0) {
-                eventsHandler.onMessage(event.channel.substr(this.__static.ROUTE_PREFIX.length), event.params);
+            if (event.channel.indexOf(this.constructor.ROUTE_PREFIX) === 0) {
+                eventsHandler.onMessage(event.channel.substr(this.constructor.ROUTE_PREFIX.length), event.params);
             }
         });
 
         this.comet.on('open', () => {
             eventsHandler.onConnectionRestore();
         });
-    },
+    }
 
     /**
      * @param {object} params
      * @param {NeatComet.api.ICometClient~openSuccess} successCallback
      */
     sendOpen(params, successCallback) {
-        this.comet.request('neat/open', { neat: params }).then(data => {
+        this.comet.request('neat/open', {
+            neat: params
+        }).then(data => {
 
             // Chain with NeatComet handler
             successCallback(data.neat);
         });
-    },
+    }
 
     /**
      * @param {string[]} ids
      */
     sendClose(ids) {
-        this.comet.request('neat/close', { neat: ids });
-    },
+        this.comet.request('neat/close', {
+            neat: ids
+        });
+    }
 
     _createCollection(profileId, bindingId, definition, openedProfile) {
         var modelClassName = definition.clientModel || definition.serverModel || ActiveRecord;
@@ -134,7 +118,7 @@ var NeatClient = Jii.defineClass('Jii.comet.client.NeatClient', /** @lends Jii.c
         return new Collection([], {
             modelClass: modelClass
         });
-    },
+    }
 
     /**
      *
@@ -186,6 +170,7 @@ var NeatClient = Jii.defineClass('Jii.comet.client.NeatClient', /** @lends Jii.c
         collection[method].apply(collection, _toArray(arguments).slice(2));
     }
 
-});
+}
 
+NeatClient.ROUTE_PREFIX = 'profiles:';
 module.exports = NeatClient;

@@ -2,28 +2,23 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
+class ModelAdapterInterface {
 
-/**
- * @class Jii.data.ModelAdapterInterface
- */
-var ModelAdapterInterface = Jii.defineClass('Jii.data.ModelAdapterInterface', /** @lends Jii.data.ModelAdapterInterface.prototype */{
-
-    /**
+    preInit() {
+        /**
      * @type {object|string[]|null}
      */
-    attributes: null,
+        this.attributes = null;
+    }
 
     /**
      *
      * @param {Jii.base.Model} original
      */
-	instance(original) {
-
-    },
+    instance(original) {}
 
     /**
      *
@@ -31,10 +26,7 @@ var ModelAdapterInterface = Jii.defineClass('Jii.data.ModelAdapterInterface', /*
      * @param {*} proxy
      * @param {object} values
      */
-    setValues(original, proxy, values) {
+    setValues(original, proxy, values) {}
 
-    }
-
-});
-
+}
 module.exports = ModelAdapterInterface;

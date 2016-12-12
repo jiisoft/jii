@@ -2,7 +2,6 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -42,101 +41,45 @@ var _sortBy = require('lodash/sortBy');
 var _without = require('lodash/without');
 var _extend = require('lodash/extend');
 var Component = require('../base/Component');
+class Collection extends Component {
 
-/**
- * BaseCollection provides a base class that implements the [[CollectionInterface]].
- *
- * @class Jii.base.Collection
- * @extends Jii.base.Component
- * @extends Array
- */
-var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Collection.prototype */{
-
-    __extends: Component,
-
-    __static: /** @lends Jii.base.Collection */{
-
+    preInit(models, config) {
+        this._editedEvents = [];
+        this._childCollections = [];
+        this._editedLevel = 0;
+        this._eventsChangeName = [];
+        this._filter = null;
+        this._byId = {};
         /**
-         * @event Jii.base.Collection#add
-         * @property {Jii.data.CollectionEvent} event
-         */
-        EVENT_ADD: 'add',
-
-        /**
-         * @event Jii.base.Collection#fetched
-         * @property {Jii.data.CollectionEvent} event
-         */
-        EVENT_FETCHED: 'fetched',
-
-        /**
-         * @event Jii.base.Collection#change
-         * @property {Jii.data.CollectionEvent} event
-         */
-        EVENT_CHANGE: 'change',
-
-        /**
-         * @event Jii.base.Collection#change:
-         * @property {Jii.data.CollectionEvent} event
-         */
-        EVENT_CHANGE_NAME: 'change:',
-
-        /**
-         * @event Jii.base.Collection#remove
-         * @property {Jii.data.CollectionEvent} event
-         */
-        EVENT_REMOVE: 'remove'
-
-    },
-
-    /**
-     * @type {number}
+     * @type {boolean}
      */
-    length: 0,
-
-    /**
-     * @type {string|Jii.base.Model}
-     */
-    modelClass: null,
-
-    /**
+        this._isFetched = false;
+        /**
      * Root collection
      * @type {Jii.base.Collection}
      */
-    parent: null,
-
-    /**
-     * @type {boolean}
+        this.parent = null;
+        /**
+     * @type {string|Jii.base.Model}
      */
-    _isFetched: false,
-
-    _byId: {},
-    _filter: null,
-
-    _eventsChangeName: [],
-
-    _editedLevel: 0,
-    _childCollections: [],
-    _editedEvents: [],
-
-    /**
-     * @param {[]|object} [models]
-     * @param {object} [config]
-     * @constructor
+        this.modelClass = null;
+        /**
+     * @type {number}
      */
-    constructor(models, config) {
-        this.__super(config);
+        this.length = 0;
+        super.preInit(config);
 
         if (_isArray(models)) {
             this.add(models);
         }
-    },
+    }
 
     /**
      * @returns {[]|object}
      */
     getModels() {
         return this.map(model => model);
-    },
+    }
 
     /**
      *
@@ -152,7 +95,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
         } else {
             this._change(this.length, models, [], true);
         }
-    },
+    }
 
     /**
      *
@@ -174,7 +117,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
 
             return this._change(index, models, []).added;
         }
-    },
+    }
 
     /**
      *
@@ -190,7 +133,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
         } else {
             return this._change(0, [], models).removed;
         }
-    },
+    }
 
     /**
      *
@@ -220,8 +163,8 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
             return this.setModels(name);
         }
 
-        return this.__super(name, value);
-    },
+        return super.set(name, value);
+    }
 
     /**
      *
@@ -245,8 +188,8 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
             return this._byId[primaryKey];
         }
 
-        return this.__super(name);
-    },
+        return super.get(name);
+    }
 
     getRoot() {
         var parent = this;
@@ -256,7 +199,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
             }
             parent = parent.parent;
         }
-    },
+    }
 
     /**
      *
@@ -275,7 +218,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
                 // Unsubscribe previous
                 if (db && this._filter && this._filter.query && this._filter.attributes) {
                     _each(this._filter.attributes, attribute => {
-                        parentCollection.off(this.__static.EVENT_CHANGE_NAME + attribute, {
+                        parentCollection.off(Collection.EVENT_CHANGE_NAME + attribute, {
                             context: this,
                             callback: this.refreshFilter
                         });
@@ -294,7 +237,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
                 // Unsubscribe previous
                 if (this._filter && this._filter.query && this._filter.attributes) {
                     _each(this._filter.attributes, attribute => {
-                        parentCollection.off(this.__static.EVENT_CHANGE_NAME + attribute, {
+                        parentCollection.off(Collection.EVENT_CHANGE_NAME + attribute, {
                             context: this,
                             callback: this.refreshFilter
                         });
@@ -307,17 +250,16 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
             if (db) {
                 // Subscribe current
                 _each(this._filter.attributes, attribute => {
-                    parentCollection.on(this.__static.EVENT_CHANGE_NAME + attribute, {
+                    parentCollection.on(Collection.EVENT_CHANGE_NAME + attribute, {
                         context: this,
                         callback: this.refreshFilter
                     });
                 });
             }
 
-
             this.refreshFilter();
         }
-    },
+    }
 
     /**
      * Run filter
@@ -333,7 +275,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
         _each(this._childCollections, childCollection => {
             childCollection.refreshFilter();
         });
-    },
+    }
 
     _filterModels() {
         var models = this.parent ? this.parent.getModels() : this.getModels();
@@ -341,10 +283,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
             // Optimize search by id
             // @todo bad condition.. =(
             var where = this._filter.query ? this._filter.query.getWhere() : null;
-            if (_isArray(where)
-                && _isString(where[0])
-                && where[0].toLowerCase() === 'in'
-                && where[1].toString() === Jii.namespace(this.modelClass).primaryKey().toString()) {
+            if (_isArray(where) && _isString(where[0]) && where[0].toLowerCase() === 'in' && where[1].toString() === Jii.namespace(this.modelClass).primaryKey().toString()) {
                 models = _map(where[2], id => this._byId[id]);
             } else {
                 models = _filter(models, this._filter);
@@ -352,14 +291,14 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
         }
 
         return models;
-    },
+    }
 
     /**
      * @return {boolean}
      */
     isFetched() {
         return this._isFetched;
-    },
+    }
 
     /**
      *
@@ -372,9 +311,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
         collectionAdapter.add(this, cloned, this.getModels());
 
         // Subscribe
-        this.on(
-            this.__static.EVENT_CHANGE,
-            /** @param {Jii.data.CollectionEvent} event */
+        this.on(Collection.EVENT_CHANGE, /** @param {Jii.data.CollectionEvent} event */
             event => {
                 if (event.added.length > 0) {
                     collectionAdapter.add(this, cloned, event.added);
@@ -382,11 +319,10 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
                 if (event.removed.length > 0) {
                     collectionAdapter.remove(this, cloned, event.removed);
                 }
-            }
-        );
+            });
 
         return cloned;
-    },
+    }
 
     /**
      * Begin change operation
@@ -397,7 +333,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
         _each(this._childCollections, childCollection => {
             childCollection.beginEdit();
         });
-    },
+    }
 
     /**
      * Cancel all changes after beginEdit() call
@@ -419,7 +355,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
             // Reset state
             this._editedEvents = [];
         }
-    },
+    }
 
     /**
      * End change operation - trigger change events
@@ -436,20 +372,19 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
             });
 
             // Each trigger events in children
-            _each(this._editedEvents,
-                /** @param {Jii.data.CollectionEvent} event */
+            _each(this._editedEvents, /** @param {Jii.data.CollectionEvent} event */
                 event => {
                     if (event.added.length > 0) {
-                        this.trigger(this.__static.EVENT_ADD, event);
+                        this.trigger(Collection.EVENT_ADD, event);
                     }
                     if (event.isFetch) {
-                        this.trigger(this.__static.EVENT_FETCHED, event);
+                        this.trigger(Collection.EVENT_FETCHED, event);
                     }
                     if (event.removed.length > 0) {
-                        this.trigger(this.__static.EVENT_REMOVE, event);
+                        this.trigger(Collection.EVENT_REMOVE, event);
                     }
                     if (event.added.length > 0 || event.removed.length > 0) {
-                        this.trigger(this.__static.EVENT_CHANGE, event);
+                        this.trigger(Collection.EVENT_CHANGE, event);
                     }
 
                     if (event.isSorted) {
@@ -460,7 +395,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
             // Reset state
             this._editedEvents = [];
         }
-    },
+    }
 
     /**
      *
@@ -470,7 +405,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     getById(primaryKey) {
         return this._byId[this._getPrimaryKey(primaryKey)] || null;
-    },
+    }
 
     /**
      *
@@ -478,7 +413,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     getCount() {
         return this.length;
-    },
+    }
 
     /**
      *
@@ -486,7 +421,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     getKeys() {
         return this.map(this._getPrimaryKey.bind(this));
-    },
+    }
 
     /**
      * @param options
@@ -494,7 +429,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     toJSON(options) {
         return this.map(model => model.toJSON(options));
-    },
+    }
 
     /**
      *
@@ -506,7 +441,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
             index = Math.max(0, this.length + index);
         }
         return this[index] || null;
-    },
+    }
 
     /**
      *
@@ -524,7 +459,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
             var diff = this._prepareDiff(models);
             this._change(0, diff.add, diff.remove, true);
         }
-    },
+    }
 
     _prepareDiff(models) {
         var toAdd = [];
@@ -553,17 +488,17 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
             add: toAdd,
             remove: toRemove
         };
-    },
+    }
 
     /**
      *
      * @returns {static}
      */
     clone() {
-        return new this.__static(this.getModels(), {
+        return new this.constructor(this.getModels(), {
             modelClass: this.modelClass
         });
-    },
+    }
 
     /**
      *
@@ -575,7 +510,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
     createChild(filter, params, className) {
         filter = filter || null;
         params = params || {};
-        className = className || this.__static;
+        className = className || this.constructor;
 
         var models = params.models || null;
         delete params.models;
@@ -597,7 +532,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
             childCollection.setFilter(filter);
         }
         return childCollection;
-    },
+    }
 
     /**
      *
@@ -609,7 +544,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
         params = params || {};
         className = className || require('../data/DataProvider');
         return this.createChild(null, params, className);
-    },
+    }
 
     /**
      *
@@ -627,7 +562,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
             index: parseInt(matches[1]),
             subName: matches[2] || null
         };
-    },
+    }
 
     _change(startIndex, toAdd, toRemove, unique, byParent) {
         unique = unique || false;
@@ -710,7 +645,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
                 startIndex: startIndex,
                 toAdd: toAdd,
                 toRemove: toRemove,
-                unique: unique,
+                unique: unique
             });
         });
 
@@ -721,7 +656,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
             added: added,
             removed: removed
         };
-    },
+    }
 
     _add(model, index) {
         // Array access
@@ -734,7 +669,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
         }
 
         return true;
-    },
+    }
 
     _remove(model, index) {
         // Array access
@@ -747,7 +682,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
         }
 
         return true;
-    },
+    }
 
     /**
      *
@@ -756,7 +691,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     _createEvent(params) {
         return new CollectionEvent(params);
-    },
+    }
 
     /**
      *
@@ -772,7 +707,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
         } else {
             return this.filter(model => primaryKey == this._getPrimaryKey(model));
         }
-    },
+    }
 
     /**
      *
@@ -802,7 +737,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
             return JSON.stringify(data);
         }
         return data;
-    },
+    }
 
     /**
      * Convert any data to model
@@ -847,11 +782,9 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
         }
 
         throw new InvalidParamException('Cannot create model instance from data: ' + JSON.stringify(data));
-    },
+    }
 
-    _onSort() {
-        // @todo Trigger sort event
-    },
+    _onSort() {}
 
     /**
      * @param {string|string[]} name
@@ -864,7 +797,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
         name = this._normalizeEventNames(name);
         if (name.length > 1) {
             _each(name, n => {
-                this.on(n, handler, data, isAppend)
+                this.on(n, handler, data, isAppend);
             });
             return;
         } else {
@@ -876,15 +809,20 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
         if (changeNameFormat) {
             var Model = require('../base/Model');
             var changeNameEvent = Model.EVENT_CHANGE_NAME + changeNameFormat.subName;
-            this._eventsChangeName.push([changeNameEvent, handler, data, isAppend]);
+            this._eventsChangeName.push([
+                changeNameEvent,
+                handler,
+                data,
+                isAppend
+            ]);
             this.each(model => {
                 model.on(changeNameEvent, handler, data, isAppend);
             });
             return;
         }
 
-        this.__super(name, handler, data, isAppend);
-    },
+        super.on(name, handler, data, isAppend);
+    }
 
     /**
      * @param {string|string[]} name
@@ -924,22 +862,21 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
             return bool;
         }
 
-        return this.__super(name, handler);
-    },
+        return super.off(name, handler);
+    }
 
     _detectKeyFormatChangeName(name) {
-        if (name.indexOf(this.__static.EVENT_CHANGE_NAME) !== 0) {
+        if (name.indexOf(Collection.EVENT_CHANGE_NAME) !== 0) {
             return null;
         }
 
         return {
-            subName: name.substr(this.__static.EVENT_CHANGE_NAME.length)
+            subName: name.substr(Collection.EVENT_CHANGE_NAME.length)
         };
-    },
+    }
 
     // Array prototype
     /////////////////////
-
     /**
      *
      * @param {...*} value1
@@ -948,7 +885,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
     concat(value1) {
         this.add(_toArray(arguments));
         return this;
-    },
+    }
 
     /**
      *
@@ -956,7 +893,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
     reverse() {
         Array.prototype.reverse.call(this);
         this._onSort();
-    },
+    }
 
     /**
      *
@@ -964,14 +901,14 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
     sort() {
         Array.prototype.sort.call(this);
         this._onSort();
-    },
+    }
 
     /**
      *
      */
     toArray() {
         return this;
-    },
+    }
 
     /**
      *
@@ -979,7 +916,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
     join() {
         // @todo
         throw new NotSupportedException();
-    },
+    }
 
     /**
      *
@@ -987,7 +924,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
     toString() {
         // @todo
         throw new NotSupportedException();
-    },
+    }
 
     /**
      *
@@ -995,7 +932,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
     toLocaleString() {
         // @todo
         throw new NotSupportedException();
-    },
+    }
 
     /**
      *
@@ -1010,7 +947,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
         this.remove(toRemove);
         this.add(_toArray(arguments).slice(2), start);
         return toRemove;
-    },
+    }
 
     /**
      *
@@ -1019,10 +956,10 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      * @returns {*}
      */
     slice(begin, end) {
-        return new this.__static(Array.prototype.slice.call(this, begin, end), {
+        return new this.constructor(Array.prototype.slice.call(this, begin, end), {
             modelClass: this.modelClass
         });
-    },
+    }
 
     /**
      *
@@ -1030,7 +967,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     push(model) {
         this.add(_toArray(arguments));
-    },
+    }
 
     /**
      *
@@ -1044,7 +981,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
         var model = this[this.length - 1];
         this.remove(model);
         return model;
-    },
+    }
 
     /**
      *
@@ -1054,7 +991,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
     unshift(model1) {
         this.add(_toArray(arguments), 0);
         return this.length;
-    },
+    }
 
     /**
      *
@@ -1068,7 +1005,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
         var model = this[0];
         this.remove(model);
         return model;
-    },
+    }
 
     // @todo ES6 methods
     //es6 copyWithin: function() {},
@@ -1076,17 +1013,15 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
     //es6 fill: function() {},
     //es6 keys: function() {},
     //es6 values: function() {},
-
     // Underscore methods
     /////////////////////
-
     /**
      *
      * @param {function} iteratee
      */
     each(iteratee) {
         return _each(this, iteratee);
-    },
+    }
 
     /**
      *
@@ -1094,7 +1029,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     forEach(iteratee) {
         return this.each.apply(this, arguments);
-    },
+    }
 
     /**
      *
@@ -1103,7 +1038,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     map(iteratee) {
         return _map(this, iteratee);
-    },
+    }
 
     /**
      *
@@ -1113,7 +1048,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     reduce(iteratee, memo) {
         return _reduce(this, iteratee, memo);
-    },
+    }
 
     /**
      *
@@ -1123,7 +1058,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     reduceRight(iteratee, memo) {
         return _reduceRight(this, iteratee, memo);
-    },
+    }
 
     /**
      *
@@ -1132,7 +1067,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     find(predicate) {
         return _find(this, this._normalizePredicate(predicate)) || null;
-    },
+    }
 
     /**
      *
@@ -1141,7 +1076,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     filter(predicate) {
         return _filter(this, this._normalizePredicate(predicate));
-    },
+    }
 
     /**
      *
@@ -1150,7 +1085,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     where(properties) {
         return _filter(this, properties);
-    },
+    }
 
     /**
      *
@@ -1159,7 +1094,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     findWhere(properties) {
         return _find(this, properties) || null;
-    },
+    }
 
     /**
      *
@@ -1168,7 +1103,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     reject(predicate) {
         return _reject(this, this._normalizePredicate(predicate));
-    },
+    }
 
     /**
      *
@@ -1176,7 +1111,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     every(predicate) {
         return _every(this, this._normalizePredicate(predicate));
-    },
+    }
 
     /**
      *
@@ -1184,7 +1119,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     some(predicate) {
         return _some(this, this._normalizePredicate(predicate));
-    },
+    }
 
     /**
      *
@@ -1193,7 +1128,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     pluck(propertyName) {
         return _map(this, model => _isFunction(model.get) ? model.get(propertyName) : model[propertyName]);
-    },
+    }
 
     /**
      *
@@ -1202,7 +1137,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     max(iteratee) {
         return _maxBy(this, iteratee);
-    },
+    }
 
     /**
      *
@@ -1211,7 +1146,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     min(iteratee) {
         return _minBy(this, iteratee);
-    },
+    }
 
     /**
      *
@@ -1219,15 +1154,13 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      * @returns {[]}
      */
     sortBy(value) {
-        var iterator = _isFunction(value) ?
-            value :
-            model => _isFunction(model.get) ? model.get(value) : model[value];
+        var iterator = _isFunction(value) ? value : model => _isFunction(model.get) ? model.get(value) : model[value];
 
         _each(_sortBy(this, iterator), (model, i) => {
             this[i] = model;
         });
         this._onSort();
-    },
+    }
 
     /**
      *
@@ -1235,12 +1168,10 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      * @returns {[]}
      */
     groupBy(value) {
-        var iterator = _isFunction(value) ?
-            value :
-            model => _isFunction(model.get) ? model.get(value) : model[value];
+        var iterator = _isFunction(value) ? value : model => _isFunction(model.get) ? model.get(value) : model[value];
 
         return _groupBy(this, iterator);
-    },
+    }
 
     /**
      *
@@ -1254,19 +1185,16 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
 
         return _indexBy(this, iterator);
     },*/
-
     /**
      *
      * @param {string|function} value
      * @returns {[]}
      */
     countBy(value) {
-        var iterator = _isFunction(value) ?
-            value :
-            model => _isFunction(model.get) ? model.get(value) : model[value];
+        var iterator = _isFunction(value) ? value : model => _isFunction(model.get) ? model.get(value) : model[value];
 
         return _countBy(this, iterator);
-    },
+    }
 
     /**
      *
@@ -1274,7 +1202,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     size() {
         return this.length;
-    },
+    }
 
     /**
      *
@@ -1283,7 +1211,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     first(num) {
         return _first(this, num);
-    },
+    }
 
     /**
      *
@@ -1292,7 +1220,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     initial(num) {
         return _initial(this, num);
-    },
+    }
 
     /**
      *
@@ -1301,7 +1229,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     last(num) {
         return _last(this, num);
-    },
+    }
 
     /**
      *
@@ -1310,7 +1238,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     rest(index) {
         return _drop(this, index);
-    },
+    }
 
     /**
      *
@@ -1321,7 +1249,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
         var args = _toArray(arguments);
         args.unshift(this);
         return _without.apply(null, args);
-    },
+    }
 
     /**
      *
@@ -1331,7 +1259,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     indexOf(value, isSorted) {
         return _indexOf(this, value, isSorted);
-    },
+    }
 
     /**
      *
@@ -1341,7 +1269,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     lastIndexOf(value, fromIndex) {
         return _lastIndexOf(this, value, fromIndex);
-    },
+    }
 
     /**
      *
@@ -1356,7 +1284,6 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
 
         return _sortedIndex(this, model, iterator);
     },*/
-
     /**
      *
      * @param {function} predicate
@@ -1364,7 +1291,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     findIndex(predicate) {
         return _findIndex(this, this._normalizePredicate(predicate));
-    },
+    }
 
     /**
      *
@@ -1373,14 +1300,14 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     findLastIndex(predicate) {
         return _findLastIndex(this, this._normalizePredicate(predicate));
-    },
+    }
 
     /**
      *
      */
     shuffle() {
         _shuffle(this);
-    },
+    }
 
     /**
      *
@@ -1388,7 +1315,7 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
      */
     isEmpty() {
         return this.length === 0;
-    },
+    }
 
     _normalizePredicate(predicate) {
         // TODO Instance of without require deps
@@ -1410,6 +1337,35 @@ var Collection = Jii.defineClass('Jii.base.Collection', /** @lends Jii.base.Coll
         return predicate;
     }
 
-});
+}
 
+/**
+         * @event Jii.base.Collection#remove
+         * @property {Jii.data.CollectionEvent} event
+         */
+Collection.EVENT_REMOVE = 'remove';
+
+/**
+         * @event Jii.base.Collection#change:
+         * @property {Jii.data.CollectionEvent} event
+         */
+Collection.EVENT_CHANGE_NAME = 'change:';
+
+/**
+         * @event Jii.base.Collection#change
+         * @property {Jii.data.CollectionEvent} event
+         */
+Collection.EVENT_CHANGE = 'change';
+
+/**
+         * @event Jii.base.Collection#fetched
+         * @property {Jii.data.CollectionEvent} event
+         */
+Collection.EVENT_FETCHED = 'fetched';
+
+/**
+         * @event Jii.base.Collection#add
+         * @property {Jii.data.CollectionEvent} event
+         */
+Collection.EVENT_ADD = 'add';
 module.exports = Collection;

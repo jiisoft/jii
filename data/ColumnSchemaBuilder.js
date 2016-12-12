@@ -2,73 +2,46 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
 var Expression = require('../data/Expression');
 var _isArray = require('lodash/isArray');
 var Object = require('../base/Object');
+class ColumnSchemaBuilder extends Object {
 
-/**
- * ColumnSchemaBuilder helps to define database schema types using a PHP interface.
- *
- * @class Jii.data.ColumnSchemaBuilder
- * @extends Jii.base.Object
- */
-var ColumnSchemaBuilder = Jii.defineClass('Jii.data.ColumnSchemaBuilder', /** @lends Jii.data.ColumnSchemaBuilder.prototype */{
-
-	__extends: Object,
-
-
-    /**
+    preInit(type, length, config) {
+        /**
+     * @type {*} default value of the column.
+     */
+        this._default = null;
+        /**
+     * @type {string} the `CHECK` constraint for the column.
+     */
+        this._check = null;
+        /**
+     * @type {boolean} whether the column values should be unique. If this is `true`, a `UNIQUE` constraint will be added.
+     */
+        this._isUnique = false;
+        /**
+     * @type {boolean} whether the column is not nullable. If this is `true`, a `NOT NULL` constraint will be added.
+     */
+        this._isNotNull = false;
+        length = length || null;
+        config = config || [];
+        /**
      * @type {string} the column type definition such as INTEGER, VARCHAR, DATETIME, etc.
      */
-    _type: null,
-    
-    /**
+        this._type = type;
+        /**
      * @type {number|string|[]} column size or precision definition. This is what goes into the parenthesis after
      * the column type. This can be either a string, an integer or an array. If it is an array, the array values will
      * be joined into a string separated by comma.
      */
-    _length: null,
-    
-    /**
-     * @type {boolean} whether the column is not nullable. If this is `true`, a `NOT NULL` constraint will be added.
-     */
-    _isNotNull: false,
-    
-    /**
-     * @type {boolean} whether the column values should be unique. If this is `true`, a `UNIQUE` constraint will be added.
-     */
-    _isUnique: false,
-    
-    /**
-     * @type {string} the `CHECK` constraint for the column.
-     */
-    _check: null,
-    
-    /**
-     * @type {*} default value of the column.
-     */
-    _default: null,
-
-    /**
-     * Create a column schema builder instance giving the type and value precision.
-     *
-     * @param {string} type type of the column. See [[type]].
-     * @param {number|string|[]} length length or precision of the column. See [[length]].
-     * @param {object} config name-value pairs that will be used to initialize the object properties
-     */
-    constructor(type, length, config) {
-        length = length || null;
-        config = config || [];
-    
-        this._type = type;
         this._length = length;
-        this.__super(config);
-    },
-    
+        super.preInit(config);
+    }
+
     /**
      * Adds a `NOT NULL` constraint to the column.
      * @returns {Jii.data.ColumnSchemaBuilder}
@@ -76,8 +49,8 @@ var ColumnSchemaBuilder = Jii.defineClass('Jii.data.ColumnSchemaBuilder', /** @l
     notNull() {
         this._isNotNull = true;
         return this;
-    },
-    
+    }
+
     /**
      * Adds a `UNIQUE` constraint to the column.
      * @returns {Jii.data.ColumnSchemaBuilder}
@@ -85,7 +58,7 @@ var ColumnSchemaBuilder = Jii.defineClass('Jii.data.ColumnSchemaBuilder', /** @l
     unique() {
         this._isUnique = true;
         return this;
-    },
+    }
 
     /**
      * Sets a `CHECK` constraint for the column.
@@ -95,7 +68,7 @@ var ColumnSchemaBuilder = Jii.defineClass('Jii.data.ColumnSchemaBuilder', /** @l
     check(check) {
         this._check = check;
         return this;
-    },
+    }
 
     /**
      * Specify the default value for the column.
@@ -105,7 +78,7 @@ var ColumnSchemaBuilder = Jii.defineClass('Jii.data.ColumnSchemaBuilder', /** @l
     defaultValue(value) {
         this._default = value;
         return this;
-    },
+    }
 
     /**
      * Specify the default SQL expression for the column.
@@ -115,31 +88,26 @@ var ColumnSchemaBuilder = Jii.defineClass('Jii.data.ColumnSchemaBuilder', /** @l
     defaultExpression(value) {
         this._default = new Expression(value);
         return this;
-    },
+    }
 
     /**
      * Build full string for create the column's schema
      * @returns {string}
      */
     toString() {
-        return this._type +
-            this._buildLengthString() +
-            this._buildNotNullString() +
-            this._buildUniqueString() +
-            this._buildDefaultString() +
-            this._buildCheckString();
-    },
+        return this._type + this._buildLengthString() + this._buildNotNullString() + this._buildUniqueString() + this._buildDefaultString() + this._buildCheckString();
+    }
 
     /**
      * Builds the length/precision part of the column.
      * @returns {string}
      */
     _buildLengthString() {
-        if (this._length === null || (_isArray(this._length) && this._length.length === 0)) {
+        if (this._length === null || _isArray(this._length) && this._length.length === 0) {
             return '';
         }
         return '(' + [].concat(this._length).join(',') + ')';
-    },
+    }
 
     /**
      * Builds the not null constraint for the column.
@@ -147,7 +115,7 @@ var ColumnSchemaBuilder = Jii.defineClass('Jii.data.ColumnSchemaBuilder', /** @l
      */
     _buildNotNullString() {
         return this._isNotNull ? ' NOT NULL' : '';
-    },
+    }
 
     /**
      * Builds the unique constraint for the column.
@@ -155,7 +123,7 @@ var ColumnSchemaBuilder = Jii.defineClass('Jii.data.ColumnSchemaBuilder', /** @l
      */
     _buildUniqueString() {
         return this._isUnique ? ' UNIQUE' : '';
-    },
+    }
 
     /**
      * Builds the default value specification for the column.
@@ -186,16 +154,15 @@ var ColumnSchemaBuilder = Jii.defineClass('Jii.data.ColumnSchemaBuilder', /** @l
         }
 
         return string;
-    },
+    }
 
     /**
      * Builds the check constraint for the column.
      * @returns {string} a string containing the CHECK constraint.
      */
     _buildCheckString() {
-        return this._check !== null ? " CHECK (" + this._check + ")" : '';
+        return this._check !== null ? ' CHECK (' + this._check + ')' : '';
     }
 
-});
-
+}
 module.exports = ColumnSchemaBuilder;

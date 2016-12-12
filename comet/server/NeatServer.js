@@ -2,7 +2,6 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -16,85 +15,59 @@ var _isEmpty = require('lodash/isEmpty');
 var _extend = require('lodash/extend');
 var Object = require('../../base/Object');
 var NeatComet = require('neatcomet');
+class NeatServer extends Object {
 
-/**
- * @class Jii.comet.server.NeatServer
- * @extends Jii.base.Object
- * @implements NeatComet.api.ICometServer
- * @implements NeatComet.api.IOrmLoader
- */
-var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.comet.server.NeatServer.prototype */{
-
-    __extends: Object,
-
-    __static: /** @lends Jii.comet.server.NeatServer */{
-
-        ROUTE_PREFIX: 'profiles:'
-
-    },
-
-    /**
-     * @type {string}
-     * @deprecated
+    preInit() {
+        /**
+     * @type {NeatComet.NeatCometServer}
      */
-    configFileName: null,
-
-    /**
-     * @type {object}
-     */
-    bindings: null,
-
-    /**
-     * @type {Jii.comet.server.Server}
-     **/
-    comet: null,
-
-    /**
-     * Callback function to be called when folder loaded from server.
-     * @callback Jii.comet.server.NeatServer~dataLoadHandlerCallback
-     * @param {object} params
-     * @returns {Promise}
-     */
-
-    /**
-     * @type {Jii.comet.server.NeatServer~dataLoadHandlerCallback}
-     */
-    dataLoadHandler: null,
-
-    /**
-     * @type {object|boolean}
-     */
-    hasDynamicAttributes: false,
-
-    /**
-     * @type {boolean}
-     */
-    listenModels: true,
-
-    /**
+        this.engine = null;
+        /**
      * Note: onOpenProfileCommand() and onCloseProfileCommand must be called from actions explicitly.
      * There's no way to subscribe for them in Jii.
      *
      * @type {NeatComet.api.ICometServerEvents}
      */
-    _events: null,
-
-    /**
-     * @type {NeatComet.NeatCometServer}
+        this._events = null;
+        /**
+     * @type {boolean}
      */
-    engine: null,
+        this.listenModels = true;
+        /**
+     * @type {object|boolean}
+     */
+        this.hasDynamicAttributes = false;
+        /**
+     * Callback function to be called when folder loaded from server.
+     * @callback Jii.comet.server.NeatServer~dataLoadHandlerCallback
+     * @param {object} params
+     * @returns {Promise}
+     */
+        /**
+     * @type {Jii.comet.server.NeatServer~dataLoadHandlerCallback}
+     */
+        this.dataLoadHandler = null;
+        /**
+     * @type {Jii.comet.server.Server}
+     **/
+        this.comet = null;
+        /**
+     * @type {object}
+     */
+        this.bindings = null;
+        /**
+     * @type {string}
+     * @deprecated
+     */
+        this.configFileName = null;
+        super.preInit(...arguments);
+    }
 
     init() {
-        this.__super();
+        super.init();
 
         // Init transport
-        this.comet = this.comet === null ?
-            Jii.app.get('comet') :
-            (
-                this.comet instanceof Component ?
-                    this.comet :
-                    Jii.createObject(this.comet)
-            );
+        this.comet = this.comet === null ? Jii.app.get('comet') : this.comet instanceof Component ? this.comet : Jii.createObject(this.comet);
 
         this.engine = new NeatComet.NeatCometServer();
         this.engine.setup({
@@ -112,7 +85,7 @@ var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
             Event.on(ActiveRecord, ActiveRecord.EVENT_AFTER_UPDATE, this._onModelUpdate.bind(this));
             Event.on(ActiveRecord, ActiveRecord.EVENT_AFTER_DELETE, this._onModelDelete.bind(this));
         }
-    },
+    }
 
     /**
      * Allowed to expect that it will be called only once per ICometServer instance
@@ -127,7 +100,7 @@ var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
         this.comet.on(Server.EVENT_REMOVE_CONNECTION, event => {
             eventsHandler.onLostConnection(event.connection.id);
         });
-    },
+    }
 
     /**
      * @return {boolean}
@@ -135,15 +108,15 @@ var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
     getSupportsForwardToClient() {
         // TODO: Implement
         return false;
-    },
+    }
 
     /**
      * @param {String} channel
      * @param {*} message
      */
     broadcast(channel, message) {
-        this.comet.sendToChannel(this.__static.ROUTE_PREFIX + channel, message);
-    },
+        this.comet.sendToChannel(this.constructor.ROUTE_PREFIX + channel, message);
+    }
 
     /**
      * @param {String} channel
@@ -154,11 +127,11 @@ var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
          * @param Jii.comet.ChannelEvent event
          */
         callback.__jiiCallbackWrapper = event => {
-            callback(event.channel.substr(this.__static.ROUTE_PREFIX.length), JSON.parse(event.message));
+            callback(event.channel.substr(this.constructor.ROUTE_PREFIX.length), JSON.parse(event.message));
         };
 
-        this.comet.on('channel:' + this.__static.ROUTE_PREFIX + channel, callback.__jiiCallbackWrapper);
-    },
+        this.comet.on('channel:' + this.constructor.ROUTE_PREFIX + channel, callback.__jiiCallbackWrapper);
+    }
 
     /**
      * @param {String} channel
@@ -168,8 +141,8 @@ var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
         if (callback && callback.__jiiCallbackWrapper) {
             callback = callback.__jiiCallbackWrapper;
         }
-        this.comet.off('channel:' + this.__static.ROUTE_PREFIX + channel, callback);
-    },
+        this.comet.off('channel:' + this.constructor.ROUTE_PREFIX + channel, callback);
+    }
 
     /**
      *
@@ -180,10 +153,10 @@ var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
     pushToClient(connectionId, channel, data) {
         this.comet.sendToConnection(connectionId, [
             'channel',
-            this.__static.ROUTE_PREFIX + channel,
+            this.constructor.ROUTE_PREFIX + channel,
             JSON.stringify(data)
         ].join(' '));
-    },
+    }
 
     /**
      * @param {string|Jii.data.ActiveQuery} modelClassName
@@ -223,9 +196,7 @@ var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
 
             case NeatComet.api.IOrmLoader.WHERE_SQL:
                 where = NeatComet.bindings.BindingServer.convertWhereJsToSql(where);
-                query
-                    .from(modelClass.tableName() + ' ' + NeatComet.api.IOrmLoader.TABLE_ALIAS_IN_SQL)
-                    .andWhere(where, NeatComet.bindings.BindingServer.filterAttributesBySqlParams(where, attributes));
+                query.from(modelClass.tableName() + ' ' + NeatComet.api.IOrmLoader.TABLE_ALIAS_IN_SQL).andWhere(where, NeatComet.bindings.BindingServer.filterAttributesBySqlParams(where, attributes));
                 break;
 
             default:
@@ -234,14 +205,13 @@ var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
 
         // Query via model implementation
         if (!_isEmpty(this.hasDynamicAttributes)) {
-            // @todo
         } else {
             if (binding.attributes !== null) {
                 query.select(binding.attributes);
             }
             return query.asArray().all();
         }
-    },
+    }
 
     /**
      *
@@ -254,7 +224,7 @@ var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
         var model = event.sender;
 
         this.engine.broadcastEvent(model.className(), 'sendAdd', model.getAttributes());
-    },
+    }
 
     /**
      *
@@ -268,7 +238,7 @@ var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
 
         var oldAttributes = _extend({}, event.changedAttributes, model.getOldAttributes());
         this.engine.broadcastEvent(model.className(), 'sendUpdate', model.getAttributes(), oldAttributes);
-    },
+    }
 
     /**
      *
@@ -281,7 +251,7 @@ var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
         var model = event.sender;
 
         this.engine.broadcastEvent(model.className(), 'sendRemove', model.getAttributes());
-    },
+    }
 
     /**
      * @param {Jii.base.Context} context
@@ -290,13 +260,13 @@ var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
      * @param {Jii.comet.server.Response} context.response
      */
     _actionOpenProfile(context) {
-        this._events
-            .onOpenProfileCommand(context.connection.id, context.request.get('neat'))
-            .then(neatResponse => {
-                context.response.data = {neat: neatResponse};
-                context.response.send();
-            });
-    },
+        this._events.onOpenProfileCommand(context.connection.id, context.request.get('neat')).then(neatResponse => {
+            context.response.data = {
+                neat: neatResponse
+            };
+            context.response.send();
+        });
+    }
 
     /**
      * @param {Jii.base.Context} context
@@ -305,10 +275,12 @@ var NeatServer = Jii.defineClass('Jii.comet.server.NeatServer', /** @lends Jii.c
      * @param {Jii.comet.server.Response} context.response
      */
     _actionCloseProfile(context) {
-        context.response.send(); // No wait
+        context.response.send();
+        // No wait
         this._events.onCloseProfileCommand(context.connection.id, context.request.get('neat'));
     }
 
-});
+}
 
+NeatServer.ROUTE_PREFIX = 'profiles:';
 module.exports = NeatServer;

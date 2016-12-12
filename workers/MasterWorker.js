@@ -2,7 +2,6 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../index');
@@ -12,36 +11,29 @@ var _has = require('lodash/has');
 var _size = require('lodash/size');
 var Object = require('../base/Object');
 var cluster = require('cluster');
+class MasterWorker extends Object {
 
-/**
- * @class Jii.workers.MasterWorker
- * @extends Jii.base.Object
- */
-var MasterWorker = Jii.defineClass('Jii.workers.MasterWorker', /** @lends Jii.workers.MasterWorker.prototype */{
-
-    __extends: Object,
-
-    /**
+    preInit() {
+        /**
+     * @type {boolean}
+     */
+        this._isMasterKilled = false;
+        /**
+     * @type {object}
+     */
+        this._indexes = {};
+        /**
+     * @type {object}
+     */
+        this._workers = {};
+        /**
      * HH:MM format, Example: 05:00
      * Set `false` for disable
      * @type {boolean|string}
      */
-    autoRestartTime: false,
-
-    /**
-     * @type {object}
-     */
-    _workers: {},
-
-    /**
-     * @type {object}
-     */
-    _indexes: {},
-
-    /**
-     * @type {boolean}
-     */
-    _isMasterKilled: false,
+        this.autoRestartTime = false;
+        super.preInit(...arguments);
+    }
 
     init() {
         console.info('Start master (pid %s)...', process.pid);
@@ -53,7 +45,7 @@ var MasterWorker = Jii.defineClass('Jii.workers.MasterWorker', /** @lends Jii.wo
         process.on('uncaughtException', err => {
             console.error('Caught exception in master:', err, err.stack);
         });
-    },
+    }
 
     /**
      *
@@ -105,7 +97,7 @@ var MasterWorker = Jii.defineClass('Jii.workers.MasterWorker', /** @lends Jii.wo
             worker: worker
         };
         this._indexes[name][pid] = index;
-    },
+    }
 
     /**
      *
@@ -128,7 +120,8 @@ var MasterWorker = Jii.defineClass('Jii.workers.MasterWorker', /** @lends Jii.wo
         var now = new Date();
         var pid = worker.process.pid;
         var nextTime = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, hour, minute, 0, 0).getTime();
-        var killTime = nextTime - new Date().getTime() + Math.floor(Math.random()*1800000); // + scatter in 30 mins
+        var killTime = nextTime - new Date().getTime() + Math.floor(Math.random() * 1800000);
+        // + scatter in 30 mins
         var timerId = setTimeout(() => {
             process.kill(pid);
             console.log('KILL TIME!!!', killTime);
@@ -137,7 +130,7 @@ var MasterWorker = Jii.defineClass('Jii.workers.MasterWorker', /** @lends Jii.wo
         worker.on('exit', () => {
             clearInterval(timerId);
         });
-    },
+    }
 
     _reserveIndex(name) {
         this._indexes[name] = this._indexes[name] || {};
@@ -160,15 +153,15 @@ var MasterWorker = Jii.defineClass('Jii.workers.MasterWorker', /** @lends Jii.wo
             }
             index++;
         }
-    },
+    }
 
     _onChildExit(pid, code, signal) {
         if (signal) {
-            console.warn("Worker `%s` was killed by signal `%s`.", pid, signal);
+            console.warn('Worker `%s` was killed by signal `%s`.', pid, signal);
         } else if (code) {
-            console.error("worker `%s` exited with error code: `%s`.", pid, code);
+            console.error('worker `%s` exited with error code: `%s`.', pid, code);
         } else {
-            console.log("worker was success exit!");
+            console.log('worker was success exit!');
         }
 
         if (this._workers[pid]) {
@@ -181,7 +174,7 @@ var MasterWorker = Jii.defineClass('Jii.workers.MasterWorker', /** @lends Jii.wo
             // Start another worker
             this.fork(name);
         }
-    },
+    }
 
     _onMasterExit() {
         this._isMasterKilled = true;
@@ -196,6 +189,5 @@ var MasterWorker = Jii.defineClass('Jii.workers.MasterWorker', /** @lends Jii.wo
         process.exit(0);
     }
 
-});
-
+}
 module.exports = MasterWorker;

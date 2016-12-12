@@ -4,21 +4,7 @@ var Jii = require('../index');
 var _each = require('lodash/each');
 var BaseRequest = require('../base/Request');
 var minimist = require('minimist');
-
-/**
- * The console Request represents the environment information for a console application.
- *
- * @property array params The command line arguments. It does not include the entry script name.
- *
- * @author Ihor Skliar
- * @author Vladimir Kozhin
- *
- * @class Jii.console.Request
- * @extends Jii.base.Request
- */
-var Request = Jii.defineClass('Jii.console.Request', /** @lends Jii.console.Request.prototype */{
-
-    __extends: BaseRequest,
+class Request extends BaseRequest {
 
     /**
      * Resolves the current request into a route and the associated parameters.
@@ -31,8 +17,11 @@ var Request = Jii.defineClass('Jii.console.Request', /** @lends Jii.console.Requ
         var ConsoleApplication = require('../application/ConsoleApplication');
         delete params[ConsoleApplication.OPTION_APPCONFIG];
 
-        return [route, params];
-    },
+        return [
+            route,
+            params
+        ];
+    }
 
     _parseParams() {
         var params = minimist(process.argv.slice(3));
@@ -46,6 +35,5 @@ var Request = Jii.defineClass('Jii.console.Request', /** @lends Jii.console.Requ
         return params;
     }
 
-});
-
+}
 module.exports = Request;

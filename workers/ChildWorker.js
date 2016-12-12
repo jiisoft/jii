@@ -2,7 +2,6 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../index');
@@ -14,55 +13,37 @@ var _isArray = require('lodash/isArray');
 var _has = require('lodash/has');
 var Component = require('../base/Component');
 var cluster = require('cluster');
+class ChildWorker extends Component {
 
-/**
- * @class Jii.workers.ChildWorker
- * @extends Jii.base.Component
- */
-var ChildWorker = Jii.defineClass('Jii.workers.ChildWorker', /** @lends Jii.workers.ChildWorker.prototype */{
-
-    __extends: Component,
-
-    __static: /** @lends Jii.workers.ChildWorker */{
-
+    preInit() {
         /**
-         * @event Jii.workers.ChildWorker#message
-         * @property {Jii.workers.MessageEvent} event
-         */
-        EVENT_MESSAGE: 'message'
-
-    },
-
-    /**
-     * @type {string}
-     */
-    name: null,
-
-    /**
-     * @type {number|null}
-     */
-    _index: null,
-
-    /**
-     * @type {object|null}
-     */
-    _config: null,
-
-    /**
-     * @type {object}
-     */
-    _actionHandlers: {},
-
-    /**
-     * @type {object}
-     */
-    _actionResponses: {},
-
-    /**
      * @type {number}
      */
-    stopTimeout: 10, // sec
+        this.stopTimeout = 10;
+        /**
+     * @type {object}
+     */
+        this._actionResponses = {};
+        /**
+     * @type {object}
+     */
+        this._actionHandlers = {};
+        /**
+     * @type {object|null}
+     */
+        this._config = null;
+        /**
+     * @type {number|null}
+     */
+        this._index = null;
+        /**
+     * @type {string}
+     */
+        this.name = null;
+        super.preInit(...arguments);
+    }
 
+    // sec
     init() {
         process.on('uncaughtException', err => {
             console.error('Caught exception:', err, err.stack);
@@ -72,7 +53,7 @@ var ChildWorker = Jii.defineClass('Jii.workers.ChildWorker', /** @lends Jii.work
         });
 
         this._onMessage = this._onMessage.bind(this);
-    },
+    }
 
     /**
      *
@@ -96,7 +77,7 @@ var ChildWorker = Jii.defineClass('Jii.workers.ChildWorker', /** @lends Jii.work
         process.on('message', this._onMessage);
 
         Jii.app.start();
-    },
+    }
 
     /**
      *
@@ -120,7 +101,7 @@ var ChildWorker = Jii.defineClass('Jii.workers.ChildWorker', /** @lends Jii.work
         if (this.stopTimeout > 0) {
             setTimeout(this._killSelf.bind(this), this.stopTimeout * 1000).unref();
         }
-    },
+    }
 
     /**
      * Send message to workers
@@ -130,7 +111,7 @@ var ChildWorker = Jii.defineClass('Jii.workers.ChildWorker', /** @lends Jii.work
         process.send({
             message: message
         });
-    },
+    }
 
     /**
      * Run action on all workers
@@ -151,14 +132,14 @@ var ChildWorker = Jii.defineClass('Jii.workers.ChildWorker', /** @lends Jii.work
                 params: params
             });
         });
-    },
+    }
 
     /**
      * @returns {number}
      */
     getIndex() {
         return this._index;
-    },
+    }
 
     /**
      *
@@ -169,7 +150,7 @@ var ChildWorker = Jii.defineClass('Jii.workers.ChildWorker', /** @lends Jii.work
             throw new InvalidConfigException('You cannot change worker index.');
         }
         this._index = parseInt(value);
-    },
+    }
 
     /**
      *
@@ -180,11 +161,11 @@ var ChildWorker = Jii.defineClass('Jii.workers.ChildWorker', /** @lends Jii.work
             throw new InvalidConfigException('You cannot change worker config.');
         }
         this._config = value;
-    },
+    }
 
     _onMessage(data) {
         if (_has(data, 'message')) {
-            this.trigger(this.__static.EVENT_MESSAGE, new MessageEvent({
+            this.trigger(ChildWorker.EVENT_MESSAGE, new MessageEvent({
                 message: data.message
             }));
         } else if (_has(data, 'route') && _has(data, 'senderIndex') && _has(data, 'requestUid')) {
@@ -205,15 +186,12 @@ var ChildWorker = Jii.defineClass('Jii.workers.ChildWorker', /** @lends Jii.work
                                 filter: {
                                     index: data.senderIndex
                                 }
-                            })
+                            });
                         }
                     }
                 }
             }));
-        } else if (_has(data, 'response')
-            && _has(data, 'requestUid')
-            && _isFunction(this._actionHandlers[data.requestUid])
-            && _isArray(this._actionResponses[data.requestUid])) {
+        } else if (_has(data, 'response') && _has(data, 'requestUid') && _isFunction(this._actionHandlers[data.requestUid]) && _isArray(this._actionResponses[data.requestUid])) {
 
             this._actionResponses[data.requestUid].push(data.response);
 
@@ -221,13 +199,18 @@ var ChildWorker = Jii.defineClass('Jii.workers.ChildWorker', /** @lends Jii.work
                 this._actionHandlers[data.requestUid].call(null, this._actionResponses[data.requestUid]);
             }
         }
-    },
+    }
 
     _killSelf() {
         console.info('Force exit `%s` worker...', process.env.APPLICATION_NAME);
         process.exit();
     }
 
-});
+}
 
+/**
+         * @event Jii.workers.ChildWorker#message
+         * @property {Jii.workers.MessageEvent} event
+         */
+ChildWorker.EVENT_MESSAGE = 'message';
 module.exports = ChildWorker;

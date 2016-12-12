@@ -2,32 +2,26 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../BaseJii');
 var _isArray = require('lodash/isArray');
 var _isNaN = require('lodash/isNaN');
 var Validator = require('./Validator');
+class DateValidator extends Validator {
 
-/**
- * @class Jii.validators.DateValidator
- * @extends Jii.validators.Validator
- */
-var DateValidator = Jii.defineClass('Jii.validators.DateValidator', /** @lends Jii.validators.DateValidator.prototype */{
-
-    __extends: Validator,
-
-	format: 'Y-m-d',
-
-    timestampAttribute: null,
+    preInit() {
+        this.timestampAttribute = null;
+        this.format = 'Y-m-d';
+        super.preInit(...arguments);
+    }
 
     init() {
-        this.__super();
+        super.init();
         if (this.message === null) {
             this.message = Jii.t('jii', 'The format of {attribute} is invalid.');
         }
-    },
+    }
 
     validateAttribute(object, attribute) {
         var value = object.get(attribute);
@@ -44,7 +38,7 @@ var DateValidator = Jii.defineClass('Jii.validators.DateValidator', /** @lends J
             var timestamp = Date.parse(value);
             object.set(this.timestampAttribute, Math.round(timestamp / 1000));
         }
-    },
+    }
 
     validateValue(value) {
         // @todo Validate by format
@@ -52,6 +46,5 @@ var DateValidator = Jii.defineClass('Jii.validators.DateValidator', /** @lends J
         return !_isNaN(timestamp);
     }
 
-});
-
+}
 module.exports = DateValidator;

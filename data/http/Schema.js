@@ -2,7 +2,6 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -11,18 +10,13 @@ var ModelSchema = require('../../data/ModelSchema');
 var _isObject = require('lodash/isObject');
 var _keys = require('lodash/keys');
 var Object = require('../../base/Object');
+class Schema extends Object {
 
-/**
- * @class Jii.data.http.Schema
- * @extends Jii.base.Object
- */
-var Schema = Jii.defineClass('Jii.data.http.Schema', /** @lends Jii.data.http.Schema.prototype */{
-
-	__extends: Object,
-
-    tables: {},
-
-    _filterBuilder: null,
+    preInit() {
+        this._filterBuilder = null;
+        this.tables = {};
+        super.preInit(...arguments);
+    }
 
     /**
      * @return {Jii.data.QueryBuilder} the query builder for this connection.
@@ -33,7 +27,7 @@ var Schema = Jii.defineClass('Jii.data.http.Schema', /** @lends Jii.data.http.Sc
         }
 
         return this._filterBuilder;
-    },
+    }
 
     /**
      *
@@ -46,11 +40,11 @@ var Schema = Jii.defineClass('Jii.data.http.Schema', /** @lends Jii.data.http.Sc
         }
 
         return this.tables[name] || null;
-    },
+    }
 
     getTableNames() {
         return _keys(this.tables);
-    },
+    }
 
     /**
      * @return {Jii.data.FilterBuilder}
@@ -59,6 +53,5 @@ var Schema = Jii.defineClass('Jii.data.http.Schema', /** @lends Jii.data.http.Sc
         return new FilterBuilder();
     }
 
-});
-
+}
 module.exports = Schema;

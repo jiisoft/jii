@@ -2,28 +2,18 @@
 
 var Jii = require('../../BaseJii');
 var ActiveRecord = require('./ActiveRecord.js');
+class Item extends ActiveRecord {
 
-/**
- * @class tests.unit.models.Item
- * @extends tests.unit.models.ActiveRecord
- */
-var Item = Jii.defineClass('tests.unit.models.Item', {
+    static tableName() {
+        return 'item';
+    }
 
-	__extends: ActiveRecord,
+    getCategory() {
+        var Category = require('./Category');
+        return this.hasOne(Category, {
+            id: 'category_id'
+        });
+    }
 
-	__static: {
-
-		tableName() {
-			return 'item';
-		}
-
-	},
-
-	getCategory() {
-		var Category = require('./Category');
-		return this.hasOne(Category, {id: 'category_id'});
-	}
-
-});
-
+}
 module.exports = Item;

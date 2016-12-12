@@ -2,7 +2,6 @@
  * @author Ihor Skliar <skliar.ihor@gmail.com>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -16,61 +15,17 @@ var _template = require('lodash/template');
 var _values = require('lodash/values');
 var Controller = require('../Controller');
 var fs = require('fs');
+class BaseMigrateController extends Controller {
 
-/**
- * Provides help information about console commands.
- *
- * This command displays the available command list in
- * the application or the detailed instructions about using
- * a specific command.
- *
- * This command can be used as follows on command line:
- *
- * ~~~
- * jii help [command name]
- * ~~~
- *
- * In the above, if the command name is not provided, all
- * available commands will be displayed.
- *
- * @property array commands All available command names. This property is read-only.
- * @class Jii.console.controllers.BaseMigrateController
- * @extends Jii.console.Controller
- */
-var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrateController', /** @lends Jii.console.controllers.BaseMigrateController.prototype */{
-
-    __extends: Controller,
-
-    __static: /** @lends Jii.console.controllers.BaseMigrateController */{
-
+    preInit() {
         /**
-         * The name of the dummy migration that marks the beginning of the whole migration history.
-         */
-        BASE_MIGRATION: 'm000000_000000_base'
-
-    },
-
-    /**
-     * @type {string} the default command action.
+     * @type {[]} column definition strings used for creating migration code.
+     * The format of each definition is `COLUMN_NAME:COLUMN_TYPE:COLUMN_DECORATOR`.
+     * For example, `--fields=name:string(12):notNull` produces a string column of size 12 which is not null.
+     * @since 2.0.7
      */
-    defaultAction: 'up',
-
-    /**
-     * @type {string} the directory storing the migration classes. This can be either
-     * a path alias or a directory.
-     */
-    migrationPath: '@app/migrations',
-
-    migrationNamespace: 'app.migrations',
-
-    /**
-     * @type {string} the template file for generating new migrations.
-     * This can be either a path alias (e.g. "@app/migrations/template.js")
-     * or a file path.
-     */
-    templateFile: null,
-
-    /**
+        this.fields = [];
+        /**
      * @type {[]} a set of template paths for generating migration code automatically.
      *
      * The key is the template type, the value is a path or the alias. Supported types are:
@@ -80,24 +35,37 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
      * - `drop_column`: dropping column template
      * - `create_junction`: create junction template
      */
-    generatorTemplateFiles: null,
-
-    /**
-     * @type {[]} column definition strings used for creating migration code.
-     * The format of each definition is `COLUMN_NAME:COLUMN_TYPE:COLUMN_DECORATOR`.
-     * For example, `--fields=name:string(12):notNull` produces a string column of size 12 which is not null.
-     * @since 2.0.7
+        this.generatorTemplateFiles = null;
+        /**
+     * @type {string} the template file for generating new migrations.
+     * This can be either a path alias (e.g. "@app/migrations/template.js")
+     * or a file path.
      */
-    fields: [],
+        this.templateFile = null;
+        this.migrationNamespace = 'app.migrations';
+        /**
+     * @type {string} the directory storing the migration classes. This can be either
+     * a path alias or a directory.
+     */
+        this.migrationPath = '@app/migrations';
+        /**
+     * @type {string} the default command action.
+     */
+        this.defaultAction = 'up';
+        super.preInit(...arguments);
+    }
 
     /**
      * @inheritdoc
      */
     options(actionID) {
-        return this.__super(actionID)
-            .concat('migrationPath') // global for all actions
-            .concat(actionID === 'create' ? ['templateFile', 'templateFileGenerators', 'fields'] : []); // action create
-    },
+        return super.options(actionID).concat('migrationPath') // global for all actions
+            .concat(actionID === 'create' ? [
+                'templateFile',
+                'templateFileGenerators',
+                'fields'
+            ] : []); // action create
+    }
 
     /**
      * This method is invoked right before an action is to be executed (after all possible filters.)
@@ -106,7 +74,7 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
      * @returns {Promise} whether the action should continue to be executed.
      */
     beforeAction(action) {
-        return this.__super(action).then(success => {
+        return super.beforeAction(action).then(success => {
             if (!success) {
                 return false;
             }
@@ -114,7 +82,7 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
             var path = Jii.getAlias(this.migrationPath);
             if (!fs.existsSync(path)) {
                 if (action.id !== 'create') {
-                    throw new Exception("Migration failed. Directory specified in migrationPath doesn't exist: " + this.migrationPath);
+                    throw new Exception('Migration failed. Directory specified in migrationPath doesn\'t exist: ' + this.migrationPath);
                 }
                 fs.mkdirSync(path);
             }
@@ -122,11 +90,11 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
             this._parseFields();
 
             var version = Jii.getVersion();
-            this.stdout("Jii Migration Tool (based on Jii v" + version + ")\n\n");
+            this.stdout('Jii Migration Tool (based on Jii v' + version + ')\n\n');
 
             return true;
         });
-    },
+    }
 
     /**
      * Upgrades the application by applying new migrations.
@@ -145,14 +113,14 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
     actionUp(context) {
         var limit = context.request.get(0, 0);
         return this._actionUpInternal(limit);
-    },
+    }
 
     _actionUpInternal(limit) {
         return this._getNewMigrations().then(migrations => {
             if (migrations.length === 0) {
-                this.stdout("No new migration found. Your system is up-to-date.\n", Console.FG_GREEN);
+                this.stdout('No new migration found. Your system is up-to-date.\n', Console.FG_GREEN);
 
-                return this.__static.EXIT_CODE_NORMAL;
+                return BaseMigrateController.EXIT_CODE_NORMAL;
             }
 
             var total = migrations.length;
@@ -163,20 +131,20 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
 
             var n = migrations.length;
             if (n === total) {
-                this.stdout("Total " + n + " new " + (n === 1 ? 'migration' : 'migrations') + " to be applied:\n", Console.FG_YELLOW);
+                this.stdout('Total ' + n + ' new ' + (n === 1 ? 'migration' : 'migrations') + ' to be applied:\n', Console.FG_YELLOW);
             } else {
-                this.stdout("Total " + n + " out of " + total + " new " + (total === 1 ? 'migration' : 'migrations') + " to be applied:\n", Console.FG_YELLOW);
+                this.stdout('Total ' + n + ' out of ' + total + ' new ' + (total === 1 ? 'migration' : 'migrations') + ' to be applied:\n', Console.FG_YELLOW);
             }
 
             _each(migrations, migration => {
-                this.stdout("\t" + migration + "\n");
+                this.stdout('\t' + migration + '\n');
             });
-            this.stdout("\n");
+            this.stdout('\n');
 
             var applied = 0;
             return this.confirm('Apply the above ' + (n === 1 ? 'migration' : 'migrations') + '?').then(bool => {
                 if (!bool) {
-                    return this.__static.EXIT_CODE_ERROR;
+                    return BaseMigrateController.EXIT_CODE_ERROR;
                 }
 
                 var migrateQueueFn = (migrations, i) => {
@@ -184,26 +152,26 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
                     if (migration) {
                         return this._migrateUp(migration).then(success => {
                             if (!success) {
-                                this.stdout("\n" + applied + " from " + n + " " + (applied === 1 ? 'migration was' : 'migrations were') + " applied.\n", Console.FG_RED);
-                                this.stdout("\nMigration failed. The rest of the migrations are canceled.\n", Console.FG_RED);
+                                this.stdout('\n' + applied + ' from ' + n + ' ' + (applied === 1 ? 'migration was' : 'migrations were') + ' applied.\n', Console.FG_RED);
+                                this.stdout('\nMigration failed. The rest of the migrations are canceled.\n', Console.FG_RED);
 
-                                return this.__static.EXIT_CODE_ERROR;
+                                return BaseMigrateController.EXIT_CODE_ERROR;
                             }
 
                             applied++;
                             return migrateQueueFn(migrations, i + 1);
                         });
                     } else {
-                        this.stdout("\n" + n + " " + (n === 1 ? 'migration was' : 'migrations were') + " applied.\n", Console.FG_GREEN);
-                        this.stdout("\nMigrated up successfully.\n", Console.FG_GREEN);
+                        this.stdout('\n' + n + ' ' + (n === 1 ? 'migration was' : 'migrations were') + ' applied.\n', Console.FG_GREEN);
+                        this.stdout('\nMigrated up successfully.\n', Console.FG_GREEN);
 
-                        return Promise.resolve()
+                        return Promise.resolve();
                     }
                 };
                 return migrateQueueFn(migrations, 0);
             });
         });
-    },
+    }
 
     /**
      * Downgrades the application by reverting old migrations.
@@ -224,7 +192,7 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
     actionDown(context) {
         var limit = context.request.get(0, 1);
         return this._actionDownInternal(limit);
-    },
+    }
 
     _actionDownInternal(limit) {
         if (limit === 'all') {
@@ -238,24 +206,24 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
 
         return this._getMigrationHistory(limit).then(migrations => {
             if (_isEmpty(migrations)) {
-                this.stdout("No migration has been done before.\n", Console.FG_YELLOW);
+                this.stdout('No migration has been done before.\n', Console.FG_YELLOW);
 
-                return this.__static.EXIT_CODE_NORMAL;
+                return BaseMigrateController.EXIT_CODE_NORMAL;
             }
 
             migrations = _keys(migrations);
 
             var n = migrations.length;
-            this.stdout("Total " + n + " " + (n === 1 ? 'migration' : 'migrations') + " to be reverted:\n", Console.FG_YELLOW);
+            this.stdout('Total ' + n + ' ' + (n === 1 ? 'migration' : 'migrations') + ' to be reverted:\n', Console.FG_YELLOW);
             _each(migrations, migration => {
-                this.stdout("\t" + migration + "\n");
+                this.stdout('\t' + migration + '\n');
             });
-            this.stdout("\n");
+            this.stdout('\n');
 
             var reverted = 0;
             return this.confirm('Revert the above ' + (n === 1 ? 'migration' : 'migrations') + '?').then(bool => {
                 if (!bool) {
-                    return this.__static.EXIT_CODE_ERROR;
+                    return BaseMigrateController.EXIT_CODE_ERROR;
                 }
 
                 var migrateQueueFn = (migrations, i) => {
@@ -263,26 +231,26 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
                     if (migration) {
                         return this._migrateDown(migration).then(success => {
                             if (!success) {
-                                this.stdout("\n" + reverted + " from " + n + " " + (reverted === 1 ? 'migration was' : 'migrations were') + " reverted.\n", Console.FG_RED);
-                                this.stdout("\nMigration failed. The rest of the migrations are canceled.\n", Console.FG_RED);
+                                this.stdout('\n' + reverted + ' from ' + n + ' ' + (reverted === 1 ? 'migration was' : 'migrations were') + ' reverted.\n', Console.FG_RED);
+                                this.stdout('\nMigration failed. The rest of the migrations are canceled.\n', Console.FG_RED);
 
-                                return this.__static.EXIT_CODE_ERROR;
+                                return BaseMigrateController.EXIT_CODE_ERROR;
                             }
 
                             reverted++;
                             return migrateQueueFn(migrations, i + 1);
                         });
                     } else {
-                        this.stdout("\n" + n + " " + (n === 1 ? 'migration was' : 'migrations were') + " reverted.\n", Console.FG_GREEN);
-                        this.stdout("\nMigrated down successfully.\n", Console.FG_GREEN);
+                        this.stdout('\n' + n + ' ' + (n === 1 ? 'migration was' : 'migrations were') + ' reverted.\n', Console.FG_GREEN);
+                        this.stdout('\nMigrated down successfully.\n', Console.FG_GREEN);
 
-                        return Promise.resolve()
+                        return Promise.resolve();
                     }
                 };
                 return migrateQueueFn(migrations, 0);
             });
         });
-    },
+    }
 
     /**
      * Redoes the last few migrations.
@@ -316,23 +284,23 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
 
         return this._getMigrationHistory(limit).then(migrations => {
             if (_isEmpty(migrations)) {
-                this.stdout("No migration has been done before.\n", Console.FG_YELLOW);
+                this.stdout('No migration has been done before.\n', Console.FG_YELLOW);
 
-                return this.__static.EXIT_CODE_NORMAL;
+                return BaseMigrateController.EXIT_CODE_NORMAL;
             }
 
             migrations = _keys(migrations);
 
             var n = migrations.length;
-            this.stdout("Total " + n + " " + (n === 1 ? 'migration' : 'migrations') + " to be redone:\n", Console.FG_YELLOW);
+            this.stdout('Total ' + n + ' ' + (n === 1 ? 'migration' : 'migrations') + ' to be redone:\n', Console.FG_YELLOW);
             _each(migrations, migration => {
-                this.stdout("\t" + migration + "\n");
+                this.stdout('\t' + migration + '\n');
             });
-            this.stdout("\n");
+            this.stdout('\n');
 
             return this.confirm('Redo the above ' + (n === 1 ? 'migration' : 'migrations') + '?').then(bool => {
                 if (!bool) {
-                    return this.__static.EXIT_CODE_ERROR;
+                    return BaseMigrateController.EXIT_CODE_ERROR;
                 }
 
                 var migrateDownQueueFn = (migrations, i) => {
@@ -340,14 +308,14 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
                     if (migration) {
                         return this._migrateDown(migration).then(success => {
                             if (!success) {
-                                this.stdout("\nMigration failed. The rest of the migrations are canceled.\n", Console.FG_RED);
-                                return this.__static.EXIT_CODE_ERROR;
+                                this.stdout('\nMigration failed. The rest of the migrations are canceled.\n', Console.FG_RED);
+                                return BaseMigrateController.EXIT_CODE_ERROR;
                             }
 
                             return migrateDownQueueFn(migrations, i + 1);
                         });
                     }
-                    return Promise.resolve()
+                    return Promise.resolve();
                 };
 
                 return migrateDownQueueFn(migrations, 0).then(() => {
@@ -358,25 +326,25 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
                         if (migration) {
                             return this._migrateUp(migration).then(success => {
                                 if (!success) {
-                                    this.stdout("\nMigration failed. The rest of the migrations migrations are canceled.\n", Console.FG_RED);
+                                    this.stdout('\nMigration failed. The rest of the migrations migrations are canceled.\n', Console.FG_RED);
 
-                                    return this.__static.EXIT_CODE_ERROR;
+                                    return BaseMigrateController.EXIT_CODE_ERROR;
                                 }
 
                                 return migrateUpQueueFn(migrations, i + 1);
                             });
                         } else {
-                            this.stdout("\n" + n + " " + (n === 1 ? 'migration was' : 'migrations were') + " redone.\n", Console.FG_GREEN);
-                            this.stdout("\nMigration redone successfully.\n", Console.FG_GREEN);
+                            this.stdout('\n' + n + ' ' + (n === 1 ? 'migration was' : 'migrations were') + ' redone.\n', Console.FG_GREEN);
+                            this.stdout('\nMigration redone successfully.\n', Console.FG_GREEN);
 
-                            return Promise.resolve()
+                            return Promise.resolve();
                         }
                     };
                     return migrateUpQueueFn(migrations, 0);
                 });
             });
         });
-    },
+    }
 
     /**
      * Upgrades or downgrades till the specified version.
@@ -412,13 +380,13 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
             return this._migrateToTime(version);
         }
 
-        var time = (new Date(version)).getTime();
+        var time = new Date(version).getTime();
         if (time) {
             return this._migrateToTime(time);
         }
 
-        throw new Exception("The version argument must be either a timestamp (e.g. 101129_185401),\n the full name of a migration (e.g. m101129_185401_create_user_table),\n a UNIX timestamp (e.g. 1392853000), or a datetime string parseable\nby the strtotime() function (e.g. 2014-02-15 13:00:50).");
-    },
+        throw new Exception('The version argument must be either a timestamp (e.g. 101129_185401),\n the full name of a migration (e.g. m101129_185401_create_user_table),\n a UNIX timestamp (e.g. 1392853000), or a datetime string parseable\nby the strtotime() function (e.g. 2014-02-15 13:00:50).');
+    }
 
     /**
      * Modifies the migration history to the specified version.
@@ -442,7 +410,7 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
         if (matches) {
             version = 'm' + matches[1];
         } else {
-            throw new Exception("The version argument must be either a timestamp (e.g. 101129_185401)\nor the full name of a migration (e.g. m101129_185401_create_user_table).");
+            throw new Exception('The version argument must be either a timestamp (e.g. 101129_185401)\nor the full name of a migration (e.g. m101129_185401_create_user_table).');
         }
 
         // try mark up
@@ -450,9 +418,9 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
             for (var i = 0, l = migrations.length; i < l; i++) {
                 var migration = migrations[i];
                 if (migration.indexOf(version + '_') === 0) {
-                    return this.confirm("Set migration history at " + originalVersion + "?").then(bool => {
+                    return this.confirm('Set migration history at ' + originalVersion + '?').then(bool => {
                         if (!bool) {
-                            return this.__static.EXIT_CODE_NORMAL;
+                            return BaseMigrateController.EXIT_CODE_NORMAL;
                         }
 
                         var promises = [];
@@ -461,8 +429,8 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
                         }
 
                         return Promise.all(promises).then(() => {
-                            this.stdout("The migration history is set at " + originalVersion + ".\nNo actual migration was performed.\n", Console.FG_GREEN);
-                            return this.__static.EXIT_CODE_NORMAL;
+                            this.stdout('The migration history is set at ' + originalVersion + '.\nNo actual migration was performed.\n', Console.FG_GREEN);
+                            return BaseMigrateController.EXIT_CODE_NORMAL;
                         });
                     });
                 }
@@ -475,11 +443,11 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
                         var migration = migrations[key];
                         if (migration.indexOf(version + '_') === 0) {
                             if (i === 0) {
-                                this.stdout("Already at '" + originalVersion + "'. Nothing needs to be done.\n", Console.FG_YELLOW);
+                                this.stdout('Already at \'' + originalVersion + '\'. Nothing needs to be done.\n', Console.FG_YELLOW);
                             } else {
-                                return this.confirm("Set migration history at " + originalVersion + "?").then(bool => {
+                                return this.confirm('Set migration history at ' + originalVersion + '?').then(bool => {
                                     if (!bool) {
-                                        return this.__static.EXIT_CODE_NORMAL;
+                                        return BaseMigrateController.EXIT_CODE_NORMAL;
                                     }
 
                                     var promises = [];
@@ -488,8 +456,8 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
                                     }
 
                                     return Promise.all(promises).then(() => {
-                                        this.stdout("The migration history is set at " + originalVersion + ".\nNo actual migration was performed.\n", Console.FG_GREEN);
-                                        return this.__static.EXIT_CODE_NORMAL;
+                                        this.stdout('The migration history is set at ' + originalVersion + '.\nNo actual migration was performed.\n', Console.FG_GREEN);
+                                        return BaseMigrateController.EXIT_CODE_NORMAL;
                                     });
                                 });
                             }
@@ -498,11 +466,11 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
                 }
             });
         }).then(result => {
-            if (result !== this.__static.EXIT_CODE_NORMAL) {
-                throw new Exception("Unable to find the version '" + originalVersion + "'.");
+            if (result !== BaseMigrateController.EXIT_CODE_NORMAL) {
+                throw new Exception('Unable to find the version \'' + originalVersion + '\'.');
             }
         });
-    },
+    }
 
     /**
      * Displays the migration history.
@@ -533,21 +501,21 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
 
         return this._getMigrationHistory(limit).then(migrations => {
             if (_isEmpty(migrations)) {
-                this.stdout("No migration has been done before.\n", Console.FG_YELLOW);
-                return this.__static.EXIT_CODE_NORMAL;
+                this.stdout('No migration has been done before.\n', Console.FG_YELLOW);
+                return BaseMigrateController.EXIT_CODE_NORMAL;
             }
 
             var n = _size(migrations);
             if (limit > 0) {
-                this.stdout("Showing the last " + n + " applied " + (n === 1 ? 'migration' : 'migrations') + ":\n", Console.FG_YELLOW);
+                this.stdout('Showing the last ' + n + ' applied ' + (n === 1 ? 'migration' : 'migrations') + ':\n', Console.FG_YELLOW);
             } else {
-                this.stdout("Total " + n + " " + (n === 1 ? 'migration has' : 'migrations have') + " been applied before:\n", Console.FG_YELLOW);
+                this.stdout('Total ' + n + ' ' + (n === 1 ? 'migration has' : 'migrations have') + ' been applied before:\n', Console.FG_YELLOW);
             }
             _each(migrations, (time, version) => {
-                this.stdout("\t(" + (new Date(time * 1000).toString()) + ') ' + version + "\n");
+                this.stdout('\t(' + new Date(time * 1000).toString() + ') ' + version + '\n');
             });
         });
-    },
+    }
 
     /**
      * Displays the un-applied new migrations.
@@ -578,23 +546,23 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
 
         return this._getNewMigrations().then(migrations => {
             if (migrations.length === 0) {
-                this.stdout("No new migrations found. Your system is up-to-date.\n", Console.FG_GREEN);
-                return this.__static.EXIT_CODE_NORMAL;
+                this.stdout('No new migrations found. Your system is up-to-date.\n', Console.FG_GREEN);
+                return BaseMigrateController.EXIT_CODE_NORMAL;
             }
 
             var n = migrations.length;
             if (limit && n > limit) {
                 migrations = migrations.slice(0, limit);
-                this.stdout("Showing " + limit + " out of " + n + " new " + (n === 1 ? 'migration' : 'migrations') + ":\n", Console.FG_YELLOW);
+                this.stdout('Showing ' + limit + ' out of ' + n + ' new ' + (n === 1 ? 'migration' : 'migrations') + ':\n', Console.FG_YELLOW);
             } else {
-                this.stdout("Found " + n + " new " + (n === 1 ? 'migration' : 'migrations') + ":\n", Console.FG_YELLOW);
+                this.stdout('Found ' + n + ' new ' + (n === 1 ? 'migration' : 'migrations') + ':\n', Console.FG_YELLOW);
             }
 
             _each(migrations, migration => {
-                this.stdout("\t" + migration + "\n");
+                this.stdout('\t' + migration + '\n');
             });
         });
-    },
+    }
 
     /**
      * Creates a new migration.
@@ -628,15 +596,15 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
                 (t.getMinutes() < 10 ? '0' : '') + t.getMinutes().toString(),
                 (t.getSeconds() < 10 ? '0' : '') + t.getSeconds().toString()
             ].join('');
-        }
+        };
 
         var className = 'm' + generateClassTime() + '_' + name;
         var fullClassName = this.migrationNamespace + '.' + className;
         var file = this.migrationPath + '/' + className + '.js';
 
-        return this.confirm("Create new migration '" + file + "'?").then(bool => {
+        return this.confirm('Create new migration \'' + file + '\'?').then(bool => {
             if (!bool) {
-                return this.__static.EXIT_CODE_NORMAL;
+                return BaseMigrateController.EXIT_CODE_NORMAL;
             }
 
             var matches;
@@ -695,13 +663,15 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
 
             if (!content) {
                 // @todo renderFile
-                content = _template(fs.readFileSync(Jii.getAlias(this.templateFile)).toString())({className: fullClassName});
+                content = _template(fs.readFileSync(Jii.getAlias(this.templateFile)).toString())({
+                    className: fullClassName
+                });
             }
 
             fs.writeFileSync(file, content);
-            this.stdout("New migration created successfully.\n", Console.FG_GREEN);
+            this.stdout('New migration created successfully.\n', Console.FG_GREEN);
         });
-    },
+    }
 
     /**
      * Upgrades with the specified migration class.
@@ -709,12 +679,12 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
      * @returns {Promise}
      */
     _migrateUp(className) {
-        if (className === this.__static.BASE_MIGRATION) {
+        if (className === this.constructor.BASE_MIGRATION) {
             return Promise.resolve(true);
         }
 
-        this.stdout("*** applying " + className + "\n", Console.FG_YELLOW);
-        var start = (new Date()).getTime();
+        this.stdout('*** applying ' + className + '\n', Console.FG_YELLOW);
+        var start = new Date().getTime();
         var time;
 
         var migration = this._createMigration(className);
@@ -723,19 +693,19 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
         }).then(isSuccess => {
             if (isSuccess !== false) {
                 return this._addMigrationHistory(className).then(() => {
-                    time = (new Date()).getTime() - start;
-                    this.stdout("*** applied " + className + " (time: " + (time / 1000) + "s)\n\n", Console.FG_GREEN);
+                    time = new Date().getTime() - start;
+                    this.stdout('*** applied ' + className + ' (time: ' + time / 1000 + 's)\n\n', Console.FG_GREEN);
 
                     return true;
                 });
             } else {
-                time = (new Date()).getTime() - start;
-                this.stdout("*** failed to apply " + className + " (time: " + (time / 1000) + "s)\n\n", Console.FG_RED);
+                time = new Date().getTime() - start;
+                this.stdout('*** failed to apply ' + className + ' (time: ' + time / 1000 + 's)\n\n', Console.FG_RED);
 
                 return false;
             }
         });
-    },
+    }
 
     /**
      * Downgrades with the specified migration class.
@@ -743,12 +713,12 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
      * @returns {Promise} whether the migration is successful
      */
     _migrateDown(className) {
-        if (className === this.__static.BASE_MIGRATION) {
+        if (className === this.constructor.BASE_MIGRATION) {
             return Promise.resolve(true);
         }
 
-        this.stdout("*** reverting " + className + "\n", Console.FG_YELLOW);
-        var start = (new Date()).getTime();
+        this.stdout('*** reverting ' + className + '\n', Console.FG_YELLOW);
+        var start = new Date().getTime();
         var time;
 
         var migration = this._createMigration(className);
@@ -757,19 +727,19 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
         }).then(isSuccess => {
             if (isSuccess !== false) {
                 return this._removeMigrationHistory(className).then(() => {
-                    time = (new Date()).getTime() - start;
-                    this.stdout("*** reverted " + className + " (time: " + (time / 1000) + "s)\n\n", Console.FG_GREEN);
+                    time = new Date().getTime() - start;
+                    this.stdout('*** reverted ' + className + ' (time: ' + time / 1000 + 's)\n\n', Console.FG_GREEN);
 
                     return true;
                 });
             } else {
-                time = (new Date()).getTime() - start;
-                this.stdout("*** failed to revert " + className + " (time: " + (time / 1000) + "s)\n\n", Console.FG_RED);
+                time = new Date().getTime() - start;
+                this.stdout('*** failed to revert ' + className + ' (time: ' + time / 1000 + 's)\n\n', Console.FG_RED);
 
                 return false;
             }
-        })
-    },
+        });
+    }
 
     /**
      * Creates a new migration instance.
@@ -782,7 +752,7 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
 
         var classFn = Jii.namespace(this.migrationNamespace + '.' + className);
         return new classFn();
-    },
+    }
 
     /**
      * Migrates to the specified apply time in the past.
@@ -799,13 +769,12 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
             }
 
             if (count === 0) {
-                this.stdout("Nothing needs to be done.\n", Console.FG_GREEN);
+                this.stdout('Nothing needs to be done.\n', Console.FG_GREEN);
             } else {
                 return this._actionDownInternal(count);
             }
         });
-
-    },
+    }
 
     /**
      * Migrates to the certain version.
@@ -833,19 +802,19 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
                     var migration = migrations[i];
                     if (migration.indexOf(version + '_') === 0) {
                         if (i === 0) {
-                            this.stdout("Already at '" + originalVersion + "'. Nothing needs to be done.\n", Console.FG_YELLOW);
+                            this.stdout('Already at \'' + originalVersion + '\'. Nothing needs to be done.\n', Console.FG_YELLOW);
                         } else {
                             return this._actionDownInternal(i);
                         }
 
-                        return this.__static.EXIT_CODE_NORMAL;
+                        return BaseMigrateController.EXIT_CODE_NORMAL;
                     }
                 }
 
-                throw new Exception("Unable to find the version 'originalVersion'.");
+                throw new Exception('Unable to find the version \'originalVersion\'.');
             });
         });
-    },
+    }
 
     /**
      * Returns the migrations that are not applied.
@@ -876,8 +845,7 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
 
             return names;
         });
-
-    },
+    }
 
     /**
      * Parse the command line migration fields
@@ -898,7 +866,7 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
                 decorators: chunks.join('.')
             };
         });
-    },
+    }
 
     /**
      * Adds default primary key to fields list if there's no primary key specified
@@ -918,7 +886,7 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
                 decorators: 'primaryKey()'
             });
         }
-    },
+    }
 
     /**
      * Returns the migration history.
@@ -927,7 +895,7 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
      */
     _getMigrationHistory(limit) {
         return new Promise();
-    },
+    }
 
     /**
      * Adds new migration entry to the history.
@@ -935,7 +903,7 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
      */
     _addMigrationHistory(version) {
         return new Promise();
-    },
+    }
 
     /**
      * Removes existing migration from the history.
@@ -945,6 +913,10 @@ var BaseMigrateController = Jii.defineClass('Jii.console.controllers.BaseMigrate
         return new Promise();
     }
 
-});
+}
 
+/**
+         * The name of the dummy migration that marks the beginning of the whole migration history.
+         */
+BaseMigrateController.BASE_MIGRATION = 'm000000_000000_base';
 module.exports = BaseMigrateController;

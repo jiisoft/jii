@@ -2,10 +2,7 @@
 
 var Jii = require('../../BaseJii');
 var Controller = require('../../base/Controller');
-
-var SiteController = Jii.defineClass('app.controllers.SiteController', {
-
-    __extends: Controller,
+class SiteController extends Controller {
 
     actionIndex(context) {
         var request = context.getComponent('request');
@@ -13,14 +10,14 @@ var SiteController = Jii.defineClass('app.controllers.SiteController', {
 
         response.data = 'test' + request.get('testParam');
         response.send();
-    },
+    }
 
     actionTest(context) {
         var response = context.getComponent('response');
 
         response.data = 'test1test';
         response.send();
-    },
+    }
 
     actionTest2(context) {
         var response = context.getComponent('response');
@@ -29,6 +26,5 @@ var SiteController = Jii.defineClass('app.controllers.SiteController', {
         response.send();
     }
 
-});
-
+}
 module.exports = SiteController;

@@ -11,7 +11,7 @@ module.exports = {
 		database: 'jiitest',
 		username: 'jiitest',
 		password: 'jiitest',
-		fixture: __dirname + '/fixture/mysql.sql'
+		fixture: __dirname + '/fixture/mysql.sql',
 	}/*,
 	sqlite: {
 		dsn: 'sqlite.memory:',

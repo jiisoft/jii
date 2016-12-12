@@ -2,57 +2,39 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
-var Jii = require('../../BaseJii');
+var Jii = require('../../index');
 var InvalidConfigException = require('../../exceptions/InvalidConfigException');
 var _trimStart = require('lodash/trimStart');
 var _isEmpty = require('lodash/isEmpty');
 var _each = require('lodash/each');
 var _values = require('lodash/values');
 var HttpRequest = require('../../base/HttpRequest');
+class Request extends HttpRequest {
 
-/**
- * @class Jii.request.http.Request
- * @extends Jii.base.HttpRequest
- */
-var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request.http.Request.prototype */{
+    preInit(httpMessage) {
+        this._referrer = null;
+        this._languages = null;
+        this._contentTypes = null;
+        this._securePort = null;
+        this._serverName = null;
+        this._cookies = null;
+        this._url = null;
+        this._baseUrl = null;
+        this._queryString = null;
+        this._bodyParams = null;
 
-	__extends: HttpRequest,
-
-    _httpMessage: null,
-
-    constructor(httpMessage) {
         if (!httpMessage.method) {
             throw new InvalidConfigException('Not found param `method` in http message.');
         }
         if (!httpMessage.headers) {
             throw new InvalidConfigException('Not found `headers` in http message.');
         }
-
         this._httpMessage = httpMessage;
 
-        this.init();
-    },
-
-    _bodyParams: null,
-
-    _queryString: null,
-
-    _baseUrl: null,
-
-    _url: null,
-
-    _cookies: null,
-
-    _serverName: null,
-
-    _securePort: null,
-
-    _contentTypes: null,
-
-    _languages: null,
+        super.preInit();
+    }
 
     /**
      * Returns the method of the current request (e.g. GET, POST, HEAD, PUT, PATCH, DELETE).
@@ -60,7 +42,7 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
      */
     getMethod() {
         return this._httpMessage.method;
-    },
+    }
 
     /**
      * Returns whether this is an AJAX (XMLHttpRequest) request.
@@ -69,7 +51,7 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
     isAjax() {
         var xhr = this._httpMessage.headers['X-Requested-With'] || '';
         return xhr.toLowerCase() === 'xmlhttprequest';
-    },
+    }
 
     /**
      * Returns whether this is an Adobe Flash or Flex request.
@@ -77,8 +59,8 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
      */
     isFlash() {
         var userAgent = this._httpMessage.headers['user-agent'] || '';
-        return userAgent && (userAgent.indexOf('Shockwave') !== -1 ||userAgent.indexOf('Flash') !== -1);
-    },
+        return userAgent && (userAgent.indexOf('Shockwave') !== -1 || userAgent.indexOf('Flash') !== -1);
+    }
 
     /**
      * Returns the request parameters given in the request body.
@@ -92,7 +74,7 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
             this._bodyParams = this._httpMessage.body || {};
         }
         return this._bodyParams;
-    },
+    }
 
     /**
      * Sets the request body parameters.
@@ -100,7 +82,7 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
      */
     setBodyParams(values) {
         this._bodyParams = values;
-    },
+    }
 
     /**
      * Returns the relative URL for the application.
@@ -109,8 +91,8 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
      * @return {string} The relative URL for the application
      */
     getBaseUrl() {
-		return this._baseUrl || '/';
-    },
+        return this._baseUrl || '/';
+    }
 
     /**
      * Sets the relative URL for the application.
@@ -120,7 +102,7 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
      */
     setBaseUrl(value) {
         this._baseUrl = value;
-    },
+    }
 
     /**
      * Returns the currently requested absolute URL.
@@ -129,7 +111,7 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
      */
     getAbsoluteUrl() {
         return this.getHostInfo() + this.getUrl();
-    },
+    }
 
     /**
      * Returns the currently requested relative URL.
@@ -142,7 +124,7 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
             this._url = this._httpMessage.url;
         }
         return this._url;
-    },
+    }
 
     /**
      * Sets the currently requested relative URL.
@@ -152,7 +134,7 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
      */
     setUrl(value) {
         this._url = _trimStart(value, '/');
-    },
+    }
 
     /**
      * Returns part of the request URL that is after the question mark.
@@ -163,7 +145,7 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
             this._queryString = this._httpMessage._parsedUrl.query;
         }
         return this._queryString;
-    },
+    }
 
     /**
      * Returns the server name.
@@ -174,9 +156,7 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
             this._serverName = this._httpMessage.headers.host.replace(/:[0-9]+$/, '');
         }
         return this._serverName;
-    },
-
-    _referrer: null,
+    }
 
     /**
      * Returns the URL referrer, null if not present
@@ -188,7 +168,7 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
             this._referrer = headers.get('referrer') || headers.get('referer') || null;
         }
         return this._referrer;
-    },
+    }
 
     /**
      * Returns the user agent, null if not present.
@@ -196,7 +176,7 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
      */
     getUserAgent() {
         return this._httpMessage.headers['user-agent'];
-    },
+    }
 
     /**
      * Returns the user IP address.
@@ -204,7 +184,7 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
      */
     getUserIP() {
         return this._httpMessage.headers['x-real-ip'] || this._httpMessage.remoteAddress || null;
-    },
+    }
 
     /**
      * Returns the user host name, null if it cannot be determined.
@@ -213,12 +193,12 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
     getUserHost() {
         // @todo
         return this.getUserIP();
-    },
+    }
 
     getContentType() {
         // @todo
         return null;
-    },
+    }
 
     /**
      * Returns the content types accepted by the end user.
@@ -232,7 +212,7 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
             this._contentTypes = acceptHeader ? this._parseAcceptHeader(acceptHeader) : [];
         }
         return this._contentTypes;
-    },
+    }
 
     /**
      * @param {array} value The content types that are accepted by the end user. They should
@@ -240,7 +220,7 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
      */
     setAcceptableContentTypes(value) {
         this._contentTypes = value;
-    },
+    }
 
     /**
      * Returns the languages accepted by the end user.
@@ -256,7 +236,7 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
             this._languages = [];
         }
         return this._languages;
-    },
+    }
 
     /**
      * @param {array} value The languages that are accepted by the end user. They should
@@ -264,7 +244,7 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
      */
     setAcceptableLanguages(value) {
         this._languages = value;
-    },
+    }
 
     /**
      * Returns the user-preferred language that should be used by this application.
@@ -297,7 +277,7 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
         });
 
         return finedLanguage || _values(languages)[0];
-    },
+    }
 
     getCookies() {
 
@@ -305,12 +285,12 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
             this._cookies = this._httpMessage.cookies || {};
         }
         return this._cookies;
-    },
+    }
 
     _parseParams() {
         // @todo Change this code, when delete express
         return this._httpMessage.query;
-    },
+    }
 
     /**
      * Parses the given `Accept` (or `Accept-Language`) header.
@@ -318,23 +298,20 @@ var Request = Jii.defineClass('Jii.request.http.Request', /** @lends Jii.request
      * @param {string} header The header to be parsed
      * @return {array} The accept values ordered by their preference level.
      */
-    _parseAcceptHeader(header) {
-        // @todo
-    },
+    _parseAcceptHeader(header) {}
 
     _parseHeaders() {
         return this._httpMessage.headers;
-    },
+    }
 
     _parseHostInfo() {
         var http = this.isSecureConnection() ? 'https' : 'http';
         return http + '://' + this._httpMessage.headers.host;
-    },
+    }
 
     _parsePathInfo() {
         return _trimStart(this._httpMessage._parsedUrl.pathname, '/');
     }
 
-});
-
+}
 module.exports = Request;

@@ -2,7 +2,6 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -16,33 +15,25 @@ var _isObject = require('lodash/isObject');
 var _isFunction = require('lodash/isFunction');
 var _template = require('lodash/template');
 var IRenderer = require('../IRenderer');
+class UnderscoreRenderer extends IRenderer {
 
-/**
- * ViewEvent represents events triggered by the [[View]] component.
- *
- * @class Jii.view.underscore.UnderscoreRenderer
- * @extends Jii.view.IRenderer
- */
-var UnderscoreRenderer = Jii.defineClass('Jii.view.underscore.UnderscoreRenderer', /** @lends Jii.view.underscore.UnderscoreRenderer.prototype */{
-
-    __extends: IRenderer,
-
-    /**
-     * @type {string} the default view file extension. This will be appended to view file names if they don't have file extensions.
-     */
-    defaultExtension: '',
-
-    /**
-     * @type {object}
-     */
-    _templates: {},
-
-    /**
+    preInit() {
+        this._currentWebView = null;
+        /**
      * @type {[]} the view files currently being rendered. There may be multiple view files being
      * rendered at a moment because one view may be rendered within another.
      */
-    _viewFiles: [],
-    _currentWebView: null,
+        this._viewFiles = [];
+        /**
+     * @type {object}
+     */
+        this._templates = {};
+        /**
+     * @type {string} the default view file extension. This will be appended to view file names if they don't have file extensions.
+     */
+        this.defaultExtension = '';
+        super.preInit(...arguments);
+    }
 
     /**
      *
@@ -56,7 +47,7 @@ var UnderscoreRenderer = Jii.defineClass('Jii.view.underscore.UnderscoreRenderer
     render(view, context, params, controller, webView) {
         var viewFile = this._findViewFile(view, controller);
         return this.renderFile(viewFile, context, params, controller, webView);
-    },
+    }
 
     /**
      *
@@ -69,7 +60,7 @@ var UnderscoreRenderer = Jii.defineClass('Jii.view.underscore.UnderscoreRenderer
      */
     renderLayout(view, context, params, controller, webView) {
         return this.renderFile(view, context, params, controller, webView);
-    },
+    }
 
     /**
      *
@@ -103,7 +94,7 @@ var UnderscoreRenderer = Jii.defineClass('Jii.view.underscore.UnderscoreRenderer
         this._viewFiles.pop();
         this._currentWebView = null;
         return output;
-    },
+    }
 
     renderJsFile(file, params, webView) {
         params = params || {};
@@ -114,7 +105,7 @@ var UnderscoreRenderer = Jii.defineClass('Jii.view.underscore.UnderscoreRenderer
 
         params.Jii = Jii;
         return this._templates[file].call(webView, params);
-    },
+    }
 
     getTemplate(path) {
         if (!require('fs').existsSync(path)) {
@@ -122,18 +113,18 @@ var UnderscoreRenderer = Jii.defineClass('Jii.view.underscore.UnderscoreRenderer
         }
         this._templates[path] = _template(require('fs').readFileSync(path).toString());
         return this._templates[path] || null;
-    },
+    }
 
     hasTemplate(path) {
         return this.getTemplate(path) !== null;
-    },
+    }
 
     /**
      * @returns {string|boolean} the view file currently being rendered. False if no view file is being rendered.
      */
     getViewFile() {
         return this._viewFiles[this._viewFiles.length - 1];
-    },
+    }
 
     /**
      * Finds the view file based on the given view name.
@@ -185,7 +176,7 @@ var UnderscoreRenderer = Jii.defineClass('Jii.view.underscore.UnderscoreRenderer
         }
 
         return path;
-    },
+    }
 
     /**
      * Returns the localized version of a specified file.
@@ -236,6 +227,5 @@ var UnderscoreRenderer = Jii.defineClass('Jii.view.underscore.UnderscoreRenderer
         return this.hasTemplate(desiredFile) ? desiredFile : file;
     }
 
-});
-
+}
 module.exports = UnderscoreRenderer;

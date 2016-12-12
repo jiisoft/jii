@@ -2,37 +2,31 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
-
 'use strict';
 
 var Jii = require('../../BaseJii');
 var InvalidConfigException = require('../../exceptions/InvalidConfigException');
 var Collection = require('../../base/Collection');
 var INeatContextProfiles = require('../INeatContextProfiles');
+class NeatContextProfiles extends INeatContextProfiles {
 
-/**
- * @class Jii.comet.server.NeatContextProfiles
- * @extends Jii.comet.INeatContextProfiles
- */
-var NeatContextProfiles = Jii.defineClass('Jii.comet.server.NeatContextProfiles', /** @lends Jii.comet.server.NeatContextProfiles.prototype */{
-
-    __extends: INeatContextProfiles,
-
-    /**
-     * @type {Jii.comet.client.NeatClient}
-     */
-    neat: 'neat',
-
-    /**
+    preInit() {
+        /**
      * @type {object}
      */
-    data: {},
+        this.data = {};
+        /**
+     * @type {Jii.comet.client.NeatClient}
+     */
+        this.neat = 'neat';
+        super.preInit(...arguments);
+    }
 
     init() {
-        this.__super();
+        super.init();
 
         this.neat = Jii.app.get(this.neat);
-    },
+    }
 
     /**
      *
@@ -63,6 +57,5 @@ var NeatContextProfiles = Jii.defineClass('Jii.comet.server.NeatContextProfiles'
         });
     }
 
-});
-
+}
 module.exports = NeatContextProfiles;

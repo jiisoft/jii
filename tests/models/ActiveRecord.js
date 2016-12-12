@@ -2,25 +2,13 @@
 
 var Jii = require('../../BaseJii');
 var ActiveRecord = require('../../data/ActiveRecord');
+class TestActiveRecord extends ActiveRecord {
 
-/**
- * @class tests.unit.models.ActiveRecord
- * @extends Jii.data.ActiveRecord
- */
-var TestActiveRecord = Jii.defineClass('tests.unit.models.ActiveRecord', {
+    static getDb() {
+        return ActiveRecord.db;
+    }
 
-	__extends: ActiveRecord,
+}
 
-	__static: {
-
-		db: null,
-
-		getDb() {
-			return ActiveRecord.db;
-		}
-
-	}
-
-});
-
+TestActiveRecord.db = null;
 module.exports = TestActiveRecord;

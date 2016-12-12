@@ -1,4 +1,3 @@
-
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -7,46 +6,37 @@ var Collection = require('../../base/Collection');
 var Command = require('./Command');
 var Component = require('../../base/Component');
 var _each = require('lodash/each');
+class Connection extends Component {
 
-/**
- *
- * @class Jii.data.http.Connection
- * @extends Jii.base.Component
- */
-var Connection = Jii.defineClass('Jii.data.http.Connection', /** @lends Jii.data.http.Connection.prototype */{
-
-	__extends: Component,
-
-    /**
-     * @type {Jii.data.http.Schema} the database schema
+    preInit() {
+        /**
+     * @type {object}
      */
-    schema: {
-        className: 'Jii.data.http.Schema'
-    },
-
-    /**
-     * @type {Jii.data.http.TransportInterface}
+        this._data = {};
+        /**
+     * @type {object}
      */
-    transport: null,
-
-    /**
+        this._rootCollections = {};
+        /**
      * @type {string}
      */
-    route: 'api/ar',
-
-    /**
-     * @type {object}
+        this.route = 'api/ar';
+        /**
+     * @type {Jii.data.http.TransportInterface}
      */
-    _rootCollections: {},
-
-    /**
-     * @type {object}
+        this.transport = null;
+        /**
+     * @type {Jii.data.http.Schema} the database schema
      */
-    _data: {},
+        this.schema = {
+            className: 'Jii.data.http.Schema'
+        };
+        super.preInit(...arguments);
+    }
 
     init() {
         this.schema = Jii.createObject(this.schema);
-    },
+    }
 
     getTransport() {
         if (this.transport === null) {
@@ -55,7 +45,7 @@ var Connection = Jii.defineClass('Jii.data.http.Connection', /** @lends Jii.data
             this.transport = Jii.createObject(this.transport);
         }
         return this.transport;
-    },
+    }
 
     /**
      *
@@ -74,13 +64,15 @@ var Connection = Jii.defineClass('Jii.data.http.Connection', /** @lends Jii.data
         }
 
         if (!this._rootCollections[tableName]) {
-            this._rootCollections[tableName] = new Collection(null, {modelClass: modelClass});
+            this._rootCollections[tableName] = new Collection(null, {
+                modelClass: modelClass
+            });
             if (this._data[tableName]) {
                 this._rootCollections[tableName].set(this._data[tableName]);
             }
         }
         return this._rootCollections[tableName];
-    },
+    }
 
     /**
      * Prepare data for root collections
@@ -94,7 +86,7 @@ var Connection = Jii.defineClass('Jii.data.http.Connection', /** @lends Jii.data
                 this._data[tableName] = items;
             }
         });
-    },
+    }
 
     /**
      * Creates a command for execution.
@@ -104,7 +96,7 @@ var Connection = Jii.defineClass('Jii.data.http.Connection', /** @lends Jii.data
         return new Command({
             db: this
         });
-    },
+    }
 
     /**
      *
@@ -119,7 +111,7 @@ var Connection = Jii.defineClass('Jii.data.http.Connection', /** @lends Jii.data
         params.modelClassName = modelClassName;
 
         return this.getTransport().request(this.route, params);
-    },
+    }
 
     /**
      * Returns the schema information for the database opened by this connection.
@@ -127,7 +119,7 @@ var Connection = Jii.defineClass('Jii.data.http.Connection', /** @lends Jii.data
      */
     getSchema() {
         return this.schema;
-    },
+    }
 
     /**
      * Obtains the schema information for the named table.
@@ -138,6 +130,5 @@ var Connection = Jii.defineClass('Jii.data.http.Connection', /** @lends Jii.data
         return this.getSchema().getTableSchema(name);
     }
 
-});
-
+}
 module.exports = Connection;

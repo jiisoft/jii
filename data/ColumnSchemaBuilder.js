@@ -7,8 +7,8 @@
 var Jii = require('../BaseJii');
 var Expression = require('../data/Expression');
 var _isArray = require('lodash/isArray');
-var Object = require('../base/Object');
-class ColumnSchemaBuilder extends Object {
+var BaseObject = require('../base/Object');
+class ColumnSchemaBuilder extends BaseObject {
 
     preInit(type, length, config) {
         /**

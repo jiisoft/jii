@@ -16,11 +16,11 @@ var _keys = require('lodash/keys');
 var _each = require('lodash/each');
 var _some = require('lodash/some');
 var _has = require('lodash/has');
-var Object = require('../base/Object');
+var BaseObject = require('../base/Object');
 var Query = require('../data/Query');
 var Expression = require('../data/Expression');
 var Model = require('../base/Model');
-class FilterBuilder extends Object {
+class FilterBuilder extends BaseObject {
 
     preInit() {
         /**

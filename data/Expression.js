@@ -6,8 +6,8 @@
 'use strict';
 
 var Jii = require('../BaseJii');
-var Object = require('../base/Object');
-class Expression extends Object {
+var BaseObject = require('../base/Object');
+class Expression extends BaseObject {
 
     preInit(expression, params, config) {
         params = params || [];

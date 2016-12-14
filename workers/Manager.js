@@ -14,10 +14,10 @@ var _uniqueId = require('lodash/uniqueId');
 var _isString = require('lodash/isString');
 var _isEmpty = require('lodash/isEmpty');
 var _each = require('lodash/each');
-var Object = require('../base/Object');
+var BaseObject = require('../base/Object');
 var cluster = require('cluster');
 var ConsoleApplication = require('../application/ConsoleApplication');
-class Manager extends Object {
+class Manager extends BaseObject {
 
     preInit() {
         /**

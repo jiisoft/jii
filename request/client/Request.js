@@ -17,6 +17,7 @@ class Request extends HttpRequest {
         }
         this._location = location;
 
+        super.preInit();
         this.init();
     }
 

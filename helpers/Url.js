@@ -9,8 +9,8 @@ var _trim = require('lodash/trim');
 var _isObject = require('lodash/isObject');
 var _isString = require('lodash/isString');
 var _isArray = require('lodash/isArray');
-var Object = require('../base/Object');
-class Url extends Object {
+var BaseObject = require('../base/Object');
+class Url extends BaseObject {
 
     /**
          * Returns a value indicating whether a URL is relative.
@@ -100,7 +100,7 @@ class Url extends Object {
         }
 
         return {
-            route: this.constructor._normalizeRoute(route, context),
+            route: Url._normalizeRoute(route, context),
             params: params
         };
     }

@@ -7,9 +7,9 @@
 var Jii = require('../BaseJii');
 var _isString = require('lodash/isString');
 var _each = require('lodash/each');
-var Object = require('../base/Object');
+var BaseObject = require('../base/Object');
 var fs = require('fs');
-class ClassLoader extends Object {
+class ClassLoader extends BaseObject {
 
     static packages() {
         _each(this.constructor.classesMap, (classNames, packageName) => {

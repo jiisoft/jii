@@ -14,8 +14,8 @@ var _extend = require('lodash/extend');
 var _intersection = require('lodash/intersection');
 var _map = require('lodash/map');
 var _each = require('lodash/each');
-var Object = require('../base/Object');
-class Validator extends Object {
+var BaseObject = require('../base/Object');
+class Validator extends BaseObject {
 
     preInit() {
         this.deferred = null;

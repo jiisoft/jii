@@ -12,9 +12,9 @@ var ColumnSchemaBuilder = require('./ColumnSchemaBuilder');
 var _isUndefined = require('lodash/isUndefined');
 var _each = require('lodash/each');
 var _has = require('lodash/has');
-var Object = require('../base/Object');
+var BaseObject = require('../base/Object');
 var ColumnSchema = require('./ColumnSchema');
-class BaseSchema extends Object {
+class BaseSchema extends BaseObject {
 
     preInit() {
         /**

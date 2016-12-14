@@ -7,8 +7,8 @@
 var Jii = require('../BaseJii');
 var InvalidConfigException = require('../exceptions/InvalidConfigException');
 var _isFunction = require('lodash/isFunction');
-var Object = require('./Object');
-class Action extends Object {
+var BaseObject = require('./Object');
+class Action extends BaseObject {
 
     preInit(id, controller, config) {
         /**

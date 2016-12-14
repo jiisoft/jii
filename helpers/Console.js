@@ -11,9 +11,9 @@ var _extend = require('lodash/extend');
 var _keys = require('lodash/keys');
 var _each = require('lodash/each');
 var _has = require('lodash/has');
-var Object = require('../base/Object');
+var BaseObject = require('../base/Object');
 var keypress = require('keypress');
-class Console extends Object {
+class Console extends BaseObject {
 
     /**
          * Moves the terminal cursor up by sending ANSI control code CUU to the terminal.

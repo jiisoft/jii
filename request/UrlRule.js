@@ -16,8 +16,8 @@ var _isObject = require('lodash/isObject');
 var _each = require('lodash/each');
 var _has = require('lodash/has');
 var _clone = require('lodash/clone');
-var Object = require('../base/Object');
-class UrlRule extends Object {
+var BaseObject = require('../base/Object');
+class UrlRule extends BaseObject {
 
     preInit(config) {
         /**

@@ -8,8 +8,8 @@ var Jii = require('../BaseJii');
 var Expression = require('../data/Expression');
 var _isBoolean = require('lodash/isBoolean');
 var _isEmpty = require('lodash/isEmpty');
-var Object = require('../base/Object');
-class ModelAttributeSchema extends Object {
+var BaseObject = require('../base/Object');
+class ModelAttributeSchema extends BaseObject {
 
     preInit() {
         /**

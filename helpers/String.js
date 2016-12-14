@@ -5,8 +5,8 @@
 'use strict';
 
 var Jii = require('../BaseJii');
-var Object = require('../base/Object');
-class String extends Object {
+var BaseObject = require('../base/Object');
+class String extends BaseObject {
 
     /**
          * Generate unique hash for string. http://jsperf.com/hashcodelordvlad

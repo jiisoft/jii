@@ -7,8 +7,8 @@
 var Jii = require('../BaseJii');
 var _trimEnd = require('lodash/trimEnd');
 var _each = require('lodash/each');
-var Object = require('../base/Object');
-class File extends Object {
+var BaseObject = require('../base/Object');
+class File extends BaseObject {
 
     static getFileDirectory(path) {
         return path.replace(/\/?[^\/]+$/, '');

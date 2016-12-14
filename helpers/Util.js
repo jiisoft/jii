@@ -5,8 +5,8 @@
 'use strict';
 
 var Jii = require('../BaseJii');
-var Object = require('../base/Object');
-class Util extends Object {
+var BaseObject = require('../base/Object');
+class Util extends BaseObject {
 
     /**
          *

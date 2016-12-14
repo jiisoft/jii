@@ -1,8 +1,8 @@
 'use strict';
 
 var Jii = require('../../../BaseJii');
-var Object = require('../../../base/Object');
-class PluginInterface extends Object {
+var BaseObject = require('../../../base/Object');
+class PluginInterface extends BaseObject {
 
     preInit() {
         /**

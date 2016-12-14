@@ -468,7 +468,7 @@ var Jii = _extend(BaseJii, /** @lends Jii */{
             // Convert class name to object
             for (var key in obj) {
                 if (obj.hasOwnProperty(key)) {
-                    if (_isObject(obj[key]) && !_isArray(obj[key]) && !_isFunction(obj[key]) && !(obj instanceof Object)) {
+                    if (_isObject(obj[key]) && !_isArray(obj[key]) && !_isFunction(obj[key]) && !(obj instanceof BaseObject)) {
                         dst[key] = this.mergeConfigs(dst[key], obj[key]);
                     } else {
                         dst[key] = obj[key];

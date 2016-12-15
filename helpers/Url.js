@@ -100,7 +100,7 @@ class Url extends BaseObject {
         }
 
         return {
-            route: Url._normalizeRoute(route, context),
+            route: this._normalizeRoute(route, context),
             params: params
         };
     }

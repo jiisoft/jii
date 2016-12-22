@@ -24,7 +24,7 @@ class Url extends BaseObject {
 
     static to(url, context, scheme) {
         if (_isObject(url)) {
-            return this.constructor.toRoute(url, context, scheme);
+            return Url.toRoute(url, context, scheme);
         }
 
         return url;
@@ -63,7 +63,7 @@ class Url extends BaseObject {
             route = [route];
         }
 
-        return scheme ? this.constructor._getUrlManager().createAbsoluteUrl(route, context, _isString(scheme) ? scheme : null) : this.constructor._getUrlManager().createUrl(route, context);
+        return scheme ? Url._getUrlManager().createAbsoluteUrl(route, context, _isString(scheme) ? scheme : null) : Url._getUrlManager().createUrl(route, context);
     }
 
     /**

@@ -7,6 +7,7 @@
 var Jii = require('../BaseJii');
 var Validator = require('../validators/Validator');
 var RequiredValidator = require('../validators/RequiredValidator');
+var BooleanValidator = require('../validators/BooleanValidator');
 var ChangeAttributeEvent = require('../data/ChangeAttributeEvent');
 var ChangeEvent = require('../data/ChangeEvent');
 var InvalidParamException = require('../exceptions/InvalidParamException');
@@ -773,18 +774,32 @@ class Model extends Component {
      * [[\jii\validators\RequiredValidator|required]] validation rule in the
      * current [[scenario]].
      *
-     * Note that when the validator has a conditional validation applied using
-     * [[\jii\validators\RequiredValidator.when|when]] this method will return
-     * `false` regardless of the `when` condition because it may be called be
-     * before the model is loaded with data.
-     *
-     * @param {string} attribute attribute name
+     * @param {string} attribute name
      * @returns {boolean} whether the attribute is required
      */
     isAttributeRequired(attribute) {
         var bool = false;
         _each(this.getActiveValidators(attribute), validator => {
             if (validator instanceof RequiredValidator) {
+                bool = true;
+            }
+        });
+        return bool;
+    }
+
+    /**
+     * Returns a value indicating whether the attribute is boolean type.
+     * This is determined by checking if the attribute is associated with a
+     * [[\jii\validators\BooleanValidator]] validation rule in the
+     * current [[scenario]].
+     *
+     * @param {string} attribute name
+     * @returns {boolean} whether the attribute is boolean
+     */
+    isAttributeBoolean(attribute) {
+        var bool = false;
+        _each(this.getActiveValidators(attribute), validator => {
+            if (validator instanceof BooleanValidator) {
                 bool = true;
             }
         });

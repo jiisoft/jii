@@ -784,7 +784,7 @@ class Model extends Component {
     isAttributeRequired(attribute) {
         var bool = false;
         _each(this.getActiveValidators(attribute), validator => {
-            if (validator instanceof RequiredValidator && validator.when === null) {
+            if (validator instanceof RequiredValidator) {
                 bool = true;
             }
         });

@@ -15,13 +15,14 @@ class HttpRequest extends Request {
 
     preInit() {
         /**
-     * @type {Jii.request.HeaderCollection}
-     */
+         * @type {Jii.request.HeaderCollection}
+         */
         this._headers = null;
         this._port = null;
         this._serverPort = null;
         this._hostInfo = null;
         this._pathInfo = null;
+        this._baseUrl = null;
 
         super.preInit(...arguments);
     }
@@ -308,6 +309,26 @@ class HttpRequest extends Request {
     setHostInfo(value) {
         this._hostInfo = _trimEnd(value, '/');
         return this._hostInfo;
+    }
+
+    /**
+     * Returns the relative URL for the application.
+     * This is similar to [[scriptUrl]] except that it does not include the script file name,
+     * and the ending slashes are removed.
+     * @return {string} The relative URL for the application
+     */
+    getBaseUrl() {
+        return this._baseUrl || '/';
+    }
+
+    /**
+     * Sets the relative URL for the application.
+     * By default the URL is determined based on the entry script URL.
+     * This setter is provided in case you want to change this behavior.
+     * @param {string} value The relative URL for the application
+     */
+    setBaseUrl(value) {
+        this._baseUrl = value;
     }
 
     _parseHeaders() {}

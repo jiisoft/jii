@@ -1,6 +1,6 @@
 {
   "name": "jii",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Jii - Full-Stack JavaScript Framework",
   "main": "index.js",
   "browser": "index-client.js",

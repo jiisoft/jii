@@ -21,7 +21,6 @@ class Request extends HttpRequest {
         this._serverName = null;
         this._cookies = null;
         this._url = null;
-        this._baseUrl = null;
         this._queryString = null;
         this._bodyParams = null;
 
@@ -82,26 +81,6 @@ class Request extends HttpRequest {
      */
     setBodyParams(values) {
         this._bodyParams = values;
-    }
-
-    /**
-     * Returns the relative URL for the application.
-     * This is similar to [[scriptUrl]] except that it does not include the script file name,
-     * and the ending slashes are removed.
-     * @return {string} The relative URL for the application
-     */
-    getBaseUrl() {
-        return this._baseUrl || '/';
-    }
-
-    /**
-     * Sets the relative URL for the application.
-     * By default the URL is determined based on the entry script URL.
-     * This setter is provided in case you want to change this behavior.
-     * @param {string} value The relative URL for the application
-     */
-    setBaseUrl(value) {
-        this._baseUrl = value;
     }
 
     /**

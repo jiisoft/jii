@@ -6,6 +6,9 @@
 
 var Jii = require('../BaseJii');
 var Validator = require('./Validator');
+var _isArray = require('lodash/isArray');
+var _intersection = require('lodash/intersection');
+var _map = require('lodash/map');
 class DefaultValueValidator extends Validator {
 
     preInit() {
@@ -25,6 +28,20 @@ class DefaultValueValidator extends Validator {
         if (this.isEmpty(object.get(attribute))) {
             object.set(attribute, this.value);
         }
+    }
+
+    validate(object, attributes) {
+        attributes = _isArray(attributes) ? _intersection(this.attributes, attributes) : this.attributes;
+
+        var promises = _map(attributes, attribute => {
+            if (this.skipOnError && object.hasErrors(attribute)) {
+                return;
+            }
+
+            return this.validateAttribute(object, attribute);
+        });
+
+        return Promise.all(promises);
     }
 
 }

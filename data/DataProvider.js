@@ -66,9 +66,10 @@ class DataProvider extends Collection {
     /**
      *
      * @param {boolean} [force]
+     * @param {boolean} [reset] reset before setNewModels ?
      * @return {*}
      */
-    fetch(force) {
+    fetch(force, reset = false) {
         // Queue promises when fetch in process
         if (this._fetchCallbacks !== null) {
             return new Promise(resolve => {
@@ -119,6 +120,9 @@ class DataProvider extends Collection {
                     isFetch: true
                 }));
             } else {
+                if(reset){
+                    this.reset([]);
+                }
                 this.setModels(data.models);
             }
 

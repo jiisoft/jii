@@ -17,14 +17,7 @@ class View extends Component {
         /**
      * @type {object}
      */
-        this.renderers = process.env.JII_NO_NAMESPACE ? null : {
-            react: {
-                className: Jii.isNode ? 'Jii.react.ReactServerRenderer' : 'Jii.react.ReactRenderer'
-            },
-            underscore: {
-                className: 'Jii.view.underscore.UnderscoreRenderer'
-            }
-        };
+        this.renderers = null;
         /**
      * @type {Jii.view.IRenderer|null}
      */

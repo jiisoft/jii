@@ -427,15 +427,6 @@ class Module extends Context {
             if (this.controllerMap[className]) {
                 return true;
             }
-
-            if (!process.env.JII_NO_NAMESPACE) {
-                var controllerClass = Jii.namespace(this.controllerNamespace + '.' + className);
-
-                if (_isFunction(controllerClass)) {
-                    var controller = new controllerClass(id, this);
-                    return controller.hasAction(route);
-                }
-            }
         }
 
         return false;
@@ -480,24 +471,6 @@ class Module extends Context {
                     controller,
                     route
                 ] : null;
-            }
-
-            if (!process.env.JII_NO_NAMESPACE) {
-                className = this.controllerNamespace + '.' + className;
-
-                // Cache controller instances
-                if (!this._controllers[className]) {
-
-                    var controllerClass = Jii.namespace(className);
-                    if (_isFunction(controllerClass)) {
-                        this._controllers[className] = new controllerClass(id, this);
-
-                        if (!(this._controllers[className] instanceof Controller)) {
-                            throw new InvalidConfigException('Controller class must extend from Jii.base.Controller.');
-                        }
-                    }
-                }
-                controller = this._controllers[className] || null;
             }
         }
 

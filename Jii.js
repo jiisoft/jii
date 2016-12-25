@@ -60,18 +60,6 @@ var Jii = _extend(BaseJii, /** @lends Jii */{
     },
 
     /**
-     * Create console application, which available by Jii.app
-     * @param {object} config
-     * @returns {Jii.app.Application}
-     */
-    createConsoleApplication(config) {
-        if (process.env.JII_NO_NAMESPACE) {
-            throw new Error(`DEPRECATED. Use createApplication().`);
-        }
-        return this.createApplication('Jii.application.ConsoleApplication', config);
-    },
-
-    /**
      * Main method which create application by class name and config.
      * @param {string} className
      * @param {object} config

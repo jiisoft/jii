@@ -46,13 +46,10 @@ _extend(Jii, /** @lends BaseJii */{
 	 * @returns {function|object}
 	 */
 	namespace(name) {
-		if (!process.env.JII_NO_NAMESPACE && Jii.helpers && Jii.helpers.ClassLoader) {
-			Jii.helpers.ClassLoader.load(name);
+		if (_isString(name)) {
+			throw new Error(`String class names is deprecated, please import real class "${name}"`);
 		}
-		if (process.env.JII_NO_NAMESPACE && _isString(name)) {
-			throw new Error(`You are used mode without namespaces, but Jii.namespace detect string class name "${name}"`);
-		}
-		return _isString(name) ? Neatness.namespace.apply(Neatness, arguments) : name;
+		return name;
 	},
 
 	/**
@@ -84,13 +81,9 @@ _extend(Jii, /** @lends BaseJii */{
 	 * @return {object}
 	 */
 	defineClass(globalName, options) {
-		if (!process.env.JII_NO_NAMESPACE && Jii.helpers && Jii.helpers.ClassLoader) {
-			Jii.helpers.ClassLoader.load(options.__extends);
+		if (_isString(options.__extends)) {
+			throw new Error(`String class names is deprecated, please import real class for extend "${options.__extends}"`);
 		}
-		if (process.env.JII_NO_NAMESPACE && _isString(options.__extends)) {
-			throw new Error(`You are used mode without namespaces, but class ${globalName} has string extended class "${options.__extends}"`);
-		}
-
 		return Neatness.defineClass.apply(Neatness, arguments);
 	}
 

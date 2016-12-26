@@ -47,13 +47,18 @@ class MegaMenu extends Component {
      * @param {array} items
      * @param {boolean} append
      */
-    addItems(items, append = true)
-    {
+    addItems(items, append = true) {
         this._items = this.mergeItems(this._items, items, append);
     }
 
-    mergeItems(baseItems, items, append)
-    {
+    /**
+     * Merge MenuItems and object
+     * @param baseItems
+     * @param items
+     * @param append
+     * @returns {*}
+     */
+    mergeItems(baseItems, items, append) {
         _forIn(items, (item, id) => {
             // Merge item with group (as key)
             if (typeof(id) == 'string' && baseItems[id]) {
@@ -106,6 +111,10 @@ class MegaMenu extends Component {
         return this.getItem(this.getRequestedRoute());
     }
 
+    /**
+     *
+     * @returns {Array|string[]|null|*}
+     */
     getRequestedRoute() {
         if (this._requestedRoute === null) {
             // Set active item

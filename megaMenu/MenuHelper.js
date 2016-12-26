@@ -4,6 +4,11 @@ var Jii = require('../index');
 
 class MenuHelper{
 
+    /**
+     * Translate items to rules for Jii.request.UrlManager
+     * @param items
+     * @returns {Array}
+     */
     static menuToRules(items) {
         let rules = [];
         for(const item in items) {
@@ -48,8 +53,7 @@ class MenuHelper{
      * @param {string} route
      * @return {string}
      */
-    static normalizeRoute(route)
-    {
+    static normalizeRoute(route) {
         route = Jii.getAlias(route);
         if (MenuHelper.strncmp(route, '/', 1) === 0) {
             // absolute route
@@ -60,7 +64,7 @@ class MenuHelper{
     }
 
     /**
-     *
+     * Binary-safe comparison of the first n characters of strings
      * @param str1
      * @param str2
      * @param lgth

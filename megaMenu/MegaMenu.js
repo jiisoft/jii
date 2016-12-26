@@ -4,13 +4,17 @@ var Jii = require('../index');
 var MenuHelper = require('./MenuHelper');
 var MegaMenuItem = require('./MegaMenuItem');
 var Component = require('../base/Component');
+var Request = require('../request/client/Request');
+var _forIn = require('lodash/forIn');
+var _merge = require('lodash/merge');
+var _sortBy = require('lodash/sortBy');
+var _difference = require('lodash/difference');
 
 class MegaMenu extends Component {
 
     preInit() {
         this._items = [];
         this._requestedRoute = null;
-        this.isModulesFetched = false;
 
         super.preInit(...arguments);
     }
@@ -24,18 +28,75 @@ class MegaMenu extends Component {
 
     /**
      * Set menu items
-     * @param {array} items
+     * @param {object} items
      */
     setItems(items) {
-        this._items = items;
+        this.addItems(items);
     }
 
     /**
      * Get all tree menu items
-     * @return {array}
+     * @return {object}
      */
     getItems() {
         return this._items;
+    }
+
+    /**
+     * Add tree menu items
+     * @param {array} items
+     * @param {boolean} append
+     */
+    addItems(items, append = true)
+    {
+        this._items = this.mergeItems(this._items, items, append);
+    }
+
+    mergeItems(baseItems, items, append)
+    {
+        _forIn(items, (item, id) => {
+            // Merge item with group (as key)
+            if (typeof(id) == 'string' && baseItems[id]) {
+                _forIn(item, (value, key) =>  {
+                    if (key === 'items') {
+                        baseItems[id][key] = this.mergeItems(baseItems[id][key], value, append);
+                    }
+                    else if (typeof(baseItems[id]) == 'object' && typeof(value) == 'object') {
+                        baseItems[id][key] = append
+                            ? _merge(baseItems[id][key], value)
+                            : _merge(value, baseItems[id][key]);
+                    }
+                    else if (append || baseItems[id][key] === null) {
+                        baseItems[id][key] = value;
+                    }
+                });
+            } else {
+                // Create instance
+                if (!(item instanceof MegaMenuItem)) {
+                    item = new MegaMenuItem(_merge(item, {'owner': this}));
+                    item.items = this.mergeItems([], item.items, true);
+                }
+
+                // Append or prepend item
+                if (typeof(id) == 'number') {
+                    if (append) {
+                        baseItems.push(item);
+                    } else {
+                        baseItems.unshift(item);
+                    }
+                } else {
+                    if (append) {
+                        baseItems[id] = item;
+                    } else {
+                        baseItems = _merge({id: item}, baseItems);
+                    }
+                }
+            }
+        });
+
+        _sortBy(baseItems, 'order');
+
+        return baseItems;
     }
 
     /**
@@ -48,11 +109,11 @@ class MegaMenu extends Component {
     getRequestedRoute() {
         if (this._requestedRoute === null) {
             // Set active item
-            const parseInfo = Jii.app.urlManager.parseRequest(Jii.app.request);
+            const parseInfo = Jii.app.urlManager.parseRequest(new Request(location));
             if (parseInfo) {
-                this._requestedRoute = [parseInfo[0] ? '/' + parseInfo[0] : ''] + parseInfo[1];
+                this._requestedRoute = _merge([parseInfo[0] ? '/' + parseInfo[0] : ''], parseInfo[1]);
             } else {
-                this._requestedRoute = ['/404'];
+                this._requestedRoute = ['/404']; //Jii.app.errorHandler.errorAction; //TODO
             }
         }
         return this._requestedRoute;
@@ -63,9 +124,9 @@ class MegaMenu extends Component {
      * items (in format for Jii\bootstrap\Nav.items). In param custom you can overwrite items
      * configuration, if set it as array. Set param custom as integer for limit tree levels.
      * For example, getMenu(null, 2) return two-level menu
-     * @param {array} fromItem
-     * @param {array} custom Items or level limit
-     * @return {array}
+     * @param {object|boolean} fromItem
+     * @param {object} custom Items or level limit
+     * @return {object}
      */
     getMenu(fromItem = null, custom = []) {
         let itemModels = [];
@@ -77,12 +138,12 @@ class MegaMenu extends Component {
         } else {
             itemModels = this.getItems();
         }
-    
+
         if (typeof(custom) == 'number') {
             // Level limit
             return this.sliceTreeItems(itemModels, custom);
         }
-    
+
         let menu = [];
         if (!custom) {
             // All
@@ -92,21 +153,21 @@ class MegaMenu extends Component {
             /** @TODO */
             /*  foreach (custom as item) {
              menuItemModel = this.getItem(item);
-    
+
              // Process items
              if (item['items']) {
              menuItemModel['items'] = this.getMenu(item['items']);
              } else {
              unset(menuItemModel['items']);
              }
-    
+
              // Extend item
              menuItemModel = array_merge(menuItemModel, item);
-    
+
              menu.push(menuItemModel;
              }*/
         }
-    
+
         return menu.map(itemModel => {
             /** @var {MegaMenuItem} itemModel */
             return itemModel.toArray();
@@ -115,7 +176,7 @@ class MegaMenu extends Component {
 
     /**
      * Find item by url (ot current page) label and return it
-     * @param {array} url Child url or route, default - current route
+     * @param {object} url Child url or route, default - current route
      * @return {string}
      */
     getTitle(url = null) {
@@ -125,7 +186,7 @@ class MegaMenu extends Component {
 
     /**
      * Find item by url (or current page) and return item label with all parent labels
-     * @param {array} url Child url or route, default - current route
+     * @param {object} url Child url or route, default - current route
      * @param {string} separator Separator, default is " - "
      * @return {string}
      */
@@ -140,29 +201,30 @@ class MegaMenu extends Component {
 
     /**
      * Return breadcrumbs links for widget \Jii-react\widgets\Breadcrumbs
-     * @param {array} url Child url or route, default - current route
-     * @return {array}
+     * @param {object} url Child url or route, default - current route
+     * @return {object}
      */
     getBreadcrumbs(url = null) {
         url = url ? url: this.getRequestedRoute();
 
         // Find child and it parents by url
-        let parents = null;
-        itemModel = this.getItem(url, parents);
+        let parents = [];
+        const itemModel = this.getItem(url, parents);
 
-        if (!itemModel || (!parents && this.isHomeUrl(itemModel.url))) {
+        if (!itemModel || (!parents.length && this.isHomeUrl(itemModel.url))) {
             return [];
         }
 
         parents.reverse().push({
             'label': itemModel.label,
             'url': itemModel.url,
+            'urlRule': itemModel.urlRule,
             'linkOptions': typeof(itemModel.linkOptions) == 'object' ? itemModel.linkOptions : [],
         });
 
         parents.map(parent => {
             if (parent['linkOptions']) {
-                parent = parent.concat(parent['linkOptions']);
+                parent = _merge(parent, parent['linkOptions']);
                 delete parent['linkOptions'];
             }
         });
@@ -173,11 +235,11 @@ class MegaMenu extends Component {
     /**
      * Find menu item by item url or route. In param parents will be added all parent items
      * @param {string|array} item
-     * @param {array} parents
+     * @param {object} parents
      * @return MegaMenuItem|null
      */
-    getItem(item, parents = []) {
-        url = typeof(item) == 'object' && !this.isRoute(item) ?
+    getItem(item, parents) {
+        const url = typeof(item) == 'object' && !this.isRoute(item) ?
             item['url'] :
             item;
 
@@ -187,10 +249,10 @@ class MegaMenu extends Component {
     /**
      * Find item by url or route and return it url
      * @param item
-     * @return {array}|null|string
+     * @return {object}|null|string
      */
     getItemUrl(item) {
-        item = this.getItem(item);
+        item = this.getItem(item || []);
         return item ? item.url : null;
     }
 
@@ -214,11 +276,11 @@ class MegaMenu extends Component {
             }
 
             // Compare routes' parameters by checking if keys are identical
-            if (count(array_diff_key(url1, url2)) || count(array_diff_key(url2, url1))) {
+            if (_difference(url1, url2).length || _difference(url2, url1).length) {
                 return false;
             }
 
-            Object.keys(url1).map(key => {
+            Object.keys(url1).map((value, key) => {
                 if (typeof(key) == 'string' && key !== '#') {
                     if (!url2[key]) {
                         return false;
@@ -263,59 +325,61 @@ class MegaMenu extends Component {
     /**
      * @param {MegaMenuItem[]} items
      * @param {number} level
-     * @return {array}
+     * @return {object}
      */
     sliceTreeItems(items, level = 1) {
         if (level <= 0) {
             return [];
         }
-    
+
         let menu = [];
-        items.map(itemModel => {
-        let item = itemModel.toArray();
-    
-        if (itemModel.items) {
-            let nextLevel = level;
-            if (itemModel.url !== null) {
-                nextLevel--;
+        _forIn(items, itemModel =>{
+            let item = itemModel.toArray();
+
+            if (itemModel.items) {
+                let nextLevel = level;
+                if (itemModel.url !== null) {
+                    nextLevel--;
+                }
+
+                item['items'] = this.sliceTreeItems(itemModel.items, nextLevel);
             }
-    
-            item['items'] = this.sliceTreeItems(itemModel.items, nextLevel);
-        }
-    
-        if (empty(item['items'])) {
+
+            if (!item['items']) {
                 item['items'] = null;
             }
             menu.push(item);
         });
-        
+
         return menu;
     }
 
     /**
      * @param {string|array} url
      * @param {MegaMenuItem[]} items
-     * @param {array} parents
+     * @param {object} parents
      * @return MegaMenuItem
      */
     findItemRecursive(url, items, parents) {
-        items.map(itemModel => {
-            if (itemModel.url && this.isUrlEquals(url, itemModel.url)) {
-                return itemModel;
-            }
-        
-            if (!empty(itemModel.items)) {
-                let foundItem = this.findItemRecursive(url, itemModel.items, parents);
-                if (foundItem) {
-                    let parentItem = itemModel.toArray();
-                    delete parentItem['items'];
-                    parents.push(parentItem);
-        
-                    return foundItem;
+        for(var key in items){
+            if(items.hasOwnProperty(key)){
+                if (items[key].url && this.isUrlEquals(url, items[key].url)) {
+                    return items[key];
+                }
+
+                if (items[key].items) {
+                    let foundItem = this.findItemRecursive(url, items[key].items, parents);
+                    if (foundItem) {
+                        let parentItem = items[key].toArray();
+                        delete parentItem['items'];
+                        parents.push(parentItem);
+
+                        return foundItem;
+                    }
                 }
             }
-        });
-    
+        }
+
         return null;
     }
 }

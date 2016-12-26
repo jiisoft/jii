@@ -9,6 +9,7 @@ var _forIn = require('lodash/forIn');
 var _merge = require('lodash/merge');
 var _sortBy = require('lodash/sortBy');
 var _difference = require('lodash/difference');
+var _keys = require('lodash/keys');
 
 class MegaMenu extends Component {
 
@@ -112,11 +113,17 @@ class MegaMenu extends Component {
     /**
      *
      * @returns {Array|string[]|null|*}
-     */    getRequestedRoute() {
+     */
+    getRequestedRoute() {
         // Set active item
         const parseInfo = Jii.app.urlManager.parseRequest(new Request(location));
         if (parseInfo) {
-            this._requestedRoute = _merge([parseInfo[0] ? '/' + parseInfo[0] : ''], parseInfo[1]);
+            if(_keys(parseInfo[1]).length){
+                this._requestedRoute = _merge({0: parseInfo[0] ? '/' + parseInfo[0] : ''}, parseInfo[1]);
+            }
+            else{
+                this._requestedRoute = [parseInfo[0] ? '/' + parseInfo[0] : ''];
+            }
         } else {
             this._requestedRoute = Jii.app.errorHandler.errorAction;
         }

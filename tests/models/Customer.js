@@ -19,9 +19,9 @@ class Customer extends ActiveRecord {
     }
 
     /**
-         * @inheritdoc
-         * @returns {CustomerQuery}
-         */
+     * @inheritdoc
+     * @returns {CustomerQuery}
+     */
     static find() {
         return new CustomerQuery(this);
     }
@@ -71,7 +71,7 @@ class Customer extends ActiveRecord {
 
         return rel.viaTable('order_item', {
             order_id: 'id'
-        }, function(q) {
+        }, function (q) {
             /** @typedef {Jii.data.ActiveQuery} q */
             q.viaTable('order', {
                 customer_id: 'id'

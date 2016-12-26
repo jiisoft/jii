@@ -1,3 +1,8 @@
+/**
+ * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
+ * @license MIT
+ */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -6,23 +11,27 @@ var _each = require('lodash/each');
 var _has = require('lodash/has');
 var _extend = require('lodash/extend');
 var Component = require('../base/Component');
+
 class Command extends Component {
 
     preInit() {
         /**
-     * @type {string} the SQL statement that this command represents
-     */
+         * @type {string} the SQL statement that this command represents
+         */
         this._sql = null;
+
         /**
-     * @type {object} the parameters (name => value) that are bound to the current PDO statement.
-     * This property is maintained by methods such as [[bindValue()]].
-     * Do not modify it directly.
-     */
+         * @type {object} the parameters (name => value) that are bound to the current PDO statement.
+         * This property is maintained by methods such as [[bindValue()]].
+         * Do not modify it directly.
+         */
         this.params = null;
+
         /**
-     * @type {Jii.data.BaseConnection} the DB connection that this command is associated with
-     */
+         * @type {Jii.data.BaseConnection} the DB connection that this command is associated with
+         */
         this.db = null;
+
         super.preInit(...arguments);
     }
 
@@ -148,7 +157,8 @@ class Command extends Component {
      * @returns {Promise} the reader object for fetching the query result
      * @throws Exception execution failed
      */
-    query() {}
+    query() {
+    }
 
     /**
      * Executes the SQL statement and returns ALL rows at once.
@@ -231,7 +241,7 @@ class Command extends Component {
      *
      * The method will properly escape the column names, and bind the values to be inserted.
      *
-     * 
+     *
      *
      * @param {string} table the table that new rows() will be inserted into.
      * @param {object} columns the column data (name => value) to be inserted into the table.
@@ -294,7 +304,7 @@ class Command extends Component {
      *
      * The method will properly escape the column names and bind the values to be updated.
      *
-     * 
+     *
      *
      * @param {string} table the table to be updated.
      * @param {object} columns the column data (name => value) to be updated.
@@ -337,7 +347,7 @@ class Command extends Component {
      *
      * The method will properly escape the table and column names.
      *
-     * 
+     *
      *
      * @param {string} table the table where the data will be deleted from.
      * @param {string|[]} [condition] the condition that will be put in the WHERE part. Please

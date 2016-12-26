@@ -1,3 +1,8 @@
+/**
+ * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
+ * @license MIT
+ */
+
 'use strict';
 
 var Jii = require('../../../BaseJii');
@@ -25,7 +30,8 @@ if (typeof global !== 'undefined' && typeof window !== 'undefined' && global !==
     _each(usedWindowKeys, key => {
         try {
             global[key] = window[key];
-        } catch (e) {}
+        } catch (e) {
+        }
     });
 }
 // @todo jsonp callbacks
@@ -33,26 +39,29 @@ var SockJS = require('sockjs-client');
 var Event = require('../../../base/Event');
 var MessageEvent = require('../MessageEvent');
 var TransportInterface = require('./TransportInterface');
+
 class Sockjs extends TransportInterface {
 
     preInit() {
         /**
-     * @type {SockJS}
-     */
+         * @type {SockJS}
+         */
         this._websocket = null;
+
         /**
-     * Available:
-     * - websocket
-     * - xdr-polling
-     * - xdr-streaming
-     * - xhr-polling
-     * - xhr-streaming
-     * - eventsource
-     * - htmlfile
-     * - iframe
-     * - jsonp-polling
-     */
+         * Available:
+         * - websocket
+         * - xdr-polling
+         * - xdr-streaming
+         * - xhr-polling
+         * - xhr-streaming
+         * - eventsource
+         * - htmlfile
+         * - iframe
+         * - jsonp-polling
+         */
         this.transports = null;
+
         super.preInit(...arguments);
     }
 

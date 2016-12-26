@@ -2,23 +2,27 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var InvalidConfigException = require('../exceptions/InvalidConfigException');
 var _isFunction = require('lodash/isFunction');
 var BaseObject = require('./Object');
+
 class Action extends BaseObject {
 
     preInit(id, controller, config) {
         /**
-     * @type {string} ID of the action
-     */
+         * @type {string} ID of the action
+         */
         this.id = id;
+
         /**
-     * @type {Jii.base.Controller} the controller that owns this action
-     */
+         * @type {Jii.base.Controller} the controller that owns this action
+         */
         this.controller = controller;
+
         super.preInit(config);
     }
 
@@ -33,7 +37,8 @@ class Action extends BaseObject {
     /**
      * @param {Jii.base.Context} context
      */
-    run(context) {}
+    run(context) {
+    }
 
     /**
      * Runs this action with the specified parameters.
@@ -75,7 +80,8 @@ class Action extends BaseObject {
      * This method is called right after `run()` is executed.
      * You may override this method to do post-processing work for the action run.
      */
-    afterRun() {}
+    afterRun() {
+    }
 
 }
 module.exports = Action;

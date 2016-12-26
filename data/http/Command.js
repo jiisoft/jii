@@ -1,15 +1,22 @@
+/**
+ * @author Vladimir Kozhin <affka@affka.ru>
+ * @license MIT
+ */
+
 'use strict';
 
 var Jii = require('../../BaseJii');
 var _isEmpty = require('lodash/isEmpty');
 var Component = require('../../base/Component');
+
 class Command extends Component {
 
     preInit() {
         /**
-     * @type {Jii.data.BaseConnection} the DB connection that this command is associated with
-     */
+         * @type {Jii.data.BaseConnection} the DB connection that this command is associated with
+         */
         this.db = null;
+
         super.preInit(...arguments);
     }
 
@@ -47,7 +54,8 @@ class Command extends Component {
      * @returns {Promise} the method execution result
      * @throws Exception if the query causes any problem
      */
-    _queryInternal(method) {}
+    _queryInternal(method) {
+    }
 
     /**
      *

@@ -2,19 +2,22 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var Event = require('./Event');
 var _each = require('lodash/each');
 var BaseObject = require('./Object');
+
 class Behavior extends BaseObject {
 
     preInit() {
         /**
-     * @var {Jii.base.Component} the owner of this behavior
-     */
+         * @var {Jii.base.Component} the owner of this behavior
+         */
         this.owner = null;
+
         super.preInit(...arguments);
     }
 

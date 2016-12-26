@@ -11,13 +11,13 @@ class UrlRuleTest extends UnitTest {
             cache: null
         });
         var suites = this._getTestsForCreateUrl();
-        suites.forEach(function(suite, i) {
+        suites.forEach(function (suite, i) {
             var name = suite[0];
             var config = suite[1];
             var tests = suite[2];
 
             var rule = new UrlRule(config);
-            tests.forEach(function(urlTest, j) {
+            tests.forEach(function (urlTest, j) {
                 var route = urlTest[0];
                 var params = urlTest[1];
                 var expected = urlTest[2];
@@ -38,13 +38,13 @@ class UrlRuleTest extends UnitTest {
         request.setHostInfo('http://en.example.com');
 
         var suites = this._getTestsForParseRequest();
-        suites.forEach(function(suite, i) {
+        suites.forEach(function (suite, i) {
             var name = suite[0];
             var config = suite[1];
             var tests = suite[2];
 
             var rule = new UrlRule(config);
-            tests.forEach(function(urlTest, j) {
+            tests.forEach(function (urlTest, j) {
                 request.setPathInfo(urlTest[0]);
                 var route = urlTest[1];
                 var params = urlTest[2] || {};

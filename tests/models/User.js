@@ -5,8 +5,8 @@ var BaseActiveRecord = require('../../data/BaseActiveRecord');
 class User extends BaseActiveRecord {
 
     /**
-         * @returns {{}}
-         */
+     * @returns {{}}
+     */
     static modelSchema() {
         return {
             primaryKey: ['id'],

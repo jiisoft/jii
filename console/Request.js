@@ -1,9 +1,15 @@
+/**
+ * @author Vladimir Kozhin <affka@affka.ru>
+ * @license MIT
+ */
+
 'use strict';
 
 var Jii = require('../index');
 var _each = require('lodash/each');
 var BaseRequest = require('../base/Request');
 var minimist = require('minimist');
+
 class Request extends BaseRequest {
 
     /**

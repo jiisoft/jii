@@ -1,9 +1,15 @@
+/**
+ * @author Vladimir Kozhin <affka@affka.ru>
+ * @license MIT
+ */
+
 'use strict';
 
 var Jii = require('../../BaseJii');
 var InvalidParamException = require('../../exceptions/InvalidParamException');
 var Action = require('../../base/Action');
 var Command = require('./Command');
+
 class ActiveRecordAction extends Action {
 
     /**

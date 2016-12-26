@@ -2,6 +2,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../index');
@@ -17,21 +18,25 @@ var _each = require('lodash/each');
 var BaseObject = require('../base/Object');
 var cluster = require('cluster');
 var ConsoleApplication = require('../application/ConsoleApplication');
+
 class Manager extends BaseObject {
 
     preInit() {
         /**
-     * @type {Jii.workers.Service}
-     */
+         * @type {Jii.workers.Service}
+         */
         this._service = null;
+
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this._applicationConfigs = {};
+
         /**
-     * @type {Jii.application.Environment}
-     */
+         * @type {Jii.application.Environment}
+         */
         this._environment = null;
+
         super.preInit(...arguments);
     }
 

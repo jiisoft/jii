@@ -2,6 +2,9 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
+'use strict';
+
 var Jii = require('../../BaseJii');
 var Url = require('../../helpers/Url');
 var InvalidParamException = require('../../exceptions/InvalidParamException');
@@ -13,69 +16,79 @@ var _isString = require('lodash/isString');
 var _each = require('lodash/each');
 var _has = require('lodash/has');
 var BaseResponse = require('../../base/Response');
+
 class Response extends BaseResponse {
 
     preInit(nativeResponse) {
         /**
-     * @var {object|null}
-     */
+         * @var {object|null}
+         */
         this._cookies = null;
+
         /**
-     * @var {object}
-     */
+         * @var {object}
+         */
         this._headers = null;
+
         /**
-     * @var {number} the HTTP status code to send with the response.
-     */
+         * @var {number} the HTTP status code to send with the response.
+         */
         this._statusCode = 200;
+
         /**
-     * @var {string} the version of the HTTP protocol to use
-     */
+         * @var {string} the version of the HTTP protocol to use
+         */
         this.version = null;
+
         /**
-     * @var {string} the HTTP status description that comes together with the status code.
-     * @see httpStatuses
-     */
+         * @var {string} the HTTP status description that comes together with the status code.
+         * @see httpStatuses
+         */
         this.statusText = 'OK';
+
         /**
-     * @var {string} the charset of the text response. If not set, it will use
-     * the value of [[Application::charset]].
-     */
+         * @var {string} the charset of the text response. If not set, it will use
+         * the value of [[Application::charset]].
+         */
         this.charset = null;
+
         /**
-     * @var {string} the response content. When [[data]] is not null, it will be converted into [[content]]
-     * according to [[format]] when the response is being sent out.
-     * @see data
-     */
+         * @var {string} the response content. When [[data]] is not null, it will be converted into [[content]]
+         * according to [[format]] when the response is being sent out.
+         * @see data
+         */
         this.content = null;
+
         /**
-     * @var {array} the formatters for converting data into the response content of the specified [[format]].
-     * The array keys are the format names, and the array values are the corresponding configurations
-     * for creating the formatter objects.
-     * @see format
-     */
+         * @var {array} the formatters for converting data into the response content of the specified [[format]].
+         * The array keys are the format names, and the array values are the corresponding configurations
+         * for creating the formatter objects.
+         * @see format
+         */
         this.formatters = null;
+
         /**
-     * @var string the response format. This determines how to convert [[data]] into [[content]]
-     * when the latter is not set. By default, the following formats are supported:
-     *
-     * - [[FORMAT_RAW]]: the data will be treated as the response content without any conversion.
-     *   No extra HTTP header will be added.
-     * - [[FORMAT_HTML]]: the data will be treated as the response content without any conversion.
-     *   The "Content-Type" header will set as "text/html" if it is not set previously.
-     * - [[FORMAT_JSON]]: the data will be converted into JSON format, and the "Content-Type"
-     *   header will be set as "application/json".
-     * - [[FORMAT_JSONP]]: the data will be converted into JSONP format, and the "Content-Type"
-     *   header will be set as "text/javascript". Note that in this case `$data` must be an array
-     *   with "data" and "callback" elements. The former refers to the actual data to be sent,
-     *   while the latter refers to the name of the JavaScript callback.
-     * - [[FORMAT_XML]]: the data will be converted into XML format. Please refer to [[XmlResponseFormatter]]
-     *   for more details.
-     *
-     * You may customize the formatting process or support additional formats by configuring [[formatters]].
-     * @see formatters
-     */
+         * @var string the response format. This determines how to convert [[data]] into [[content]]
+         * when the latter is not set. By default, the following formats are supported:
+         *
+         * - [[FORMAT_RAW]]: the data will be treated as the response content without any conversion.
+         *   No extra HTTP header will be added.
+         * - [[FORMAT_HTML]]: the data will be treated as the response content without any conversion.
+         *   The "Content-Type" header will set as "text/html" if it is not set previously.
+         * - [[FORMAT_JSON]]: the data will be converted into JSON format, and the "Content-Type"
+         *   header will be set as "application/json".
+         * - [[FORMAT_JSONP]]: the data will be converted into JSONP format, and the "Content-Type"
+         *   header will be set as "text/javascript". Note that in this case `$data` must be an array
+         *   with "data" and "callback" elements. The former refers to the actual data to be sent,
+         *   while the latter refers to the name of the JavaScript callback.
+         * - [[FORMAT_XML]]: the data will be converted into XML format. Please refer to [[XmlResponseFormatter]]
+         *   for more details.
+         *
+         * You may customize the formatting process or support additional formats by configuring [[formatters]].
+         * @see formatters
+         */
         this.format = null;
+
         this._nativeResponse = nativeResponse;
 
         this.init();
@@ -235,10 +248,10 @@ class Response extends BaseResponse {
 
         // @todo
         /*if (Yii::$app->getRequest()->getIsPjax()) {
-            this.getHeaders()->set('X-Pjax-Url', $url);
-        } elseif (Yii::$app->getRequest()->getIsAjax()) {
-            this.getHeaders()->set('X-Redirect', $url);
-        } else {*/
+         this.getHeaders()->set('X-Pjax-Url', $url);
+         } elseif (Yii::$app->getRequest()->getIsAjax()) {
+         this.getHeaders()->set('X-Redirect', $url);
+         } else {*/
         this.getHeaders().set('Location', url);
         //}
         this.setStatusCode(statusCode);
@@ -246,7 +259,8 @@ class Response extends BaseResponse {
         return null;
     }
 
-    refresh() {}
+    refresh() {
+    }
 
     /**
      * @return {boolean} whether this response has a valid [[statusCode]].

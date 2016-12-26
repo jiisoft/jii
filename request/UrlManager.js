@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../index');
@@ -15,87 +16,95 @@ var _isString = require('lodash/isString');
 var _each = require('lodash/each');
 var _has = require('lodash/has');
 var Component = require('../base/Component');
+
 class UrlManager extends Component {
 
     preInit() {
         this._hostInfo = null;
         this._baseUrl = null;
+
         /**
-     * The default configuration of URL rules. Individual rule configurations
-     * specified via [[rules]] will take precedence when the same property of the rule is configured.
-     * @type {object}
-     */
+         * The default configuration of URL rules. Individual rule configurations
+         * specified via [[rules]] will take precedence when the same property of the rule is configured.
+         * @type {object}
+         */
         this.ruleConfig = {
             className: UrlRule
         };
+
         /**
-     * The cache object or the application component ID of the cache object.
-     * Compiled URL rules will be cached through this cache object, if it is available.
-     *
-     * After the UrlManager object is created, if you want to change this property,
-     * you should only assign it with a cache object.
-     * Set this property to null if you do not want to cache the URL rules.
-     * @type {Cache|string}
-     */
+         * The cache object or the application component ID of the cache object.
+         * Compiled URL rules will be cached through this cache object, if it is available.
+         *
+         * After the UrlManager object is created, if you want to change this property,
+         * you should only assign it with a cache object.
+         * Set this property to null if you do not want to cache the URL rules.
+         * @type {Cache|string}
+         */
         this.cache = 'cache';
+
         /**
-     * The URL suffix used when in 'path' format.
-     * For example, ".html" can be used so that the URL looks like pointing to a static HTML page.
-     * @type {string}
-     */
+         * The URL suffix used when in 'path' format.
+         * For example, ".html" can be used so that the URL looks like pointing to a static HTML page.
+         * @type {string}
+         */
         this.suffix = null;
+
         /**
-     * Each element in the array
-     * is the configuration array for creating a single URL rule. The configuration will
-     * be merged with [[ruleConfig]] first before it is used for creating the rule object.
-     *
-     * A special shortcut format can be used if a rule only specifies [[UrlRule::pattern|pattern]]
-     * and [[UrlRule::route|route]]: `'pattern': 'route'`. That is, instead of using a configuration
-     * array, one can use the key to represent the pattern and the value the corresponding route.
-     * For example, `'post/<id:\d+>': 'post/view'`.
-     *
-     * For RESTful routing the mentioned shortcut format also allows you to specify the
-     * [[UrlRule::verb|HTTP verb]] that the rule should apply for.
-     * You can do that  by prepending it to the pattern, separated by space.
-     * For example, `'PUT post/<id:\d+>': 'post/update'`.
-     * You may specify multiple verbs by separating them with comma
-     * like this: `'POST,PUT post/index': 'post/create'`.
-     * The supported verbs in the shortcut format are: GET, HEAD, POST, PUT, PATCH and DELETE.
-     * Note that [[UrlRule::mode|mode]] will be set to PARSING_ONLY when specifying verb in this way
-     * so you normally would not specify a verb for normal GET request.
-     *
-     * Here is an example configuration for RESTful CRUD controller:
-     *
-     * ~~~
-     * {
-     *     'dashboard': 'site/index',
-     *
-     *     'POST <controller:\w+>s': '<controller>/create',
-     *     <controller:\w+>s': '<controller>/index',
-     *
-     *     'PUT <controller:\w+>/<id:\d+>'   : '<controller>/update',
-     *     'DELETE <controller:\w+>/<id:\d+>': '<controller>/delete',
-     *     '<controller:\w+>/<id:\d+>'       : '<controller>/view'
-     * }
-     * ~~~
-     *
-     * Note that if you modify this property after the UrlManager object is created, make sure
-     * you populate the array with rule objects instead of rule configurations.
-     * @type {object}
-     */
+         * Each element in the array
+         * is the configuration array for creating a single URL rule. The configuration will
+         * be merged with [[ruleConfig]] first before it is used for creating the rule object.
+         *
+         * A special shortcut format can be used if a rule only specifies [[UrlRule::pattern|pattern]]
+         * and [[UrlRule::route|route]]: `'pattern': 'route'`. That is, instead of using a configuration
+         * array, one can use the key to represent the pattern and the value the corresponding route.
+         * For example, `'post/<id:\d+>': 'post/view'`.
+         *
+         * For RESTful routing the mentioned shortcut format also allows you to specify the
+         * [[UrlRule::verb|HTTP verb]] that the rule should apply for.
+         * You can do that  by prepending it to the pattern, separated by space.
+         * For example, `'PUT post/<id:\d+>': 'post/update'`.
+         * You may specify multiple verbs by separating them with comma
+         * like this: `'POST,PUT post/index': 'post/create'`.
+         * The supported verbs in the shortcut format are: GET, HEAD, POST, PUT, PATCH and DELETE.
+         * Note that [[UrlRule::mode|mode]] will be set to PARSING_ONLY when specifying verb in this way
+         * so you normally would not specify a verb for normal GET request.
+         *
+         * Here is an example configuration for RESTful CRUD controller:
+         *
+         * ~~~
+         * {
+         *     'dashboard': 'site/index',
+         *
+         *     'POST <controller:\w+>s': '<controller>/create',
+         *     <controller:\w+>s': '<controller>/index',
+         *
+         *     'PUT <controller:\w+>/<id:\d+>'   : '<controller>/update',
+         *     'DELETE <controller:\w+>/<id:\d+>': '<controller>/delete',
+         *     '<controller:\w+>/<id:\d+>'       : '<controller>/view'
+         * }
+         * ~~~
+         *
+         * Note that if you modify this property after the UrlManager object is created, make sure
+         * you populate the array with rule objects instead of rule configurations.
+         * @type {object}
+         */
         this.rules = {};
+
         /**
-     * Whether to enable strict parsing. If strict parsing is enabled, the incoming
-     * requested URL must match at least one of the [[rules]] in order to be treated as a valid request.
-     * Otherwise, the path info part of the request will be treated as the requested route.
-     * @type {boolean}
-     */
+         * Whether to enable strict parsing. If strict parsing is enabled, the incoming
+         * requested URL must match at least one of the [[rules]] in order to be treated as a valid request.
+         * Otherwise, the path info part of the request will be treated as the requested route.
+         * @type {boolean}
+         */
         this.enableStrictParsing = false;
+
         /**
-     * Instance with request data
-     * @type {Jii.request.BaseRequest}
-     */
+         * Instance with request data
+         * @type {Jii.request.BaseRequest}
+         */
         this.request = null;
+
         super.preInit(...arguments);
     }
 
@@ -170,10 +179,10 @@ class UrlManager extends Component {
             rules.push(Jii.createObject(ruleConfig));
         });
         this.rules = rules;
-    // @todo Cache
-    /*if (isset(key, hash)) {
-     this.cache.set(key, [this.rules, hash]);
-     }*/
+        // @todo Cache
+        /*if (isset(key, hash)) {
+         this.cache.set(key, [this.rules, hash]);
+         }*/
     }
 
     /**

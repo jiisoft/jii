@@ -2,29 +2,34 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var Component = require('./Component');
+
 class Response extends Component {
 
     preInit() {
         /**
-     * The original response data
-     * @type {*}
-     */
+         * The original response data
+         * @type {*}
+         */
         this.data = null;
+
         /**
-     * @var {boolean} whether the response has been sent. If this is true, calling [[send()]] will do nothing.
-     */
+         * @var {boolean} whether the response has been sent. If this is true, calling [[send()]] will do nothing.
+         */
         this.isSent = false;
+
         super.preInit(...arguments);
     }
 
     /**
      * Sends the response to client.
      */
-    send() {}
+    send() {
+    }
 
 }
 module.exports = Response;

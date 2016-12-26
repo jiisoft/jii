@@ -2,12 +2,14 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var _isArray = require('lodash/isArray');
 var _isString = require('lodash/isString');
 var Validator = require('./Validator');
+
 class StringValidator extends Validator {
 
     preInit() {
@@ -17,6 +19,7 @@ class StringValidator extends Validator {
         this.min = null;
         this.max = null;
         this.length = null;
+
         super.preInit(...arguments);
     }
 

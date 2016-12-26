@@ -2,17 +2,20 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var ApplicationException = require('../exceptions/ApplicationException');
 var _isRegExp = require('lodash/isRegExp');
 var Validator = require('./Validator');
+
 class RegularExpressionValidator extends Validator {
 
     preInit() {
         this.not = false;
         this.pattern = null;
+
         super.preInit(...arguments);
     }
 

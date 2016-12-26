@@ -3,12 +3,14 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../../BaseJii');
 var InvalidConfigException = require('../../exceptions/InvalidConfigException');
 var _trimStart = require('lodash/trimStart');
 var HttpRequest = require('../../base/HttpRequest');
+
 class Request extends HttpRequest {
 
     preInit(location) {
@@ -18,7 +20,6 @@ class Request extends HttpRequest {
         this._location = location;
 
         super.preInit();
-        this.init();
     }
 
     getMethod() {

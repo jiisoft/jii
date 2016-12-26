@@ -1,30 +1,40 @@
+/**
+ * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
+ * @license MIT
+ */
+
 'use strict';
 
 var Jii = require('../../../BaseJii');
 var Client = require('../Client');
 var TransportInterface = require('../transport/TransportInterface');
 var PluginInterface = require('./PluginInterface');
+
 class AutoReconnect extends PluginInterface {
 
     preInit() {
         /**
-     * @type {number}
-     */
+         * @type {number}
+         */
         this._tryReconnectNumber = 0;
+
         /**
-     * Maximal retry interval in milliseconds
-     * @type {number}
-     */
+         * Maximal retry interval in milliseconds
+         * @type {number}
+         */
         this.maxRetryInterval = 20000;
+
         /**
-     * Minimal retry interval in milliseconds
-     * @type {number}
-     */
+         * Minimal retry interval in milliseconds
+         * @type {number}
+         */
         this.minRetryInterval = 2000;
+
         /**
-     * @type {boolean}
-     */
+         * @type {boolean}
+         */
         this.enable = true;
+
         super.preInit(...arguments);
     }
 

@@ -2,21 +2,25 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../../BaseJii');
 var HttpRequest = require('../../base/HttpRequest');
+
 class Request extends HttpRequest {
 
     preInit() {
         /**
-     * @type {string}
-     */
+         * @type {string}
+         */
         this.ip = null;
+
         /**
-     * @type {string}
-     */
+         * @type {string}
+         */
         this.uid = null;
+
         super.preInit(...arguments);
     }
 

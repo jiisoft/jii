@@ -5,8 +5,8 @@ var BaseActiveRecord = require('../../data/BaseActiveRecord');
 class LinkData extends BaseActiveRecord {
 
     /**
-         * @returns {{}}
-         */
+     * @returns {{}}
+     */
     static modelSchema() {
         return {
             primaryKey: ['id'],

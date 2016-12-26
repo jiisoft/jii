@@ -2,17 +2,20 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var BaseObject = require('../base/Object');
+
 class Environment extends BaseObject {
 
     preInit() {
         /**
-     * @type {string}
-     */
+         * @type {string}
+         */
         this._name = null;
+
         super.preInit(...arguments);
     }
 

@@ -2,15 +2,18 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var Component = require('../base/Component');
 var IntlMessageFormat = require('intl-messageformat');
+
 class MessageFormatter extends Component {
 
     preInit() {
         this._errorMessage = '';
+
         super.preInit(...arguments);
     }
 

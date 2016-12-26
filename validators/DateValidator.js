@@ -2,17 +2,20 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var _isArray = require('lodash/isArray');
 var _isNaN = require('lodash/isNaN');
 var Validator = require('./Validator');
+
 class DateValidator extends Validator {
 
     preInit() {
         this.timestampAttribute = null;
         this.format = 'Y-m-d';
+
         super.preInit(...arguments);
     }
 

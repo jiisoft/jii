@@ -2,9 +2,11 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
+
 class ApplicationException extends Error {
 
     preInit(message) {
@@ -16,4 +18,5 @@ class ApplicationException extends Error {
     }
 
 }
+
 module.exports = ApplicationException;

@@ -2,17 +2,20 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../../BaseJii');
 var ConnectionEvent = require('./ConnectionEvent');
+
 class MessageEvent extends ConnectionEvent {
 
     preInit() {
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this.message = null;
+
         super.preInit(...arguments);
     }
 

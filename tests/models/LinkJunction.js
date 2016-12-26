@@ -6,8 +6,8 @@ var Link = require('./Link');
 class LinkJunction extends BaseActiveRecord {
 
     /**
-         * @returns {{}}
-         */
+     * @returns {{}}
+     */
     static modelSchema() {
         return {
             primaryKey: [

@@ -2,43 +2,52 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var Expression = require('../data/Expression');
 var _isArray = require('lodash/isArray');
 var BaseObject = require('../base/Object');
+
 class ColumnSchemaBuilder extends BaseObject {
 
     preInit(type, length, config) {
-        /**
-     * @type {*} default value of the column.
-     */
-        this._default = null;
-        /**
-     * @type {string} the `CHECK` constraint for the column.
-     */
-        this._check = null;
-        /**
-     * @type {boolean} whether the column values should be unique. If this is `true`, a `UNIQUE` constraint will be added.
-     */
-        this._isUnique = false;
-        /**
-     * @type {boolean} whether the column is not nullable. If this is `true`, a `NOT NULL` constraint will be added.
-     */
-        this._isNotNull = false;
         length = length || null;
         config = config || [];
+
         /**
-     * @type {string} the column type definition such as INTEGER, VARCHAR, DATETIME, etc.
-     */
+         * @type {*} default value of the column.
+         */
+        this._default = null;
+
+        /**
+         * @type {string} the `CHECK` constraint for the column.
+         */
+        this._check = null;
+
+        /**
+         * @type {boolean} whether the column values should be unique. If this is `true`, a `UNIQUE` constraint will be added.
+         */
+        this._isUnique = false;
+
+        /**
+         * @type {boolean} whether the column is not nullable. If this is `true`, a `NOT NULL` constraint will be added.
+         */
+        this._isNotNull = false;
+
+        /**
+         * @type {string} the column type definition such as INTEGER, VARCHAR, DATETIME, etc.
+         */
         this._type = type;
+
         /**
-     * @type {number|string|[]} column size or precision definition. This is what goes into the parenthesis after
-     * the column type. This can be either a string, an integer or an array. If it is an array, the array values will
-     * be joined into a string separated by comma.
-     */
+         * @type {number|string|[]} column size or precision definition. This is what goes into the parenthesis after
+         * the column type. This can be either a string, an integer or an array. If it is an array, the array values will
+         * be joined into a string separated by comma.
+         */
         this._length = length;
+
         super.preInit(config);
     }
 

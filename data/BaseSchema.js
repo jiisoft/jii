@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -14,33 +15,40 @@ var _each = require('lodash/each');
 var _has = require('lodash/has');
 var BaseObject = require('../base/Object');
 var ColumnSchema = require('./ColumnSchema');
+
 class BaseSchema extends BaseObject {
 
     preInit() {
         /**
-     * @type {Jii.data.FilterBuilder}
-     */
+         * @type {Jii.data.FilterBuilder}
+         */
         this._filterBuilder = null;
+
         /**
-     * @type {Jii.data.QueryBuilder}
-     */
+         * @type {Jii.data.QueryBuilder}
+         */
         this._builder = null;
+
         /**
-     * @var array list of loaded table metadata (table name: TableSchema)
-     */
+         * @var array list of loaded table metadata (table name: TableSchema)
+         */
         this._tables = {};
+
         /**
-     * @var array list of ALL table names in the database
-     */
+         * @var array list of ALL table names in the database
+         */
         this._tableNames = {};
+
         /**
-     * @var string the default schema name used for the current session.
-     */
+         * @var string the default schema name used for the current session.
+         */
         this.defaultSchema = null;
+
         /**
-     * @type {Jii.sql.Connection} the database connection
-     */
+         * @type {Jii.sql.Connection} the database connection
+         */
         this.db = null;
+
         super.preInit(...arguments);
     }
 
@@ -428,30 +436,31 @@ class BaseSchema extends BaseObject {
 
         return 'string';
     }
-/**
+
+    /**
      * Handles database error
      *
      * @param \Exception e
      * @param string rawSql SQL that produced exception
      * @throws Exception
      */
-/*handleException: function(\Exception e, rawSql)
- {
- if (e instanceof Exception) {
- throw e;
- } else {
- exceptionClass = '\yii\db\Exception';
- foreach (this.exceptionMap as error: class) {
- if (strpos(e.getMessage(), error) !== false) {
- exceptionClass = class;
- }
- }
+    /*handleException: function(\Exception e, rawSql)
+     {
+     if (e instanceof Exception) {
+     throw e;
+     } else {
+     exceptionClass = '\yii\db\Exception';
+     foreach (this.exceptionMap as error: class) {
+     if (strpos(e.getMessage(), error) !== false) {
+     exceptionClass = class;
+     }
+     }
 
- message = e.getMessage()  . "\nThe SQL being executed was: rawSql";
- errorInfo = e instanceof \PDOException ? e.errorInfo : null;
- throw new exceptionClass(message, errorInfo, (int) e.getCode(), e);
- }
- }*/
+     message = e.getMessage()  . "\nThe SQL being executed was: rawSql";
+     errorInfo = e instanceof \PDOException ? e.errorInfo : null;
+     throw new exceptionClass(message, errorInfo, (int) e.getCode(), e);
+     }
+     }*/
 }
 BaseSchema.TYPE_MONEY = 'money';
 BaseSchema.TYPE_BOOLEAN = 'boolean';
@@ -471,7 +480,7 @@ BaseSchema.TYPE_STRING = 'string';
 BaseSchema.TYPE_BIGPK = 'bigpk';
 
 /**
-         * The followings are the supported abstract column data types.
-         */
+ * The followings are the supported abstract column data types.
+ */
 BaseSchema.TYPE_PK = 'pk';
 module.exports = BaseSchema;

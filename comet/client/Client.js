@@ -2,6 +2,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -13,44 +14,54 @@ var ChannelEvent = require('../ChannelEvent');
 var _indexOf = require('lodash/indexOf');
 var _each = require('lodash/each');
 var Component = require('../../base/Component');
+
 /**
  * Read-only from api stationUid
  * @type {null}
  */
 var stationUid = null;
+
 class Client extends Component {
 
     preInit() {
         this._subscribes = [];
+
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this._requestsInProcess = {};
+
         /**
-     * @type {boolean}
-     */
+         * @type {boolean}
+         */
         this._forceClosed = false;
+
         /**
-     * @type {boolean}
-     */
+         * @type {boolean}
+         */
         this._isOpened = false;
+
         /**
-     * Url to comet server
-     * @type {string}
-     */
+         * Url to comet server
+         * @type {string}
+         */
         this._serverUrl = '';
+
         /**
-     * @type {boolean}
-     */
+         * @type {boolean}
+         */
         this.autoSubscribeOnReconnect = true;
+
         /**
-     * @type {boolean}
-     */
+         * @type {boolean}
+         */
         this.autoOpen = true;
+
         /**
-     * Max comet workers number. Used for auto generate different server urls (balancer).
-     */
+         * Max comet workers number. Used for auto generate different server urls (balancer).
+         */
         this.workersCount = null;
+
         this.plugins = {
 
             /**
@@ -60,12 +71,14 @@ class Client extends Component {
                 className: 'Jii.comet.client.plugin.AutoReconnect'
             }
         };
+
         /**
-     * @type {Jii.comet.client.transport.TransportInterface}
-     */
+         * @type {Jii.comet.client.transport.TransportInterface}
+         */
         this.transport = {
             className: 'Jii.comet.client.transport.Sockjs'
         };
+
         super.preInit(...arguments);
     }
 
@@ -365,55 +378,55 @@ class Client extends Component {
 }
 
 /**
-         * @type {string}
-         */
+ * @type {string}
+ */
 Client.CHANNEL_NAME_ALL = '__allVfcOS7';
 
 /**
-         * @event Jii.comet.client.Client#request
-         * @property {Jii.comet.client.RequestEvent} event
-         */
+ * @event Jii.comet.client.Client#request
+ * @property {Jii.comet.client.RequestEvent} event
+ */
 Client.EVENT_REQUEST = 'request';
 
 /**
-         * @event Jii.comet.client.Client#beforeRequest
-         * @property {Jii.comet.client.RequestEvent} event
-         */
+ * @event Jii.comet.client.Client#beforeRequest
+ * @property {Jii.comet.client.RequestEvent} event
+ */
 Client.EVENT_BEFORE_REQUEST = 'beforeRequest';
 
 /**
-         * @event Jii.comet.client.Client#message
-         * @property {Jii.comet.client.MessageEvent} event
-         */
+ * @event Jii.comet.client.Client#message
+ * @property {Jii.comet.client.MessageEvent} event
+ */
 Client.EVENT_MESSAGE = 'message';
 
 /**
-         * @event Jii.comet.client.Client#channel:
-         * @property {Jii.comet.ChannelEvent} event
-         */
+ * @event Jii.comet.client.Client#channel:
+ * @property {Jii.comet.ChannelEvent} event
+ */
 Client.EVENT_CHANNEL_NAME = 'channel:';
 
 /**
-         * @event Jii.comet.client.Client#channel
-         * @property {Jii.comet.ChannelEvent} event
-         */
+ * @event Jii.comet.client.Client#channel
+ * @property {Jii.comet.ChannelEvent} event
+ */
 Client.EVENT_CHANNEL = 'channel';
 
 /**
-         * @event Jii.comet.client.Client#beforeSend
-         * @property {Jii.comet.client.MessageEvent} event
-         */
+ * @event Jii.comet.client.Client#beforeSend
+ * @property {Jii.comet.client.MessageEvent} event
+ */
 Client.EVENT_BEFORE_SEND = 'beforeSend';
 
 /**
-         * @event Jii.comet.client.Client#close
-         * @property {Jii.base.Event} event
-         */
+ * @event Jii.comet.client.Client#close
+ * @property {Jii.base.Event} event
+ */
 Client.EVENT_CLOSE = 'close';
 
 /**
-         * @event Jii.comet.client.Client#open
-         * @property {Jii.base.Event} event
-         */
+ * @event Jii.comet.client.Client#open
+ * @property {Jii.base.Event} event
+ */
 Client.EVENT_OPEN = 'open';
 module.exports = Client;

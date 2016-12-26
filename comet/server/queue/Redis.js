@@ -1,30 +1,37 @@
+/**
+ * @author Vladimir Kozhin <affka@affka.ru>
+ * @license MIT
+ */
+
 'use strict';
 
 var Jii = require('../../../BaseJii');
 var QueueInterface = require('./QueueInterface');
+
 class Redis extends QueueInterface {
 
     preInit() {
         /**
-     * @type {RedisClient}
-     */
+         * @type {RedisClient}
+         */
         this._engine = null;
         /**
-     * @type {string}
-     */
+         * @type {string}
+         */
         this.password = null;
         /**
-     * @type {number}
-     */
+         * @type {number}
+         */
         this.port = 6379;
         /**
-     * @type {string}
-     */
+         * @type {string}
+         */
         this.host = '127.0.0.1';
         super.preInit(...arguments);
     }
 
-    init() {}
+    init() {
+    }
 
     start() {
         var options = {};
@@ -96,7 +103,7 @@ class Redis extends QueueInterface {
 }
 
 /**
-         * @type {string}
-         */
+ * @type {string}
+ */
 Redis.KEY = '__queueZCw4l7';
 module.exports = Redis;

@@ -3,6 +3,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -19,111 +20,126 @@ var _toNumber = require('lodash/toNumber');
 var _words = require('lodash/words');
 var _trim = require('lodash/trim');
 var Component = require('../base/Component');
+
 class Query extends Component {
 
     preInit() {
         /**
-     * @type {string|function} column the name of the column by which the query results should be indexed by.
-     * This can also be a callable (e.g. anonymous function) that returns the index value based on the given
-     * row data. For more details, see [[indexBy()]]. This property is only used by [[QueryInterface.all()|all()]].
-     */
+         * @type {string|function} column the name of the column by which the query results should be indexed by.
+         * This can also be a callable (e.g. anonymous function) that returns the index value based on the given
+         * row data. For more details, see [[indexBy()]]. This property is only used by [[QueryInterface.all()|all()]].
+         */
         this._indexBy = null;
+
         /**
-     * @type {object} how to sort the query results. This is used to construct the ORDER BY clause in a SQL statement.
-     * The array keys are the columns to be sorted by, and the array values are the corresponding sort directions which
-     * can be either [SORT_ASC](http://php.net/manual/en/array.constants.php#constant.sort-asc)
-     * or [SORT_DESC](http://php.net/manual/en/array.constants.php#constant.sort-desc).
-     * The array may also contain [[Expression]] objects. If that is the case, the expressions
-     * will be converted into strings without any change.
-     */
+         * @type {object} how to sort the query results. This is used to construct the ORDER BY clause in a SQL statement.
+         * The array keys are the columns to be sorted by, and the array values are the corresponding sort directions which
+         * can be either [SORT_ASC](http://php.net/manual/en/array.constants.php#constant.sort-asc)
+         * or [SORT_DESC](http://php.net/manual/en/array.constants.php#constant.sort-desc).
+         * The array may also contain [[Expression]] objects. If that is the case, the expressions
+         * will be converted into strings without any change.
+         */
         this._orderBy = null;
+
         /**
-     * @type {number} zero-based offset from where the records are to be returned. If not set or
-     * less than 0, it means starting from the beginning.
-     */
+         * @type {number} zero-based offset from where the records are to be returned. If not set or
+         * less than 0, it means starting from the beginning.
+         */
         this._offset = null;
+
         /**
-     * @type {number} maximum number of records to be returned. If not set or less than 0, it means no limit.
-     */
+         * @type {number} maximum number of records to be returned. If not set or less than 0, it means no limit.
+         */
         this._limit = null;
+
         /**
-     * @type {string|[]} query condition. This refers to the WHERE clause in a SQL statement.
-     * For example, `age > 31 AND team = 1`.
-     * @see where()
-     */
+         * @type {string|[]} query condition. This refers to the WHERE clause in a SQL statement.
+         * For example, `age > 31 AND team = 1`.
+         * @see where()
+         */
         this._where = null;
+
         /**
-     * @type {object} list of query parameter values indexed by parameter placeholders.
-     * For example, `{':name': 'Dan', ':age': 31}`.
-     */
+         * @type {object} list of query parameter values indexed by parameter placeholders.
+         * For example, `{':name': 'Dan', ':age': 31}`.
+         */
         this._params = null;
+
         /**
-     * @type {[]} this is used to construct the UNION clause(s) in a SQL statement.
-     * Each array element is an array of the following structure:
-     *
-     * - `query`: either a string or a [[Query]] object representing a query
-     * - `all`: boolean, whether it should be `UNION ALL` or `UNION`
-     */
+         * @type {[]} this is used to construct the UNION clause(s) in a SQL statement.
+         * Each array element is an array of the following structure:
+         *
+         * - `query`: either a string or a [[Query]] object representing a query
+         * - `all`: boolean, whether it should be `UNION ALL` or `UNION`
+         */
         this._union = [];
+
         /**
-     * @type {string|[]} the condition to be applied in the GROUP BY clause.
-     * It can be either a string or an array. Please refer to [[where()]] on how to specify the condition.
-     */
+         * @type {string|[]} the condition to be applied in the GROUP BY clause.
+         * It can be either a string or an array. Please refer to [[where()]] on how to specify the condition.
+         */
         this._having = null;
+
         /**
-     * @type {[]} how to join with other tables. Each array element represents the specification
-     * of one join which has the following structure:
-     *
-     * ~~~
-     * [joinType, tableName, joinCondition]
-     * ~~~
-     *
-     * For example,
-     *
-     * ~~~
-     * {
-     *     ['INNER JOIN', 'user', 'user.id = author_id'],
-     *     ['LEFT JOIN', 'team', 'team.id = team_id'],
-     * }
-     * ~~~
-     */
+         * @type {[]} how to join with other tables. Each array element represents the specification
+         * of one join which has the following structure:
+         *
+         * ~~~
+         * [joinType, tableName, joinCondition]
+         * ~~~
+         *
+         * For example,
+         *
+         * ~~~
+         * {
+         *     ['INNER JOIN', 'user', 'user.id = author_id'],
+         *     ['LEFT JOIN', 'team', 'team.id = team_id'],
+         * }
+         * ~~~
+         */
         this._join = [];
+
         /**
-     * @type {[]} how to group the query results. For example, `['company', 'department']`.
-     * This is used to construct the GROUP BY clause in a SQL statement.
-     */
+         * @type {[]} how to group the query results. For example, `['company', 'department']`.
+         * This is used to construct the GROUP BY clause in a SQL statement.
+         */
         this._groupBy = null;
+
         /**
-     * @type {[]} the table(s) to be selected from. For example, `['user', 'post']`.
-     * This is used to construct the FROM clause in a SQL statement.
-     * @see from()
-     */
+         * @type {[]} the table(s) to be selected from. For example, `['user', 'post']`.
+         * This is used to construct the FROM clause in a SQL statement.
+         * @see from()
+         */
         this._from = null;
+
         /**
-     * @type {boolean} whether to select distinct rows of data only. If this is set true,
-     * the SELECT clause would be changed to SELECT DISTINCT.
-     */
+         * @type {boolean} whether to select distinct rows of data only. If this is set true,
+         * the SELECT clause would be changed to SELECT DISTINCT.
+         */
         this._distinct = null;
+
         /**
-     * @type {string} additional option that should be appended to the 'SELECT' keyword. For example,
-     * in MySQL, the option 'SQL_CALC_FOUND_ROWS' can be used.
-     */
+         * @type {string} additional option that should be appended to the 'SELECT' keyword. For example,
+         * in MySQL, the option 'SQL_CALC_FOUND_ROWS' can be used.
+         */
         this._selectOption = null;
+
         /**
-     * @type {[]} the columns being selected. For example, `['id', 'name']`.
-     * This is used to construct the SELECT clause in a SQL statement. If not set, it means selecting all columns.
-     * @see select()
-     */
+         * @type {[]} the columns being selected. For example, `['id', 'name']`.
+         * This is used to construct the SELECT clause in a SQL statement. If not set, it means selecting all columns.
+         * @see select()
+         */
         this._select = null;
+
         super.preInit(...arguments);
     }
 
     /**
-         * Creates a new Query object and copies its property values from an existing one.
-         * The properties being copies are the ones to be used by query builders.
-         * @param {Jii.data.Query} from the source query object
-         * @return {Jii.data.Query} the new Query object
-         */
+     * Creates a new Query object and copies its property values from an existing one.
+     * The properties being copies are the ones to be used by query builders.
+     * @param {Jii.data.Query} from the source query object
+     * @return {Jii.data.Query} the new Query object
+     */
     static createFromQuery(from) {
         return new this({
             where: from.getWhere(),
@@ -192,17 +208,17 @@ class Query extends Component {
      * and can be traversed to retrieve the data in batches.
      */
     /*batch(batchSize, db) {
-        batchSize = batchSize || '';
-        db = db || null;
+     batchSize = batchSize || '';
+     db = db || null;
 
-        return Jii.createObject({
-            className: Jii.sql.BatchQueryResult,
-            query: this,
-            batchSize: batchSize,
-            db: db,
-            each: false
-        });
-    },*/
+     return Jii.createObject({
+     className: Jii.sql.BatchQueryResult,
+     query: this,
+     batchSize: batchSize,
+     db: db,
+     each: false
+     });
+     },*/
     /**
      * Starts a batch query and retrieves data row by row.
      * This method is similar to [[batch()]] except that in each iteration of the result,
@@ -220,17 +236,17 @@ class Query extends Component {
      * and can be traversed to retrieve the data in batches.
      */
     /*each(batchSize, db) {
-        batchSize = batchSize || '';
-        db = db || null;
+     batchSize = batchSize || '';
+     db = db || null;
 
-        return Jii.createObject({
-            className: Jii.sql.BatchQueryResult,
-            query: this,
-            batchSize: batchSize,
-            db: db,
-            each: true
-        });
-    },*/
+     return Jii.createObject({
+     className: Jii.sql.BatchQueryResult,
+     query: this,
+     batchSize: batchSize,
+     db: db,
+     each: true
+     });
+     },*/
     /**
      * Executes the query and returns all results as an array.
      * @param {Jii.data.BaseConnection} [db] the database connection used to generate the SQL statement.
@@ -1279,19 +1295,19 @@ class Query extends Component {
                 break;
 
             /*case 'IN':
-                case 'NOT IN':
-                case 'LIKE':
-                case 'OR LIKE':
-                case 'NOT LIKE':
-                case 'OR NOT LIKE':
-                case 'ILIKE': // PostgreSQL operator for case insensitive LIKE
-                case 'OR ILIKE':
-                case 'NOT ILIKE':
-                case 'OR NOT ILIKE':
-                    if (condition[1] && this._isEmpty(condition[1])) {
-                        return [];
-                    }
-                    break;*/
+             case 'NOT IN':
+             case 'LIKE':
+             case 'OR LIKE':
+             case 'NOT LIKE':
+             case 'OR NOT LIKE':
+             case 'ILIKE': // PostgreSQL operator for case insensitive LIKE
+             case 'OR ILIKE':
+             case 'NOT ILIKE':
+             case 'OR NOT ILIKE':
+             if (condition[1] && this._isEmpty(condition[1])) {
+             return [];
+             }
+             break;*/
 
             case 'BETWEEN':
             case 'NOT BETWEEN':

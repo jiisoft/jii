@@ -2,6 +2,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -16,23 +17,27 @@ var _clone = require('lodash/clone');
 var _map = require('lodash/map');
 var Component = require('../../base/Component');
 var NeatComet = require('neatcomet');
+
 class NeatClient extends Component {
 
     preInit() {
         /**
-     * @type {NeatComet.NeatCometClient}
-     */
+         * @type {NeatComet.NeatCometClient}
+         */
         this.engine = {
             className: 'NeatComet.NeatCometClient'
         };
+
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this.bindings = null;
+
         /**
-     * @type {Jii.comet.client.Client}
-     */
+         * @type {Jii.comet.client.Client}
+         */
         this.comet = null;
+
         super.preInit(...arguments);
     }
 

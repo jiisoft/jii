@@ -2,6 +2,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -11,58 +12,69 @@ var _isObject = require('lodash/isObject');
 var _has = require('lodash/has');
 var _each = require('lodash/each');
 var Module = require('./Module');
+
 class Application extends Module {
 
     preInit(config) {
         /**
-     * The root directory of the module.
-     * @type {string}
-     */
+         * The root directory of the module.
+         * @type {string}
+         */
         this._runtimePath = null;
+
         /**
-     * @type {string}
-     */
+         * @type {string}
+         */
         this.environment = 'development';
+
         /**
-     * @type {string} the language that the application is written in. This mainly refers to
-     * the language that the messages and view files are written in.
-     * @see language
-     */
+         * @type {string} the language that the application is written in. This mainly refers to
+         * the language that the messages and view files are written in.
+         * @see language
+         */
         this.sourceLanguage = 'en';
+
         /**
-     * @type {string} the language that is meant to be used for end users.
-     * @see sourceLanguage
-     */
+         * @type {string} the language that is meant to be used for end users.
+         * @see sourceLanguage
+         */
         this.language = 'en';
+
         /**
-     * @type {string} the charset currently used for the application.
-     */
+         * @type {string} the charset currently used for the application.
+         */
         this.charset = 'UTF-8';
+
         /**
-     * @type {string} the version of this application.
-     */
+         * @type {string} the version of this application.
+         */
         this.version = '1.0';
+
         /**
-     * @type {string} the application name.
-     */
+         * @type {string} the application name.
+         */
         this.name = 'My Application';
+
         /**
-     * @type {string} the namespace that controller classes are in. If not set,
-     * it will use the "app\controllers" namespace.
-     */
+         * @type {string} the namespace that controller classes are in. If not set,
+         * it will use the "app\controllers" namespace.
+         */
         this.controllerNamespace = 'app.controllers';
-        Jii.app = this;
+
         /**
-     * The IDs of the components or modules that should be preloaded right after initialization.
-     * @type {string[]}
-     */
+         * The IDs of the components or modules that should be preloaded right after initialization.
+         * @type {string[]}
+         */
         this.bootstrap = [];
+
+        Jii.app = this;
 
         // Merge with default config
         config = Jii.mergeConfigs(this._getBaseConfig(), config);
 
         this._preInit(config);
         this._loadBootstrapComponents();
+
         super.preInit(null, null, config);
     }
 

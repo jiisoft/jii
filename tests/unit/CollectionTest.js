@@ -155,15 +155,15 @@ class self extends UnitTest {
             result;
 
         result = 0;
-        this._coll().each(function() {
+        this._coll().each(function () {
             result++;
         });
-        this._coll().forEach(function() {
+        this._coll().forEach(function () {
             result++;
         });
         test.deepEqual(result, 6);
 
-        result = this._coll().map(function(v) {
+        result = this._coll().map(function (v) {
             return v * 2;
         });
         test.deepEqual(result, [
@@ -172,7 +172,7 @@ class self extends UnitTest {
             6
         ]);
 
-        result = this._coll().reduce(function(memo, num) {
+        result = this._coll().reduce(function (memo, num) {
             return memo + num;
         }, 0);
         test.deepEqual(result, 6);
@@ -190,7 +190,7 @@ class self extends UnitTest {
                 4,
                 5
             ]
-        ]).reduceRight(function(a, b) {
+        ]).reduceRight(function (a, b) {
             return a.concat(b);
         }, []);
         test.deepEqual(result, [
@@ -209,7 +209,7 @@ class self extends UnitTest {
             4,
             5,
             6
-        ]).find(function(num) {
+        ]).find(function (num) {
             return num % 2 == 0;
         });
         test.deepEqual(result, 2);
@@ -221,7 +221,7 @@ class self extends UnitTest {
             4,
             5,
             6
-        ]).filter(function(num) {
+        ]).filter(function (num) {
             return num % 2 == 0;
         });
         test.deepEqual(result, [
@@ -265,7 +265,7 @@ class self extends UnitTest {
             4,
             5,
             6
-        ]).reject(function(num) {
+        ]).reject(function (num) {
             return num % 2 == 0;
         });
         test.deepEqual(result, [
@@ -323,7 +323,7 @@ class self extends UnitTest {
                 name: 'larry',
                 age: 50
             }
-        ]).max(function(s) {
+        ]).max(function (s) {
             return s.age;
         });
         test.deepEqual(result, {
@@ -340,7 +340,7 @@ class self extends UnitTest {
                 name: 'larry',
                 age: 50
             }
-        ]).min(function(s) {
+        ]).min(function (s) {
             return s.age;
         });
         test.deepEqual(result, {
@@ -356,7 +356,7 @@ class self extends UnitTest {
             5,
             6
         ]);
-        coll.sortBy(function(num) {
+        coll.sortBy(function (num) {
             return Math.sin(num);
         });
         test.deepEqual(coll.getModels(), [
@@ -372,7 +372,7 @@ class self extends UnitTest {
             1.3,
             2.1,
             2.4
-        ]).groupBy(function(num) {
+        ]).groupBy(function (num) {
             return Math.floor(num);
         });
         test.deepEqual(result, {
@@ -392,7 +392,7 @@ class self extends UnitTest {
             3,
             4,
             5
-        ]).countBy(function(num) {
+        ]).countBy(function (num) {
             return num % 2 == 0 ? 'even' : 'odd';
         });
         test.deepEqual(result, {
@@ -480,7 +480,7 @@ class self extends UnitTest {
             6,
             8,
             12
-        ]).findIndex(function(v) {
+        ]).findIndex(function (v) {
             return v % 6 === 0;
         }), 1);
 
@@ -489,7 +489,7 @@ class self extends UnitTest {
             6,
             8,
             12
-        ]).findLastIndex(function(v) {
+        ]).findLastIndex(function (v) {
             return v % 6 === 0;
         }), 3);
 
@@ -714,7 +714,7 @@ class self extends UnitTest {
         coll.set('[0].name', 'Bond');
         test.strictEqual(coll.at(0).get('name'), 'Bond');
         test.strictEqual(coll.get('[0]name'), 'Bond');
-        test.throws(function() {
+        test.throws(function () {
             coll.set('[1].name', 'Bond');
         }, InvalidParamException);
 
@@ -729,11 +729,11 @@ class self extends UnitTest {
          *
          * @param {Jii.data.CollectionEvent} event
          */
-        var eventsFn = function(event) {
-            _each(event.added, function(model) {
+        var eventsFn = function (event) {
+            _each(event.added, function (model) {
                 events.push('added-' + model.getPrimaryKey());
             });
-            _each(event.removed, function(model) {
+            _each(event.removed, function (model) {
                 events.push('removed-' + model.getPrimaryKey());
             });
         };
@@ -814,14 +814,14 @@ class self extends UnitTest {
          *
          * @param {Jii.data.CollectionEvent|Jii.data.ChangeEvent} event
          */
-        var eventsFn = function(event) {
+        var eventsFn = function (event) {
             if (event instanceof ChangeEvent) {
                 events.push.apply(events, Object.keys(event.changedAttributes));
             } else if (event instanceof CollectionEvent) {
-                _each(event.added, function(model) {
+                _each(event.added, function (model) {
                     events.push('added-' + model.getPrimaryKey());
                 });
-                _each(event.removed, function(model) {
+                _each(event.removed, function (model) {
                     events.push('removed-' + model.getPrimaryKey());
                 });
             }
@@ -888,11 +888,11 @@ class self extends UnitTest {
          *
          * @param {Jii.data.CollectionEvent|Jii.data.ChangeEvent} event
          */
-        var eventsFn = function(event) {
-            _each(event.added, function(model) {
+        var eventsFn = function (event) {
+            _each(event.added, function (model) {
                 events.push('added-' + model.getPrimaryKey());
             });
-            _each(event.removed, function(model) {
+            _each(event.removed, function (model) {
                 events.push('removed-' + model.getPrimaryKey());
             });
         };
@@ -1019,7 +1019,7 @@ class self extends UnitTest {
         var child = root.createChild();
         test.strictEqual(child.length, 3);
 
-        child.setFilter(function(model) {
+        child.setFilter(function (model) {
             return model.get('title').indexOf('bbb') !== -1;
         });
         test.strictEqual(root.length, 3);
@@ -1065,12 +1065,12 @@ class self extends UnitTest {
         test.strictEqual(root.length, 3);
 
         var child1 = root.createChild();
-        child1.setFilter(function(model) {
+        child1.setFilter(function (model) {
             return model.get('title').indexOf('bbb') !== -1;
         });
 
         var child2 = child1.createChild();
-        child2.setFilter(function(model) {
+        child2.setFilter(function (model) {
             return model.get('title').indexOf('ccc') !== -1;
         });
 
@@ -1110,26 +1110,26 @@ class self extends UnitTest {
         });
 
         var modelAdapter = {
-            instance: function(original) {
+            instance: function (original) {
                 return {};
             },
-            setValues: function(original, proxy, values) {
+            setValues: function (original, proxy, values) {
                 _extend(proxy, values);
             }
         };
 
         var cloned = coll.createProxy({
-            instance: function(original) {
+            instance: function (original) {
                 return [];
             },
-            add: function(original, cloned, models) {
-                cloned.push.apply(cloned, models.map(function(model) {
+            add: function (original, cloned, models) {
+                cloned.push.apply(cloned, models.map(function (model) {
                     return model.createProxy(modelAdapter);
                 }));
             },
-            remove: function(original, cloned, models) {
-                _each(models, function(model) {
-                    _each(cloned, function(obj, index) {
+            remove: function (original, cloned, models) {
+                _each(models, function (model) {
+                    _each(cloned, function (obj, index) {
                         if (model.getPrimaryKey() === obj.id) {
                             cloned.splice(index, 1);
                         }
@@ -1164,14 +1164,14 @@ class self extends UnitTest {
          *
          * @param {Jii.data.CollectionEvent|Jii.data.ChangeEvent} event
          */
-        var eventsFn = function(event) {
+        var eventsFn = function (event) {
             if (event instanceof ChangeEvent) {
                 events.push.apply(events, Object.keys(event.changedAttributes));
             } else if (event instanceof CollectionEvent) {
-                _each(event.added, function(model) {
+                _each(event.added, function (model) {
                     events.push('added-' + model.getPrimaryKey());
                 });
-                _each(event.removed, function(model) {
+                _each(event.removed, function (model) {
                     events.push('removed-' + model.getPrimaryKey());
                 });
             }
@@ -1208,11 +1208,11 @@ class self extends UnitTest {
     }
 
     filterSubscribeTest(test) {
-        Article.getDb = function() {
+        Article.getDb = function () {
             return {
-                getSchema: function() {
+                getSchema: function () {
                     return {
-                        getFilterBuilder: function() {
+                        getFilterBuilder: function () {
                             return new FilterBuilder();
                         }
                     };
@@ -1253,7 +1253,7 @@ class self extends UnitTest {
         }));
         test.strictEqual(child.length, 2);
 
-        child.on('change:text', function() {
+        child.on('change:text', function () {
             console.log(9999);
         });
         article.set('text', 'ww');
@@ -1277,10 +1277,10 @@ class self extends UnitTest {
      */
     _coll(arr) {
         arr = arr || [
-            1,
-            2,
-            3
-        ];
+                1,
+                2,
+                3
+            ];
         return new Collection(arr, {
             modelClass: false
         });

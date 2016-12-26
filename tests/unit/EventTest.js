@@ -24,10 +24,10 @@ class EventTest extends UnitTest {
     }
 
     onTest(test) {
-        Event.on(Post, 'save', function(event) {
+        Event.on(Post, 'save', function (event) {
             this._counter += 1;
         }.bind(this));
-        Event.on(TestActiveRecord, 'save', function(event) {
+        Event.on(TestActiveRecord, 'save', function (event) {
             this._counter += 3;
         }.bind(this));
 
@@ -45,7 +45,8 @@ class EventTest extends UnitTest {
     }
 
     offTest(test) {
-        var handler = function() {};
+        var handler = function () {
+        };
 
         test.strictEqual(Event.hasHandlers(Post, 'save'), false);
         Event.on(Post, 'save', handler);
@@ -60,12 +61,14 @@ class EventTest extends UnitTest {
         test.strictEqual(Event.hasHandlers(Post, 'save'), false);
         test.strictEqual(Event.hasHandlers(TestActiveRecord, 'save'), false);
 
-        Event.on(Post, 'save', function() {});
+        Event.on(Post, 'save', function () {
+        });
         test.strictEqual(Event.hasHandlers(Post, 'save'), true);
         test.strictEqual(Event.hasHandlers(TestActiveRecord, 'save'), false);
 
         test.strictEqual(Event.hasHandlers(User, 'save'), false);
-        Event.on(TestActiveRecord, 'save', function() {});
+        Event.on(TestActiveRecord, 'save', function () {
+        });
         test.strictEqual(Event.hasHandlers(User, 'save'), true);
         test.strictEqual(Event.hasHandlers(TestActiveRecord, 'save'), true);
 

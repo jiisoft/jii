@@ -2,6 +2,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -15,23 +16,28 @@ var _isFunction = require('lodash/isFunction');
 var _isObject = require('lodash/isObject');
 var _each = require('lodash/each');
 var BaseObject = require('./Object');
+
 class Component extends BaseObject {
 
     preInit() {
         /**
-     * @var {object} the attached behaviors (behavior name: behavior)
-     */
+         * @var {object} the attached behaviors (behavior name: behavior)
+         */
         this._behaviors = null;
+
         /**
-     * @var {object} the attached event handlers (event name: handlers)
-     */
+         * @var {object} the attached event handlers (event name: handlers)
+         */
         this._events = null;
+
         /**
-     * @var {Jii.base.Context|Jii.base.Module}
-     */
+         * @var {Jii.base.Context|Jii.base.Module}
+         */
         this.owner = null;
+
         // Proxy behaviour methods
         this.proxyBehaviors();
+
         super.preInit(...arguments);
     }
 

@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../index');
@@ -17,82 +18,95 @@ var _each = require('lodash/each');
 var _has = require('lodash/has');
 var _clone = require('lodash/clone');
 var BaseObject = require('../base/Object');
+
 class UrlRule extends BaseObject {
 
     preInit(config) {
         /**
-     * The regex for matching the route part. This is used in generating URL.
-     * @type {string}
-     */
+         * The regex for matching the route part. This is used in generating URL.
+         * @type {string}
+         */
         this._routeRule = null;
+
         /**
-     * The template for generating a new URL. This is derived from [[pattern]] and is used in generating URL.
-     * @type {string}
-     */
+         * The template for generating a new URL. This is derived from [[pattern]] and is used in generating URL.
+         * @type {string}
+         */
         this._template = null;
+
         /**
-     * A value indicating if this rule should be used for both request parsing and URL creation,
-     * parsing only, or creation only.
-     * If not set or 0, it means the rule is both request parsing and URL creation.
-     * If it is [[PARSING_ONLY]], the rule is for request parsing only.
-     * If it is [[CREATION_ONLY]], the rule is for URL creation only.
-     * @type {number}
-     */
+         * A value indicating if this rule should be used for both request parsing and URL creation,
+         * parsing only, or creation only.
+         * If not set or 0, it means the rule is both request parsing and URL creation.
+         * If it is [[PARSING_ONLY]], the rule is for request parsing only.
+         * If it is [[CREATION_ONLY]], the rule is for URL creation only.
+         * @type {number}
+         */
         this.mode = null;
+
         /**
-     * The HTTP verb (e.g. GET, POST, DELETE) that this rule should match.
-     * Use array to represent multiple verbs that this rule may match.
-     * If this property is not set, the rule can match any verb.
-     * Note that this property is only used when parsing a request. It is ignored for URL creation.
-     * @type {string|array}
-     */
+         * The HTTP verb (e.g. GET, POST, DELETE) that this rule should match.
+         * Use array to represent multiple verbs that this rule may match.
+         * If this property is not set, the rule can match any verb.
+         * Note that this property is only used when parsing a request. It is ignored for URL creation.
+         * @type {string|array}
+         */
         this.verb = null;
+
         /**
-     * The URL suffix used for this rule.
-     * For example, ".html" can be used so that the URL looks like pointing to a static HTML page.
-     * If not, the value of [[UrlManager::suffix]] will be used.
-     * @type {string}
-     */
+         * The URL suffix used for this rule.
+         * For example, ".html" can be used so that the URL looks like pointing to a static HTML page.
+         * If not, the value of [[UrlManager::suffix]] will be used.
+         * @type {string}
+         */
         this.suffix = null;
+
         /**
-     * The default GET parameters (name => value) that this rule provides.
-     * When this rule is used to parse the incoming request, the values declared in this property
-     * will be injected into $_GET.
-     * @type {object}
-     */
+         * The default GET parameters (name => value) that this rule provides.
+         * When this rule is used to parse the incoming request, the values declared in this property
+         * will be injected into $_GET.
+         * @type {object}
+         */
         this.defaults = {};
+
         /**
-     * The route to the controller action
-     * @type {string}
-     */
+         * The route to the controller action
+         * @type {string}
+         */
         this.route = null;
+
         /**
-     * The pattern used to parse and create the host info part of a URL.
-     * @type {string}
-     * @see pattern
-     */
+         * The pattern used to parse and create the host info part of a URL.
+         * @type {string}
+         * @see pattern
+         */
         this.host = null;
+
         /**
-     * The pattern used to parse and create the path info part of a URL.
-     * @type {string}
-     * @see host
-     */
+         * The pattern used to parse and create the path info part of a URL.
+         * @type {string}
+         * @see host
+         */
         this.pattern = null;
+
         /**
-     * The name of this rule. If not set, it will use [[pattern]] as the name.
-     * @type {string}
-     */
+         * The name of this rule. If not set, it will use [[pattern]] as the name.
+         * @type {string}
+         */
         this.name = null;
+
         /**
-     * List of regex for matching parameters. This is used in generating URL.
-     * @type {array}
-     */
+         * List of regex for matching parameters. This is used in generating URL.
+         * @type {array}
+         */
         this._paramRules = [];
+
         /**
-     * List of parameters used in the route.
-     * @type {object}
-     */
+         * List of parameters used in the route.
+         * @type {object}
+         */
         this._routeParams = {};
+
         super.preInit(...arguments);
     }
 
@@ -425,19 +439,19 @@ class UrlRule extends BaseObject {
 }
 
 /**
-         * @type {string}
-         */
+ * @type {string}
+ */
 UrlRule.DEFAULT_PATTERN = '[^/]+';
 
 /**
-         * Set [[mode]] with this value to mark that this rule is for URL creation only
-         * @type {number}
-         */
+ * Set [[mode]] with this value to mark that this rule is for URL creation only
+ * @type {number}
+ */
 UrlRule.CREATION_ONLY = 2;
 
 /**
-         * Set [[mode]] with this value to mark that this rule is for URL parsing only
-         * @type {number}
-         */
+ * Set [[mode]] with this value to mark that this rule is for URL parsing only
+ * @type {number}
+ */
 UrlRule.PARSING_ONLY = 1;
 module.exports = UrlRule;

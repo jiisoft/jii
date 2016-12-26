@@ -2,6 +2,7 @@
  * @author Ihor Skliar <skliar.ihor@gmail.com>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../index');
@@ -11,26 +12,32 @@ var Exception = require('../console/Exception');
 var Response = require('../console/Response');
 var _isEmpty = require('lodash/isEmpty');
 var Application = require('../base/Application');
+
 class ConsoleApplication extends Application {
 
     preInit(config) {
-        /**
-     * @type {Jii.console.Controller} the currently active controller instance
-     */
-        this.controller = null;
-        /**
-     * @type {boolean} whether to enable the commands provided by the core framework.
-     * Defaults to true.
-     */
-        this.enableCoreCommands = true;
-        /**
-     * @type {string} the default route of this application. Defaults to 'help',
-     * meaning the `help` command.
-     */
-        this.defaultRoute = 'help';
         config = config || {};
+
+        /**
+         * @type {Jii.console.Controller} the currently active controller instance
+         */
+        this.controller = null;
+
+        /**
+         * @type {boolean} whether to enable the commands provided by the core framework.
+         * Defaults to true.
+         */
+        this.enableCoreCommands = true;
+
+        /**
+         * @type {string} the default route of this application. Defaults to 'help',
+         * meaning the `help` command.
+         */
+        this.defaultRoute = 'help';
+
         this._request = new Request(this.defaultRoute);
         config = this._loadConfig(config);
+
         super.preInit(config);
     }
 
@@ -119,7 +126,7 @@ class ConsoleApplication extends Application {
 }
 
 /**
-         * The option name for specifying the application configuration file path.
-         */
+ * The option name for specifying the application configuration file path.
+ */
 ConsoleApplication.OPTION_APPCONFIG = 'appconfig';
 module.exports = ConsoleApplication;

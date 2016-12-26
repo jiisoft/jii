@@ -1,30 +1,40 @@
+/**
+ * @author Vladimir Kozhin <affka@affka.ru>
+ * @license MIT
+ */
+
 'use strict';
 
 var Jii = require('../../../BaseJii');
 var Component = require('../../../base/Component');
+
 class QueueInterface extends Component {
 
     /**
      * Start queue
      */
-    start() {}
+    start() {
+    }
 
     /**
      * Stop queue
      */
-    stop() {}
+    stop() {
+    }
 
     /**
      * Add message to queue
      * @param message
      */
-    push(message) {}
+    push(message) {
+    }
 
     /**
      * Get and remove message from queue
      * @returns Promise
      */
-    pop() {}
+    pop() {
+    }
 
 }
 module.exports = QueueInterface;

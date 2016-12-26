@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -28,13 +29,16 @@ var _words = require('lodash/words');
 var _trim = require('lodash/trim');
 var _trimStart = require('lodash/trimStart');
 var BaseObject = require('../base/Object');
+
 class QueryBuilder extends BaseObject {
 
     preInit(connection, config) {
+        config = config || {};
+
         /**
-     * @var array map of query condition to builder methods.
-     * These methods are used by [[buildCondition]] to build SQL conditions from array syntax.
-     */
+         * @var array map of query condition to builder methods.
+         * These methods are used by [[buildCondition]] to build SQL conditions from array syntax.
+         */
         this._conditionBuilders = {
             'NOT': 'buildNotCondition',
             'AND': 'buildAndCondition',
@@ -50,22 +54,25 @@ class QueryBuilder extends BaseObject {
             'EXISTS': 'buildExistsCondition',
             'NOT EXISTS': 'buildExistsCondition'
         };
+
         /**
-     * @var array the abstract column types mapped to physical column types.
-     * This is mainly used to support creating/modifying tables using DB-independent data type specifications.
-     * Child classes should override this property to declare supported type mappings.
-     */
+         * @var array the abstract column types mapped to physical column types.
+         * This is mainly used to support creating/modifying tables using DB-independent data type specifications.
+         * Child classes should override this property to declare supported type mappings.
+         */
         this.typeMap = null;
+
         /**
-     * @var string the separator between different fragments of a SQL statement.
-     * Defaults to an empty space. This is mainly used by [[build()]] when generating a SQL statement.
-     */
+         * @var string the separator between different fragments of a SQL statement.
+         * Defaults to an empty space. This is mainly used by [[build()]] when generating a SQL statement.
+         */
         this.separator = ' ';
-        config = config || {};
+
         /**
-     * @var Connection the database connection.
-     */
+         * @var Connection the database connection.
+         */
         this.db = connection;
+
         super.preInit(config);
     }
 
@@ -1197,10 +1204,10 @@ class QueryBuilder extends BaseObject {
         }
 
         var escape = operands[2] || {
-            '%': '\\%',
-            '_': '\\_',
-            '\\': '\\\\'
-        };
+                '%': '\\%',
+                '_': '\\_',
+                '\\': '\\\\'
+            };
         delete operands[2];
 
         var matches = /^(AND |OR |)((NOT |)I?LIKE)/.exec(operator);
@@ -1314,7 +1321,7 @@ class QueryBuilder extends BaseObject {
 }
 
 /**
-         * The prefix for automatically generated query binding parameters.
-         */
+ * The prefix for automatically generated query binding parameters.
+ */
 QueryBuilder.PARAM_PREFIX = ':qp';
 module.exports = QueryBuilder;

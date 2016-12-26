@@ -2,6 +2,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -10,13 +11,14 @@ var ApplicationException = require('../exceptions/ApplicationException');
 var _isFunction = require('lodash/isFunction');
 var _extend = require('lodash/extend');
 var BaseObject = require('./../base/Object');
+
 class UnitTest extends BaseObject {
 
     /**
-         *
-         * @param time In seconds
-         * @returns {Promise}
-         */
+     *
+     * @param time In seconds
+     * @returns {Promise}
+     */
     static waitDeferred(time) {
         new Promise(resolve => {
             setTimeout(() => {

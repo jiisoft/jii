@@ -2,29 +2,35 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var ChangeEvent = require('./ChangeEvent');
+
 class ChangeAttributeEvent extends ChangeEvent {
 
     preInit() {
         /**
-     * @type {boolean}
-     */
+         * @type {boolean}
+         */
         this.isRelation = false;
+
         /**
-     * @type {*}
-     */
+         * @type {*}
+         */
         this.newValue = null;
+
         /**
-     * @type {*}
-     */
+         * @type {*}
+         */
         this.oldValue = null;
+
         /**
-     * @type {string}
-     */
+         * @type {string}
+         */
         this.attribute = '';
+
         super.preInit(...arguments);
     }
 

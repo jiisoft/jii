@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -15,6 +16,7 @@ var _intersection = require('lodash/intersection');
 var _map = require('lodash/map');
 var _each = require('lodash/each');
 var BaseObject = require('../base/Object');
+
 class Validator extends BaseObject {
 
     preInit() {
@@ -25,6 +27,7 @@ class Validator extends BaseObject {
         this.on = [];
         this.message = null;
         this.attributes = [];
+
         super.preInit(...arguments);
     }
 
@@ -106,7 +109,8 @@ class Validator extends BaseObject {
      * @param attribute
      * @returns {Promise|null}
      */
-    validateAttribute(object, attribute) {}
+    validateAttribute(object, attribute) {
+    }
 
     validateValue() {
         throw new ApplicationException('Not found implementation for method `validateValue()`.');

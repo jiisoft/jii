@@ -2,6 +2,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -13,11 +14,13 @@ var Component = require('../base/Component');
 var InvalidConfigException = require('../exceptions/InvalidConfigException');
 var MessageSource = require('./MessageSource');
 var MessageFormatter = require('./MessageFormatter');
+
 class I18N extends Component {
 
     preInit() {
         this._messageFormatter = null;
         this.translations = {};
+
         super.preInit(...arguments);
     }
 

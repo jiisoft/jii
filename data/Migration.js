@@ -2,20 +2,23 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var Component = require('../base/Component');
 var BaseSchema = require('./BaseSchema');
+
 class Migration extends Component {
 
     preInit() {
         /**
-     * @type {Jii.data.BaseConnection|object|string} the DB connection object or the application component ID of the DB connection
-     * that this migration should work with. Starting from version 2.0.2, this can also be a configuration array
-     * for creating the object.
-     */
+         * @type {Jii.data.BaseConnection|object|string} the DB connection object or the application component ID of the DB connection
+         * that this migration should work with. Starting from version 2.0.2, this can also be a configuration array
+         * for creating the object.
+         */
         this.db = null;
+
         super.preInit(...arguments);
     }
 

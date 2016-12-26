@@ -69,29 +69,29 @@ class CometServerTest extends UnitTest {
     subscribeTest(test) {
         /** @typedef {Jii.comet.ChannelEvent} event */
         var event = null;
-        Jii.app.comet.on(Server.EVENT_CHANNEL, function(e) {
+        Jii.app.comet.on(Server.EVENT_CHANNEL, function (e) {
             event = e;
         });
 
         /** @typedef {Jii.comet.ChannelEvent} event */
         var event2 = null;
-        Jii.app.comet.on(Server.EVENT_CHANNEL_NAME + 'test', function(e) {
+        Jii.app.comet.on(Server.EVENT_CHANNEL_NAME + 'test', function (e) {
             event2 = e;
         });
 
         /** @typedef {Jii.comet.ChannelEvent} event */
         var event3 = null;
-        Jii.app.comet.on(Server.EVENT_CHANNEL_NAME + 'blabla', function(e) {
+        Jii.app.comet.on(Server.EVENT_CHANNEL_NAME + 'blabla', function (e) {
             event3 = e;
         });
 
         /** @typedef {Jii.comet.ChannelEvent} event */
         var hubEvent = null;
-        Jii.app.comet.hub.on(HubInterface.EVENT_MESSAGE, function(e) {
+        Jii.app.comet.hub.on(HubInterface.EVENT_MESSAGE, function (e) {
             hubEvent = e;
         });
 
-        setTimeout(function() {
+        setTimeout(function () {
             Jii.app.comet.sendToChannel('test', {
                 foo: 588
             });
@@ -101,7 +101,7 @@ class CometServerTest extends UnitTest {
             test.strictEqual(true, Jii.app.comet.hasEventHandlers(Server.EVENT_CHANNEL_NAME + 'blabla'));
             test.strictEqual(false, Jii.app.comet.hasEventHandlers(Server.EVENT_CHANNEL_NAME + 'qweqwe'));
 
-            setTimeout(function() {
+            setTimeout(function () {
                 test.strictEqual(event.channel, 'test');
                 test.strictEqual(event.message, '{"foo":588}');
 
@@ -129,7 +129,7 @@ class CometServerTest extends UnitTest {
                     foo: 444
                 });
 
-                setTimeout(function() {
+                setTimeout(function () {
                     test.strictEqual(event, null);
                     test.strictEqual(event2, null);
                     test.strictEqual(hubEvent, null);
@@ -145,13 +145,13 @@ class CometServerTest extends UnitTest {
         Jii.app.cometListener.hub.unsubscribe(HubServer.CHANNEL_NAME_ACTION);
 
         var incomeMessage = null;
-        var connection = this._createConnection(function(m) {
+        var connection = this._createConnection(function (m) {
             incomeMessage = m;
         });
 
         // Subscribe
         var event = null;
-        Jii.app.comet.on(HubServer.EVENT_MESSAGE, function(e) {
+        Jii.app.comet.on(HubServer.EVENT_MESSAGE, function (e) {
             event = e;
         });
 
@@ -166,7 +166,7 @@ class CometServerTest extends UnitTest {
             message: 'action site/test'
         }));
 
-        setTimeout(function() {
+        setTimeout(function () {
             test.notStrictEqual(event, null);
 
             test.strictEqual(event.channel, HubServer.CHANNEL_NAME_ACTION);
@@ -179,7 +179,7 @@ class CometServerTest extends UnitTest {
 
     pushActionViaHubTest(test) {
         var incomeMessage = null;
-        var connection = this._createConnection(function(m) {
+        var connection = this._createConnection(function (m) {
             incomeMessage = m;
         });
 
@@ -194,7 +194,7 @@ class CometServerTest extends UnitTest {
             message: 'action site/test2'
         }));
 
-        setTimeout(function() {
+        setTimeout(function () {
             test.strictEqual(incomeMessage, 'action "test2test"');
 
             test.done();
@@ -206,7 +206,8 @@ class CometServerTest extends UnitTest {
             id: String.generateUid(),
             originalConnection: {
                 write: handler,
-                destroy: function() {}
+                destroy: function () {
+                }
             },
             request: new Request({
                 headers: {},

@@ -73,13 +73,13 @@ class ClientTest extends UnitTest {
         test.strictEqual(article.get('links[10].notexists'), null);
 
         // Throw on set property of null model
-        test.throws(function() {
+        test.throws(function () {
             article.set('links[10].url', 'http://none.net');
         }, UnknownPropertyException);
-        test.throws(function() {
+        test.throws(function () {
             article.set('links[10].notexists', 'http://none.net');
         }, UnknownPropertyException);
-        test.throws(function() {
+        test.throws(function () {
             article.set('links.notexists', 'http://none.net');
         }, InvalidParamException);
 
@@ -117,22 +117,23 @@ class ClientTest extends UnitTest {
             ]
         });
 
-        article.on('change:title', function() {});
+        article.on('change:title', function () {
+        });
         /*article.on('change:user', function() {
 
-        });
-        article.on('change:user.name', function() {
+         });
+         article.on('change:user.name', function() {
 
-        });
-        article.on('change:links', function() {
+         });
+         article.on('change:links', function() {
 
-        });
-        article.on('change:links[0]', function() {
+         });
+         article.on('change:links[0]', function() {
 
-        });
-        article.on('change:links[1].url', function() {
+         });
+         article.on('change:links[1].url', function() {
 
-        });*/
+         });*/
 
         test.done();
     }

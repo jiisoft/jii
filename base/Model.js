@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -28,6 +29,7 @@ var _map = require('lodash/map');
 var _keys = require('lodash/keys');
 var _startCase = require('lodash/startCase');
 var Component = require('./Component');
+
 class Model extends Component {
 
     preInit(attributes, config) {
@@ -41,6 +43,7 @@ class Model extends Component {
         if (_isObject(attributes)) {
             this.set(attributes);
         }
+
         super.preInit(config);
     }
 
@@ -363,11 +366,11 @@ class Model extends Component {
         // Subscribe for sync
         _each(attributes, (name, alias) => {
             this.on(Model.EVENT_CHANGE_NAME + name, /** @param {Jii.data.ChangeAttributeEvent} event */
-                event => {
-                    var obj = {};
-                    obj[alias] = event.newValue;
-                    adapter.setValues(this, cloned, obj);
-                });
+                                                    event => {
+                var obj = {};
+                obj[alias] = event.newValue;
+                adapter.setValues(this, cloned, obj);
+            });
         });
 
         return cloned;
@@ -874,32 +877,32 @@ class Model extends Component {
 }
 
 /**
-         * @event Jii.base.Model#after_validate
-         * @property {Jii.data.ValidateEvent} event
-         */
+ * @event Jii.base.Model#after_validate
+ * @property {Jii.data.ValidateEvent} event
+ */
 Model.EVENT_AFTER_VALIDATE = 'after_validate';
 
 /**
-         * @event Jii.base.Model#change_errors
-         * @property {Jii.data.ValidateEvent} event
-         */
+ * @event Jii.base.Model#change_errors
+ * @property {Jii.data.ValidateEvent} event
+ */
 Model.EVENT_CHANGE_ERRORS = 'change_errors';
 
 /**
-         * @event Jii.base.Model#before_validate
-         * @property {Jii.data.ValidateEvent} event
-         */
+ * @event Jii.base.Model#before_validate
+ * @property {Jii.data.ValidateEvent} event
+ */
 Model.EVENT_BEFORE_VALIDATE = 'before_validate';
 
 /**
-         * @event Jii.base.Model#change:
-         * @property {Jii.data.ChangeAttributeEvent} event
-         */
+ * @event Jii.base.Model#change:
+ * @property {Jii.data.ChangeAttributeEvent} event
+ */
 Model.EVENT_CHANGE_NAME = 'change:';
 
 /**
-         * @event Jii.base.Model#change
-         * @property {Jii.data.ChangeEvent} event
-         */
+ * @event Jii.base.Model#change
+ * @property {Jii.data.ChangeEvent} event
+ */
 Model.EVENT_CHANGE = 'change';
 module.exports = Model;

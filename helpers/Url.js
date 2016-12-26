@@ -2,6 +2,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -10,14 +11,15 @@ var _isObject = require('lodash/isObject');
 var _isString = require('lodash/isString');
 var _isArray = require('lodash/isArray');
 var BaseObject = require('../base/Object');
+
 class Url extends BaseObject {
 
     /**
-         * Returns a value indicating whether a URL is relative.
-         * A relative URL does not have host info part.
-         * @param {string} url the URL to be checked
-         * @returns {boolean} whether the URL is relative
-         */
+     * Returns a value indicating whether a URL is relative.
+     * A relative URL does not have host info part.
+     * @param {string} url the URL to be checked
+     * @returns {boolean} whether the URL is relative
+     */
     static isRelative(url) {
         return url.indexOf('//') !== 0 && url.indexOf('://') === -1;
     }
@@ -28,32 +30,32 @@ class Url extends BaseObject {
         }
 
         return url;
-    // @todo
-    /*$url = Yii::getAlias($url);
-        if ($url === '') {
-            $url = Yii::$app->getRequest()->getUrl();
-        }
+        // @todo
+        /*$url = Yii::getAlias($url);
+         if ($url === '') {
+         $url = Yii::$app->getRequest()->getUrl();
+         }
 
-        if (!$scheme) {
-            return $url;
-        }
+         if (!$scheme) {
+         return $url;
+         }
 
-        if (strncmp($url, '//', 2) === 0) {
-            // e.g. //hostname/path/to/resource
-            return is_string($scheme) ? "$scheme:$url" : $url;
-        }
+         if (strncmp($url, '//', 2) === 0) {
+         // e.g. //hostname/path/to/resource
+         return is_string($scheme) ? "$scheme:$url" : $url;
+         }
 
-        if (($pos = strpos($url, ':')) === false || !ctype_alpha(substr($url, 0, $pos))) {
-            // turn relative URL into absolute
-            $url = static::getUrlManager()->getHostInfo() . '/' . ltrim($url, '/');
-        }
+         if (($pos = strpos($url, ':')) === false || !ctype_alpha(substr($url, 0, $pos))) {
+         // turn relative URL into absolute
+         $url = static::getUrlManager()->getHostInfo() . '/' . ltrim($url, '/');
+         }
 
-        if (is_string($scheme) && ($pos = strpos($url, ':')) !== false) {
-            // replace the scheme with the specified one
-            $url = $scheme . substr($url, $pos);
-        }
+         if (is_string($scheme) && ($pos = strpos($url, ':')) !== false) {
+         // replace the scheme with the specified one
+         $url = $scheme . substr($url, $pos);
+         }
 
-        return $url;*/
+         return $url;*/
     }
 
     static toRoute(route, context, scheme) {
@@ -67,20 +69,20 @@ class Url extends BaseObject {
     }
 
     /**
-         *
-         * @returns {Jii.request.UrlManager}
-         * @private
-         */
+     *
+     * @returns {Jii.request.UrlManager}
+     * @private
+     */
     static _getUrlManager() {
         return this.constructor.urlManager || Jii.app.urlManager;
     }
 
     /**
-         *
-         * @param {string|array|object} route
-         * @param {Jii.base.Context} context
-         * @returns {{route: string, params: {}}}
-         */
+     *
+     * @param {string|array|object} route
+     * @param {Jii.base.Context} context
+     * @returns {{route: string, params: {}}}
+     */
     static parseRoute(route, context) {
         var params = {};
 
@@ -113,25 +115,25 @@ class Url extends BaseObject {
         }
 
         return route;
-    // relative route
-    // @todo
-    /*if (!Jii.app || Jii.app.controller === null) {
-       throw new InvalidParamException("Unable to resolve the relative route: $route. No active controller is available.");
-        }
+        // relative route
+        // @todo
+        /*if (!Jii.app || Jii.app.controller === null) {
+         throw new InvalidParamException("Unable to resolve the relative route: $route. No active controller is available.");
+         }
 
-        if (strpos($route, '/') === false) {
-       // empty or an action ID
-       return $route === '' ? Yii::$app->controller->getRoute() : Yii::$app->controller->getUniqueId() . '/' . $route;
-        } else {
-       // relative to module
-       return ltrim(Yii::$app->controller->module->getUniqueId() . '/' . $route, '/');
-        }*/
+         if (strpos($route, '/') === false) {
+         // empty or an action ID
+         return $route === '' ? Yii::$app->controller->getRoute() : Yii::$app->controller->getUniqueId() . '/' . $route;
+         } else {
+         // relative to module
+         return ltrim(Yii::$app->controller->module->getUniqueId() . '/' . $route, '/');
+         }*/
     }
 
 }
 
 /**
-         * @type {Jii.request.UrlManager}
-         */
+ * @type {Jii.request.UrlManager}
+ */
 Url.urlManager = null;
 module.exports = Url;

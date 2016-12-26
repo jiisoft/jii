@@ -8,8 +8,8 @@ var LinkJunction = require('./LinkJunction');
 class Article extends BaseActiveRecord {
 
     /**
-         * @returns {{}}
-         */
+     * @returns {{}}
+     */
     static modelSchema() {
         return {
             primaryKey: ['id'],

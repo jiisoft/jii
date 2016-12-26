@@ -197,11 +197,11 @@ class self extends UnitTest {
 
     relationTimeTest(test) {
         var filterBuilder = new FilterBuilder();
-        Article.getDb = function() {
+        Article.getDb = function () {
             return {
-                getSchema: function() {
+                getSchema: function () {
                     return {
-                        getFilterBuilder: function() {
+                        getFilterBuilder: function () {
                             return filterBuilder;
                         }
                     };

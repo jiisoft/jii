@@ -2,6 +2,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -9,17 +10,20 @@ var InvalidConfigException = require('../../exceptions/InvalidConfigException');
 var Collection = require('../../base/Collection');
 var _clone = require('lodash/clone');
 var INeatContextProfiles = require('../INeatContextProfiles');
+
 class NeatContextProfiles extends INeatContextProfiles {
 
     preInit() {
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this.data = {};
+
         /**
-     * @type {Jii.comet.client.NeatClient}
-     */
+         * @type {Jii.comet.client.NeatClient}
+         */
         this.neat = 'neat';
+
         super.preInit(...arguments);
     }
 
@@ -41,9 +45,9 @@ class NeatContextProfiles extends INeatContextProfiles {
 
         /** @typedef {NeatComet.bindings.BindingServer} bingind */
         /*var binding = this.neat.engine.profilesDefinition[profileName] && this.neat.engine.profilesDefinition[profileName][name] || null;
-        if (!binding) {
-            throw new InvalidConfigException('Not found collection for profile id `' + name + '`');
-        }*/
+         if (!binding) {
+         throw new InvalidConfigException('Not found collection for profile id `' + name + '`');
+         }*/
 
         return Promise.resolve().then(() => {
             // @todo Temporary code
@@ -59,9 +63,9 @@ class NeatContextProfiles extends INeatContextProfiles {
                 collection.each(model => {
                     model.setOldAttributes(_clone(model.getAttributes()));
                 });
-            /*return new Collection(this.data[collectionName], {
-                        modelClass: binding.serverModel || binding.clientModel
-                    })*/
+                /*return new Collection(this.data[collectionName], {
+                 modelClass: binding.serverModel || binding.clientModel
+                 })*/
             }
             return collection;
         });

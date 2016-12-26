@@ -1,13 +1,20 @@
+/**
+ * @author Ihor Skliar <skliar.ihor@gmail.com>
+ * @license MIT
+ */
+
 'use strict';
 
 var Jii = require('../../index');
 var Console = require('../../helpers/Console');
 var Controller = require('../Controller');
 var fs = require('fs');
+
 class ServiceController extends Controller {
 
     preInit() {
         this._forever = null;
+
         super.preInit(...arguments);
     }
 

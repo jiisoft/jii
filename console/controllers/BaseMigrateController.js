@@ -2,6 +2,7 @@
  * @author Ihor Skliar <skliar.ihor@gmail.com>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -15,43 +16,50 @@ var _template = require('lodash/template');
 var _values = require('lodash/values');
 var Controller = require('../Controller');
 var fs = require('fs');
+
 class BaseMigrateController extends Controller {
 
     preInit() {
         /**
-     * @type {[]} column definition strings used for creating migration code.
-     * The format of each definition is `COLUMN_NAME:COLUMN_TYPE:COLUMN_DECORATOR`.
-     * For example, `--fields=name:string(12):notNull` produces a string column of size 12 which is not null.
-     * @since 2.0.7
-     */
+         * @type {[]} column definition strings used for creating migration code.
+         * The format of each definition is `COLUMN_NAME:COLUMN_TYPE:COLUMN_DECORATOR`.
+         * For example, `--fields=name:string(12):notNull` produces a string column of size 12 which is not null.
+         * @since 2.0.7
+         */
         this.fields = [];
+
         /**
-     * @type {[]} a set of template paths for generating migration code automatically.
-     *
-     * The key is the template type, the value is a path or the alias. Supported types are:
-     * - `create_table`: table creating template
-     * - `drop_table`: table dropping template
-     * - `add_column`: adding new column() template
-     * - `drop_column`: dropping column template
-     * - `create_junction`: create junction template
-     */
+         * @type {[]} a set of template paths for generating migration code automatically.
+         *
+         * The key is the template type, the value is a path or the alias. Supported types are:
+         * - `create_table`: table creating template
+         * - `drop_table`: table dropping template
+         * - `add_column`: adding new column() template
+         * - `drop_column`: dropping column template
+         * - `create_junction`: create junction template
+         */
         this.generatorTemplateFiles = null;
+
         /**
-     * @type {string} the template file for generating new migrations.
-     * This can be either a path alias (e.g. "@app/migrations/template.js")
-     * or a file path.
-     */
+         * @type {string} the template file for generating new migrations.
+         * This can be either a path alias (e.g. "@app/migrations/template.js")
+         * or a file path.
+         */
         this.templateFile = null;
+
         this.migrationNamespace = 'app.migrations';
+
         /**
-     * @type {string} the directory storing the migration classes. This can be either
-     * a path alias or a directory.
-     */
+         * @type {string} the directory storing the migration classes. This can be either
+         * a path alias or a directory.
+         */
         this.migrationPath = '@app/migrations';
+
         /**
-     * @type {string} the default command action.
-     */
+         * @type {string} the default command action.
+         */
         this.defaultAction = 'up';
+
         super.preInit(...arguments);
     }
 
@@ -612,54 +620,54 @@ class BaseMigrateController extends Controller {
 
             // @todo Generator templates
             /*matches = /^create_junction_(.+)_and_(.+)/.exec(name);
-            if (!content && matches) {
-                var firstTable = matches[1].toLowerCase();
-                var secondTable = matches[2].toLowerCase();
-                content = this.renderFile(Jii.getAlias(this.generatorTemplateFiles['create_junction']), {
-                    className: className,
-                    table: firstTable + '_' + secondTable,
-                    field_first: firstTable,
-                    field_second: secondTable
-                });
-            }
+             if (!content && matches) {
+             var firstTable = matches[1].toLowerCase();
+             var secondTable = matches[2].toLowerCase();
+             content = this.renderFile(Jii.getAlias(this.generatorTemplateFiles['create_junction']), {
+             className: className,
+             table: firstTable + '_' + secondTable,
+             field_first: firstTable,
+             field_second: secondTable
+             });
+             }
 
-            matches = /^add_(.+)_to_(.+)/.exec(name);
-            if (!content && matches) {
-                content = this.renderFile(Jii.getAlias(this.generatorTemplateFiles['add_column']), {
-                    className: className,
-                    table: matches[2].toLowerCase(),
-                    fields: this.fields
-                });
-            }
+             matches = /^add_(.+)_to_(.+)/.exec(name);
+             if (!content && matches) {
+             content = this.renderFile(Jii.getAlias(this.generatorTemplateFiles['add_column']), {
+             className: className,
+             table: matches[2].toLowerCase(),
+             fields: this.fields
+             });
+             }
 
-            matches = /^drop_(.+)_from_(.+)/.exec(name);
-            if (!content && matches) {
-                content = this.renderFile(Jii.getAlias(this.generatorTemplateFiles['drop_column']), {
-                    className: className,
-                    table: matches[2].toLowerCase(),
-                    fields: this.fields
-                });
-            }
+             matches = /^drop_(.+)_from_(.+)/.exec(name);
+             if (!content && matches) {
+             content = this.renderFile(Jii.getAlias(this.generatorTemplateFiles['drop_column']), {
+             className: className,
+             table: matches[2].toLowerCase(),
+             fields: this.fields
+             });
+             }
 
-            matches = /^create_(.+)/.exec(name);
-            if (!content && matches) {
-                this._addDefaultPrimaryKey();
-                content = this.renderFile(Jii.getAlias(this.generatorTemplateFiles['create_table']), {
-                    className: className,
-                    table: matches[1].toLowerCase(),
-                    fields: this.fields
-                });
-            }
+             matches = /^create_(.+)/.exec(name);
+             if (!content && matches) {
+             this._addDefaultPrimaryKey();
+             content = this.renderFile(Jii.getAlias(this.generatorTemplateFiles['create_table']), {
+             className: className,
+             table: matches[1].toLowerCase(),
+             fields: this.fields
+             });
+             }
 
-            matches = /^drop_(.+)/.exec(name);
-            if (!content && matches) {
-                this.addDefaultPrimaryKey();
-                content = this.renderFile(Jii.getAlias(this.generatorTemplateFiles['drop_table']), {
-                    className: className,
-                    table: matches[1].toLowerCase(),
-                    fields: this.fields
-                });
-            }*/
+             matches = /^drop_(.+)/.exec(name);
+             if (!content && matches) {
+             this.addDefaultPrimaryKey();
+             content = this.renderFile(Jii.getAlias(this.generatorTemplateFiles['drop_table']), {
+             className: className,
+             table: matches[1].toLowerCase(),
+             fields: this.fields
+             });
+             }*/
 
             if (!content) {
                 // @todo renderFile
@@ -916,7 +924,7 @@ class BaseMigrateController extends Controller {
 }
 
 /**
-         * The name of the dummy migration that marks the beginning of the whole migration history.
-         */
+ * The name of the dummy migration that marks the beginning of the whole migration history.
+ */
 BaseMigrateController.BASE_MIGRATION = 'm000000_000000_base';
 module.exports = BaseMigrateController;

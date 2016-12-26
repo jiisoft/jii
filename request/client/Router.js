@@ -3,6 +3,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -11,15 +12,18 @@ var Response = require('./Response');
 var _isString = require('lodash/isString');
 var _extend = require('lodash/extend');
 var Component = require('../../base/Component');
+
 class Router extends Component {
 
     preInit() {
         this._bindRouteFunction = null;
         this.mode = null;
+
         /**
-     * @type {Jii.controller.UrlManager|string}
-     */
+         * @type {Jii.controller.UrlManager|string}
+         */
         this.urlManager = 'urlManager';
+
         super.preInit(...arguments);
     }
 

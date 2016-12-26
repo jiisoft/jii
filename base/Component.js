@@ -15,7 +15,7 @@ var _isString = require('lodash/isString');
 var _isFunction = require('lodash/isFunction');
 var _isObject = require('lodash/isObject');
 var _each = require('lodash/each');
-var BaseObject = require('./Object');
+var BaseObject = require('./BaseObject');
 
 class Component extends BaseObject {
 

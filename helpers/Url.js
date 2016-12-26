@@ -10,7 +10,7 @@ var _trim = require('lodash/trim');
 var _isObject = require('lodash/isObject');
 var _isString = require('lodash/isString');
 var _isArray = require('lodash/isArray');
-var BaseObject = require('../base/Object');
+var BaseObject = require('../base/BaseObject');
 
 class Url extends BaseObject {
 

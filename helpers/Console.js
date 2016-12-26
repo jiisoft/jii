@@ -12,7 +12,7 @@ var _extend = require('lodash/extend');
 var _keys = require('lodash/keys');
 var _each = require('lodash/each');
 var _has = require('lodash/has');
-var BaseObject = require('../base/Object');
+var BaseObject = require('../base/BaseObject');
 var keypress = require('keypress');
 
 class Console extends BaseObject {

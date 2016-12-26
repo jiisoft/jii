@@ -13,6 +13,7 @@ var AnonymousAction = require('../request/AnonymousAction');
 var InvalidRouteException = require('../exceptions/InvalidRouteException');
 var InvalidConfigException = require('../exceptions/InvalidConfigException');
 var ActionEvent = require('./ActionEvent');
+var ErrorHandler = require('./ErrorHandler');
 var _trimStart = require('lodash/trimStart');
 var _trim = require('lodash/trim');
 var _lastIndexOf = require('lodash/lastIndexOf');
@@ -406,7 +407,7 @@ class Module extends Context {
             if (errorRoute !== null && route !== errorRoute) {
 
                 context.setComponent('errorHandler', {
-                    className: 'Jii.base.ErrorHandler',
+                    className: ErrorHandler,
                     error: e
                 });
                 this.runAction(errorRoute, context);

@@ -14,7 +14,7 @@ var InvalidConfigException = require('../../exceptions/InvalidConfigException');
 var _isFunction = require('lodash/isFunction');
 var _isEmpty = require('lodash/isEmpty');
 var _extend = require('lodash/extend');
-var BaseObject = require('../../base/Object');
+var BaseObject = require('../../base/BaseObject');
 var NeatComet = require('neatcomet');
 
 class NeatServer extends BaseObject {

@@ -10,7 +10,7 @@ var _isNumber = require('lodash/isNumber');
 var _each = require('lodash/each');
 var _has = require('lodash/has');
 var _size = require('lodash/size');
-var BaseObject = require('../base/Object');
+var BaseObject = require('../base/BaseObject');
 var cluster = require('cluster');
 
 class MasterWorker extends BaseObject {

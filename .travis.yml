@@ -4,5 +4,6 @@ node_js:
 install:
   - npm i
   - npm i jii-mysql
+  - cd node_modules && ln -fs ../ jii
 script:
   - nodeunit tests/unit

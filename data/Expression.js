@@ -7,7 +7,7 @@
 'use strict';
 
 var Jii = require('../BaseJii');
-var BaseObject = require('../base/Object');
+var BaseObject = require('../base/BaseObject');
 
 class Expression extends BaseObject {
 

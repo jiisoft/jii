@@ -7,7 +7,6 @@
 
 var Jii = require('../index');
 var Console = require('../helpers/Console');
-var ClassLoader = require('../helpers/ClassLoader');
 var Exception = require('./Exception');
 var _trim = require('lodash/trim');
 var _isEmpty = require('lodash/isEmpty');
@@ -439,8 +438,7 @@ class Controller extends BaseController {
             return;
         }
 
-        var classPath = ClassLoader.getClassPath(this.className());
-        var comments = _values(extract(fs.readFileSync(classPath, 'utf-8')));
+        var comments = _values(extract(/*fs.readFileSync(classPath, 'utf-8')*/'')); // TODO
         var exp = /^action(.*)(:|\()(.*)/i;
         var exp2 = /\n@/gi;
         var exp3 = /^@/i;

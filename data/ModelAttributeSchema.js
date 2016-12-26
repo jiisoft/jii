@@ -9,7 +9,7 @@ var Jii = require('../BaseJii');
 var Expression = require('../data/Expression');
 var _isBoolean = require('lodash/isBoolean');
 var _isEmpty = require('lodash/isEmpty');
-var BaseObject = require('../base/Object');
+var BaseObject = require('../base/BaseObject');
 
 class ModelAttributeSchema extends BaseObject {
 

@@ -10,6 +10,7 @@ var InvalidParamException = require('../../exceptions/InvalidParamException');
 var Collection = require('../../base/Collection');
 var Command = require('./Command');
 var Component = require('../../base/Component');
+var Schema = require('./Schema');
 var _each = require('lodash/each');
 
 class Connection extends Component {
@@ -39,7 +40,7 @@ class Connection extends Component {
          * @type {Jii.data.http.Schema} the database schema
          */
         this.schema = {
-            className: 'Jii.data.http.Schema'
+            className: Schema,
         };
 
         super.preInit(...arguments);

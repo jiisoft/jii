@@ -8,7 +8,7 @@
 var Jii = require('../BaseJii');
 var _trimEnd = require('lodash/trimEnd');
 var _each = require('lodash/each');
-var BaseObject = require('../base/Object');
+var BaseObject = require('../base/BaseObject');
 
 class File extends BaseObject {
 

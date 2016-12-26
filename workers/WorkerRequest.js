@@ -8,7 +8,7 @@
 var Jii = require('../index');
 var BaseRequest = require('../base/Request');
 
-class Request extends BaseRequest {
+class WorkerRequest extends BaseRequest {
 
     preInit() {
         /**
@@ -20,4 +20,4 @@ class Request extends BaseRequest {
     }
 
 }
-module.exports = Request;
+module.exports = WorkerRequest;

@@ -10,7 +10,7 @@ var WebApplication = require('../application/WebApplication');
 var ApplicationException = require('../exceptions/ApplicationException');
 var _isFunction = require('lodash/isFunction');
 var _extend = require('lodash/extend');
-var BaseObject = require('./../base/Object');
+var BaseObject = require('./../base/BaseObject');
 
 class UnitTest extends BaseObject {
 

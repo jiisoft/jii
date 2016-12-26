@@ -15,7 +15,7 @@ var _uniqueId = require('lodash/uniqueId');
 var _isString = require('lodash/isString');
 var _isEmpty = require('lodash/isEmpty');
 var _each = require('lodash/each');
-var BaseObject = require('../base/Object');
+var BaseObject = require('../base/BaseObject');
 var cluster = require('cluster');
 var ConsoleApplication = require('../application/ConsoleApplication');
 

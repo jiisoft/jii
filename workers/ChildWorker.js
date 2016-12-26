@@ -13,6 +13,8 @@ var _isFunction = require('lodash/isFunction');
 var _isArray = require('lodash/isArray');
 var _has = require('lodash/has');
 var Component = require('../base/Component');
+var WorkerRequest = require('./WorkerRequest');
+var WorkerResponse = require('./WorkerResponse');
 var cluster = require('cluster');
 
 class ChildWorker extends Component {
@@ -181,12 +183,12 @@ class ChildWorker extends Component {
                 route: data.route,
                 components: {
                     request: {
-                        className: 'Jii.workers.Request',
+                        className: WorkerRequest,
                         uid: data.requestUid,
                         params: data.params || {}
                     },
                     response: {
-                        className: 'Jii.workers.Response',
+                        className: WorkerResponse,
                         handler(result) {
                             process.send({
                                 requestUid: data.requestUid,

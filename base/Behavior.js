@@ -8,7 +8,7 @@
 var Jii = require('../BaseJii');
 var Event = require('./Event');
 var _each = require('lodash/each');
-var BaseObject = require('./Object');
+var BaseObject = require('./BaseObject');
 
 class Behavior extends BaseObject {
 

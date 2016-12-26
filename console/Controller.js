@@ -2,6 +2,7 @@
  * @author Ihor Skliar <skliar.ihor@gmail.com>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../index');
@@ -21,26 +22,31 @@ var _compact = require('lodash/compact');
 var BaseController = require('../base/Controller');
 var fs = require('fs');
 var extract = require('extract-comments');
+
 class Controller extends BaseController {
 
     preInit() {
         /**
-     * @type {string[]} the options passed during execution.
-     */
+         * @type {string[]} the options passed during execution.
+         */
         this._passedOptions = [];
+
         /**
-     * @type {{main: {help: string, description: string}, properties: object, actions: object}}
-     */
+         * @type {{main: {help: string, description: string}, properties: object, actions: object}}
+         */
         this._comments = null;
+
         /**
-     * If not set, ANSI color will only be enabled for terminals that support it.
-     * @type {boolean} whether to enable ANSI color in the output.
-     */
+         * If not set, ANSI color will only be enabled for terminals that support it.
+         * @type {boolean} whether to enable ANSI color in the output.
+         */
         this.color = true;
+
         /**
-     * @type {boolean} whether to run the command interactively.
-     */
+         * @type {boolean} whether to run the command interactively.
+         */
         this.interactive = true;
+
         super.preInit(...arguments);
     }
 

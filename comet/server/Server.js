@@ -2,6 +2,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -11,33 +12,40 @@ var _values = require('lodash/values');
 var _keys = require('lodash/keys');
 var _each = require('lodash/each');
 var HubServer = require('./HubServer');
+
 class Server extends HubServer {
 
     preInit() {
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this._subscribes = {};
+
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this._connections = {};
+
         /**
-     * @type {Server}
-     */
+         * @type {Server}
+         */
         this._httpServer = null;
+
         /**
-     * @type {Jii.comet.server.transport.TransportInterface}
-     */
+         * @type {Jii.comet.server.transport.TransportInterface}
+         */
         this.transport = null;
+
         /**
-     * @type {number}
-     */
+         * @type {number}
+         */
         this.port = 4100;
+
         /**
-     * @type {string}
-     */
+         * @type {string}
+         */
         this.host = '0.0.0.0';
+
         super.preInit(...arguments);
     }
 
@@ -291,14 +299,14 @@ class Server extends HubServer {
 }
 
 /**
-         * @event Jii.comet.server.Server#removeConnection
-         * @property {Jii.comet.server.ConnectionEvent} event
-         */
+ * @event Jii.comet.server.Server#removeConnection
+ * @property {Jii.comet.server.ConnectionEvent} event
+ */
 Server.EVENT_REMOVE_CONNECTION = 'removeConnection';
 
 /**
-         * @event Jii.comet.server.Server#addConnection
-         * @property {Jii.comet.server.ConnectionEvent} event
-         */
+ * @event Jii.comet.server.Server#addConnection
+ * @property {Jii.comet.server.ConnectionEvent} event
+ */
 Server.EVENT_ADD_CONNECTION = 'addConnection';
 module.exports = Server;

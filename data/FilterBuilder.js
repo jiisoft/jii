@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -20,13 +21,14 @@ var BaseObject = require('../base/Object');
 var Query = require('../data/Query');
 var Expression = require('../data/Expression');
 var Model = require('../base/Model');
+
 class FilterBuilder extends BaseObject {
 
     preInit() {
         /**
-     * @var array map of query condition to builder methods.
-     * These methods are used by [[buildCondition]] to build SQL conditions from array syntax.
-     */
+         * @var array map of query condition to builder methods.
+         * These methods are used by [[buildCondition]] to build SQL conditions from array syntax.
+         */
         this._conditionBuilders = {
             'NOT': [
                 'filterNotCondition',
@@ -61,6 +63,7 @@ class FilterBuilder extends BaseObject {
                 'attributesExistsCondition'
             ]
         };
+
         super.preInit(...arguments);
     }
 
@@ -303,10 +306,10 @@ class FilterBuilder extends BaseObject {
         }
 
         var escape = operands[2] || {
-            '%': '\\%',
-            '_': '\\_',
-            '\\': '\\\\'
-        };
+                '%': '\\%',
+                '_': '\\_',
+                '\\': '\\\\'
+            };
         delete operands[2];
 
         var matches = /^(AND |OR |)((NOT |)I?LIKE)/.exec(operator);
@@ -316,48 +319,48 @@ class FilterBuilder extends BaseObject {
 
         // @todo http://stackoverflow.com/questions/1314045/emulating-sql-like-in-javascript
         throw new NotSupportedException();
-    /*var andor = ' ' + (matches[1] || 'AND ');
-    var not = !!matches[3];
-    var parsedOperator = matches[2];
+        /*var andor = ' ' + (matches[1] || 'AND ');
+         var not = !!matches[3];
+         var parsedOperator = matches[2];
 
-    var column = operands[0];
-    var values = operands[1];
+         var column = operands[0];
+         var values = operands[1];
 
-    if (_isEmpty(values)) {
-        return Promise.resolve(not ? '' : '0=1');
-    }
+         if (_isEmpty(values)) {
+         return Promise.resolve(not ? '' : '0=1');
+         }
 
-    if (!_isArray(values)) {
-        values = [values];
-    }
-    if (column.indexOf('(') === -1) {
-        column = this.db.quoteColumnName(column);
-    }
+         if (!_isArray(values)) {
+         values = [values];
+         }
+         if (column.indexOf('(') === -1) {
+         column = this.db.quoteColumnName(column);
+         }
 
-    var parts = [];
-    _each(values, value => {
-        var phName = null;
-        if (value instanceof Expression) {
-            _each(value.params, (n, v) => {
-                params[n] = v;
-            });
-            phName = value.expression;
-        } else {
-            phName = this.__static.PARAM_PREFIX + _size(params);
+         var parts = [];
+         _each(values, value => {
+         var phName = null;
+         if (value instanceof Expression) {
+         _each(value.params, (n, v) => {
+         params[n] = v;
+         });
+         phName = value.expression;
+         } else {
+         phName = this.__static.PARAM_PREFIX + _size(params);
 
-            if (!_isEmpty(escape)) {
-                _each(escape, (to, from) => {
-                    value = value.split(from).join(to);
-                });
-                value = '%' + value + '%';
-            }
-            params[phName] = value;
-        }
+         if (!_isEmpty(escape)) {
+         _each(escape, (to, from) => {
+         value = value.split(from).join(to);
+         });
+         value = '%' + value + '%';
+         }
+         params[phName] = value;
+         }
 
-        parts.push(column + ' ' + parsedOperator + ' ' + phName);
-    });
+         parts.push(column + ' ' + parsedOperator + ' ' + phName);
+         });
 
-    return Promise.resolve(parts.join(andor));*/
+         return Promise.resolve(parts.join(andor));*/
     }
 
     /**
@@ -389,23 +392,24 @@ class FilterBuilder extends BaseObject {
         var value = operands[1];
 
         // @todo
-        throw new NotSupportedException(); /*
-        var condition = null;
+        throw new NotSupportedException();
+        /*
+         var condition = null;
 
-        if (value === null) {
-            condition = column + ' ' + operator + ' NULL';
-        } else if (value instanceof Expression) {
-            _each(value.params, (v, n) => {
-                params[n] = v;
-            });
-            condition = column + ' ' + operator + ' ' + value.expression;
-        } else {
-            var phName = this.__static.PARAM_PREFIX + _size(params);
-            params[phName] = value;
-            condition = column + ' ' + operator + ' ' + phName;
-        }
+         if (value === null) {
+         condition = column + ' ' + operator + ' NULL';
+         } else if (value instanceof Expression) {
+         _each(value.params, (v, n) => {
+         params[n] = v;
+         });
+         condition = column + ' ' + operator + ' ' + value.expression;
+         } else {
+         var phName = this.__static.PARAM_PREFIX + _size(params);
+         params[phName] = value;
+         condition = column + ' ' + operator + ' ' + phName;
+         }
 
-        return Promise.resolve(condition);*/
+         return Promise.resolve(condition);*/
     }
 
 }

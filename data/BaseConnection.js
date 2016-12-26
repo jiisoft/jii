@@ -1,3 +1,8 @@
+/**
+ * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
+ * @license MIT
+ */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -7,48 +12,57 @@ var _isString = require('lodash/isString');
 var _isFunction = require('lodash/isFunction');
 var _each = require('lodash/each');
 var Component = require('../base/Component');
+
 class BaseConnection extends Component {
 
     preInit() {
         /**
-     * @type {boolean}
-     */
+         * @type {boolean}
+         */
         this._isOpen = false;
+
         /**
-     * @type {Jii.data.BaseSchema} the database schema
-     */
+         * @type {Jii.data.BaseSchema} the database schema
+         */
         this._schema = null;
+
         /**
-     * @type {string}
-     */
+         * @type {string}
+         */
         this.driverName = '';
+
         /**
-     * @type {string|object}
-     */
+         * @type {string|object}
+         */
         this.schemaClass = '';
+
         /**
-     * @type {string} the common prefix or suffix for table names. If a table name is given
-     * as `{{%TableName}}`, then the percentage character `%` will be replaced with this
-     * property value. For example, `{{%post}}` becomes `{{tbl_post}}`.
-     */
+         * @type {string} the common prefix or suffix for table names. If a table name is given
+         * as `{{%TableName}}`, then the percentage character `%` will be replaced with this
+         * property value. For example, `{{%post}}` becomes `{{tbl_post}}`.
+         */
         this.tablePrefix = '';
+
         /**
-     * @type {string} the charset used for database connection. The property is only used
-     * for MySQL, PostgreSQL and CUBRID databases. Defaults to null, meaning using default charset
-     * as specified by the database.
-     *
-     * Note that if you're using GBK or BIG5 then it's highly recommended to
-     * specify charset via DSN like 'mysql:dbname=mydatabase;host=127.0.0.1;charset=GBK;'.
-     */
+         * @type {string} the charset used for database connection. The property is only used
+         * for MySQL, PostgreSQL and CUBRID databases. Defaults to null, meaning using default charset
+         * as specified by the database.
+         *
+         * Note that if you're using GBK or BIG5 then it's highly recommended to
+         * specify charset via DSN like 'mysql:dbname=mydatabase;host=127.0.0.1;charset=GBK;'.
+         */
         this.charset = null;
+
         /**
-     * @type {string} the password for establishing DB connection. Defaults to `null` meaning no password to use.
-     */
+         * @type {string} the password for establishing DB connection. Defaults to `null` meaning no password to use.
+         */
         this.password = null;
+
         /**
-     * @type {string} the username for establishing DB connection. Defaults to `null` meaning no username to use.
-     */
+         * @type {string} the username for establishing DB connection. Defaults to `null` meaning no username to use.
+         */
         this.username = null;
+
         super.preInit(...arguments);
     }
 
@@ -111,12 +125,14 @@ class BaseConnection extends Component {
      * It then triggers an [[EVENT_AFTER_OPEN]] event.
      * @protected
      */
-    _initConnection() {}
+    _initConnection() {
+    }
 
     /**
      * @protected
      */
-    _closeConnection() {}
+    _closeConnection() {
+    }
 
     /**
      * Creates a command for execution.
@@ -279,7 +295,7 @@ class BaseConnection extends Component {
 
 }
 /**
-         * @event Event an event that is triggered after a DB connection is established
-         */
+ * @event Event an event that is triggered after a DB connection is established
+ */
 BaseConnection.EVENT_AFTER_OPEN = 'afterOpen';
 module.exports = BaseConnection;

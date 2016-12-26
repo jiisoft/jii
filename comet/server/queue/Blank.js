@@ -1,11 +1,18 @@
+/**
+ * @author Vladimir Kozhin <affka@affka.ru>
+ * @license MIT
+ */
+
 'use strict';
 
 var Jii = require('../../../BaseJii');
 var QueueInterface = require('./QueueInterface');
+
 class Blank extends QueueInterface {
 
     preInit() {
         this._queue = [];
+
         super.preInit(...arguments);
     }
 

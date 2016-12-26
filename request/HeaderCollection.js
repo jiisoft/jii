@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -11,10 +12,12 @@ var _has = require('lodash/has');
 var _first = require('lodash/first');
 var _each = require('lodash/each');
 var BaseObject = require('../base/Object');
+
 class HeaderCollection extends BaseObject {
 
     preInit() {
         this._headers = null;
+
         super.preInit(...arguments);
     }
 

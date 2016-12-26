@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -35,39 +36,44 @@ var _first = require('lodash/first');
 var _values = require('lodash/values');
 var _map = require('lodash/map');
 var Model = require('../base/Model');
+
 class BaseActiveRecord extends Model {
 
     preInit() {
         /**
-     * @type {object|null} old attribute values indexed by attribute names.
-     * This is `null` if the record [[isNewRecord|is new]].
-     */
+         * @type {object|null} old attribute values indexed by attribute names.
+         * This is `null` if the record [[isNewRecord|is new]].
+         */
         this._oldAttributes = null;
+
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this._relatedEvents = {};
+
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this._relatedFetched = {};
+
         /**
-     * @type {object} related models indexed by the relation names
-     */
+         * @type {object} related models indexed by the relation names
+         */
         this._related = {};
+
         super.preInit(...arguments);
     }
 
     /**
-         * @returns {{}}
-         */
+     * @returns {{}}
+     */
     static modelSchema() {
         return {};
     }
 
     /**
-         * @returns {Jii.data.TableSchema}
-         */
+     * @returns {Jii.data.TableSchema}
+     */
     static getTableSchema() {
         const className = this.className();
 
@@ -87,64 +93,64 @@ class BaseActiveRecord extends Model {
     }
 
     /**
-         * @inheritdoc
-         * @returns {Jii.data.BaseActiveRecord} BaseActiveRecord instance matching the condition, or `null` if nothing matches.
-         */
+     * @inheritdoc
+     * @returns {Jii.data.BaseActiveRecord} BaseActiveRecord instance matching the condition, or `null` if nothing matches.
+     */
     static findOne(condition) {
         return this._findByCondition(condition, true);
     }
 
     /**
-         * @inheritdoc
-         * @returns {Jii.data.BaseActiveRecord[]} an array of BaseActiveRecord instances, or an empty array if nothing matches.
-         */
+     * @inheritdoc
+     * @returns {Jii.data.BaseActiveRecord[]} an array of BaseActiveRecord instances, or an empty array if nothing matches.
+     */
     static findAll(condition) {
         return this._findByCondition(condition, false);
     }
 
     /**
-         * @inheritdoc
-         */
+     * @inheritdoc
+     */
     static find() {
         return new ActiveQuery(this);
     }
 
     /**
-         * Returns the database connection used by this AR class.
-         * By default, the "db" application component is used as the database connection.
-         * You may override this method if you want to use a different database connection.
-         * @returns {Jii.data.BaseConnection} the database connection used by this AR class.
-         */
+     * Returns the database connection used by this AR class.
+     * By default, the "db" application component is used as the database connection.
+     * You may override this method if you want to use a different database connection.
+     * @returns {Jii.data.BaseConnection} the database connection used by this AR class.
+     */
     static getDb() {
         return Jii.app ? Jii.app.getComponent('db') : null;
     }
 
     /**
-         * Returns the primary key name(s) for this AR class.
-         * The default implementation will return the primary key(s) as declared
-         * in the DB table that is associated with this AR class.
-         *
-         * If the DB table does not declare any primary key, you should override
-         * this method to return the attributes that you want to use as primary keys
-         * for this AR class.
-         *
-         * Note that an array should be returned even for a table with single primary key.
-         *
-         * @returns {string[]} the primary keys of the associated database table.
-         */
+     * Returns the primary key name(s) for this AR class.
+     * The default implementation will return the primary key(s) as declared
+     * in the DB table that is associated with this AR class.
+     *
+     * If the DB table does not declare any primary key, you should override
+     * this method to return the attributes that you want to use as primary keys
+     * for this AR class.
+     *
+     * Note that an array should be returned even for a table with single primary key.
+     *
+     * @returns {string[]} the primary keys of the associated database table.
+     */
     static primaryKey() {
         return this.getTableSchema().primaryKey;
     }
 
     /**
-         * Finds BaseActiveRecord instance(s) by the given condition.
-         * This method is internally called by [[findOne()]] and [[findAll()]].
-         * @param {*} condition please refer to [[findOne()]] for the explanation of this parameter
-         * @param {boolean} one whether this method is called by [[findOne()]] or [[findAll()]]
-         * @returns {Jii.data.BaseActiveRecord|Jii.data.BaseActiveRecord[]}
-         * @throws {Jii.exceptions.InvalidConfigException} if there is no primary key defined
-         * @internal
-         */
+     * Finds BaseActiveRecord instance(s) by the given condition.
+     * This method is internally called by [[findOne()]] and [[findAll()]].
+     * @param {*} condition please refer to [[findOne()]] for the explanation of this parameter
+     * @param {boolean} one whether this method is called by [[findOne()]] or [[findAll()]]
+     * @returns {Jii.data.BaseActiveRecord|Jii.data.BaseActiveRecord[]}
+     * @throws {Jii.exceptions.InvalidConfigException} if there is no primary key defined
+     * @internal
+     */
     static _findByCondition(condition, one) {
         var query = this.find();
 
@@ -176,19 +182,19 @@ class BaseActiveRecord extends Model {
     }
 
     /**
-         * Updates the whole table using the provided attribute values and conditions.
-         * For example, to change the status to be 1 for all customers whose status is 2:
-         *
-         * ~~~
-         * Customer.updateAll({status: 1}, 'status = 2');
-         * ~~~
-         *
-         * @param {object} attributes attribute values (name-value pairs) to be saved into the table
-         * @param {string|[]} [condition] the conditions that will be put in the WHERE part of the UPDATE SQL.
-         * Please refer to [[Query.where()]] on how to specify this parameter.
-         * @returns {Promise.<number>} the number of rows updated
-         * @throws {Jii.exceptions.NotSupportedException} if not overrided
-         */
+     * Updates the whole table using the provided attribute values and conditions.
+     * For example, to change the status to be 1 for all customers whose status is 2:
+     *
+     * ~~~
+     * Customer.updateAll({status: 1}, 'status = 2');
+     * ~~~
+     *
+     * @param {object} attributes attribute values (name-value pairs) to be saved into the table
+     * @param {string|[]} [condition] the conditions that will be put in the WHERE part of the UPDATE SQL.
+     * Please refer to [[Query.where()]] on how to specify this parameter.
+     * @returns {Promise.<number>} the number of rows updated
+     * @throws {Jii.exceptions.NotSupportedException} if not overrided
+     */
     static updateAll(attributes, condition) {
         condition = condition || '';
 
@@ -196,20 +202,20 @@ class BaseActiveRecord extends Model {
     }
 
     /**
-         * Updates the whole table using the provided counter changes and conditions.
-         * For example, to increment all customers' age by 1,
-         *
-         * ~~~
-         * Customer.updateAllCounters({age: 1});
-         * ~~~
-         *
-         * @param {[]} counters the counters to be updated (attribute name => increment value).
-         * Use negative values if you want to decrement the counters.
-         * @param {string|[]} [condition] the conditions that will be put in the WHERE part of the UPDATE SQL.
-         * Please refer to [[Query.where()]] on how to specify this parameter.
-         * @returns {number} the number of rows updated
-         * @throws {Jii.exceptions.NotSupportedException} if not overrided
-         */
+     * Updates the whole table using the provided counter changes and conditions.
+     * For example, to increment all customers' age by 1,
+     *
+     * ~~~
+     * Customer.updateAllCounters({age: 1});
+     * ~~~
+     *
+     * @param {[]} counters the counters to be updated (attribute name => increment value).
+     * Use negative values if you want to decrement the counters.
+     * @param {string|[]} [condition] the conditions that will be put in the WHERE part of the UPDATE SQL.
+     * Please refer to [[Query.where()]] on how to specify this parameter.
+     * @returns {number} the number of rows updated
+     * @throws {Jii.exceptions.NotSupportedException} if not overrided
+     */
     static updateAllCounters(counters, condition) {
         condition = condition || '';
 
@@ -217,21 +223,21 @@ class BaseActiveRecord extends Model {
     }
 
     /**
-         * Deletes rows in the table using the provided conditions.
-         * WARNING: If you do not specify any condition, this method will delete ALL rows in the table.
-         *
-         * For example, to delete all customers whose status is 3:
-         *
-         * ~~~
-         * Customer.deleteAll('status = 3');
-         * ~~~
-         *
-         * @param {string|[]} [condition] the conditions that will be put in the WHERE part of the DELETE SQL.
-         * Please refer to [[Query.where()]] on how to specify this parameter.
-         * @param {[]} [params] the parameters (name => value) to be bound to the query.
-         * @returns {number} the number of rows deleted
-         * @throws {Jii.exceptions.NotSupportedException} if not overrided
-         */
+     * Deletes rows in the table using the provided conditions.
+     * WARNING: If you do not specify any condition, this method will delete ALL rows in the table.
+     *
+     * For example, to delete all customers whose status is 3:
+     *
+     * ~~~
+     * Customer.deleteAll('status = 3');
+     * ~~~
+     *
+     * @param {string|[]} [condition] the conditions that will be put in the WHERE part of the DELETE SQL.
+     * Please refer to [[Query.where()]] on how to specify this parameter.
+     * @param {[]} [params] the parameters (name => value) to be bound to the query.
+     * @returns {number} the number of rows deleted
+     * @throws {Jii.exceptions.NotSupportedException} if not overrided
+     */
     static deleteAll(condition, params) {
         condition = condition || '';
         params = params || [];
@@ -240,19 +246,19 @@ class BaseActiveRecord extends Model {
     }
 
     /**
-         * Populates an active record object using a row of data from the database/storage.
-         *
-         * This is an internal method meant to be called to create active record objects after
-         * fetching data from the database. It is mainly used by [[ActiveQuery]] to populate
-         * the query results into active records.
-         *
-         * When calling this method manually you should call [[afterFind()]] on the created
-         * record to trigger the [[EVENT_AFTER_FIND|afterFind Event]].
-         *
-         * @param {Jii.data.BaseActiveRecord} record the record to be populated. In most cases this will be an instance
-         * created by [[instantiate()]] beforehand.
-         * @param {object} row attribute values (name => value)
-         */
+     * Populates an active record object using a row of data from the database/storage.
+     *
+     * This is an internal method meant to be called to create active record objects after
+     * fetching data from the database. It is mainly used by [[ActiveQuery]] to populate
+     * the query results into active records.
+     *
+     * When calling this method manually you should call [[afterFind()]] on the created
+     * record to trigger the [[EVENT_AFTER_FIND|afterFind Event]].
+     *
+     * @param {Jii.data.BaseActiveRecord} record the record to be populated. In most cases this will be an instance
+     * created by [[instantiate()]] beforehand.
+     * @param {object} row attribute values (name => value)
+     */
     static populateRecord(record, row) {
         var columns = record.attributes();
 
@@ -267,27 +273,27 @@ class BaseActiveRecord extends Model {
     }
 
     /**
-         * Creates an active record instance.
-         *
-         * This method is called together with [[populateRecord()]] by [[ActiveQuery]].
-         * It is not meant to be used for creating new records() directly.
-         *
-         * You may override this method if the instance being created
-         * depends on the row data to be populated into the record.
-         * For example, by creating a record based on the value of a column,
-         * you may implement the so-called single-table inheritance mapping.
-         * @param {object} row row data to be populated into the record.
-         * @returns {Jii.data.BaseActiveRecord} the newly created active record
-         */
+     * Creates an active record instance.
+     *
+     * This method is called together with [[populateRecord()]] by [[ActiveQuery]].
+     * It is not meant to be used for creating new records() directly.
+     *
+     * You may override this method if the instance being created
+     * depends on the row data to be populated into the record.
+     * For example, by creating a record based on the value of a column,
+     * you may implement the so-called single-table inheritance mapping.
+     * @param {object} row row data to be populated into the record.
+     * @returns {Jii.data.BaseActiveRecord} the newly created active record
+     */
     static instantiate(row) {
         return new this(row);
     }
 
     /**
-         * Returns a value indicating whether the given set of attributes represents the primary key for this model
-         * @param {[]} keys the set of attributes to check
-         * @returns {boolean} whether the given set of attributes represents the primary key for this model
-         */
+     * Returns a value indicating whether the given set of attributes represents the primary key for this model
+     * @param {[]} keys the set of attributes to check
+     * @returns {boolean} whether the given set of attributes represents the primary key for this model
+     */
     static isPrimaryKey(keys) {
         var pks = this.primaryKey();
 
@@ -877,7 +883,8 @@ class BaseActiveRecord extends Model {
      * meaning all attributes that are loaded from DB will be saved.
      * @return boolean whether the attributes are valid and the record is inserted successfully.
      */
-    insert(runValidation, attributeNames) {}
+    insert(runValidation, attributeNames) {
+    }
 
     /**
      * Saves the changes to this active record into the associated database table.
@@ -1744,26 +1751,26 @@ class BaseActiveRecord extends Model {
     }
 
     /*destroy: function() {
-        this.__super();
+     this.__super();
 
-        this._relatedEvents = {};
-        _each(this._relatedFetched, function(bool, relationName) {
-            var relation = this.getRelation(relationName);
-            var modelClassName = Jii.namespace(relation.modelClass).className();
-            var rootCollection = this.constructor.getDb() ? this.constructor.getDb().getRootCollection(modelClassName) : null;
-            if (rootCollection) {
-                // @todo Implement EVENT_ALL
-                //rootCollection.off(Event.EVENT_ALL, this);
+     this._relatedEvents = {};
+     _each(this._relatedFetched, function(bool, relationName) {
+     var relation = this.getRelation(relationName);
+     var modelClassName = Jii.namespace(relation.modelClass).className();
+     var rootCollection = this.constructor.getDb() ? this.constructor.getDb().getRootCollection(modelClassName) : null;
+     if (rootCollection) {
+     // @todo Implement EVENT_ALL
+     //rootCollection.off(Event.EVENT_ALL, this);
 
-                _each(rootCollection._events, function(handlers, name) {
-                    rootCollection.off(name, {
-                        callback: this._onChangeRelatedModel,
-                        context: this
-                    });
-                }.bind(this));
-            }
-        });
-    },*/
+     _each(rootCollection._events, function(handlers, name) {
+     rootCollection.off(name, {
+     callback: this._onChangeRelatedModel,
+     context: this
+     });
+     }.bind(this));
+     }
+     });
+     },*/
     /**
      *
      * @param {string} relationName
@@ -1869,54 +1876,54 @@ class BaseActiveRecord extends Model {
 BaseActiveRecord._modelSchema = {};
 
 /**
-         * @event Jii.data.BaseActiveRecord#afterDelete
-         * @property {Jii.base.Event} event an event that is triggered after a record is deleted.
-         */
+ * @event Jii.data.BaseActiveRecord#afterDelete
+ * @property {Jii.base.Event} event an event that is triggered after a record is deleted.
+ */
 BaseActiveRecord.EVENT_AFTER_DELETE = 'afterDelete';
 
 /**
-         * You may set [[ModelEvent.isValid]] to be false to stop the deletion.
-         * @event Jii.data.BaseActiveRecord#beforeDelete
-         * @property {Jii.base.ModelEvent} event an event that is triggered before deleting a record.
-         */
+ * You may set [[ModelEvent.isValid]] to be false to stop the deletion.
+ * @event Jii.data.BaseActiveRecord#beforeDelete
+ * @property {Jii.base.ModelEvent} event an event that is triggered before deleting a record.
+ */
 BaseActiveRecord.EVENT_BEFORE_DELETE = 'beforeDelete';
 
 /**
-         * @event Jii.data.BaseActiveRecord#afterUpdate
-         * @property {Jii.data.AfterSaveEvent} event an event that is triggered after a record is updated.
-         */
+ * @event Jii.data.BaseActiveRecord#afterUpdate
+ * @property {Jii.data.AfterSaveEvent} event an event that is triggered after a record is updated.
+ */
 BaseActiveRecord.EVENT_AFTER_UPDATE = 'afterUpdate';
 
 /**
-         * You may set [[ModelEvent.isValid]] to be false to stop the update.
-         * @event Jii.data.BaseActiveRecord#beforeUpdate
-         * @property {Jii.base.ModelEvent} event an event that is triggered before updating a record.
-         */
+ * You may set [[ModelEvent.isValid]] to be false to stop the update.
+ * @event Jii.data.BaseActiveRecord#beforeUpdate
+ * @property {Jii.base.ModelEvent} event an event that is triggered before updating a record.
+ */
 BaseActiveRecord.EVENT_BEFORE_UPDATE = 'beforeUpdate';
 
 /**
-         * Event an event that is triggered after a record is inserted.
-         * @event Jii.data.BaseActiveRecord#afterInsert
-         * @property {Jii.data.AfterSaveEvent} event
-         */
+ * Event an event that is triggered after a record is inserted.
+ * @event Jii.data.BaseActiveRecord#afterInsert
+ * @property {Jii.data.AfterSaveEvent} event
+ */
 BaseActiveRecord.EVENT_AFTER_INSERT = 'afterInsert';
 
 /**
-         * You may set [[Jii.base.ModelEvent.isValid]] to be false to stop the insertion.
-         * @event Jii.data.BaseActiveRecord#beforeInsert
-         * @property {Jii.base.ModelEvent} event an event that is triggered before inserting a record.
-         */
+ * You may set [[Jii.base.ModelEvent.isValid]] to be false to stop the insertion.
+ * @event Jii.data.BaseActiveRecord#beforeInsert
+ * @property {Jii.base.ModelEvent} event an event that is triggered before inserting a record.
+ */
 BaseActiveRecord.EVENT_BEFORE_INSERT = 'beforeInsert';
 
 /**
-         * @event Jii.data.BaseActiveRecord#afterFind
-         * @property {Jii.base.Event} event an event that is triggered after the record is created and populated with query result.
-         */
+ * @event Jii.data.BaseActiveRecord#afterFind
+ * @property {Jii.base.Event} event an event that is triggered after the record is created and populated with query result.
+ */
 BaseActiveRecord.EVENT_AFTER_FIND = 'afterFind';
 
 /**
-         * @event Jii.data.BaseActiveRecord#init
-         * @property {Jii.base.Event} event an event that is triggered when the record is initialized via [[init()]].
-         */
+ * @event Jii.data.BaseActiveRecord#init
+ * @property {Jii.base.Event} event an event that is triggered when the record is initialized via [[init()]].
+ */
 BaseActiveRecord.EVENT_INIT = 'init';
 module.exports = BaseActiveRecord;

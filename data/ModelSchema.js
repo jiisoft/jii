@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -15,29 +16,33 @@ var _each = require('lodash/each');
 var _has = require('lodash/has');
 var _keys = require('lodash/keys');
 var BaseObject = require('../base/Object');
+
 class ModelSchema extends BaseObject {
 
     preInit() {
         /**
-     * @var {{string: Jii.data.ModelAttributeSchema}} column metadata of this table. Each array element is a [[Jii.data.ModelAttributeSchema]] object, indexed by column names.
-     */
+         * @var {{string: Jii.data.ModelAttributeSchema}} column metadata of this table. Each array element is a [[Jii.data.ModelAttributeSchema]] object, indexed by column names.
+         */
         this.columns = {};
+
         /**
-     * @var {string[]} primary keys of this table.
-     */
+         * @var {string[]} primary keys of this table.
+         */
         this.primaryKey = [];
+
         /**
-     * @var {string} the name of the schema that this table belongs to.
-     */
+         * @var {string} the name of the schema that this table belongs to.
+         */
         this.schemaName = '';
+
         super.preInit(...arguments);
     }
 
     /**
-         *
-         * @param {object} obj
-         * @returns {Jii.data.ModelSchema}
-         */
+     *
+     * @param {object} obj
+     * @returns {Jii.data.ModelSchema}
+     */
     static createFromObject(obj) {
         if (_isString(obj.primaryKey)) {
             obj.primaryKey = [obj.primaryKey];

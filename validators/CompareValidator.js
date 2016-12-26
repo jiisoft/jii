@@ -2,18 +2,21 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var ApplicationException = require('../exceptions/ApplicationException');
 var _isArray = require('lodash/isArray');
 var Validator = require('./Validator');
+
 class CompareValidator extends Validator {
 
     preInit() {
         this.operator = '==';
         this.compareValue = null;
         this.compareAttribute = null;
+
         super.preInit(...arguments);
     }
 

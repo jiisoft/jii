@@ -2,11 +2,13 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var _isArray = require('lodash/isArray');
 var Validator = require('./Validator');
+
 class NumberValidator extends Validator {
 
     preInit() {
@@ -17,6 +19,7 @@ class NumberValidator extends Validator {
         this.min = null;
         this.max = null;
         this.integerOnly = false;
+
         super.preInit(...arguments);
     }
 

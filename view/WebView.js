@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -10,18 +11,20 @@ var _trim = require('lodash/trim');
 var _isFunction = require('lodash/isFunction');
 var _has = require('lodash/has');
 var View = require('./View');
+
 class WebView extends View {
 
     preInit() {
         /**
-     * @type {object} the registered JS files.
-     * @see registerJsFile()
-     */
+         * @type {object} the registered JS files.
+         * @see registerJsFile()
+         */
         this.jsFiles = {};
+
         /**
-     * @type {object} the registered JS code blocks
-     * @see registerJs()
-     */
+         * @type {object} the registered JS code blocks
+         * @see registerJs()
+         */
         this.js = {
             head: {},
             begin: {},
@@ -29,34 +32,41 @@ class WebView extends View {
             ready: {},
             load: {}
         };
+
         /**
-     * @type {object} the registered CSS files.
-     * @see registerCssFile()
-     */
+         * @type {object} the registered CSS files.
+         * @see registerCssFile()
+         */
         this.cssFiles = {};
+
         /**
-     * @type {object} the registered CSS code blocks.
-     * @see registerCss()
-     */
+         * @type {object} the registered CSS code blocks.
+         * @see registerCss()
+         */
         this.css = {};
+
         /**
-     * @type {object} the registered link tags.
-     * @see registerLinkTag()
-     */
+         * @type {object} the registered link tags.
+         * @see registerLinkTag()
+         */
         this.linkTags = {};
+
         /**
-     * @type {object} the registered meta tags.
-     * @see registerMetaTag()
-     */
+         * @type {object} the registered meta tags.
+         * @see registerMetaTag()
+         */
         this.metaTags = {};
+
         /**
-     * @type {string} the page title
-     */
+         * @type {string} the page title
+         */
         this.title = '';
+
         /**
-     * @type {string}
-     */
+         * @type {string}
+         */
         this.docType = '<!DOCTYPE html>';
+
         super.preInit(...arguments);
     }
 
@@ -231,7 +241,8 @@ class WebView extends View {
         return Promise.resolve(this.getRenderer(view).renderLayout(view, context, params, controller, this));
     }
 
-    clear() {}
+    clear() {
+    }
 
     _registerMetaTagInternal(key, options) {
         return '';
@@ -265,62 +276,62 @@ class WebView extends View {
 }
 
 /**
-         * This is internally used as the placeholder for receiving the content registered for the end of the body section.
-         */
+ * This is internally used as the placeholder for receiving the content registered for the end of the body section.
+ */
 WebView.PH_BODY_END = '<![CDATA[JII-BLOCK-BODY-END]]>';
 
 /**
-         * This is internally used as the placeholder for receiving the content registered for the beginning of the body section.
-         */
+ * This is internally used as the placeholder for receiving the content registered for the beginning of the body section.
+ */
 WebView.PH_BODY_BEGIN = '<![CDATA[JII-BLOCK-BODY-BEGIN]]>';
 
 /**
-         * This is internally used as the placeholder for receiving the content registered for the head section.
-         */
+ * This is internally used as the placeholder for receiving the content registered for the head section.
+ */
 WebView.PH_HEAD = '<![CDATA[JII-BLOCK-HEAD]]>';
 
 /**
-         * @type {string}
-         */
+ * @type {string}
+ */
 WebView.DATA_KEY_NAME = 'data-jiiwebview';
 
 /**
-         * The location of registered JavaScript code block.
-         * This means the JavaScript code block will be enclosed within `jQuery(window).load()`.
-         */
+ * The location of registered JavaScript code block.
+ * This means the JavaScript code block will be enclosed within `jQuery(window).load()`.
+ */
 WebView.POS_LOAD = 'load';
 
 /**
-         * The location of registered JavaScript code block.
-         * This means the JavaScript code block will be enclosed within `jQuery(document).ready()`.
-         */
+ * The location of registered JavaScript code block.
+ * This means the JavaScript code block will be enclosed within `jQuery(document).ready()`.
+ */
 WebView.POS_READY = 'ready';
 
 /**
-         * The location of registered JavaScript code block or files.
-         * This means the location is at the end of the body section.
-         */
+ * The location of registered JavaScript code block or files.
+ * This means the location is at the end of the body section.
+ */
 WebView.POS_END = 'end';
 
 /**
-         * The location of registered JavaScript code block or files.
-         * This means the location is at the beginning of the body section.
-         */
+ * The location of registered JavaScript code block or files.
+ * This means the location is at the beginning of the body section.
+ */
 WebView.POS_BEGIN = 'begin';
 
 /**
-         * The location of registered JavaScript code block or files.
-         * This means the location is in the head section.
-         */
+ * The location of registered JavaScript code block or files.
+ * This means the location is in the head section.
+ */
 WebView.POS_HEAD = 'head';
 
 /**
-         * @event Event an event that is triggered by [[endBody()]].
-         */
+ * @event Event an event that is triggered by [[endBody()]].
+ */
 WebView.EVENT_END_BODY = 'endBody';
 
 /**
-         * @event Event an event that is triggered by [[beginBody()]].
-         */
+ * @event Event an event that is triggered by [[beginBody()]].
+ */
 WebView.EVENT_BEGIN_BODY = 'beginBody';
 module.exports = WebView;

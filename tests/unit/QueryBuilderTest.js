@@ -27,19 +27,19 @@ class self extends DatabaseTestCase {
                 break;
 
             /*case 'sqlite':
-                    return new SqliteQueryBuilder(this.getConnection(true, false));
-                case 'mssql':
-                    return new MssqlQueryBuilder(this.getConnection(true, false));
-                case 'pgsql':
-                    return new PgsqlQueryBuilder(this.getConnection(true, false));
-                case 'cubrid':
-                    return new CubridQueryBuilder(this.getConnection(true, false));*/
+             return new SqliteQueryBuilder(this.getConnection(true, false));
+             case 'mssql':
+             return new MssqlQueryBuilder(this.getConnection(true, false));
+             case 'pgsql':
+             return new PgsqlQueryBuilder(this.getConnection(true, false));
+             case 'cubrid':
+             return new CubridQueryBuilder(this.getConnection(true, false));*/
 
             default:
                 throw new ApplicationException('Test is not implemented for ' + this.driverName);
         }
 
-        return this.getConnection(true, false).then(function(db) {
+        return this.getConnection(true, false).then(function (db) {
             queryBuilder.db = db;
             return queryBuilder;
         });
@@ -283,8 +283,8 @@ class self extends DatabaseTestCase {
     }
 
     testGetColumnType(test) {
-        this._getQueryBuilder().then(function(queryBuilder) {
-            _each(this.columnTypes(), function(item) {
+        this._getQueryBuilder().then(function (queryBuilder) {
+            _each(this.columnTypes(), function (item) {
                 var column = item[0];
                 var expected = item[1];
 
@@ -299,21 +299,21 @@ class self extends DatabaseTestCase {
         var columns = {};
         var queryBuilder = null;
 
-        this._getQueryBuilder().then(function(qb) {
+        this._getQueryBuilder().then(function (qb) {
             queryBuilder = qb;
             return queryBuilder.db.getSchema().loadTableSchema('column_type_table', true);
-        }).then(function(table) {
+        }).then(function (table) {
             if (table !== null) {
                 // Clear
-                return this.getConnection(false).then(function(db) {
-                    return queryBuilder.dropTable('column_type_table').then(function(sql) {
+                return this.getConnection(false).then(function (db) {
+                    return queryBuilder.dropTable('column_type_table').then(function (sql) {
                         return db.createCommand(sql).execute();
                     });
                 });
             }
-        }.bind(this)).then(function() {
+        }.bind(this)).then(function () {
             var i = 1;
-            _each(this.columnTypes(), function(item) {
+            _each(this.columnTypes(), function (item) {
                 var column = item[0];
 
                 if (column.substr(0, 2) !== 'pk') {
@@ -322,19 +322,19 @@ class self extends DatabaseTestCase {
             });
 
             // Create new
-            return this.getConnection(false).then(function(db) {
-                return queryBuilder.createTable('column_type_table', columns).then(function(sql) {
+            return this.getConnection(false).then(function (db) {
+                return queryBuilder.createTable('column_type_table', columns).then(function (sql) {
                     return db.createCommand(sql).execute();
                 });
             });
-        }.bind(this)).then(function() {
+        }.bind(this)).then(function () {
 
             // Check created
             return queryBuilder.db.getSchema().loadTableSchema('column_type_table', true);
-        }.bind(this)).then(function(table) {
+        }.bind(this)).then(function (table) {
             test.notStrictEqual(table, null);
 
-            _each(table.columns, function(column, name) {
+            _each(table.columns, function (column, name) {
                 test.strictEqual(column instanceof ColumnSchema, true);
                 test.strictEqual(_has(columns, name), true);
                 test.strictEqual(column.name, name);
@@ -1022,12 +1022,12 @@ class self extends DatabaseTestCase {
         ];
 
         // adjust dbms specific escaping
-        _each(conditions, function(condition, i) {
+        _each(conditions, function (condition, i) {
             conditions[i][1] = this._replaceQuotes(condition[1]);
         }.bind(this));
 
-        this._getQueryBuilder().then(function(queryBuilder) {
-            var testNext = function(i) {
+        this._getQueryBuilder().then(function (queryBuilder) {
+            var testNext = function (i) {
                 var item = conditions[i];
                 if (!item) {
                     test.done();
@@ -1039,7 +1039,7 @@ class self extends DatabaseTestCase {
                 var expectedParams = item[2];
 
                 var query = new Query().where(condition);
-                queryBuilder.build(query).then(function(buildParams) {
+                queryBuilder.build(query).then(function (buildParams) {
                     var sql = buildParams[0];
                     var params = buildParams[1];
 
@@ -1278,12 +1278,12 @@ class self extends DatabaseTestCase {
         ];
 
         // adjust dbms specific escaping
-        _each(conditions, function(condition, i) {
+        _each(conditions, function (condition, i) {
             conditions[i][1] = this._replaceQuotes(condition[1]);
         }.bind(this));
 
-        this._getQueryBuilder().then(function(queryBuilder) {
-            var testNext = function(i) {
+        this._getQueryBuilder().then(function (queryBuilder) {
+            var testNext = function (i) {
                 var item = conditions[i];
                 if (!item) {
                     test.done();
@@ -1295,7 +1295,7 @@ class self extends DatabaseTestCase {
                 var expectedParams = item[2];
 
                 var query = new Query().filterWhere(condition);
-                queryBuilder.build(query).then(function(buildParams) {
+                queryBuilder.build(query).then(function (buildParams) {
                     var sql = buildParams[0];
                     var params = buildParams[1];
 
@@ -1315,26 +1315,26 @@ class self extends DatabaseTestCase {
         var queryBuilder = null;
 
         // ADD
-        this._getQueryBuilder().then(function(qb) {
+        this._getQueryBuilder().then(function (qb) {
             queryBuilder = qb;
             return queryBuilder.db.createCommand().addPrimaryKey(pkeyName, tableName, ['id']);
-        }).then(function() {
+        }).then(function () {
 
             return queryBuilder.db.getSchema().loadTableSchema(tableName, true);
-        }).then(function(tableSchema) {
+        }).then(function (tableSchema) {
             test.equals(tableSchema.primaryKey.length, 1);
 
             // DROP
             return queryBuilder.db.createCommand().dropPrimaryKey(pkeyName, tableName);
-        }).then(function() {
+        }).then(function () {
 
             // resets the schema
             return this._getQueryBuilder();
-        }.bind(this)).then(function(qb) {
+        }.bind(this)).then(function (qb) {
             queryBuilder = qb;
 
             return queryBuilder.db.getSchema().loadTableSchema(tableName);
-        }).then(function(tableSchema) {
+        }).then(function (tableSchema) {
             test.equals(tableSchema.primaryKey.length, 0);
             test.done();
         });
@@ -1363,8 +1363,8 @@ class self extends DatabaseTestCase {
             ]
         ];
 
-        this._getQueryBuilder().then(function(queryBuilder) {
-            var testNext = function(i) {
+        this._getQueryBuilder().then(function (queryBuilder) {
+            var testNext = function (i) {
                 var item = conditions[i];
                 if (!item) {
                     test.done();
@@ -1383,7 +1383,7 @@ class self extends DatabaseTestCase {
                     subQuery
                 ]);
 
-                queryBuilder.build(query).then(function(buildParams) {
+                queryBuilder.build(query).then(function (buildParams) {
                     var actualQuerySql = buildParams[0];
                     var actualQueryParams = buildParams[1];
 
@@ -1417,10 +1417,10 @@ class self extends DatabaseTestCase {
             ':some_value': 'asd'
         });
 
-        this._getQueryBuilder().then(function(queryBuilder) {
+        this._getQueryBuilder().then(function (queryBuilder) {
 
             return queryBuilder.build(query);
-        }).then(function(buildParams) {
+        }).then(function (buildParams) {
             var actualQuerySql = buildParams[0];
             var actualQueryParams = buildParams[1];
 
@@ -1453,10 +1453,10 @@ class self extends DatabaseTestCase {
             't.some_column': 'asd'
         });
 
-        this._getQueryBuilder().then(function(queryBuilder) {
+        this._getQueryBuilder().then(function (queryBuilder) {
 
             return queryBuilder.build(query);
-        }).then(function(buildParams) {
+        }).then(function (buildParams) {
             var actualQuerySql = buildParams[0];
             var actualQueryParams = buildParams[1];
 
@@ -1484,10 +1484,10 @@ class self extends DatabaseTestCase {
             'x < 2'
         ]).union(secondQuery).union(thirdQuery, true);
 
-        this._getQueryBuilder().then(function(queryBuilder) {
+        this._getQueryBuilder().then(function (queryBuilder) {
 
             return queryBuilder.build(query);
-        }).then(function(buildParams) {
+        }).then(function (buildParams) {
             var actualQuerySql = buildParams[0];
             var actualQueryParams = buildParams[1];
 
@@ -1506,10 +1506,10 @@ class self extends DatabaseTestCase {
             operations_count: subquery
         });
 
-        this._getQueryBuilder().then(function(queryBuilder) {
+        this._getQueryBuilder().then(function (queryBuilder) {
 
             return queryBuilder.build(query);
-        }).then(function(buildParams) {
+        }).then(function (buildParams) {
             var sql = buildParams[0];
             var params = buildParams[1];
 

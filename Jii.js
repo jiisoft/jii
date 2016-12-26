@@ -277,7 +277,7 @@ var Jii = _extend(BaseJii, /** @lends Jii */{
 
     /**
      * Creates a new instance using the given configuration.
-     * @param {string|object} config Class name or object with param `className`
+     * @param {*} config Class name or object with param `className`
      * @returns {object}
      */
     createObject(config) {

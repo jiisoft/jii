@@ -2,12 +2,14 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var _isString = require('lodash/isString');
 var _each = require('lodash/each');
 var Validator = require('./Validator');
+
 class UrlValidator extends Validator {
 
     preInit() {
@@ -17,6 +19,7 @@ class UrlValidator extends Validator {
             'https'
         ];
         this.pattern = /^{schemes}:\/\/(([A-Z0-9][A-Z0-9_-]*)(\.[A-Z0-9][A-Z0-9_-]*)+)/i;
+
         super.preInit(...arguments);
     }
 

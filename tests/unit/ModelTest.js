@@ -24,7 +24,7 @@ class self extends UnitTest {
     }
 
     setterTest(test) {
-        _each(this._getModelInstances(), function(sampleModel) {
+        _each(this._getModelInstances(), function (sampleModel) {
             // Check insert scenario (set name and description)
             sampleModel.setScenario('insert');
             sampleModel.setAttributes({
@@ -44,7 +44,7 @@ class self extends UnitTest {
             test.strictEqual(sampleModel.get('description'), 'Project manager');
 
             // Check try set unknow attribute
-            test.throws(function() {
+            test.throws(function () {
                 sampleModel.set('unknow', '...');
             }, ApplicationException);
         });
@@ -53,10 +53,10 @@ class self extends UnitTest {
     }
 
     validateTest(test) {
-        _each(this._getModelInstances(), function(sampleModel) {
+        _each(this._getModelInstances(), function (sampleModel) {
             sampleModel.setScenario('insert');
             sampleModel.set('description', '1234567890+1');
-            sampleModel.validate().then(function(isValid) {
+            sampleModel.validate().then(function (isValid) {
 
                 // Check validation errors
                 test.strictEqual(isValid, false);
@@ -91,7 +91,7 @@ class self extends UnitTest {
             name: 'Aaa'
         });
         var counter;
-        var counterFn = function() {
+        var counterFn = function () {
             counter++;
         };
 
@@ -136,13 +136,14 @@ class self extends UnitTest {
         var article;
         var events = [];
 
-        Article.getDb = User.getDb = function() {};
+        Article.getDb = User.getDb = function () {
+        };
 
         /**
          *
          * @param {Jii.data.ChangeEvent|Jii.data.ChangeAttributeEvent} event
          */
-        var eventsFn = function(event) {
+        var eventsFn = function (event) {
             if (event instanceof ChangeAttributeEvent) {
                 events.push(event.attribute);
             } else if (event instanceof ChangeEvent) {
@@ -240,16 +241,16 @@ class self extends UnitTest {
          *
          * @param {Jii.data.CollectionEvent|Jii.data.ChangeAttributeEvent|Jii.data.ChangeEvent} event
          */
-        var eventsFn = function(event) {
+        var eventsFn = function (event) {
             if (event instanceof ChangeAttributeEvent) {
                 events.push(event.attribute);
             } else if (event instanceof ChangeEvent) {
                 events.push.apply(events, Object.keys(event.changedAttributes));
             } else if (event instanceof CollectionEvent) {
-                _each(event.added, function(model) {
+                _each(event.added, function (model) {
                     events.push('added-' + model.getPrimaryKey());
                 });
-                _each(event.removed, function(model) {
+                _each(event.removed, function (model) {
                     events.push('removed-' + model.getPrimaryKey());
                 });
             }
@@ -309,7 +310,7 @@ class self extends UnitTest {
 
         // Sub-collection, change index, not exists: change:links[0]
         article = new Article();
-        test.throws(function() {
+        test.throws(function () {
             article.on('change:links[0]', eventsFn);
         }, InvalidParamException);
 
@@ -404,7 +405,7 @@ class self extends UnitTest {
 
         // Sub-collection, change:key index, not exists: change:links[0].url
         article = new Article();
-        test.throws(function() {
+        test.throws(function () {
             article.on('change:links[0].url', eventsFn);
         }, InvalidParamException);
 
@@ -509,10 +510,10 @@ class self extends UnitTest {
         });
 
         var obj = article.createProxy({
-            instance: function(original) {
+            instance: function (original) {
                 return {};
             },
-            setValues: function(original, proxy, values) {
+            setValues: function (original, proxy, values) {
                 _extend(proxy, values);
             }
         });
@@ -530,16 +531,16 @@ class self extends UnitTest {
          *
          * @param {Jii.data.CollectionEvent|Jii.data.ChangeAttributeEvent|Jii.data.ChangeEvent} event
          */
-        var eventsFn = function(event) {
+        var eventsFn = function (event) {
             if (event instanceof ChangeAttributeEvent) {
                 events.push(event.attribute);
             } else if (event instanceof ChangeEvent) {
                 events.push.apply(events, Object.keys(event.changedAttributes));
             } else if (event instanceof CollectionEvent) {
-                _each(event.added, function(model) {
+                _each(event.added, function (model) {
                     events.push('added-' + JSON.stringify(model.getPrimaryKey()));
                 });
-                _each(event.removed, function(model) {
+                _each(event.removed, function (model) {
                     events.push('removed-' + JSON.stringify(model.getPrimaryKey()));
                 });
             }
@@ -573,7 +574,7 @@ class self extends UnitTest {
          *
          * @param {Jii.data.CollectionEvent|Jii.data.ChangeAttributeEvent|Jii.data.ChangeEvent} event
          */
-        var eventsFn = function(event) {
+        var eventsFn = function (event) {
             if (event instanceof ChangeAttributeEvent) {
                 events.push(event.attribute);
             } else if (event instanceof ChangeEvent) {
@@ -632,7 +633,7 @@ class self extends UnitTest {
          *
          * @param {Jii.data.CollectionEvent|Jii.data.ChangeAttributeEvent|Jii.data.ChangeEvent} event
          */
-        var eventsFn = function(event) {
+        var eventsFn = function (event) {
             if (event instanceof ChangeAttributeEvent) {
                 events.push(event.attribute);
             } else if (event instanceof ChangeEvent) {
@@ -641,17 +642,17 @@ class self extends UnitTest {
         };
 
         var rootCollections = {};
-        Article.getDb = User.getDb = function() {
+        Article.getDb = User.getDb = function () {
             return {
-                getRootCollection: function(name) {
+                getRootCollection: function (name) {
                     rootCollections[name] = rootCollections[name] || new Collection([], {
-                        modelClass: name
-                    });
+                            modelClass: name
+                        });
                     return rootCollections[name];
                 },
-                getSchema: function() {
+                getSchema: function () {
                     return {
-                        getFilterBuilder: function() {
+                        getFilterBuilder: function () {
                             return new FilterBuilder();
                         }
                     };
@@ -717,33 +718,33 @@ class self extends UnitTest {
          *
          * @param {Jii.data.CollectionEvent|Jii.data.ChangeAttributeEvent|Jii.data.ChangeEvent} event
          */
-        var eventsFn = function(event) {
+        var eventsFn = function (event) {
             if (event instanceof ChangeAttributeEvent) {
                 events.push(event.attribute);
             } else if (event instanceof ChangeEvent) {
                 events.push.apply(events, Object.keys(event.changedAttributes));
             } else if (event instanceof CollectionEvent) {
-                _each(event.added, function(model) {
+                _each(event.added, function (model) {
                     events.push('added-' + JSON.stringify(model.getPrimaryKey()));
                 });
-                _each(event.removed, function(model) {
+                _each(event.removed, function (model) {
                     events.push('removed-' + JSON.stringify(model.getPrimaryKey()));
                 });
             }
         };
 
         var rootCollections = {};
-        Article.getDb = Link.getDb = function() {
+        Article.getDb = Link.getDb = function () {
             return {
-                getRootCollection: function(name) {
+                getRootCollection: function (name) {
                     rootCollections[name] = rootCollections[name] || new Collection([], {
-                        modelClass: name
-                    });
+                            modelClass: name
+                        });
                     return rootCollections[name];
                 },
-                getSchema: function() {
+                getSchema: function () {
                     return {
-                        getFilterBuilder: function() {
+                        getFilterBuilder: function () {
                             return new FilterBuilder();
                         }
                     };
@@ -813,7 +814,7 @@ class self extends UnitTest {
             ]
         };
         var article = new Article(data);
-        article.get('links').sortBy(function(m) {
+        article.get('links').sortBy(function (m) {
             return m.getPrimaryKey();
         });
 

@@ -2,26 +2,31 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var Component = require('../base/Component');
 var MissingTranslationEvent = require('./MissingTranslationEvent');
+
 class MessageSource extends Component {
 
     preInit() {
         this._messages = {};
+
         /**
-     * the language that the original messages are in. If not set, it will use the value of [[Jii.base.Application.sourceLanguage]]
-     * @type string|null
-     */
+         * the language that the original messages are in. If not set, it will use the value of [[Jii.base.Application.sourceLanguage]]
+         * @type string|null
+         */
         this.sourceLanguage = null;
+
         /**
-     * whether to force message translation when the source and target languages are the same.
-     * Defaults to false, meaning translation is only performed when source and target languages are different
-     * @type boolean
-     */
+         * whether to force message translation when the source and target languages are the same.
+         * Defaults to false, meaning translation is only performed when source and target languages are different
+         * @type boolean
+         */
         this.forceTranslation = false;
+
         super.preInit(...arguments);
     }
 
@@ -117,8 +122,8 @@ class MessageSource extends Component {
 }
 
 /**
-         * @event Jii.i18n.MessageSource#change
-         * @property {Jii.i18n.MissingTranslationEvent} event
-         */
+ * @event Jii.i18n.MessageSource#change
+ * @property {Jii.i18n.MissingTranslationEvent} event
+ */
 MessageSource.EVENT_MISSING_TRANSLATION = 'missingTranslation';
 module.exports = MessageSource;

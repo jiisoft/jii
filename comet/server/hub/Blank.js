@@ -1,12 +1,19 @@
+/**
+ * @author Vladimir Kozhin <affka@affka.ru>
+ * @license MIT
+ */
+
 'use strict';
 
 var Jii = require('../../../BaseJii');
 var ChannelEvent = require('../../ChannelEvent');
 var HubInterface = require('./HubInterface');
+
 class Blank extends HubInterface {
 
     preInit() {
         this._channels = {};
+
         super.preInit(...arguments);
     }
 

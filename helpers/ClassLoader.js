@@ -2,6 +2,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -9,6 +10,7 @@ var _isString = require('lodash/isString');
 var _each = require('lodash/each');
 var BaseObject = require('../base/Object');
 var fs = require('fs');
+
 class ClassLoader extends BaseObject {
 
     static packages() {

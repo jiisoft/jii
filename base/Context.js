@@ -2,6 +2,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -10,31 +11,38 @@ var _isObject = require('lodash/isObject');
 var _has = require('lodash/has');
 var _each = require('lodash/each');
 var Component = require('./Component');
+
 class Context extends Component {
 
     preInit() {
         /**
-     * @type {string|null}
-     */
+         * @type {string|null}
+         */
         this._route = null;
+
         this._coreComponents = require('../components.json');
+
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this._components = {};
+
         /**
-     * @type {Jii.base.Response}
-     */
+         * @type {Jii.base.Response}
+         */
         this.response = null;
+
         /**
-     * @type {Jii.base.Request|Jii.base.HttpRequest}
-     */
+         * @type {Jii.base.Request|Jii.base.HttpRequest}
+         */
         this.request = null;
+
         /**
-     * Custom context parameters (name => value).
-     * @type {object}
-     */
+         * Custom context parameters (name => value).
+         * @type {object}
+         */
         this.params = {};
+
         super.preInit(...arguments);
     }
 

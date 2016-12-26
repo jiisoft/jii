@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -15,23 +16,28 @@ var _isObject = require('lodash/isObject');
 var _isFunction = require('lodash/isFunction');
 var _template = require('lodash/template');
 var IRenderer = require('../IRenderer');
+
 class UnderscoreRenderer extends IRenderer {
 
     preInit() {
         this._currentWebView = null;
+
         /**
-     * @type {[]} the view files currently being rendered. There may be multiple view files being
-     * rendered at a moment because one view may be rendered within another.
-     */
+         * @type {[]} the view files currently being rendered. There may be multiple view files being
+         * rendered at a moment because one view may be rendered within another.
+         */
         this._viewFiles = [];
+
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this._templates = {};
+
         /**
-     * @type {string} the default view file extension. This will be appended to view file names if they don't have file extensions.
-     */
+         * @type {string} the default view file extension. This will be appended to view file names if they don't have file extensions.
+         */
         this.defaultExtension = '';
+
         super.preInit(...arguments);
     }
 

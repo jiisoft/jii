@@ -2,6 +2,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -15,51 +16,60 @@ var _isEmpty = require('lodash/isEmpty');
 var _extend = require('lodash/extend');
 var BaseObject = require('../../base/Object');
 var NeatComet = require('neatcomet');
+
 class NeatServer extends BaseObject {
 
     preInit() {
         /**
-     * @type {NeatComet.NeatCometServer}
-     */
+         * @type {NeatComet.NeatCometServer}
+         */
         this.engine = null;
+
         /**
-     * Note: onOpenProfileCommand() and onCloseProfileCommand must be called from actions explicitly.
-     * There's no way to subscribe for them in Jii.
-     *
-     * @type {NeatComet.api.ICometServerEvents}
-     */
+         * Note: onOpenProfileCommand() and onCloseProfileCommand must be called from actions explicitly.
+         * There's no way to subscribe for them in Jii.
+         *
+         * @type {NeatComet.api.ICometServerEvents}
+         */
         this._events = null;
+
         /**
-     * @type {boolean}
-     */
+         * @type {boolean}
+         */
         this.listenModels = true;
+
         /**
-     * @type {object|boolean}
-     */
+         * @type {object|boolean}
+         */
         this.hasDynamicAttributes = false;
+
         /**
-     * Callback function to be called when folder loaded from server.
-     * @callback Jii.comet.server.NeatServer~dataLoadHandlerCallback
-     * @param {object} params
-     * @returns {Promise}
-     */
+         * Callback function to be called when folder loaded from server.
+         * @callback Jii.comet.server.NeatServer~dataLoadHandlerCallback
+         * @param {object} params
+         * @returns {Promise}
+         */
         /**
-     * @type {Jii.comet.server.NeatServer~dataLoadHandlerCallback}
-     */
+         * @type {Jii.comet.server.NeatServer~dataLoadHandlerCallback}
+         */
         this.dataLoadHandler = null;
+
         /**
-     * @type {Jii.comet.server.Server}
-     **/
+         * @type {Jii.comet.server.Server}
+         **/
         this.comet = null;
+
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this.bindings = null;
+
         /**
-     * @type {string}
-     * @deprecated
-     */
+         * @type {string}
+         * @deprecated
+         */
         this.configFileName = null;
+
         super.preInit(...arguments);
     }
 

@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -25,78 +26,91 @@ var _extend = require('lodash/extend');
 var _keys = require('lodash/keys');
 var _size = require('lodash/size');
 var _uniq = require('lodash/uniq');
+
 class ActiveQuery extends Query {
 
     preInit(modelClass, config) {
-        /**
-     * @type {boolean} whether to return each record as an array. If false (default), an object
-     * of [[modelClass]] will be created to represent each record.
-     */
-        this._asArray = null;
-        /**
-     * @type {[]} a list of relations that this query should be performed with
-     */
-        this._with = null;
-        /**
-     * @type {string} the name of the relation that is the inverse of this relation.
-     * For example, an order has a customer, which means the inverse of the "customer" relation
-     * is the "orders", and the inverse of the "orders" relation is the "customer".
-     * If this property is set, the primary record(s) will be referenced through the specified relation.
-     * For example, `customer.orders[0].customer` and `customer` will be the same object,
-     * and accessing the customer of an order will not trigger new DB() query.
-     * This property is only used in relational context.
-     * @see inverseOf()
-     */
-        this._inverseOf = null;
-        /**
-     * @type {[]|object} the query associated with the junction table. Please call [[via()]]
-     * to set this property instead of directly setting it.
-     * This property is only used in relational context.
-     * @see via()
-     */
-        this._via = null;
-        /**
-     * @type {object} the columns of the primary and foreign tables that establish a relation.
-     * The array keys must be columns of the table for this relation, and the array values
-     * must be the corresponding columns from the primary table.
-     * Do not prefix or quote the column names as this will be done automatically by Jii.
-     * This property is only used in relational context.
-     */
-        this.link = null;
-        /**
-     * @type {[]} a list of relations that this query should be joined with
-     */
-        this._joinWith = [];
-        /**
-     * @type {string} the SQL statement to be executed for retrieving AR records.
-     * This is set by [[ActiveRecord.findBySql()]].
-     */
-        this._sql = null;
-        /**
-     * @type {string|[]} the join condition to be used when this query is used in a relational context.
-     * The condition will be used in the ON part when [[ActiveQuery.joinWith()]] is called.
-     * Otherwise, the condition will be used in the WHERE part of a query.
-     * Please refer to [[Query.where()]] on how to specify this parameter.
-     * @see onCondition()
-     */
-        this._on = null;
-        /**
-     * @type {ActiveRecord} the primary model of a relational query.
-     * This is used only in lazy loading with dynamic query options.
-     */
-        this.primaryModel = null;
-        /**
-     * @type {boolean} whether this query represents a relation to more than one record.
-     * This property is only used in relational context. If true, this relation will
-     * populate all query results into AR instances using [[Query.all()|all()]].
-     * If false, only the first row of the results will be retrieved using [[Query.one()|one()]].
-     */
-        this.multiple = null;
         config = config || {};
+
         /**
-     * @type {ActiveRecord} ActiveRecord class.
-     */
+         * @type {boolean} whether to return each record as an array. If false (default), an object
+         * of [[modelClass]] will be created to represent each record.
+         */
+        this._asArray = null;
+
+        /**
+         * @type {[]} a list of relations that this query should be performed with
+         */
+        this._with = null;
+
+        /**
+         * @type {string} the name of the relation that is the inverse of this relation.
+         * For example, an order has a customer, which means the inverse of the "customer" relation
+         * is the "orders", and the inverse of the "orders" relation is the "customer".
+         * If this property is set, the primary record(s) will be referenced through the specified relation.
+         * For example, `customer.orders[0].customer` and `customer` will be the same object,
+         * and accessing the customer of an order will not trigger new DB() query.
+         * This property is only used in relational context.
+         * @see inverseOf()
+         */
+        this._inverseOf = null;
+
+        /**
+         * @type {[]|object} the query associated with the junction table. Please call [[via()]]
+         * to set this property instead of directly setting it.
+         * This property is only used in relational context.
+         * @see via()
+         */
+        this._via = null;
+
+        /**
+         * @type {object} the columns of the primary and foreign tables that establish a relation.
+         * The array keys must be columns of the table for this relation, and the array values
+         * must be the corresponding columns from the primary table.
+         * Do not prefix or quote the column names as this will be done automatically by Jii.
+         * This property is only used in relational context.
+         */
+        this.link = null;
+
+        /**
+         * @type {[]} a list of relations that this query should be joined with
+         */
+        this._joinWith = [];
+
+        /**
+         * @type {string} the SQL statement to be executed for retrieving AR records.
+         * This is set by [[ActiveRecord.findBySql()]].
+         */
+        this._sql = null;
+
+        /**
+         * @type {string|[]} the join condition to be used when this query is used in a relational context.
+         * The condition will be used in the ON part when [[ActiveQuery.joinWith()]] is called.
+         * Otherwise, the condition will be used in the WHERE part of a query.
+         * Please refer to [[Query.where()]] on how to specify this parameter.
+         * @see onCondition()
+         */
+        this._on = null;
+
+        /**
+         * @type {ActiveRecord} the primary model of a relational query.
+         * This is used only in lazy loading with dynamic query options.
+         */
+        this.primaryModel = null;
+
+        /**
+         * @type {boolean} whether this query represents a relation to more than one record.
+         * This property is only used in relational context. If true, this relation will
+         * populate all query results into AR instances using [[Query.all()|all()]].
+         * If false, only the first row of the results will be retrieved using [[Query.one()|one()]].
+         */
+        this.multiple = null;
+
+        /**
+         * @type {ActiveRecord} ActiveRecord class.
+         */
         this.modelClass = modelClass;
+
         super.preInit(config);
     }
 
@@ -1536,7 +1550,7 @@ class ActiveQuery extends Query {
 
 }
 /**
-         * @event Event an event that is triggered when the query is initialized via [[init()]].
-         */
+ * @event Event an event that is triggered when the query is initialized via [[init()]].
+ */
 ActiveQuery.EVENT_INIT = 'init';
 module.exports = ActiveQuery;

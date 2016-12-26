@@ -1,3 +1,8 @@
+/**
+ * @author Vladimir Kozhin <affka@affka.ru>
+ * @license MIT
+ */
+
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -6,31 +11,37 @@ var Collection = require('../../base/Collection');
 var Command = require('./Command');
 var Component = require('../../base/Component');
 var _each = require('lodash/each');
+
 class Connection extends Component {
 
     preInit() {
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this._data = {};
+
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this._rootCollections = {};
+
         /**
-     * @type {string}
-     */
+         * @type {string}
+         */
         this.route = 'api/ar';
+
         /**
-     * @type {Jii.data.http.TransportInterface}
-     */
+         * @type {Jii.data.http.TransportInterface}
+         */
         this.transport = null;
+
         /**
-     * @type {Jii.data.http.Schema} the database schema
-     */
+         * @type {Jii.data.http.Schema} the database schema
+         */
         this.schema = {
             className: 'Jii.data.http.Schema'
         };
+
         super.preInit(...arguments);
     }
 

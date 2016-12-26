@@ -2,24 +2,28 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var Action = require('../base/Action');
+
 class AnonymousAction extends Action {
 
     preInit(route, module, handler, config) {
         /**
-     * @type {string} the controller method that  this inline action is associated with
-     */
+         * @type {string} the controller method that  this inline action is associated with
+         */
         this.route = route;
+
         /**
-     * @type {function}
-     */
+         * @type {function}
+         */
         this.handler = handler;
+
         /**
-     * @type {Jii.base.Module}
-     */
+         * @type {Jii.base.Module}
+         */
         this.module = module;
 
         var id = route.split('/').pop();

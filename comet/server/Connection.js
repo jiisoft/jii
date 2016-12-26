@@ -7,22 +7,26 @@
 var Jii = require('../../BaseJii');
 var _pick = require('lodash/pick');
 var Component = require('../../base/Component');
+
 class Connection extends Component {
 
     preInit() {
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this.originalConnection = null;
+
         /**
-     * @type {Jii.comet.server.Request}
-     */
+         * @type {Jii.comet.server.Request}
+         */
         this.request = null;
+
         /**
-     * Connection id
-     * @type {number|string}
-     */
+         * Connection id
+         * @type {number|string}
+         */
         this.id = null;
+
         super.preInit(...arguments);
     }
 

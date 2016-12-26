@@ -2,12 +2,14 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var _trimEnd = require('lodash/trimEnd');
 var _each = require('lodash/each');
 var BaseObject = require('../base/Object');
+
 class File extends BaseObject {
 
     static getFileDirectory(path) {
@@ -28,18 +30,18 @@ class File extends BaseObject {
     }
 
     /**
-         * Normalizes a file/directory path.
-         * The normalization does the following work:
-         *
-         * - Convert all directory separators into `DIRECTORY_SEPARATOR` (e.g. "\a/b\c" becomes "/a/b/c")
-         * - Remove trailing directory separators (e.g. "/a/b/c/" becomes "/a/b/c")
-         * - Turn multiple consecutive slashes into a single one (e.g. "/a///b/c" becomes "/a/b/c")
-         * - Remove ".." and "." based on their meanings (e.g. "/a/./b/../c" becomes "/a/c")
-         *
-         * @param {string} path the file/directory path to be normalized
-         * @param {string} [ds] the directory separator to be used in the normalized result. Defaults to `DIRECTORY_SEPARATOR`.
-         * @returns {string} the normalized file/directory path
-         */
+     * Normalizes a file/directory path.
+     * The normalization does the following work:
+     *
+     * - Convert all directory separators into `DIRECTORY_SEPARATOR` (e.g. "\a/b\c" becomes "/a/b/c")
+     * - Remove trailing directory separators (e.g. "/a/b/c/" becomes "/a/b/c")
+     * - Turn multiple consecutive slashes into a single one (e.g. "/a///b/c" becomes "/a/b/c")
+     * - Remove ".." and "." based on their meanings (e.g. "/a/./b/../c" becomes "/a/c")
+     *
+     * @param {string} path the file/directory path to be normalized
+     * @param {string} [ds] the directory separator to be used in the normalized result. Defaults to `DIRECTORY_SEPARATOR`.
+     * @returns {string} the normalized file/directory path
+     */
     static normalizePath(path, ds) {
         ds = ds || '/';
 
@@ -68,8 +70,8 @@ class File extends BaseObject {
 }
 
 /**
-         * @type {string} the path (or alias) of a PHP file containing MIME type information.
-         */
+ * @type {string} the path (or alias) of a PHP file containing MIME type information.
+ */
 File.mimeMagicFile = '@jii/helpers/mimeTypes.php';
 File.PATTERN_CASE_INSENSITIVE = 32;
 File.PATTERN_NEGATIVE = 16;

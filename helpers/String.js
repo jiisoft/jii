@@ -2,17 +2,19 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var BaseObject = require('../base/Object');
+
 class String extends BaseObject {
 
     /**
-         * Generate unique hash for string. http://jsperf.com/hashcodelordvlad
-         * @param {String} str
-         * @returns {String}
-         */
+     * Generate unique hash for string. http://jsperf.com/hashcodelordvlad
+     * @param {String} str
+     * @returns {String}
+     */
     static hashCode(str) {
         return str.split('').reduce((a, b) => {
             a = (a << 5) - a + b.charCodeAt(0);

@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -16,22 +17,28 @@ var http = require('http');
 var express = require('express');
 var bodyParser = require('body-parser');
 var multer = require('multer');
+
 class HttpServer extends Component {
 
     preInit() {
         this._isExpressSubscribed = false;
         this._server = null;
         this._express = null;
+
         /**
-     * @type {string|string[]|object}
-     */
+         * @type {string|string[]|object}
+         */
         this.staticDirs = null;
+
         /**
-     * @type {Jii.request.UrlManager|string}
-     */
+         * @type {Jii.request.UrlManager|string}
+         */
         this.urlManager = 'urlManager';
+
         this.port = 3000;
+
         this.host = '0.0.0.0';
+
         super.preInit(...arguments);
     }
 

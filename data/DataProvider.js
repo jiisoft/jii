@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -17,43 +18,52 @@ var _isObject = require('lodash/isObject');
 var _isFunction = require('lodash/isFunction');
 var _findKey = require('lodash/findKey');
 var _has = require('lodash/has');
+
 class DataProvider extends Collection {
 
     preInit() {
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this._fetchedKeys = {};
+
         /**
-     * @type {function[]|null}
-     */
+         * @type {function[]|null}
+         */
         this._fetchCallbacks = null;
+
         /**
-     * @type {number|null}
-     */
+         * @type {number|null}
+         */
         this._totalCount = 0;
+
         /**
-     * @type {Jii.data.Pagination|boolean}
-     */
+         * @type {Jii.data.Pagination|boolean}
+         */
         this._pagination = null;
+
         /**
-     * @type {Jii.data.Sort}
-     */
+         * @type {Jii.data.Sort}
+         */
         this._sort = null;
+
         /**
-     * @type {boolean}
-     */
+         * @type {boolean}
+         */
         this.autoFetch = true;
+
         /**
-     * @type {function|Jii.data.Query}
-     */
+         * @type {function|Jii.data.Query}
+         */
         this.query = null;
+
         /**
-     * @type {string|null} an ID that uniquely identifies the data provider among all data providers.
-     * You should set this property if the same page contains two or more different data providers.
-     * Otherwise, the [[pagination]] and [[sort]] may not work properly.
-     */
+         * @type {string|null} an ID that uniquely identifies the data provider among all data providers.
+         * You should set this property if the same page contains two or more different data providers.
+         * Otherwise, the [[pagination]] and [[sort]] may not work properly.
+         */
         this.id = null;
+
         super.preInit(...arguments);
     }
 
@@ -256,8 +266,8 @@ class DataProvider extends Collection {
                 config.sortParam = `${ this.id }-sort`;
             }
             this._sort = Jii.createObject(Jii.mergeConfigs(config, value));
-        } else if ( /*value instanceof Sort ||*/
-            value === false) {
+        } else if (/*value instanceof Sort ||*/
+        value === false) {
             // @todo Sort implementation
             this._sort = value;
         } else {
@@ -327,20 +337,20 @@ class DataProvider extends Collection {
 }
 
 /**
-         * @event Jii.data.DataProvider#loading
-         * @property {Jii.data.FetchEvent} event
-         */
+ * @event Jii.data.DataProvider#loading
+ * @property {Jii.data.FetchEvent} event
+ */
 DataProvider.EVENT_LOADING = 'loading';
 
 /**
-         * @event Jii.data.DataProvider#after_fetch
-         * @property {Jii.data.FetchEvent} event
-         */
+ * @event Jii.data.DataProvider#after_fetch
+ * @property {Jii.data.FetchEvent} event
+ */
 DataProvider.EVENT_AFTER_FETCH = 'after_fetch';
 
 /**
-         * @event Jii.data.DataProvider#before_fetch
-         * @property {Jii.data.FetchEvent} event
-         */
+ * @event Jii.data.DataProvider#before_fetch
+ * @property {Jii.data.FetchEvent} event
+ */
 DataProvider.EVENT_BEFORE_FETCH = 'before_fetch';
 module.exports = DataProvider;

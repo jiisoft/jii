@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../../index');
@@ -11,6 +12,7 @@ var _isEmpty = require('lodash/isEmpty');
 var _each = require('lodash/each');
 var _values = require('lodash/values');
 var HttpRequest = require('../../base/HttpRequest');
+
 class Request extends HttpRequest {
 
     preInit(httpMessage) {
@@ -277,7 +279,8 @@ class Request extends HttpRequest {
      * @param {string} header The header to be parsed
      * @return {array} The accept values ordered by their preference level.
      */
-    _parseAcceptHeader(header) {}
+    _parseAcceptHeader(header) {
+    }
 
     _parseHeaders() {
         return this._httpMessage.headers;

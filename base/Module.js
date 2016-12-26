@@ -2,6 +2,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -23,94 +24,108 @@ var _map = require('lodash/map');
 var _each = require('lodash/each');
 var _has = require('lodash/has');
 var Context = require('./Context');
+
 class Module extends Context {
 
     preInit(id, moduleObject, config) {
         /**
-     * The root directory that contains layout view files for this module.
-     * @type {string}
-     */
+         * The root directory that contains layout view files for this module.
+         * @type {string}
+         */
         this._layoutPath = null;
+
         /**
-     * The root directory that contains view files for this module
-     * @type {string}
-     */
+         * The root directory that contains view files for this module
+         * @type {string}
+         */
         this._viewPath = null;
+
         /**
-     * The root directory of the module.
-     * @type {string}
-     */
+         * The root directory of the module.
+         * @type {string}
+         */
         this._basePath = null;
+
         /**
-     * Stored controller instances
-     * @type {object}
-     */
+         * Stored controller instances
+         * @type {object}
+         */
         this._controllers = {};
+
         /**
-     * @type {string|null}
-     */
+         * @type {string|null}
+         */
         this.errorRoute = null;
+
         /**
-     * The layout that should be applied for views within this module. This refers to a view name
-     * relative to [[layoutPath]]. If this is not set, it means the layout value of the [[module|parent module]]
-     * will be taken. If this is false, layout will be disabled within this module.
-     * @type {string|boolean}
-     */
+         * The layout that should be applied for views within this module. This refers to a view name
+         * relative to [[layoutPath]]. If this is not set, it means the layout value of the [[module|parent module]]
+         * will be taken. If this is false, layout will be disabled within this module.
+         * @type {string|boolean}
+         */
         this.layout = null;
+
         /**
-     * The default route of this module. Defaults to 'default'.
-     * The route may consist of child module ID, controller ID, and/or action ID.
-     * For example, `help`, `post/create`, `admin/post/create`.
-     * If action ID is not given, it will take the default value as specified in defaultAction.
-     * @type {string}
-     */
+         * The default route of this module. Defaults to 'default'.
+         * The route may consist of child module ID, controller ID, and/or action ID.
+         * For example, `help`, `post/create`, `admin/post/create`.
+         * If action ID is not given, it will take the default value as specified in defaultAction.
+         * @type {string}
+         */
         this.defaultRoute = 'default';
+
         /**
-     * String the namespace that controller classes are in. If not set,
-     * it will use the "controllers" sub-namespace under the namespace of this module.
-     * For example, if the namespace of this module is "foo\bar", then the default
-     * controller namespace would be "foo\bar\controllers".
-     * @type {string}
-     */
+         * String the namespace that controller classes are in. If not set,
+         * it will use the "controllers" sub-namespace under the namespace of this module.
+         * For example, if the namespace of this module is "foo\bar", then the default
+         * controller namespace would be "foo\bar\controllers".
+         * @type {string}
+         */
         this.controllerNamespace = null;
+
         /**
-     * Mapping from controller ID to controller configurations.
-     * Each name-value pair specifies the configuration of a single controller.
-     * A controller configuration can be either a string or an array.
-     * If the former, the string should be the fully qualified class name of the controller.
-     * If the latter, the array must contain a 'class' element which specifies
-     * the controller's fully qualified class name, and the rest of the name-value pairs
-     * in the array are used to initialize the corresponding controller properties. For example,
-     *
-     * ~~~
-     * {
-     *   account: 'app.controllers.UserController',
-     *   article: {
-     *      className: 'app.controllers.PostController',
-     *      pageTitle: 'something new'
-     *   }
-     * }
-     * ~~~
-     * @type {object}
-     */
+         * Mapping from controller ID to controller configurations.
+         * Each name-value pair specifies the configuration of a single controller.
+         * A controller configuration can be either a string or an array.
+         * If the former, the string should be the fully qualified class name of the controller.
+         * If the latter, the array must contain a 'class' element which specifies
+         * the controller's fully qualified class name, and the rest of the name-value pairs
+         * in the array are used to initialize the corresponding controller properties. For example,
+         *
+         * ~~~
+         * {
+         *   account: 'app.controllers.UserController',
+         *   article: {
+         *      className: 'app.controllers.PostController',
+         *      pageTitle: 'something new'
+         *   }
+         * }
+         * ~~~
+         * @type {object}
+         */
         this.controllerMap = {};
+
         /**
-     * @type {{string: function}}
-     */
+         * @type {{string: function}}
+         */
         this.inlineActions = {};
+
         /**
-     * @type {string}
-     */
+         * @type {string}
+         */
         this.id = id;
+
         /**
-     * The parent module of this module. Null if this module does not have a parent.
-     * @type {Jii.base.Module}
-     */
+         * The parent module of this module. Null if this module does not have a parent.
+         * @type {Jii.base.Module}
+         */
         this.module = moduleObject;
+
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this._modules = {};
+
         super.preInit(config);
     }
 
@@ -553,14 +568,14 @@ class Module extends Context {
 }
 
 /**
-         * @event Jii.base.Module#afterAction
-         * @property {Jii.base.ActionEvent} event
-         */
+ * @event Jii.base.Module#afterAction
+ * @property {Jii.base.ActionEvent} event
+ */
 Module.EVENT_AFTER_ACTION = 'afterAction';
 
 /**
-         * @event Jii.base.Module#beforeAction
-         * @property {Jii.base.ActionEvent} event
-         */
+ * @event Jii.base.Module#beforeAction
+ * @property {Jii.base.ActionEvent} event
+ */
 Module.EVENT_BEFORE_ACTION = 'beforeAction';
 module.exports = Module;

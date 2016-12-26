@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -9,32 +10,38 @@ var Expression = require('../data/Expression');
 var _isBoolean = require('lodash/isBoolean');
 var _isEmpty = require('lodash/isEmpty');
 var BaseObject = require('../base/Object');
+
 class ModelAttributeSchema extends BaseObject {
 
     preInit() {
         /**
-     * @var {boolean} whether this column is a primary key
-     */
+         * @var {boolean} whether this column is a primary key
+         */
         this.isPrimaryKey = false;
+
         /**
-     * @var {*} default value of this column
-     */
+         * @var {*} default value of this column
+         */
         this.defaultValue = null;
+
         /**
-     * @var {string} the JS type of this column. Possible JS types include:
-     * string, boolean, number, double.
-     */
+         * @var {string} the JS type of this column. Possible JS types include:
+         * string, boolean, number, double.
+         */
         this.jsType = null;
+
         /**
-     * @var {string} abstract type of this column. Possible abstract types include:
-     * string, text, boolean, smallint, integer, bigint, float, decimal, datetime,
-     * timestamp, time, date, binary, and money.
-     */
+         * @var {string} abstract type of this column. Possible abstract types include:
+         * string, text, boolean, smallint, integer, bigint, float, decimal, datetime,
+         * timestamp, time, date, binary, and money.
+         */
         this.type = null;
+
         /**
-     * @var {string} name of this column (without quotes).
-     */
+         * @var {string} name of this column (without quotes).
+         */
         this.name = null;
+
         super.preInit(...arguments);
     }
 

@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -13,26 +14,27 @@ var _has = require('lodash/has');
 var _keys = require('lodash/keys');
 var _snakeCase = require('lodash/snakeCase');
 var BaseActiveRecord = require('./BaseActiveRecord');
+
 class ActiveRecord extends BaseActiveRecord {
 
     /**
-         * Creates an [[ActiveQuery]] instance with a given SQL statement.
-         *
-         * Note that because the SQL statement is already specified, calling additional
-         * query modification methods (such as `where()`, `order()`) on the created [[ActiveQuery]]
-         * instance will have no effect. However, calling `with()`, `asArray()` or `indexBy()` is
-         * still fine.
-         *
-         * Below is an example:
-         *
-         * ~~~
-         * customers = Customer.findBySql('SELECT * FROM customer').all();
-         * ~~~
-         *
-         * @param {string} sql the SQL statement to be executed
-         * @param {[]} params parameters to be bound to the SQL statement during execution.
-         * @returns {Jii.data.ActiveQuery} the newly created [[ActiveQuery]] instance
-         */
+     * Creates an [[ActiveQuery]] instance with a given SQL statement.
+     *
+     * Note that because the SQL statement is already specified, calling additional
+     * query modification methods (such as `where()`, `order()`) on the created [[ActiveQuery]]
+     * instance will have no effect. However, calling `with()`, `asArray()` or `indexBy()` is
+     * still fine.
+     *
+     * Below is an example:
+     *
+     * ~~~
+     * customers = Customer.findBySql('SELECT * FROM customer').all();
+     * ~~~
+     *
+     * @param {string} sql the SQL statement to be executed
+     * @param {[]} params parameters to be bound to the SQL statement during execution.
+     * @returns {Jii.data.ActiveQuery} the newly created [[ActiveQuery]] instance
+     */
     static findBySql(sql, params) {
         params = params || [];
 
@@ -43,19 +45,19 @@ class ActiveRecord extends BaseActiveRecord {
     }
 
     /**
-         * Updates the whole table using the provided attribute values and conditions.
-         * For example, to change the status to be 1 for all customers whose status is 2:
-         *
-         * ~~~
-         * Customer.updateAll({status: 1}, 'status = 2');
-         * ~~~
-         *
-         * @param {[]} attributes attribute values (name-value pairs) to be saved into the table
-         * @param {string|[]} [condition] the conditions that will be put in the WHERE part of the UPDATE SQL.
-         * Please refer to [[Query.where()]] on how to specify this parameter.
-         * @param {object} [params] the parameters (name => value) to be bound to the query.
-         * @returns {Promise.<number>} the number of rows updated
-         */
+     * Updates the whole table using the provided attribute values and conditions.
+     * For example, to change the status to be 1 for all customers whose status is 2:
+     *
+     * ~~~
+     * Customer.updateAll({status: 1}, 'status = 2');
+     * ~~~
+     *
+     * @param {[]} attributes attribute values (name-value pairs) to be saved into the table
+     * @param {string|[]} [condition] the conditions that will be put in the WHERE part of the UPDATE SQL.
+     * Please refer to [[Query.where()]] on how to specify this parameter.
+     * @param {object} [params] the parameters (name => value) to be bound to the query.
+     * @returns {Promise.<number>} the number of rows updated
+     */
     static updateAll(attributes, condition, params) {
         condition = condition || '';
         params = params || {};
@@ -64,21 +66,21 @@ class ActiveRecord extends BaseActiveRecord {
     }
 
     /**
-         * Updates the whole table using the provided counter changes and conditions.
-         * For example, to increment all customers' age by 1,
-         *
-         * ~~~
-         * Customer.updateAllCounters({age: 1});
-         * ~~~
-         *
-         * @param {[]} counters the counters to be updated (attribute name => increment value).
-         * Use negative values if you want to decrement the counters.
-         * @param {string|[]} [condition] the conditions that will be put in the WHERE part of the UPDATE SQL.
-         * Please refer to [[Query.where()]] on how to specify this parameter.
-         * @param {object} [params] the parameters (name => value) to be bound to the query.
-         * Do not name the parameters as `:bp0`, `:bp1`, etc., because they are used internally by this method.
-         * @returns {number} the number of rows updated
-         */
+     * Updates the whole table using the provided counter changes and conditions.
+     * For example, to increment all customers' age by 1,
+     *
+     * ~~~
+     * Customer.updateAllCounters({age: 1});
+     * ~~~
+     *
+     * @param {[]} counters the counters to be updated (attribute name => increment value).
+     * Use negative values if you want to decrement the counters.
+     * @param {string|[]} [condition] the conditions that will be put in the WHERE part of the UPDATE SQL.
+     * Please refer to [[Query.where()]] on how to specify this parameter.
+     * @param {object} [params] the parameters (name => value) to be bound to the query.
+     * Do not name the parameters as `:bp0`, `:bp1`, etc., because they are used internally by this method.
+     * @returns {number} the number of rows updated
+     */
     static updateAllCounters(counters, condition, params) {
         condition = condition || '';
         params = params || {};
@@ -95,20 +97,20 @@ class ActiveRecord extends BaseActiveRecord {
     }
 
     /**
-         * Deletes rows in the table using the provided conditions.
-         * WARNING: If you do not specify any condition, this method will delete ALL rows in the table.
-         *
-         * For example, to delete all customers whose status is 3:
-         *
-         * ~~~
-         * Customer.deleteAll('status = 3');
-         * ~~~
-         *
-         * @param {string|[]} [condition] the conditions that will be put in the WHERE part of the DELETE SQL.
-         * Please refer to [[Query.where()]] on how to specify this parameter.
-         * @param {object} [params] the parameters (name => value) to be bound to the query.
-         * @returns {number} the number of rows deleted
-         */
+     * Deletes rows in the table using the provided conditions.
+     * WARNING: If you do not specify any condition, this method will delete ALL rows in the table.
+     *
+     * For example, to delete all customers whose status is 3:
+     *
+     * ~~~
+     * Customer.deleteAll('status = 3');
+     * ~~~
+     *
+     * @param {string|[]} [condition] the conditions that will be put in the WHERE part of the DELETE SQL.
+     * Please refer to [[Query.where()]] on how to specify this parameter.
+     * @param {object} [params] the parameters (name => value) to be bound to the query.
+     * @returns {number} the number of rows deleted
+     */
     static deleteAll(condition, params) {
         condition = condition || '';
         params = params || {};
@@ -117,21 +119,21 @@ class ActiveRecord extends BaseActiveRecord {
     }
 
     /**
-         * @inheritdoc
-         */
+     * @inheritdoc
+     */
     static find() {
         var ActiveQuery = require('./ActiveQuery');
         return new ActiveQuery(this);
     }
 
     /**
-         * Declares the name of the database table associated with this AR class.
-         * By default this method returns the class name as the table name by calling [[Inflector.camel2id()]]
-         * with prefix [[Connection.tablePrefix]]. For example if [[Connection.tablePrefix]] is 'tbl_',
-         * 'Customer' becomes 'tbl_customer', and 'OrderItem' becomes 'tbl_order_item'. You may override this method
-         * if the table is not named after this convention.
-         * @returns {string} the table name
-         */
+     * Declares the name of the database table associated with this AR class.
+     * By default this method returns the class name as the table name by calling [[Inflector.camel2id()]]
+     * with prefix [[Connection.tablePrefix]]. For example if [[Connection.tablePrefix]] is 'tbl_',
+     * 'Customer' becomes 'tbl_customer', and 'OrderItem' becomes 'tbl_order_item'. You may override this method
+     * if the table is not named after this convention.
+     * @returns {string} the table name
+     */
     static tableName() {
         var className = this.className();
         var name = className.substr(className.lastIndexOf('.') + 1);
@@ -140,10 +142,10 @@ class ActiveRecord extends BaseActiveRecord {
     }
 
     /**
-         * Returns the schema information of the DB table associated with this AR class.
-         * @returns {Jii.data.TableSchema} the schema information of the DB table associated with this AR class.
-         * @throws {Jii.exceptions.InvalidConfigException} if the table for the AR class does not exist.
-         */
+     * Returns the schema information of the DB table associated with this AR class.
+     * @returns {Jii.data.TableSchema} the schema information of the DB table associated with this AR class.
+     * @throws {Jii.exceptions.InvalidConfigException} if the table for the AR class does not exist.
+     */
     static getTableSchema() {
         var schema = this.getDb().getTableSchema(this.tableName());
         if (schema === null) {
@@ -154,18 +156,18 @@ class ActiveRecord extends BaseActiveRecord {
     }
 
     /**
-         * Returns the primary key name(s) for this AR class.
-         * The default implementation will return the primary key(s) as declared
-         * in the DB table that is associated with this AR class.
-         *
-         * If the DB table does not declare any primary key, you should override
-         * this method to return the attributes that you want to use as primary keys
-         * for this AR class.
-         *
-         * Note that an array should be returned even for a table with single primary key.
-         *
-         * @returns {string[]} the primary keys of the associated database table.
-         */
+     * Returns the primary key name(s) for this AR class.
+     * The default implementation will return the primary key(s) as declared
+     * in the DB table that is associated with this AR class.
+     *
+     * If the DB table does not declare any primary key, you should override
+     * this method to return the attributes that you want to use as primary keys
+     * for this AR class.
+     *
+     * Note that an array should be returned even for a table with single primary key.
+     *
+     * @returns {string[]} the primary keys of the associated database table.
+     */
     static primaryKey() {
         return this.getTableSchema().primaryKey;
     }
@@ -398,20 +400,20 @@ class ActiveRecord extends BaseActiveRecord {
             }
 
             /*db = static.getDb();
-            if (this.isTransactional(self.OP_UPDATE)) {
-                transaction = db.beginTransaction();
-                try {
-                    result = this.updateInternal(attributeNames);
-                    if (result === false) {
-                        transaction.rollBack();
-                    } else {
-                        transaction.commit();
-                    }
-                } catch (\Exception e) {
-                    transaction.rollBack();
-                    throw e;
-                }
-            } else {*/
+             if (this.isTransactional(self.OP_UPDATE)) {
+             transaction = db.beginTransaction();
+             try {
+             result = this.updateInternal(attributeNames);
+             if (result === false) {
+             transaction.rollBack();
+             } else {
+             transaction.commit();
+             }
+             } catch (\Exception e) {
+             transaction.rollBack();
+             throw e;
+             }
+             } else {*/
             return this._updateInternal(attributeNames); //}
 
         });
@@ -438,23 +440,23 @@ class ActiveRecord extends BaseActiveRecord {
      */
     delete() {
         /*db = static.getDb();
-        if (this.isTransactional(self.OP_DELETE)) {
-            transaction = db.beginTransaction();
-            try {
-                result = this.deleteInternal();
-                if (result === false) {
-                    transaction.rollBack();
-                } else {
-                    transaction.commit();
-                }
-            } catch (\Exception e) {
-                transaction.rollBack();
-                throw e;
-            }
-        } else {*/
+         if (this.isTransactional(self.OP_DELETE)) {
+         transaction = db.beginTransaction();
+         try {
+         result = this.deleteInternal();
+         if (result === false) {
+         transaction.rollBack();
+         } else {
+         transaction.commit();
+         }
+         } catch (\Exception e) {
+         transaction.rollBack();
+         throw e;
+         }
+         } else {*/
         return this._deleteInternal(); //}
 
-    //return result;
+        //return result;
     }
 
     /**

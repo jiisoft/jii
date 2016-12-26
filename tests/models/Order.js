@@ -40,7 +40,8 @@ class Order extends ActiveRecord {
     getItems() {
         return this.hasMany(Item, {
             id: 'item_id'
-        }).via('orderItems', function(q) {}).orderBy('item.id');
+        }).via('orderItems', function (q) {
+        }).orderBy('item.id');
     }
 
     getItemsIndexed() {
@@ -60,7 +61,7 @@ class Order extends ActiveRecord {
     getItemsInOrder1() {
         return this.hasMany(Item, {
             id: 'item_id'
-        }).via('orderItems', function(q) {
+        }).via('orderItems', function (q) {
             q.orderBy({
                 subtotal: 'asc'
             });
@@ -70,7 +71,7 @@ class Order extends ActiveRecord {
     getItemsInOrder2() {
         return this.hasMany(Item, {
             id: 'item_id'
-        }).via('orderItems', function(q) {
+        }).via('orderItems', function (q) {
             q.orderBy({
                 subtotal: 'desc'
             });
@@ -124,7 +125,7 @@ class Order extends ActiveRecord {
     }
 
     beforeSave(insert) {
-        return super.beforeSave(insert).then(function(success) {
+        return super.beforeSave(insert).then(function (success) {
             if (!success) {
                 return false;
             }

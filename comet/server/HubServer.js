@@ -2,6 +2,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -15,29 +16,34 @@ var _extend = require('lodash/extend');
 var Component = require('../../base/Component');
 var RedisHub = require('./hub/Redis');
 var RedisQueue = require('./queue/Redis');
+
 class HubServer extends Component {
 
     preInit() {
         /**
-     * @type {string}
-     */
+         * @type {string}
+         */
         this._serverUid = null;
+
         /**
-     * @type {Jii.comet.server.queue.QueueInterface}
-     */
+         * @type {Jii.comet.server.queue.QueueInterface}
+         */
         this.queue = {
             className: RedisQueue
         };
+
         /**
-     * @type {Jii.comet.server.hub.HubInterface}
-     */
+         * @type {Jii.comet.server.hub.HubInterface}
+         */
         this.hub = {
             className: RedisHub
         };
+
         /**
-     * @type {boolean}
-     */
+         * @type {boolean}
+         */
         this.listenActions = true;
+
         super.preInit(...arguments);
     }
 
@@ -258,35 +264,35 @@ class HubServer extends Component {
 }
 
 /**
-         * @type {string}
-         */
+ * @type {string}
+ */
 HubServer.CHANNEL_NAME_CONNECTION = '__connectionN9a63w:';
 
 /**
-         * @type {string}
-         */
+ * @type {string}
+ */
 HubServer.CHANNEL_NAME_ACTION = '__actionXZj1sf';
 
 /**
-         * @type {string}
-         */
+ * @type {string}
+ */
 HubServer.CHANNEL_NAME_ALL = '__allVfcOS7';
 
 /**
-         * @event Jii.comet.server.HubServer#message
-         * @property {Jii.comet.server.MessageEvent} event
-         */
+ * @event Jii.comet.server.HubServer#message
+ * @property {Jii.comet.server.MessageEvent} event
+ */
 HubServer.EVENT_MESSAGE = 'message';
 
 /**
-         * @event Jii.comet.server.HubServer#channel:%channel_name%
-         * @property {Jii.comet.ChannelEvent} event
-         */
+ * @event Jii.comet.server.HubServer#channel:%channel_name%
+ * @property {Jii.comet.ChannelEvent} event
+ */
 HubServer.EVENT_CHANNEL_NAME = 'channel:';
 
 /**
-         * @event Jii.comet.server.HubServer#channel
-         * @property {Jii.comet.ChannelEvent} event
-         */
+ * @event Jii.comet.server.HubServer#channel
+ * @property {Jii.comet.ChannelEvent} event
+ */
 HubServer.EVENT_CHANNEL = 'channel';
 module.exports = HubServer;

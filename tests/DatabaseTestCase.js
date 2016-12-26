@@ -12,11 +12,11 @@ class DatabaseTestCase extends UnitTest {
 
     preInit() {
         /**
-     * @type {Jii.sql.Connection}
-     */
+         * @type {Jii.sql.Connection}
+         */
         this.db = null;
         this.driverName = 'mysql';
-         this.database = _clone(config[this.driverName]);
+        this.database = _clone(config[this.driverName]);
 
         super.preInit(...arguments);
     }
@@ -75,8 +75,8 @@ class DatabaseTestCase extends UnitTest {
             return Promise.resolve(db);
         }
 
-        return db.open().then(function() {
-            return new Promise(function(resolve, reject) {
+        return db.open().then(function () {
+            return new Promise(function (resolve, reject) {
                 if (fixture === null) {
                     resolve(db);
                     return;
@@ -84,7 +84,7 @@ class DatabaseTestCase extends UnitTest {
 
                 var lines = fs.readFileSync(fixture).toString().split(';');
                 var i = -1;
-                var execLine = function() {
+                var execLine = function () {
                     i++;
                     if (i === lines.length) {
                         resolve(db);

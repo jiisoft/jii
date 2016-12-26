@@ -23,7 +23,7 @@ class self extends UnitTest {
     _assertValidation(test, validator, values, hasErrors) {
         var model = new FakeValidationModel();
 
-        values.forEach(function(value) {
+        values.forEach(function (value) {
             model.set('foo', value);
             model.clearErrors();
 
@@ -144,7 +144,7 @@ class self extends UnitTest {
     filterValidatorTest(test) {
         var model = new FakeValidationModel();
         var validator = new FilterValidator({
-            filter: function(value) {
+            filter: function (value) {
                 return value * 2;
             }
         });
@@ -158,7 +158,7 @@ class self extends UnitTest {
 
     inlineValidatorTest(test) {
         var model = new FakeValidationModel();
-        model.checkFoo = function(attribute, params) {
+        model.checkFoo = function (attribute, params) {
             test.strictEqual(params.param1, 'value1');
             this.addError(attribute, 'test error');
         };

@@ -2,17 +2,20 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var ApplicationException = require('../exceptions/ApplicationException');
 var _isFunction = require('lodash/isFunction');
 var Validator = require('./Validator');
+
 class InlineValidator extends Validator {
 
     preInit() {
         this.params = null;
         this.method = null;
+
         super.preInit(...arguments);
     }
 

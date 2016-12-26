@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -41,6 +42,7 @@ var _sortBy = require('lodash/sortBy');
 var _without = require('lodash/without');
 var _extend = require('lodash/extend');
 var Component = require('../base/Component');
+
 class Collection extends Component {
 
     preInit(models, config) {
@@ -50,23 +52,28 @@ class Collection extends Component {
         this._eventsChangeName = [];
         this._filter = null;
         this._byId = {};
+
         /**
-     * @type {boolean}
-     */
+         * @type {boolean}
+         */
         this._isFetched = false;
+
         /**
-     * Root collection
-     * @type {Jii.base.Collection}
-     */
+         * Root collection
+         * @type {Jii.base.Collection}
+         */
         this.parent = null;
+
         /**
-     * @type {string|Jii.base.Model}
-     */
+         * @type {string|Jii.base.Model}
+         */
         this.modelClass = null;
+
         /**
-     * @type {number}
-     */
+         * @type {number}
+         */
         this.length = 0;
+
         super.preInit(config);
 
         if (_isArray(models)) {
@@ -312,14 +319,14 @@ class Collection extends Component {
 
         // Subscribe
         this.on(Collection.EVENT_CHANGE, /** @param {Jii.data.CollectionEvent} event */
-            event => {
-                if (event.added.length > 0) {
-                    collectionAdapter.add(this, cloned, event.added);
-                }
-                if (event.removed.length > 0) {
-                    collectionAdapter.remove(this, cloned, event.removed);
-                }
-            });
+                                         event => {
+            if (event.added.length > 0) {
+                collectionAdapter.add(this, cloned, event.added);
+            }
+            if (event.removed.length > 0) {
+                collectionAdapter.remove(this, cloned, event.removed);
+            }
+        });
 
         return cloned;
     }
@@ -373,24 +380,24 @@ class Collection extends Component {
 
             // Each trigger events in children
             _each(this._editedEvents, /** @param {Jii.data.CollectionEvent} event */
-                event => {
-                    if (event.added.length > 0) {
-                        this.trigger(Collection.EVENT_ADD, event);
-                    }
-                    if (event.isFetch) {
-                        this.trigger(Collection.EVENT_FETCHED, event);
-                    }
-                    if (event.removed.length > 0) {
-                        this.trigger(Collection.EVENT_REMOVE, event);
-                    }
-                    if (event.added.length > 0 || event.removed.length > 0) {
-                        this.trigger(Collection.EVENT_CHANGE, event);
-                    }
+                                      event => {
+                if (event.added.length > 0) {
+                    this.trigger(Collection.EVENT_ADD, event);
+                }
+                if (event.isFetch) {
+                    this.trigger(Collection.EVENT_FETCHED, event);
+                }
+                if (event.removed.length > 0) {
+                    this.trigger(Collection.EVENT_REMOVE, event);
+                }
+                if (event.added.length > 0 || event.removed.length > 0) {
+                    this.trigger(Collection.EVENT_CHANGE, event);
+                }
 
-                    if (event.isSorted) {
-                        this._onSort();
-                    }
-                });
+                if (event.isSorted) {
+                    this._onSort();
+                }
+            });
 
             // Reset state
             this._editedEvents = [];
@@ -784,7 +791,8 @@ class Collection extends Component {
         throw new InvalidParamException('Cannot create model instance from data: ' + JSON.stringify(data));
     }
 
-    _onSort() {}
+    _onSort() {
+    }
 
     /**
      * @param {string|string[]} name
@@ -1179,12 +1187,12 @@ class Collection extends Component {
      * @returns {[]}
      */
     /*indexBy(value) {
-        var iterator = _isFunction(value) ?
-            value :
-            model => _isFunction(model.get) ? model.get(value) : model[value];
+     var iterator = _isFunction(value) ?
+     value :
+     model => _isFunction(model.get) ? model.get(value) : model[value];
 
-        return _indexBy(this, iterator);
-    },*/
+     return _indexBy(this, iterator);
+     },*/
     /**
      *
      * @param {string|function} value
@@ -1278,12 +1286,12 @@ class Collection extends Component {
      * @returns {number}
      */
     /*sortedIndex(model, value) {
-        var iterator = _isFunction(value) ?
-            value :
-            model => _isFunction(model.get) ? model.get(value) : model[value];
+     var iterator = _isFunction(value) ?
+     value :
+     model => _isFunction(model.get) ? model.get(value) : model[value];
 
-        return _sortedIndex(this, model, iterator);
-    },*/
+     return _sortedIndex(this, model, iterator);
+     },*/
     /**
      *
      * @param {function} predicate
@@ -1340,32 +1348,32 @@ class Collection extends Component {
 }
 
 /**
-         * @event Jii.base.Collection#remove
-         * @property {Jii.data.CollectionEvent} event
-         */
+ * @event Jii.base.Collection#remove
+ * @property {Jii.data.CollectionEvent} event
+ */
 Collection.EVENT_REMOVE = 'remove';
 
 /**
-         * @event Jii.base.Collection#change:
-         * @property {Jii.data.CollectionEvent} event
-         */
+ * @event Jii.base.Collection#change:
+ * @property {Jii.data.CollectionEvent} event
+ */
 Collection.EVENT_CHANGE_NAME = 'change:';
 
 /**
-         * @event Jii.base.Collection#change
-         * @property {Jii.data.CollectionEvent} event
-         */
+ * @event Jii.base.Collection#change
+ * @property {Jii.data.CollectionEvent} event
+ */
 Collection.EVENT_CHANGE = 'change';
 
 /**
-         * @event Jii.base.Collection#fetched
-         * @property {Jii.data.CollectionEvent} event
-         */
+ * @event Jii.base.Collection#fetched
+ * @property {Jii.data.CollectionEvent} event
+ */
 Collection.EVENT_FETCHED = 'fetched';
 
 /**
-         * @event Jii.base.Collection#add
-         * @property {Jii.data.CollectionEvent} event
-         */
+ * @event Jii.base.Collection#add
+ * @property {Jii.data.CollectionEvent} event
+ */
 Collection.EVENT_ADD = 'add';
 module.exports = Collection;

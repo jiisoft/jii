@@ -13,9 +13,9 @@ var DatabaseTestCase = require('../DatabaseTestCase.js');
 class self extends DatabaseTestCase {
 
     testGetTableNames(test) {
-        this.getConnection().then(function(db) {
+        this.getConnection().then(function (db) {
             return db.getSchema().loadTableNames();
-        }).then(function(tables) {
+        }).then(function (tables) {
 
             test.notStrictEqual(_indexOf(tables, 'customer'), -1);
             test.notStrictEqual(_indexOf(tables, 'category'), -1);
@@ -33,19 +33,19 @@ class self extends DatabaseTestCase {
         var tableSchemas = null;
         var tableNames = null;
 
-        this.getConnection().then(function(db) {
+        this.getConnection().then(function (db) {
             schema = db.getSchema();
 
             return schema.loadTableSchemas();
-        }).then(function(ts) {
+        }).then(function (ts) {
             tableSchemas = ts;
 
             return schema.loadTableNames();
-        }).then(function(tn) {
+        }).then(function (tn) {
             tableNames = tn;
 
             test.equals(tableSchemas.length, tableNames.length);
-            _each(tableSchemas, function(table) {
+            _each(tableSchemas, function (table) {
                 test.strictEqual(table instanceof TableSchema, true);
             });
 
@@ -54,8 +54,8 @@ class self extends DatabaseTestCase {
     }
 
     testGetNonExistingTableSchema(test) {
-        this.getConnection().then(function(db) {
-            db.getSchema().loadTableSchema('nonexisting_table').then(function(table) {
+        this.getConnection().then(function (db) {
+            db.getSchema().loadTableSchema('nonexisting_table').then(function (table) {
                 test.strictEqual(table, null);
                 test.done();
             });
@@ -63,9 +63,9 @@ class self extends DatabaseTestCase {
     }
 
     testCompositeFk(test) {
-        this.getConnection().then(function(db) {
+        this.getConnection().then(function (db) {
             var schema = db.getSchema();
-            schema.loadTableSchema('composite_fk').then(function(table) {
+            schema.loadTableSchema('composite_fk').then(function (table) {
 
                 test.strictEqual(table.foreignKeys.length, 1);
                 test.strictEqual(_has(table.foreignKeys, 0), true);
@@ -281,14 +281,14 @@ class self extends DatabaseTestCase {
     testColumnSchema(test) {
         var columns = this.getExpectedColumns();
 
-        this.getConnection().then(function(db) {
+        this.getConnection().then(function (db) {
             return db.getSchema().loadTableSchema('type', true);
-        }).then(function(table) {
+        }).then(function (table) {
             var expectedColNames = _keys(columns).sort();
             var colNames = table.getColumnNames().sort();
             test.deepEqual(colNames, expectedColNames);
 
-            _each(table.columns, function(column, name) {
+            _each(table.columns, function (column, name) {
                 var expected = columns[name];
 
                 test.strictEqual(column.dbType, expected.dbType);

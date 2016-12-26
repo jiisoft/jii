@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -11,21 +12,25 @@ var ViewEvent = require('./ViewEvent');
 var _isString = require('lodash/isString');
 var _isFunction = require('lodash/isFunction');
 var Component = require('../base/Component');
+
 class View extends Component {
 
     preInit() {
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this.renderers = null;
+
         /**
-     * @type {Jii.view.IRenderer|null}
-     */
+         * @type {Jii.view.IRenderer|null}
+         */
         this.renderer = null;
+
         /**
-     * @type {mixed} custom parameters that are shared among view templates.
-     */
+         * @type {mixed} custom parameters that are shared among view templates.
+         */
         this.params = null;
+
         super.preInit(...arguments);
     }
 
@@ -124,12 +129,12 @@ View.RENDERER_UNDERSCORE = 'underscore';
 
 View.RENDERER_REACT = 'react';
 /**
-         * @event ViewEvent an event that is triggered by [[renderFile()]] right after it renders a view file.
-         */
+ * @event ViewEvent an event that is triggered by [[renderFile()]] right after it renders a view file.
+ */
 View.EVENT_AFTER_RENDER = 'afterRender';
 
 /**
-         * @event ViewEvent an event that is triggered by [[renderFile()]] right before it renders a view file.
-         */
+ * @event ViewEvent an event that is triggered by [[renderFile()]] right before it renders a view file.
+ */
 View.EVENT_BEFORE_RENDER = 'beforeRender';
 module.exports = View;

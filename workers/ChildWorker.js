@@ -2,6 +2,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../index');
@@ -13,33 +14,40 @@ var _isArray = require('lodash/isArray');
 var _has = require('lodash/has');
 var Component = require('../base/Component');
 var cluster = require('cluster');
+
 class ChildWorker extends Component {
 
     preInit() {
         /**
-     * @type {number}
-     */
+         * @type {number}
+         */
         this.stopTimeout = 10;
+
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this._actionResponses = {};
+
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this._actionHandlers = {};
+
         /**
-     * @type {object|null}
-     */
+         * @type {object|null}
+         */
         this._config = null;
+
         /**
-     * @type {number|null}
-     */
+         * @type {number|null}
+         */
         this._index = null;
+
         /**
-     * @type {string}
-     */
+         * @type {string}
+         */
         this.name = null;
+
         super.preInit(...arguments);
     }
 
@@ -209,8 +217,8 @@ class ChildWorker extends Component {
 }
 
 /**
-         * @event Jii.workers.ChildWorker#message
-         * @property {Jii.workers.MessageEvent} event
-         */
+ * @event Jii.workers.ChildWorker#message
+ * @property {Jii.workers.MessageEvent} event
+ */
 ChildWorker.EVENT_MESSAGE = 'message';
 module.exports = ChildWorker;

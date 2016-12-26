@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -11,6 +12,7 @@ var _trimEnd = require('lodash/trimEnd');
 var _each = require('lodash/each');
 var _has = require('lodash/has');
 var Request = require('./Request');
+
 class HttpRequest extends Request {
 
     preInit() {
@@ -18,6 +20,7 @@ class HttpRequest extends Request {
          * @type {Jii.request.HeaderCollection}
          */
         this._headers = null;
+
         this._port = null;
         this._serverPort = null;
         this._hostInfo = null;
@@ -331,11 +334,14 @@ class HttpRequest extends Request {
         this._baseUrl = value;
     }
 
-    _parseHeaders() {}
+    _parseHeaders() {
+    }
 
-    _parsePathInfo() {}
+    _parsePathInfo() {
+    }
 
-    _parseHostInfo() {}
+    _parseHostInfo() {
+    }
 
 }
 module.exports = HttpRequest;

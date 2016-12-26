@@ -1,3 +1,8 @@
+/**
+ * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
+ * @license MIT
+ */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -6,86 +11,101 @@ var InvalidConfigException = require('../exceptions/InvalidConfigException');
 var _isObject = require('lodash/isObject');
 var _isEmpty = require('lodash/isEmpty');
 var _isArray = require('lodash/isArray');
+
 class Pagination extends Component {
 
     preInit() {
         /**
-     * @type {Jii.base.Context}
-     */
+         * @type {Jii.base.Context}
+         */
         this._context = null;
+
         /**
-     * @type {number|null}
-     */
+         * @type {number|null}
+         */
         this._page = null;
+
         /**
-     * @type {number|null} number of items on each page.
-     * If it is less than 1, it means the page size is infinite, and thus a single page contains all items.
-     */
+         * @type {number|null} number of items on each page.
+         * If it is less than 1, it means the page size is infinite, and thus a single page contains all items.
+         */
         this._pageSize = null;
+
         /**
-     * @type {string}
-     */
+         * @type {string}
+         */
         this.mode = 'pages';
+
         /**
-     * @type {[]|boolean} the page size limits. The first array element stands for the minimal page size, and the second
-     * the maximal page size. If this is false, it means [[pageSize]] should always return the value of [[defaultPageSize]].
-     */
+         * @type {[]|boolean} the page size limits. The first array element stands for the minimal page size, and the second
+         * the maximal page size. If this is false, it means [[pageSize]] should always return the value of [[defaultPageSize]].
+         */
         this.pageSizeLimit = [
             1,
             50
         ];
+
         /**
-     * @type {number} the default page size. This property will be returned by [[pageSize]] when page size
-     * cannot be determined by [[pageSizeParam]] from [[params]].
-     */
+         * @type {number} the default page size. This property will be returned by [[pageSize]] when page size
+         * cannot be determined by [[pageSizeParam]] from [[params]].
+         */
         this.defaultPageSize = 20;
+
         /**
-     * @type {number} total number of items.
-     */
+         * @type {number} total number of items.
+         */
         this.totalCount = 0;
+
         /**
-     * @type {boolean} whether to check if [[page]] is within valid range.
-     * When this property is true, the value of [[page]] will always be between 0 and ([[pageCount]]-1).
-     * Because [[pageCount]] relies on the correct value of [[totalCount]] which may not be available
-     * in some cases (e.g. MongoDB), you may want to set this property to be false to disable the page
-     * number validation. By doing so, [[page]] will return the value indexed by [[pageParam]] in [[params]].
-     */
+         * @type {boolean} whether to check if [[page]] is within valid range.
+         * When this property is true, the value of [[page]] will always be between 0 and ([[pageCount]]-1).
+         * Because [[pageCount]] relies on the correct value of [[totalCount]] which may not be available
+         * in some cases (e.g. MongoDB), you may want to set this property to be false to disable the page
+         * number validation. By doing so, [[page]] will return the value indexed by [[pageParam]] in [[params]].
+         */
         this.validatePage = true;
+
         /**
-     * @type {Jii.request.UrlManager|null} the URL manager used for creating pagination URLs. If not set,
-     * the "urlManager" application component will be used.
-     */
+         * @type {Jii.request.UrlManager|null} the URL manager used for creating pagination URLs. If not set,
+         * the "urlManager" application component will be used.
+         */
         this.urlManager = null;
+
         /**
-     * @type {[]} parameters (name => value) that should be used to obtain the current page number
-     * and to create new pagination() URLs. If not set, all parameters from _GET will be used instead.
-     *
-     * In order to add hash to all links use `array_merge(_GET, {'#': 'my-hash'})`.
-     *
-     * The array element indexed by [[pageParam]] is considered to be the current page number (defaults to 0);
-     * while the element indexed by [[pageSizeParam]] is treated as the page size (defaults to [[defaultPageSize]]).
-     */
+         * @type {[]} parameters (name => value) that should be used to obtain the current page number
+         * and to create new pagination() URLs. If not set, all parameters from _GET will be used instead.
+         *
+         * In order to add hash to all links use `array_merge(_GET, {'#': 'my-hash'})`.
+         *
+         * The array element indexed by [[pageParam]] is considered to be the current page number (defaults to 0);
+         * while the element indexed by [[pageSizeParam]] is treated as the page size (defaults to [[defaultPageSize]]).
+         */
         this.params = null;
+
         /**
-     * @type {string|null} the route of the controller action for displaying the paged contents.
-     * If not set, it means using the currently requested route.
-     */
+         * @type {string|null} the route of the controller action for displaying the paged contents.
+         * If not set, it means using the currently requested route.
+         */
         this.route = null;
+
         /**
-     * @type {boolean} whether to always have the page parameter in the URL created by [[createUrl()]].
-     * If false and [[page]] is 0, the page parameter will not be put in the URL.
-     */
+         * @type {boolean} whether to always have the page parameter in the URL created by [[createUrl()]].
+         * If false and [[page]] is 0, the page parameter will not be put in the URL.
+         */
         this.forcePageParam = true;
+
         /**
-     * @type {string} name of the parameter storing the page size.
-     * @see params
-     */
+         * @type {string} name of the parameter storing the page size.
+         * @see params
+         */
         this.pageSizeParam = 'per-page';
+
         /**
-     * @type {string} name of the parameter storing the current page index.
-     * @see params
-     */
+         * @type {string} name of the parameter storing the current page index.
+         * @see params
+         */
         this.pageParam = 'page';
+
         super.preInit(...arguments);
     }
 
@@ -356,8 +376,8 @@ Pagination.LINK_NEXT = 'next';
 Pagination.REL_SELF = 'self';
 
 /**
-         * @event Jii.data.Pagination#change
-         * @property {Jii.base.Event} event
-         */
+ * @event Jii.data.Pagination#change
+ * @property {Jii.base.Event} event
+ */
 Pagination.EVENT_CHANGE = 'change';
 module.exports = Pagination;

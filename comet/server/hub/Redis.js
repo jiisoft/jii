@@ -1,31 +1,42 @@
+/**
+ * @author Vladimir Kozhin <affka@affka.ru>
+ * @license MIT
+ */
+
 'use strict';
 
 var Jii = require('../../../BaseJii');
 var ChannelEvent = require('../../ChannelEvent');
 var HubInterface = require('./HubInterface');
+
 class Redis extends HubInterface {
 
     preInit() {
         /**
-     * @type {RedisClient}
-     */
+         * @type {RedisClient}
+         */
         this._subscriber = null;
+
         /**
-     * @type {RedisClient}
-     */
+         * @type {RedisClient}
+         */
         this._hub = null;
+
         /**
-     * @type {string}
-     */
+         * @type {string}
+         */
         this.password = null;
+
         /**
-     * @type {number}
-     */
+         * @type {number}
+         */
         this.port = 6379;
+
         /**
-     * @type {string}
-     */
+         * @type {string}
+         */
         this.host = '127.0.0.1';
+
         super.preInit(...arguments);
     }
 

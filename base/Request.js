@@ -2,18 +2,21 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var _has = require('lodash/has');
 var Component = require('./Component');
+
 class Request extends Component {
 
     preInit() {
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this._params = null;
+
         super.preInit(...arguments);
     }
 
@@ -69,7 +72,8 @@ class Request extends Component {
         return name === null ? this.getParams() : this.getParam(name, defaultValue);
     }
 
-    _parseParams() {}
+    _parseParams() {
+    }
 
 }
 module.exports = Request;

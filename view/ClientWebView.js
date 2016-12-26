@@ -2,10 +2,12 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var WebView = require('./WebView');
+
 class ClientWebView extends WebView {
 
     _registerMetaTagInternal(key, options) {

@@ -2,10 +2,12 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var _isObject = require('lodash/isObject');
+
 class BaseObject {
 
     constructor() {
@@ -23,17 +25,17 @@ class BaseObject {
     }
 
     /**
-         * Return full class name with namespace
-         * @returns {string}
-         */
+     * Return full class name with namespace
+     * @returns {string}
+     */
     static className() {
         return this.name;
     }
 
     /**
-         * Return extended class name with namespace
-         * @returns {string}
-         */
+     * Return extended class name with namespace
+     * @returns {string}
+     */
     static parentClassName() {
         return Object.getPrototypeOf(this).name;
     }
@@ -41,7 +43,8 @@ class BaseObject {
     /**
      * Customized initialize method
      */
-    init() {}
+    init() {
+    }
 
     /**
      * Return full class name with namespace

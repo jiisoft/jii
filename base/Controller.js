@@ -2,6 +2,7 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
@@ -18,34 +19,40 @@ var _isObject = require('lodash/isObject');
 var _isString = require('lodash/isString');
 var _has = require('lodash/has');
 var Component = require('./Component');
+
 class Controller extends Component {
 
     preInit(id, moduleObject, config) {
         /**
-     * The view object that can be used to render views or view files.
-     * @type {Jii.view.View}
-     */
+         * The view object that can be used to render views or view files.
+         * @type {Jii.view.View}
+         */
         this._view = null;
+
         /**
-     * @type {string|boolean} the name of the layout to be applied to this controller's views.
-     * This property mainly affects the behavior of [[render()]].
-     * Defaults to null, meaning the actual layout value should inherit that from [[module]]'s layout value.
-     * If false, no layout will be applied.
-     */
+         * @type {string|boolean} the name of the layout to be applied to this controller's views.
+         * This property mainly affects the behavior of [[render()]].
+         * Defaults to null, meaning the actual layout value should inherit that from [[module]]'s layout value.
+         * If false, no layout will be applied.
+         */
         this.layout = null;
+
         /**
-     * @type {string} The ID of the action that is used when the action ID is not specified
-     * in the request. Defaults to 'index'.
-     */
+         * @type {string} The ID of the action that is used when the action ID is not specified
+         * in the request. Defaults to 'index'.
+         */
         this.defaultAction = 'index';
+
         /**
-     * @type {string} The ID of this controller.
-     */
+         * @type {string} The ID of this controller.
+         */
         this.id = id;
+
         /**
-     * @type {Jii.base.Module} The module that this controller belongs to.
-     */
+         * @type {Jii.base.Module} The module that this controller belongs to.
+         */
         this.module = moduleObject;
+
         super.preInit(config);
     }
 
@@ -391,14 +398,14 @@ class Controller extends Component {
 }
 
 /**
-         * @event Jii.base.Module#afterAction
-         * @property {Jii.base.ActionEvent} event
-         */
+ * @event Jii.base.Module#afterAction
+ * @property {Jii.base.ActionEvent} event
+ */
 Controller.EVENT_AFTER_ACTION = 'afterAction';
 
 /**
-         * @event Jii.base.Module#beforeAction
-         * @property {Jii.base.ActionEvent} event
-         */
+ * @event Jii.base.Module#beforeAction
+ * @property {Jii.base.ActionEvent} event
+ */
 Controller.EVENT_BEFORE_ACTION = 'beforeAction';
 module.exports = Controller;

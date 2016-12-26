@@ -2,12 +2,14 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var _values = require('lodash/values');
 var _each = require('lodash/each');
 var WebView = require('./WebView');
+
 class ServerWebView extends WebView {
 
     /**

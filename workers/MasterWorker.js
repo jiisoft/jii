@@ -2,6 +2,7 @@
  * @author Vladimir Kozhin <affka@affka.ru>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../index');
@@ -11,27 +12,32 @@ var _has = require('lodash/has');
 var _size = require('lodash/size');
 var BaseObject = require('../base/Object');
 var cluster = require('cluster');
+
 class MasterWorker extends BaseObject {
 
     preInit() {
         /**
-     * @type {boolean}
-     */
+         * @type {boolean}
+         */
         this._isMasterKilled = false;
+
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this._indexes = {};
+
         /**
-     * @type {object}
-     */
+         * @type {object}
+         */
         this._workers = {};
+
         /**
-     * HH:MM format, Example: 05:00
-     * Set `false` for disable
-     * @type {boolean|string}
-     */
+         * HH:MM format, Example: 05:00
+         * Set `false` for disable
+         * @type {boolean|string}
+         */
         this.autoRestartTime = false;
+
         super.preInit(...arguments);
     }
 

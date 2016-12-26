@@ -1,7 +1,13 @@
+/**
+ * @author Vladimir Kozhin <affka@affka.ru>
+ * @license MIT
+ */
+
 'use strict';
 
 var Jii = require('../../BaseJii');
 var Component = require('../../base/Component');
+
 class TransportInterface extends Component {
 
     /**
@@ -10,7 +16,8 @@ class TransportInterface extends Component {
      * @param {object} [params]
      * @returns {Promise}
      */
-    request(route, params) {}
+    request(route, params) {
+    }
 
 }
 module.exports = TransportInterface;

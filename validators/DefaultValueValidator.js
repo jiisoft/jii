@@ -2,15 +2,18 @@
  * @author <a href="http://www.affka.ru">Vladimir Kozhin</a>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../BaseJii');
 var Validator = require('./Validator');
+
 class DefaultValueValidator extends Validator {
 
     preInit() {
         this.skipOnEmpty = false;
         this.value = null;
+
         super.preInit(...arguments);
     }
 

@@ -46,7 +46,7 @@ class HttpServerTest extends UnitTest {
 
     echoTest(test) {
         var testValue = new Date().getTime();
-        request('http://localhost:' + this.constructor.SERVER_PORT + '/?testParam=' + testValue, function(err, response, body) {
+        request('http://localhost:' + this.constructor.SERVER_PORT + '/?testParam=' + testValue, function (err, response, body) {
             test.strictEqual(response.headers['content-type'], 'text/html; charset=utf-8');
             test.strictEqual(body, 'test' + testValue);
 
@@ -56,7 +56,7 @@ class HttpServerTest extends UnitTest {
 
     requestTest(test) {
         var testValue = new Date().getTime();
-        SiteController.prototype.actionTest = function(context) {
+        SiteController.prototype.actionTest = function (context) {
             var request = context.getComponent('request');
             var response = context.getComponent('response');
 
@@ -89,7 +89,7 @@ class HttpServerTest extends UnitTest {
                 'user-agent': 'Mozilla/5.0 (compatible; NodeUnit/2.0)',
                 'x-real-ip': '152.68.13.4'
             }
-        }, function(err, response, body) {
+        }, function (err, response, body) {
             test.strictEqual(response.headers['content-type'], 'application/json; charset=utf-8');
 
             test.done();

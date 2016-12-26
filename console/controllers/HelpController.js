@@ -2,6 +2,7 @@
  * @author Ihor Skliar <skliar.ihor@gmail.com>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../../index');
@@ -21,6 +22,7 @@ var _repeat = require('lodash/repeat');
 var _endsWith = require('lodash/endsWith');
 var Controller = require('../Controller');
 var fs = require('fs');
+
 class HelpController extends Controller {
 
     /**

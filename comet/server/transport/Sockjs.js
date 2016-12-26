@@ -1,3 +1,8 @@
+/**
+ * @author Vladimir Kozhin <affka@affka.ru>
+ * @license MIT
+ */
+
 'use strict';
 
 var Jii = require('../../../BaseJii');
@@ -8,11 +13,13 @@ var MessageEvent = require('../MessageEvent');
 var ConnectionEvent = require('../ConnectionEvent');
 var TransportInterface = require('./TransportInterface');
 var SockJS = require('sockjs');
+
 class SockJs extends TransportInterface {
 
     preInit() {
         this._server = null;
         this.urlPrefix = '/comet';
+
         super.preInit(...arguments);
     }
 

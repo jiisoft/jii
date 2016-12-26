@@ -2,6 +2,7 @@
  * @author Ihor Skliar <skliar.ihor@gmail.com>
  * @license MIT
  */
+
 'use strict';
 
 var Jii = require('../../BaseJii');
@@ -11,23 +12,27 @@ var Query = require('../../data/Query');
 var _each = require('lodash/each');
 var BaseMigrateController = require('./BaseMigrateController');
 var fs = require('fs');
+
 class MigrateController extends BaseMigrateController {
 
     preInit() {
         /**
-     * @type {Jii.data.BaseConnection|string} the DB connection object or the application component ID of the DB connection to use
-     * when applying migrations. Starting from version 2.0.3, this can also be a configuration array
-     * for creating the object.
-     */
+         * @type {Jii.data.BaseConnection|string} the DB connection object or the application component ID of the DB connection to use
+         * when applying migrations. Starting from version 2.0.3, this can also be a configuration array
+         * for creating the object.
+         */
         this.db = null;
+
         /**
-     * @inheritdoc
-     */
+         * @inheritdoc
+         */
         this.templateFile = __dirname + '/../views/migration.js';
+
         /**
-     * @type {string} the name of the table for keeping applied migration information.
-     */
+         * @type {string} the name of the table for keeping applied migration information.
+         */
         this.migrationTable = '{{%migration}}';
+
         super.preInit(...arguments);
     }
 

@@ -1,14 +1,10 @@
 'use strict';
 
 var Jii = require('../index');
+var _clone = require('lodash/clone');
 
 class MenuHelper{
 
-    /**
-     * Translate items to rules for Jii.request.UrlManager
-     * @param items
-     * @returns {Array}
-     */
     static menuToRules(items) {
         let rules = [];
         for(const item in items) {
@@ -17,8 +13,15 @@ class MenuHelper{
                 let urlRule = items[item].urlRule;
 
                 if (url && (urlRule || urlRule == '') && typeof(url) == 'object') {
-                    const defaults = url;
+                    const defaults = _clone(url);
                     const route = defaults[0];
+
+                    if(defaults.length > 0){
+                        defaults.splice(0, 1);
+                    }
+                    else{
+                        delete defaults[0];
+                    }
 
                     if (typeof(urlRule) == 'string') {
                         rules.push({

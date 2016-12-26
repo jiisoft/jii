@@ -117,13 +117,26 @@ class MegaMenuItem extends BaseObject {
     }
 
     /**
+     *
+     * @param forBreadcrumbs
      * @return array
      */
-    toArray() {
+    toArray(forBreadcrumbs = false) {
+        if(forBreadcrumbs){
+            return {
+                'label': this.label,
+                'url': this.url,
+                'urlRule': this.urlRule,
+                'items': this.items,
+                'linkOptions': this.linkOptions,
+            };
+        }
+
         return {
             'label': this.label,
             'url': this.url,
             'roles': this.roles,
+            'urlRule': this.urlRule,
             'visible': this.visible,
             'encode': this.encode,
             'active': this.active,

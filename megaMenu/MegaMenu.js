@@ -21,9 +21,7 @@ class MegaMenu extends Component {
 
     init() {
         super.init();
-        if(this._items){
-            Jii.app.urlManager.setRules(MenuHelper.menuToRules(this._items));
-        }
+        Jii.app.urlManager.setRules(MenuHelper.menuToRules(this._items));
     }
 
     /**
@@ -114,16 +112,13 @@ class MegaMenu extends Component {
     /**
      *
      * @returns {Array|string[]|null|*}
-     */
-    getRequestedRoute() {
-        if (this._requestedRoute === null) {
-            // Set active item
-            const parseInfo = Jii.app.urlManager.parseRequest(new Request(location));
-            if (parseInfo) {
-                this._requestedRoute = _merge([parseInfo[0] ? '/' + parseInfo[0] : ''], parseInfo[1]);
-            } else {
-                this._requestedRoute = ['/404']; //Jii.app.errorHandler.errorAction; //TODO
-            }
+     */    getRequestedRoute() {
+        // Set active item
+        const parseInfo = Jii.app.urlManager.parseRequest(new Request(location));
+        if (parseInfo) {
+            this._requestedRoute = _merge([parseInfo[0] ? '/' + parseInfo[0] : ''], parseInfo[1]);
+        } else {
+            this._requestedRoute = Jii.app.errorHandler.errorAction;
         }
         return this._requestedRoute;
     }
@@ -218,7 +213,7 @@ class MegaMenu extends Component {
 
         // Find child and it parents by url
         let parents = [];
-        const itemModel = this.getItem(url, parents);
+        const itemModel = this.getItem(url, parents, true);
 
         if (!itemModel || (!parents.length && this.isHomeUrl(itemModel.url))) {
             return [];
@@ -245,14 +240,15 @@ class MegaMenu extends Component {
      * Find menu item by item url or route. In param parents will be added all parent items
      * @param {string|array} item
      * @param {object} parents
+     * @param {boolean} forBreadcrumbs
      * @return MegaMenuItem|null
      */
-    getItem(item, parents) {
+    getItem(item, parents, forBreadcrumbs = false) {
         const url = typeof(item) == 'object' && !this.isRoute(item) ?
             item['url'] :
             item;
 
-        return this.findItemRecursive(url, this.getItems(), parents);
+        return this.findItemRecursive(url, this.getItems(), parents, forBreadcrumbs);
     }
 
     /**
@@ -367,9 +363,10 @@ class MegaMenu extends Component {
      * @param {string|array} url
      * @param {MegaMenuItem[]} items
      * @param {object} parents
+     * @param {boolean} forBreadcrumbs
      * @return MegaMenuItem
      */
-    findItemRecursive(url, items, parents) {
+    findItemRecursive(url, items, parents, forBreadcrumbs = false) {
         for(var key in items){
             if(items.hasOwnProperty(key)){
                 if (items[key].url && this.isUrlEquals(url, items[key].url)) {
@@ -377,9 +374,9 @@ class MegaMenu extends Component {
                 }
 
                 if (items[key].items) {
-                    let foundItem = this.findItemRecursive(url, items[key].items, parents);
+                    let foundItem = this.findItemRecursive(url, items[key].items, parents, forBreadcrumbs);
                     if (foundItem) {
-                        let parentItem = items[key].toArray();
+                        let parentItem = items[key].toArray(forBreadcrumbs);
                         delete parentItem['items'];
                         parents.push(parentItem);
 

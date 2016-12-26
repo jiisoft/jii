@@ -3,7 +3,8 @@ node_js:
   - "6"
 services:
   - mysql
-before script:
+sudo: required
+before_install:
   - mysql -e "CREATE DATABASE jiitest"
   - mysql -e "CREATE USER jiitest@localhost IDENTIFIED BY 'jiitest'"
   - mysql -uroot -e "GRANT ALL PRIVILEGES ON jiitest.* TO jiitest@localhost"

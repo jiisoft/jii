@@ -11,6 +11,11 @@ var _sortBy = require('lodash/sortBy');
 var _difference = require('lodash/difference');
 var _keys = require('lodash/keys');
 
+/**
+ * Class MegaMenu
+ * @property {object} $items
+ * @property-read {object} $activeItem
+ */
 class MegaMenu extends Component {
 
     preInit() {
@@ -35,7 +40,7 @@ class MegaMenu extends Component {
 
     /**
      * Get all tree menu items
-     * @return {object}
+     * @return {MegaMenuItem[]}
      */
     getItems() {
         return this._items;
@@ -43,7 +48,7 @@ class MegaMenu extends Component {
 
     /**
      * Add tree menu items
-     * @param {array} items
+     * @param {object} items
      * @param {boolean} append
      */
     addItems(items, append = true) {
@@ -51,7 +56,7 @@ class MegaMenu extends Component {
     }
 
     /**
-     * Merge MenuItems and object
+     * Merge MenuItems and object with this.items
      * @param baseItems
      * @param items
      * @param append
@@ -112,12 +117,13 @@ class MegaMenu extends Component {
 
     /**
      *
-     * @returns {Array|string[]|null|*}
+     * @returns {object|string[]|null|*}
      */
     getRequestedRoute() {
         // Set active item
         const parseInfo = Jii.app.urlManager.parseRequest(new Request(location));
         if (parseInfo) {
+            //set object/array in depending from parseInfo
             if(_keys(parseInfo[1]).length){
                 this._requestedRoute = _merge({0: parseInfo[0] ? '/' + parseInfo[0] : ''}, parseInfo[1]);
             }
@@ -125,7 +131,7 @@ class MegaMenu extends Component {
                 this._requestedRoute = [parseInfo[0] ? '/' + parseInfo[0] : ''];
             }
         } else {
-            this._requestedRoute = Jii.app.errorHandler.errorAction;
+            this._requestedRoute = ['/404']; //TODO: add Jii.app.errorHandler.errorAction
         }
         return this._requestedRoute;
     }
@@ -198,7 +204,7 @@ class MegaMenu extends Component {
     /**
      * Find item by url (or current page) and return item label with all parent labels
      * @param {object} url Child url or route, default - current route
-     * @param {string} separator Separator, default is " - "
+     * @param {string} separator Separator, default is ' - '
      * @return {string}
      */
     getFullTitle(url = null, separator = ' — ') {
@@ -245,12 +251,12 @@ class MegaMenu extends Component {
 
     /**
      * Find menu item by item url or route. In param parents will be added all parent items
-     * @param {string|array} item
+     * @param {string|object} item
      * @param {object} parents
      * @param {boolean} forBreadcrumbs
      * @return MegaMenuItem|null
      */
-    getItem(item, parents, forBreadcrumbs = false) {
+    getItem(item, parents = [], forBreadcrumbs = false) {
         const url = typeof(item) == 'object' && !this.isRoute(item) ?
             item['url'] :
             item;
@@ -269,8 +275,8 @@ class MegaMenu extends Component {
     }
 
     /**
-     * @param {string|array|MegaMenuItem} url1
-     * @param {string|array} url2
+     * @param {string|object|MegaMenuItem} url1
+     * @param {string|object|MegaMenuItem} url2
      * @return {boolean}
      */
     isUrlEquals(url1, url2) {
@@ -316,7 +322,7 @@ class MegaMenu extends Component {
     }
 
     /**
-     * @param {string|array} url
+     * @param {string|object} url
      * @return {boolean}
      */
     isHomeUrl(url) {
@@ -327,7 +333,7 @@ class MegaMenu extends Component {
     }
 
     /**
-     * @param {mixed} value
+     * @param {string|object} value
      * @return {boolean}
      */
     isRoute(value) {
@@ -367,7 +373,7 @@ class MegaMenu extends Component {
     }
 
     /**
-     * @param {string|array} url
+     * @param {string|object} url
      * @param {MegaMenuItem[]} items
      * @param {object} parents
      * @param {boolean} forBreadcrumbs

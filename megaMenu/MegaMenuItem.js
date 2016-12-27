@@ -24,7 +24,7 @@ class MegaMenuItem extends BaseObject {
         this.urlRule = null;
 
         /**
-         * Value format is identical to \yii\filters\AccessRule::roles. "?", "@" or string role are supported
+         * Value format is identical to \yii\filters\AccessRule::roles. '?', '@' or string role are supported
          * @var string|string[]
          */
         this.roles = null;

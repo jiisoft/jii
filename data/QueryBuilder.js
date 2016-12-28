@@ -28,7 +28,7 @@ var _values = require('lodash/values');
 var _words = require('lodash/words');
 var _trim = require('lodash/trim');
 var _trimStart = require('lodash/trimStart');
-var BaseObject = require('../base/Object');
+var BaseObject = require('../base/BaseObject');
 
 class QueryBuilder extends BaseObject {
 

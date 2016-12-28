@@ -20,8 +20,6 @@ class Context extends Component {
          */
         this._route = null;
 
-        this._coreComponents = require('../components.json');
-
         /**
          * @type {object}
          */
@@ -96,11 +94,6 @@ class Context extends Component {
         } else {
             // Create component instance
             if (!(component instanceof Component)) {
-                // Auto get class name
-                if (!component.className && _has(this._coreComponents, id)) {
-                    component.className = _isObject(this._coreComponents[id]) ? Jii.isNode ? this._coreComponents[id].server : this._coreComponents[id].client : this._coreComponents[id];
-                }
-
                 if (component.className) {
                     var componentClass = Jii.namespace(component.className);
                     if (typeof componentClass.prototype.owner !== 'undefined') {

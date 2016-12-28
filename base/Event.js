@@ -14,7 +14,7 @@ var _isString = require('lodash/isString');
 var _isUndefined = require('lodash/isUndefined');
 var _has = require('lodash/has');
 var _each = require('lodash/each');
-var BaseObject = require('./Object');
+var BaseObject = require('./BaseObject');
 
 class Event extends BaseObject {
 

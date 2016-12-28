@@ -8,7 +8,7 @@
 var Jii = require('../index');
 var BaseResponse = require('../base/Response');
 
-class Response extends BaseResponse {
+class WorkerResponse extends BaseResponse {
 
     preInit() {
         /**
@@ -29,4 +29,4 @@ class Response extends BaseResponse {
     }
 
 }
-module.exports = Response;
+module.exports = WorkerResponse;

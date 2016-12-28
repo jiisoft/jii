@@ -14,6 +14,7 @@ var ChannelEvent = require('../ChannelEvent');
 var _indexOf = require('lodash/indexOf');
 var _each = require('lodash/each');
 var Component = require('../../base/Component');
+var AutoReconnect = require('./plugin/AutoReconnect');
 
 /**
  * Read-only from api stationUid
@@ -68,16 +69,14 @@ class Client extends Component {
              * @type {Jii.comet.client.plugin.AutoReconnect}
              */
             autoReconnect: {
-                className: 'Jii.comet.client.plugin.AutoReconnect'
+                className: AutoReconnect
             }
         };
 
         /**
          * @type {Jii.comet.client.transport.TransportInterface}
          */
-        this.transport = {
-            className: 'Jii.comet.client.transport.Sockjs'
-        };
+        this.transport = null;
 
         super.preInit(...arguments);
     }

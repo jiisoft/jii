@@ -9,7 +9,7 @@ var FilterBuilder = require('../../data/FilterBuilder');
 var ModelSchema = require('../../data/ModelSchema');
 var _isObject = require('lodash/isObject');
 var _keys = require('lodash/keys');
-var BaseObject = require('../../base/Object');
+var BaseObject = require('../../base/BaseObject');
 class Schema extends BaseObject {
 
     preInit() {

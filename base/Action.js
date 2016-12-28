@@ -8,7 +8,7 @@
 var Jii = require('../BaseJii');
 var InvalidConfigException = require('../exceptions/InvalidConfigException');
 var _isFunction = require('lodash/isFunction');
-var BaseObject = require('./Object');
+var BaseObject = require('./BaseObject');
 
 class Action extends BaseObject {
 

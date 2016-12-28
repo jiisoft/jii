@@ -8,7 +8,7 @@
 var Jii = require('../BaseJii');
 var Expression = require('../data/Expression');
 var _isArray = require('lodash/isArray');
-var BaseObject = require('../base/Object');
+var BaseObject = require('../base/BaseObject');
 
 class ColumnSchemaBuilder extends BaseObject {
 

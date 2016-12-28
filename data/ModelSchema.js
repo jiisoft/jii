@@ -15,7 +15,7 @@ var _isEmpty = require('lodash/isEmpty');
 var _each = require('lodash/each');
 var _has = require('lodash/has');
 var _keys = require('lodash/keys');
-var BaseObject = require('../base/Object');
+var BaseObject = require('../base/BaseObject');
 
 class ModelSchema extends BaseObject {
 

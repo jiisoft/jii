@@ -1,8 +1,16 @@
 language: node_js
 node_js:
   - "6"
+services:
+  - mysql
+sudo: required
+before_install:
+  - mysql -e "CREATE DATABASE jiitest"
+  - mysql -e "CREATE USER jiitest@localhost IDENTIFIED BY 'jiitest'"
+  - mysql -uroot -e "GRANT ALL PRIVILEGES ON jiitest.* TO jiitest@localhost"
 install:
   - npm i
   - npm i jii-mysql
+  - ln -fs ../ node_modules/jii
 script:
   - nodeunit tests/unit

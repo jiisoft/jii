@@ -2,6 +2,7 @@
     "urlManager": "Jii.request.UrlManager",
     "formatter": "Jii.i18n.Formatter",
     "megaMenu": "Jii.megaMenu.MegaMenu",
+    "user": "Jii.web.WebUser",
     "view": {
         "client": "Jii.view.ClientWebView",
         "server": "Jii.view.ServerWebView"

@@ -19,7 +19,7 @@ var _keys = require('lodash/keys');
 class MegaMenu extends Component {
 
     preInit() {
-        this._items = [];
+        this._items = {};
         this._requestedRoute = null;
 
         super.preInit(...arguments);
@@ -65,18 +65,18 @@ class MegaMenu extends Component {
     mergeItems(baseItems, items, append) {
         _forIn(items, (item, id) => {
             // Merge item with group (as key)
-            if (typeof(id) == 'string' && baseItems[id]) {
+            if (typeof(id) == 'string' && baseItems['_' + id]) {
                 _forIn(item, (value, key) =>  {
                     if (key === 'items') {
-                        baseItems[id][key] = this.mergeItems(baseItems[id][key], value, append);
+                        baseItems['_' + id][key] = this.mergeItems(baseItems['_' + id][key], value, append);
                     }
-                    else if (typeof(baseItems[id]) == 'object' && typeof(value) == 'object') {
-                        baseItems[id][key] = append
-                            ? _merge(baseItems[id][key], value)
-                            : _merge(value, baseItems[id][key]);
+                    else if (typeof(baseItems['_' + id]) == 'object' && typeof(value) == 'object') {
+                        baseItems['_' + id][key] = append
+                            ? _merge(baseItems['_' + id][key], value)
+                            : _merge(value, baseItems['_' + id][key]);
                     }
-                    else if (append || baseItems[id][key] === null) {
-                        baseItems[id][key] = value;
+                    else if (append || baseItems['_' + id][key] === null) {
+                        baseItems['_' + id][key] = value;
                     }
                 });
             } else {
@@ -87,25 +87,21 @@ class MegaMenu extends Component {
                 }
 
                 // Append or prepend item
-                if (typeof(id) == 'number') {
-                    if (append) {
-                        baseItems.push(item);
-                    } else {
-                        baseItems.unshift(item);
-                    }
+                if (append) {
+                    baseItems['_' + id] = item;
                 } else {
-                    if (append) {
-                        baseItems[id] = item;
-                    } else {
-                        baseItems = _merge({id: item}, baseItems);
-                    }
+                    baseItems = _merge({['_' + id]: item}, baseItems);
                 }
             }
         });
 
-        _sortBy(baseItems, 'order');
+        //sort
+        let sortedBaseItems = {};
+        Object.keys(baseItems)
+            .sort((key1, key2) => baseItems[key1].order > baseItems[key2].order)
+            .forEach(key => sortedBaseItems[key] = baseItems[key]);
 
-        return baseItems;
+        return sortedBaseItems;
     }
 
     /**
@@ -162,7 +158,7 @@ class MegaMenu extends Component {
         }
 
         let menu = [];
-        if (!custom) {
+        if (!custom || !custom.length) {
             // All
             menu = itemModels;
         } else {
@@ -187,7 +183,9 @@ class MegaMenu extends Component {
 
         return menu.map(itemModel => {
             /** @var {MegaMenuItem} itemModel */
-            return itemModel.toArray();
+            let arrayModel = itemModel.toArray();
+            arrayModel['url'] = MenuHelper.normalizeUrl(arrayModel['url'], arrayModel['urlRule']);
+            return arrayModel;
         });
     }
 
@@ -198,7 +196,7 @@ class MegaMenu extends Component {
      */
     getTitle(url = null) {
         const titles = this.getBreadcrumbs(url).reverse();
-        return titles ? titles[0]['label'] : '';
+        return titles && titles.length ? titles[0]['label'] : '';
     }
 
     /**
@@ -234,8 +232,7 @@ class MegaMenu extends Component {
 
         parents.reverse().push({
             'label': itemModel.label,
-            'url': itemModel.url,
-            'urlRule': itemModel.urlRule,
+            'url': itemModel.urlRule || itemModel.url,
             'linkOptions': typeof(itemModel.linkOptions) == 'object' ? itemModel.linkOptions : [],
         });
 
@@ -244,10 +241,14 @@ class MegaMenu extends Component {
                 parent = _merge(parent, parent['linkOptions']);
                 delete parent['linkOptions'];
             }
+            parent['url'] = MenuHelper.normalizeUrl(parent['url'], parent['urlRule']);
+
         });
 
         return parents;
     }
+
+
 
     /**
      * Find menu item by item url or route. In param parents will be added all parent items
@@ -294,13 +295,13 @@ class MegaMenu extends Component {
             }
 
             // Compare routes' parameters by checking if keys are identical
-            if (_difference(url1, url2).length || _difference(url2, url1).length) {
+            if (_difference(url1, url2).length && _difference(url2, url1).length) {
                 return false;
             }
 
             Object.keys(url1).map((value, key) => {
                 if (typeof(key) == 'string' && key !== '#') {
-                    if (!url2[key]) {
+                    if (!url2[key] || typeof(url2[key]) == 'object' && !url2[key].length) {
                         return false;
                     }
 
@@ -329,7 +330,7 @@ class MegaMenu extends Component {
         if (this.isRoute(url)) {
             return this.isUrlEquals(['/' + Jii.app.defaultRoute], url);
         }
-        return url === '/'; //Jii.app.HomeUrl
+        return url === Jii.app.getHomeUrl();
     }
 
     /**
@@ -362,8 +363,9 @@ class MegaMenu extends Component {
 
                 item['items'] = this.sliceTreeItems(itemModel.items, nextLevel);
             }
+            item['url'] = MenuHelper.normalizeUrl(item['url'], item['urlRule']);
 
-            if (!item['items']) {
+            if (!item['items'] || !item['items'].length) {
                 item['items'] = null;
             }
             menu.push(item);

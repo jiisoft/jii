@@ -2,6 +2,8 @@
 
 var Jii = require('../index');
 var BaseObject = require('../base/Object');
+var _merge = require('lodash/merge');
+var _clone = require('lodash/clone');
 
 class MegaMenuItem extends BaseObject {
 
@@ -18,14 +20,14 @@ class MegaMenuItem extends BaseObject {
         this.url = null;
 
         /**
-         * Value format is identical to item from \yii\web\UrlManager::rules
+         * Value format is identical to item from \Jii\web\UrlManager.rules
          * @var string|array|UrlRule
          */
         this.urlRule = null;
 
         /**
-         * Value format is identical to \yii\filters\AccessRule::roles. '?', '@' or string role are supported
-         * @var string|string[]
+         * Value format is identical to \Jii\filters\AccessRule.roles. '?', '@' or string role are supported
+         * @var {string|string[]}
          */
         this.roles = null;
 
@@ -70,7 +72,7 @@ class MegaMenuItem extends BaseObject {
         this._active = null;
 
         /**
-         * @var callable|callable[]
+         * @var {function|function[]}
          */
         this.accessCheck = null;
 
@@ -81,25 +83,24 @@ class MegaMenuItem extends BaseObject {
      * @return {boolean}
      */
     getActive() {
-        if (this._active === null) {
-            this._active = false;
+        this._active = false;
 
-            if (this.url && this.owner.isUrlEquals(this.url, this.owner.getRequestedRoute())) {
-                this._active = true;
-            } else {
-                for(const itemModel in this.items) {
-                    if (this.items.hasOwnProperty(itemModel) && this.items[itemModel].active) {
-                        this._active = true;
-                        break;
-                    }
+        if (this.url && this.owner.isUrlEquals(this.url, this.owner.getRequestedRoute())) {
+            this._active = true;
+        } else {
+            for(const itemModel in this.items) {
+                if (this.items.hasOwnProperty(itemModel) && this.items[itemModel].active) {
+                    this._active = true;
+                    break;
                 }
             }
         }
+
         return this._active;
     }
 
     /**
-     * @param {bool} value
+     * @param {boolean} value
      */
     setActive(value) {
         this._active = value;
@@ -109,11 +110,57 @@ class MegaMenuItem extends BaseObject {
      * @return {boolean}
      */
     getVisible() {
-        if (this.visible !== null) {
+        if (this.visible === true || this.visible === false) {
             return this.visible;
         }
 
         return this.checkVisible(this.url);
+    }
+
+    /**
+     * @param {object} url
+     * @return {boolean}
+     */
+    checkVisible(url) {
+        if(this.roles === null && this.accessCheck === null){
+            return true;
+        }
+
+        if(typeof(this.roles) == 'string'){
+            this.roles = [this.roles];
+        }
+        if(typeof(this.accessCheck) == 'function'){
+            this.accessCheck = [this.accessCheck];
+        }
+        const rules = _merge(this.accessCheck || [], this.roles || []);
+
+        if (rules) {
+            for(let index in rules) {
+                if(rules.hasOwnProperty(index)) {
+                    if (typeof(rules[index]) == 'function') {
+                        const params = rules[index](url);
+                        const permissionName = _clone(params[0]);
+                        delete params[0];
+                        if (permissionName && Jii.app.user.can(permissionName, params)) {
+                            return true;
+                        }
+                    } else if (rules[index] === '?') {
+                        if (!Jii.app.user.role) {
+                            return true;
+                        }
+                    } else if (rules[index] === '@') {
+                        if (Jii.app.user.role) {
+                            return true;
+                        }
+                    } else  if (Jii.app.user.role == rules[index]) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        return true;
     }
 
     /**
@@ -125,8 +172,7 @@ class MegaMenuItem extends BaseObject {
         if(forBreadcrumbs){
             return {
                 'label': this.label,
-                'url': this.url,
-                'urlRule': this.urlRule,
+                'url': this.urlRule || this.url,
                 'items': this.items,
                 'linkOptions': this.linkOptions,
             };
@@ -137,9 +183,9 @@ class MegaMenuItem extends BaseObject {
             'url': this.url,
             'roles': this.roles,
             'urlRule': this.urlRule,
-            'visible': this.visible,
+            'visible': this.getVisible(),
             'encode': this.encode,
-            'active': this.active,
+            'active': this.getActive(),
             'items': this.items,
             'options': this.options,
             'linkOptions': this.linkOptions,

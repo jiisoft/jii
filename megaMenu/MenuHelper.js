@@ -2,6 +2,7 @@
 
 var Jii = require('../index');
 var _clone = require('lodash/clone');
+var _trimStart = require('lodash/trimStart');
 
 class MenuHelper{
 
@@ -60,10 +61,22 @@ class MenuHelper{
         route = Jii.getAlias(route);
         if (MenuHelper.strncmp(route, '/', 1) === 0) {
             // absolute route
-            return route[0] == '/' ? route.substr(1) : route;
+            return _trimStart(route, '/');
         }
-
         return route;
+    }
+
+    /**
+     * @param {string} url
+     * @param {string} urlRoute
+     * @return {string}
+     */
+    static normalizeUrl(url, urlRoute) {
+        url = urlRoute || urlRoute == '' ? urlRoute : url;
+        if(typeof(url) == 'string' && url[0] != '/') {
+            url = '/' + (urlRoute || url);
+        }
+        return url;
     }
 
     /**

@@ -296,7 +296,7 @@ class MegaMenu extends Component {
             }
 
             // Compare routes' parameters by checking if keys are identical
-            if (_difference(url1, url2).length && _difference(url2, url1).length) {
+            if (_difference(url1, url2).length || _difference(url2, url1).length) {
                 return false;
             }
 

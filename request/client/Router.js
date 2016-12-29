@@ -136,8 +136,18 @@ class Router extends Component {
 
         var request = new Request(location);
         var result = this.urlManager.parseRequest(request);
-        let moduleName = result[0].split('/')[0];
-        if (result !== false && (Jii.app.getModule(moduleName) || moduleName == '')) {
+        const urlPathes = result[0].split('/');
+        const moduleName = urlPathes[0];
+        const controllerName = urlPathes[1]
+                .split('-')
+                .map(s => s.charAt(0).toUpperCase() + s.substr(1)) //to upper first symbol
+                .join('') + 'Controller';
+
+        if (result !== false &&
+            Jii.app.getModule(moduleName) &&
+            Object.keys(Jii.app.getModule(moduleName).controllerMap).indexOf(controllerName) !== -1 ||
+            moduleName == '')
+        {
             var route = result[0];
             var params = result[1];
 

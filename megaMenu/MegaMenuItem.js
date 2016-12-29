@@ -4,6 +4,8 @@ var Jii = require('../index');
 var BaseObject = require('../base/Object');
 var _merge = require('lodash/merge');
 var _clone = require('lodash/clone');
+var _keys = require('lodash/keys');
+var _difference = require('lodash/difference');
 
 class MegaMenuItem extends BaseObject {
 
@@ -85,12 +87,16 @@ class MegaMenuItem extends BaseObject {
     getActive() {
         this._active = false;
 
-        if (this.url && this.owner.isUrlEquals(this.url, this.owner.getRequestedRoute())) {
+        const request = this.owner.getRequestedRoute();
+        if (this.url && this.owner.isUrlEquals(this.url, request)) {
             this._active = true;
         } else {
-            for(const itemModel in this.items) {
-                if (this.items.hasOwnProperty(itemModel) && this.items[itemModel].url[0] == this.owner.getRequestedRoute()[0]) {
-                    this.items[itemModel].url = this.owner.getRequestedRoute();
+            for(const index in this.items) {
+                if (this.items.hasOwnProperty(index) &&
+                    this.items[index].url[0] == request[0] &&
+                    _difference(_keys(this.items[index].url), _keys(request)).length == 0)
+                {
+                    this.items[index].url = request;
                     this._active = true;
                     break;
                 }

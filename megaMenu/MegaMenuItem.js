@@ -89,7 +89,8 @@ class MegaMenuItem extends BaseObject {
             this._active = true;
         } else {
             for(const itemModel in this.items) {
-                if (this.items.hasOwnProperty(itemModel) && this.items[itemModel].active) {
+                if (this.items.hasOwnProperty(itemModel) && this.items[itemModel].url[0] == this.owner.getRequestedRoute()[0]) {
+                    this.items[itemModel].url = this.owner.getRequestedRoute();
                     this._active = true;
                     break;
                 }
@@ -172,7 +173,8 @@ class MegaMenuItem extends BaseObject {
         if(forBreadcrumbs){
             return {
                 'label': this.label,
-                'url': this.urlRule || this.url,
+                'url': this.url,
+                'urlRule': this.urlRule,
                 'items': this.items,
                 'linkOptions': this.linkOptions,
             };

@@ -3,6 +3,7 @@
 var Jii = require('../index');
 var _clone = require('lodash/clone');
 var _trimStart = require('lodash/trimStart');
+var _forIn = require('lodash/forIn');
 
 class MenuHelper{
 
@@ -72,11 +73,21 @@ class MenuHelper{
      * @return {string}
      */
     static normalizeUrl(url, urlRoute) {
-        url = urlRoute || urlRoute == '' ? urlRoute : url;
-        if(typeof(url) == 'string' && url[0] != '/') {
-            url = '/' + (urlRoute || url);
+        let newUrl = urlRoute || urlRoute == '' ? urlRoute : url;
+        if(typeof(newUrl) == 'string' && newUrl[0] != '/') {
+            newUrl = '/' + (urlRoute || newUrl);
         }
-        return url;
+
+        //repalce get params on value
+        if(typeof(newUrl) == 'string' && newUrl.indexOf && newUrl.indexOf('<') != -1) {
+            let oldUrl = _clone(url);
+            delete oldUrl[0];
+            _forIn(oldUrl, (value, key) => {
+                newUrl = newUrl.replace('<' + key + '>', value);
+            })
+        }
+
+        return newUrl;
     }
 
     /**

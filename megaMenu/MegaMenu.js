@@ -232,7 +232,8 @@ class MegaMenu extends Component {
 
         parents.reverse().push({
             'label': itemModel.label,
-            'url': itemModel.urlRule || itemModel.url,
+            'url': itemModel.url,
+            'urlRule': itemModel.urlRule,
             'linkOptions': typeof(itemModel.linkOptions) == 'object' ? itemModel.linkOptions : [],
         });
 
@@ -242,7 +243,7 @@ class MegaMenu extends Component {
                 delete parent['linkOptions'];
             }
             parent['url'] = MenuHelper.normalizeUrl(parent['url'], parent['urlRule']);
-
+            delete parent['urlRule'];
         });
 
         return parents;

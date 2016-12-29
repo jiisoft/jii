@@ -11,6 +11,7 @@ var Response = require('./Response');
 var Component = require('../../base/Component');
 var _isString = require('lodash/isString');
 var _extend = require('lodash/extend');
+var _upperFirst = require('lodash/upperFirst');
 
 class Router extends Component {
 
@@ -140,7 +141,7 @@ class Router extends Component {
         const moduleName = urlPathes[0];
         const controllerName = urlPathes[1]
                 .split('-')
-                .map(s => s.charAt(0).toUpperCase() + s.substr(1)) //to upper first symbol
+                .map(s => _upperFirst(s)) //to upper first symbol
                 .join('') + 'Controller';
 
         if (result !== false &&

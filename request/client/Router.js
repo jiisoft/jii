@@ -175,8 +175,10 @@ class Router extends Component {
             let url = e.target.getAttribute('href') || '';
             e.preventDefault();
 
-            history.pushState({}, '', url);
-            this._onRoute();
+            if(url != 'javascript:void(0)') {
+                history.pushState({}, '', url);
+                this._onRoute();
+            }
         }
     }
 

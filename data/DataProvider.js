@@ -76,10 +76,9 @@ class DataProvider extends Collection {
     /**
      *
      * @param {boolean} [force]
-     * @param {boolean} [reset] reset before setNewModels ?
      * @return {*}
      */
-    fetch(force, reset = false) {
+    fetch(force) {
         // Queue promises when fetch in process
         if (this._fetchCallbacks !== null) {
             return new Promise(resolve => {
@@ -88,6 +87,7 @@ class DataProvider extends Collection {
         }
 
         if (this.isFetched() && !force) {
+            this.refreshFilter();
             return Promise.resolve(false);
         }
 
@@ -130,10 +130,8 @@ class DataProvider extends Collection {
                     isFetch: true
                 }));
             } else {
-                if(reset){
-                    this.reset([]);
-                }
                 this.setModels(data.models);
+                this.refreshFilter();
             }
 
             // Resolve queue promises after current
@@ -306,8 +304,6 @@ class DataProvider extends Collection {
     }
 
     _onPaginationChange() {
-        this.refreshFilter();
-
         if (this.autoFetch) {
             this.fetch();
         }

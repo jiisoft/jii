@@ -17,6 +17,12 @@ class Application extends Module {
 
     preInit(config) {
         /**
+         * The homepage URL.
+         * @type {string}
+         */
+        this._homeUrl = null;
+
+        /**
          * The root directory of the module.
          * @type {string}
          */
@@ -117,6 +123,21 @@ class Application extends Module {
         }
 
         return this._runtimePath;
+    }
+
+
+    /**
+     * @return {string} the homepage URL
+     */
+    getHomeUrl() {
+        if (this._homeUrl === null) {
+            const homeUrl = new Request(location).getBaseUrl();
+            return homeUrl[homeUrl.length - 1] == '/'
+                ? homeUrl
+                : homeUrl + '/';
+        } else {
+            return this._homeUrl;
+        }
     }
 
     /**

@@ -87,6 +87,7 @@ class DataProvider extends Collection {
         }
 
         if (this.isFetched() && !force) {
+            this.refreshFilter();
             return Promise.resolve(false);
         }
 
@@ -130,6 +131,7 @@ class DataProvider extends Collection {
                 }));
             } else {
                 this.setModels(data.models);
+                this.refreshFilter();
             }
 
             // Resolve queue promises after current
@@ -302,8 +304,6 @@ class DataProvider extends Collection {
     }
 
     _onPaginationChange() {
-        this.refreshFilter();
-
         if (this.autoFetch) {
             this.fetch();
         }

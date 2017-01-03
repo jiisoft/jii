@@ -113,6 +113,8 @@ class Url extends BaseObject {
             // absolute route
             return _trim(route, '/');
         }
+
+        return route;
         // relative route
         // @todo
         /*if (!Jii.app || Jii.app.controller === null) {

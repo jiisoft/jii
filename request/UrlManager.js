@@ -310,5 +310,13 @@ class UrlManager extends Component {
         return url;
     }
 
+    /**
+     * set rules
+     * @param {array} rules
+     */
+    setRules(rules){
+        this.rules = rules;
+        this._compileRules();
+    }
 }
 module.exports = UrlManager;

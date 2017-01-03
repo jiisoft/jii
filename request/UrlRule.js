@@ -286,7 +286,7 @@ class UrlRule extends BaseObject {
         var tr = {};
 
         // match the route part first
-        if (route !== this.route) {
+        if (!(route === this.route || '/' + route === this.route)) {
             if (this._routeRule === null) {
                 return false;
             }

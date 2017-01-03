@@ -781,18 +781,13 @@ class Model extends Component {
      * [[\jii\validators\RequiredValidator|required]] validation rule in the
      * current [[scenario]].
      *
-     * Note that when the validator has a conditional validation applied using
-     * [[\jii\validators\RequiredValidator.when|when]] this method will return
-     * `false` regardless of the `when` condition because it may be called be
-     * before the model is loaded with data.
-     *
-     * @param {string} attribute attribute name
+     * @param {string} attribute name
      * @returns {boolean} whether the attribute is required
      */
     isAttributeRequired(attribute) {
         var bool = false;
         _each(this.getActiveValidators(attribute), validator => {
-            if (validator instanceof RequiredValidator && validator.when === null) {
+            if (validator instanceof RequiredValidator) {
                 bool = true;
             }
         });

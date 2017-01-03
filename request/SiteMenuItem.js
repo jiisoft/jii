@@ -1,13 +1,13 @@
 'use strict';
 
 var Jii = require('../index');
-var BaseObject = require('../base/Object');
+var BaseObject = require('../base/BaseObject');
 var _merge = require('lodash/merge');
 var _clone = require('lodash/clone');
 var _keys = require('lodash/keys');
 var _difference = require('lodash/difference');
 
-class MegaMenuItem extends BaseObject {
+class SiteMenuItem extends BaseObject {
 
     preInit() {
 
@@ -49,7 +49,7 @@ class MegaMenuItem extends BaseObject {
         this.order = 0;
 
         /**
-         * @var MegaMenuItem[]
+         * @var SiteMenuItem[]
          */
         this.items = [];
 
@@ -64,7 +64,7 @@ class MegaMenuItem extends BaseObject {
         this.linkOptions = [];
 
         /**
-         * @var MegaMenu
+         * @var SiteMenu
          */
         this.owner = null;
 
@@ -91,11 +91,10 @@ class MegaMenuItem extends BaseObject {
         if (this.url && this.owner.isUrlEquals(this.url, request)) {
             this._active = true;
         } else {
-            for(const index in this.items) {
+            for (const index in this.items) {
                 if (this.items.hasOwnProperty(index) &&
                     this.items[index].url[0] == request[0] &&
-                    _difference(_keys(this.items[index].url), _keys(request)).length == 0)
-                {
+                    _difference(_keys(this.items[index].url), _keys(request)).length == 0) {
                     this.items[index].url = request;
                     this._active = true;
                     break;
@@ -129,21 +128,21 @@ class MegaMenuItem extends BaseObject {
      * @return {boolean}
      */
     checkVisible(url) {
-        if(this.roles === null && this.accessCheck === null){
+        if (this.roles === null && this.accessCheck === null) {
             return true;
         }
 
-        if(typeof(this.roles) == 'string'){
+        if (typeof(this.roles) == 'string') {
             this.roles = [this.roles];
         }
-        if(typeof(this.accessCheck) == 'function'){
+        if (typeof(this.accessCheck) == 'function') {
             this.accessCheck = [this.accessCheck];
         }
         const rules = _merge(this.accessCheck || [], this.roles || []);
 
         if (rules) {
-            for(let index in rules) {
-                if(rules.hasOwnProperty(index)) {
+            for (let index in rules) {
+                if (rules.hasOwnProperty(index)) {
                     if (typeof(rules[index]) == 'function') {
                         const params = rules[index](url);
                         const permissionName = _clone(params[0]);
@@ -159,7 +158,7 @@ class MegaMenuItem extends BaseObject {
                         if (Jii.app.user.role) {
                             return true;
                         }
-                    } else  if (Jii.app.user.role == rules[index]) {
+                    } else if (Jii.app.user.role == rules[index]) {
                         return true;
                     }
                 }
@@ -176,7 +175,7 @@ class MegaMenuItem extends BaseObject {
      * @return array
      */
     toArray(forBreadcrumbs = false) {
-        if(forBreadcrumbs){
+        if (forBreadcrumbs) {
             return {
                 'label': this.label,
                 'url': this.url,
@@ -200,4 +199,4 @@ class MegaMenuItem extends BaseObject {
         };
     }
 }
-module.exports = MegaMenuItem;
+module.exports = SiteMenuItem;

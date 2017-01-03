@@ -2,7 +2,7 @@
 
 var Jii = require('../index');
 var MenuHelper = require('./MenuHelper');
-var MegaMenuItem = require('./MegaMenuItem');
+var SiteMenuItem = require('./SiteMenuItem');
 var Component = require('../base/Component');
 var Request = require('../request/client/Request');
 var _forIn = require('lodash/forIn');
@@ -12,11 +12,11 @@ var _difference = require('lodash/difference');
 var _keys = require('lodash/keys');
 
 /**
- * Class MegaMenu
+ * Class SiteMenu
  * @property {object} $items
  * @property-read {object} $activeItem
  */
-class MegaMenu extends Component {
+class SiteMenu extends Component {
 
     preInit() {
         this._items = {};
@@ -40,7 +40,7 @@ class MegaMenu extends Component {
 
     /**
      * Get all tree menu items
-     * @return {MegaMenuItem[]}
+     * @return {SiteMenuItem[]}
      */
     getItems() {
         return this._items;
@@ -66,7 +66,7 @@ class MegaMenu extends Component {
         _forIn(items, (item, id) => {
             // Merge item with group (as key)
             if (typeof(id) == 'string' && baseItems['_' + id]) {
-                _forIn(item, (value, key) =>  {
+                _forIn(item, (value, key) => {
                     if (key === 'items') {
                         baseItems['_' + id][key] = this.mergeItems(baseItems['_' + id][key], value, append);
                     }
@@ -81,8 +81,8 @@ class MegaMenu extends Component {
                 });
             } else {
                 // Create instance
-                if (!(item instanceof MegaMenuItem)) {
-                    item = new MegaMenuItem(_merge(item, {'owner': this}));
+                if (!(item instanceof SiteMenuItem)) {
+                    item = new SiteMenuItem(_merge(item, {'owner': this}));
                     item.items = this.mergeItems([], item.items, true);
                 }
 
@@ -105,7 +105,7 @@ class MegaMenu extends Component {
     }
 
     /**
-     * @return {MegaMenuItem}
+     * @return {SiteMenuItem}
      */
     getActiveItem() {
         return this.getItem(this.getRequestedRoute());
@@ -120,10 +120,10 @@ class MegaMenu extends Component {
         const parseInfo = Jii.app.urlManager.parseRequest(new Request(location));
         if (parseInfo) {
             //set object/array in depending from parseInfo
-            if(_keys(parseInfo[1]).length){
+            if (_keys(parseInfo[1]).length) {
                 this._requestedRoute = _merge({0: parseInfo[0] ? '/' + parseInfo[0] : ''}, parseInfo[1]);
             }
-            else{
+            else {
                 this._requestedRoute = [parseInfo[0] ? '/' + parseInfo[0] : ''];
             }
         } else {
@@ -182,7 +182,7 @@ class MegaMenu extends Component {
         }
 
         return menu.map(itemModel => {
-            /** @var {MegaMenuItem} itemModel */
+            /** @var {SiteMenuItem} itemModel */
             let arrayModel = itemModel.toArray();
             arrayModel['url'] = MenuHelper.normalizeUrl(arrayModel['url'], arrayModel['urlRule']);
             return arrayModel;
@@ -220,7 +220,7 @@ class MegaMenu extends Component {
      * @return {object}
      */
     getBreadcrumbs(url = null) {
-        url = url ? url: this.getRequestedRoute();
+        url = url ? url : this.getRequestedRoute();
 
         // Find child and it parents by url
         let parents = [];
@@ -250,13 +250,12 @@ class MegaMenu extends Component {
     }
 
 
-
     /**
      * Find menu item by item url or route. In param parents will be added all parent items
      * @param {string|object} item
      * @param {object} parents
      * @param {boolean} forBreadcrumbs
-     * @return MegaMenuItem|null
+     * @return SiteMenuItem|null
      */
     getItem(item, parents = [], forBreadcrumbs = false) {
         const url = typeof(item) == 'object' && !this.isRoute(item) ?
@@ -277,15 +276,15 @@ class MegaMenu extends Component {
     }
 
     /**
-     * @param {string|object|MegaMenuItem} url1
-     * @param {string|object|MegaMenuItem} url2
+     * @param {string|object|SiteMenuItem} url1
+     * @param {string|object|SiteMenuItem} url2
      * @return {boolean}
      */
     isUrlEquals(url1, url2) {
-        if (url1 instanceof MegaMenuItem) {
+        if (url1 instanceof SiteMenuItem) {
             url1 = url1.url;
         }
-        if (url2 instanceof MegaMenuItem) {
+        if (url2 instanceof SiteMenuItem) {
             url2 = url2.url;
         }
 
@@ -343,7 +342,7 @@ class MegaMenu extends Component {
     }
 
     /**
-     * @param {MegaMenuItem[]} items
+     * @param {SiteMenuItem[]} items
      * @param {number} level
      * @return {object}
      */
@@ -353,7 +352,7 @@ class MegaMenu extends Component {
         }
 
         let menu = [];
-        _forIn(items, itemModel =>{
+        _forIn(items, itemModel => {
             let item = itemModel.toArray();
 
             if (itemModel.items) {
@@ -377,14 +376,14 @@ class MegaMenu extends Component {
 
     /**
      * @param {string|object} url
-     * @param {MegaMenuItem[]} items
+     * @param {SiteMenuItem[]} items
      * @param {object} parents
      * @param {boolean} forBreadcrumbs
-     * @return MegaMenuItem
+     * @return SiteMenuItem
      */
     findItemRecursive(url, items, parents, forBreadcrumbs = false) {
-        for(var key in items){
-            if(items.hasOwnProperty(key)){
+        for (var key in items) {
+            if (items.hasOwnProperty(key)) {
                 if (items[key].url && this.isUrlEquals(url, items[key].url)) {
                     return items[key];
                 }
@@ -405,4 +404,4 @@ class MegaMenu extends Component {
         return null;
     }
 }
-module.exports = MegaMenu;
+module.exports = SiteMenu;

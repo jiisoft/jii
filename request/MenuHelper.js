@@ -5,12 +5,12 @@ var _clone = require('lodash/clone');
 var _trimStart = require('lodash/trimStart');
 var _forIn = require('lodash/forIn');
 
-class MenuHelper{
+class MenuHelper {
 
     static menuToRules(items) {
         let rules = [];
-        for(const item in items) {
-            if(items.hasOwnProperty(item)){
+        for (const item in items) {
+            if (items.hasOwnProperty(item)) {
                 const url = items[item].url;
                 let urlRule = items[item].urlRule;
 
@@ -18,10 +18,10 @@ class MenuHelper{
                     const defaults = _clone(url);
                     const route = defaults[0];
 
-                    if(defaults.length > 0){
+                    if (defaults.length > 0) {
                         defaults.splice(0, 1);
                     }
-                    else{
+                    else {
                         delete defaults[0];
                     }
 
@@ -74,12 +74,12 @@ class MenuHelper{
      */
     static normalizeUrl(url, urlRoute) {
         let newUrl = urlRoute || urlRoute == '' ? urlRoute : url;
-        if(typeof(newUrl) == 'string' && newUrl[0] != '/') {
+        if (typeof(newUrl) == 'string' && newUrl[0] != '/') {
             newUrl = '/' + (urlRoute || newUrl);
         }
 
         //repalce get params on value
-        if(typeof(newUrl) == 'string' && newUrl.indexOf && newUrl.indexOf('<') != -1) {
+        if (typeof(newUrl) == 'string' && newUrl.indexOf && newUrl.indexOf('<') != -1) {
             let oldUrl = _clone(url);
             delete oldUrl[0];
             _forIn(oldUrl, (value, key) => {

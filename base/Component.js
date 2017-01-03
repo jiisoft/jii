@@ -35,10 +35,10 @@ class Component extends BaseObject {
          */
         this.owner = null;
 
+        super.preInit(...arguments);
+
         // Proxy behaviour methods
         this.proxyBehaviors();
-
-        super.preInit(...arguments);
     }
 
     /**

@@ -11,6 +11,8 @@ var Application = require('../base/Application');
 class WebApplication extends Application {
 
     preInit() {
+        super.preInit(...arguments);
+
         this.defaultRoute = 'site';
 
         /**
@@ -18,8 +20,6 @@ class WebApplication extends Application {
          * If this is false, layout will be disabled.
          */
         this.layout = 'main';
-
-        super.preInit(...arguments);
     }
 
     _preInit(config) {

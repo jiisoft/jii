@@ -31,6 +31,14 @@ var Component = require('./Component');
 
 class Model extends Component {
 
+    constructor(attributes, config) {
+        super(config);
+
+        if (_isObject(attributes)) {
+            this.set(attributes);
+        }
+    }
+
     preInit(attributes, config) {
         this._editedChanges = {};
         this._editedSubModels = [];
@@ -39,9 +47,6 @@ class Model extends Component {
         this._validators = null;
         this._errors = {};
         this._attributes = {};
-        if (_isObject(attributes)) {
-            this.set(attributes);
-        }
 
         super.preInit(config);
     }

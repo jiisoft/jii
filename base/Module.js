@@ -181,7 +181,7 @@ class Module extends Context {
      */
     getBasePath() {
         if (this._basePath === null) {
-            this._basePath = Jii.getAlias('@' + this.className().replace(/\.[^.]+$/, '').replace(/\./g, '/'));
+            this._basePath = process.cwd();//Jii.getAlias('@' + this.className().replace(/\.[^.]+$/, '').replace(/\./g, '/'));
         }
 
         return this._basePath;

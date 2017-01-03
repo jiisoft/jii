@@ -463,10 +463,7 @@ class Controller extends BaseController {
             var description = _compact(fakeArr.map(line => exp3.test(line) ? '' : line)).join('\n');
             description = _trim(description, '\n');
 
-            if (comment.code && /Jii\.defineClass/.test(comment.code)) {
-                this._comments.main.help = content[0];
-                this._comments.main.description = description;
-            } else if (comment.code && exp.test(comment.code)) {
+            if (comment.code && exp.test(comment.code)) {
                 var actionId = comment.code.replace(exp, '$1').toLowerCase();
                 // @todo lowercase is wrong. need convert AaBb to aa-bb.
                 if (this._comments.actions[actionId] === undefined) {

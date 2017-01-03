@@ -7,14 +7,10 @@
 
 'use strict';
 
-var neatness = require('neatness');
 var _isString = require('lodash/isString');
 var _extend = require('lodash/extend');
 
-var Neatness = neatness.newContext();
-Neatness.defineClass('Jii', {});
-
-var Jii = Neatness.namespace('Jii');
+var Jii = {};
 
 /**
  * @class BaseJii
@@ -25,7 +21,7 @@ _extend(Jii, /** @lends BaseJii */{
      * True, if running in node js
      * @type {boolean}
      */
-    isNode: false,
+    isNode: typeof window === 'undefined',
 
     /**
      * @type {boolean}
@@ -59,32 +55,17 @@ _extend(Jii, /** @lends BaseJii */{
      * @returns {*|Function|Object}
      */
     namespaceMoveContext(newContext, removeFromOld) {
-        return Neatness.moveContext.apply(Neatness, arguments);
+        throw new Error(`Method namespaceMoveContext() is deprecated.`);
     },
 
     /**
-     * Method for define class. Options object will be converter to class prototype.
-     * For set static properties and methods, set param `__static` as object with properties and methods.
-     * For extends from class, set `__extends` property as extended class (function). Example format:
-     *    {
-		 *      __extends: Object,
-		 *      __static: {
-		 *          staticParam: 10,
-		 *          MY_CONSTANT: 'constant',
-		 *          normalizeName: function() {},
-		 *      },
-		 *      prototypeParam: 20,
-		 *      getName: function() {}
-		 * }
      * @param {string} globalName
      * @param {object} options
+     * @deprecated
      * @return {object}
      */
     defineClass(globalName, options) {
-        if (_isString(options.__extends)) {
-            throw new Error(`String class names is deprecated, please import real class for extend "${options.__extends}"`);
-        }
-        return Neatness.defineClass.apply(Neatness, arguments);
+        throw new Error(`Method defineClass() is deprecated. Use es6 class for create ${globalName}`);
     }
 
 });

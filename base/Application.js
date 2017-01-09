@@ -150,7 +150,7 @@ class Application extends Module {
      */
     getHomeUrl() {
         if (this._homeUrl === null) {
-            const homeUrl = new Request(location).getBaseUrl();
+            const homeUrl = this.getBasePath();
             return homeUrl[homeUrl.length - 1] == '/'
                 ? homeUrl
                 : homeUrl + '/';

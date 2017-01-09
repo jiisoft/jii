@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var HttpRequest = require('../../base/HttpRequest');
+const Jii = require('../../BaseJii');
+const HttpRequest = require('../../base/HttpRequest');
 
 class Request extends HttpRequest {
 

@@ -5,17 +5,17 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var Url = require('../../helpers/Url');
-var InvalidParamException = require('../../exceptions/InvalidParamException');
-var HeaderCollection = require('../../request/HeaderCollection');
-var InvalidConfigException = require('../../exceptions/InvalidConfigException');
-var _indexOf = require('lodash/indexOf');
-var _isObject = require('lodash/isObject');
-var _isString = require('lodash/isString');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var BaseResponse = require('../../base/Response');
+const Jii = require('../../BaseJii');
+const Url = require('../../helpers/Url');
+const InvalidParamException = require('../../exceptions/InvalidParamException');
+const HeaderCollection = require('../../request/HeaderCollection');
+const InvalidConfigException = require('../../exceptions/InvalidConfigException');
+const _indexOf = require('lodash/indexOf');
+const _isObject = require('lodash/isObject');
+const _isString = require('lodash/isString');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const BaseResponse = require('../../base/Response');
 
 class Response extends BaseResponse {
 

@@ -5,10 +5,10 @@
 
 'use strict';
 
-var Jii = require('../index');
-var _each = require('lodash/each');
-var BaseRequest = require('../base/Request');
-var minimist = require('minimist');
+const Jii = require('../index');
+const _each = require('lodash/each');
+const BaseRequest = require('../base/Request');
+const minimist = require('minimist');
 
 class Request extends BaseRequest {
 
@@ -20,7 +20,7 @@ class Request extends BaseRequest {
         var route = process.argv[2] || '';
         var params = this.getParams();
 
-        var ConsoleApplication = require('../application/ConsoleApplication');
+        const ConsoleApplication = require('../application/ConsoleApplication');
         delete params[ConsoleApplication.OPTION_APPCONFIG];
 
         return [

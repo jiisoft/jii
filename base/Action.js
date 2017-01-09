@@ -5,10 +5,10 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var InvalidConfigException = require('../exceptions/InvalidConfigException');
-var _isFunction = require('lodash/isFunction');
-var BaseObject = require('./BaseObject');
+const Jii = require('../BaseJii');
+const InvalidConfigException = require('../exceptions/InvalidConfigException');
+const _isFunction = require('lodash/isFunction');
+const BaseObject = require('./BaseObject');
 
 class Action extends BaseObject {
 

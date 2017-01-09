@@ -5,22 +5,22 @@
 
 'use strict';
 
-var Jii = require('../index');
-var Console = require('../helpers/Console');
-var Exception = require('./Exception');
-var _trim = require('lodash/trim');
-var _isEmpty = require('lodash/isEmpty');
-var _indexOf = require('lodash/indexOf');
-var _isArray = require('lodash/isArray');
-var _toArray = require('lodash/toArray');
-var _isFunction = require('lodash/isFunction');
-var _isUndefined = require('lodash/isUndefined');
-var _each = require('lodash/each');
-var _values = require('lodash/values');
-var _compact = require('lodash/compact');
-var BaseController = require('../base/Controller');
-var fs = require('fs');
-var extract = require('extract-comments');
+const Jii = require('../index');
+const Console = require('../helpers/Console');
+const Exception = require('./Exception');
+const _trim = require('lodash/trim');
+const _isEmpty = require('lodash/isEmpty');
+const _indexOf = require('lodash/indexOf');
+const _isArray = require('lodash/isArray');
+const _toArray = require('lodash/toArray');
+const _isFunction = require('lodash/isFunction');
+const _isUndefined = require('lodash/isUndefined');
+const _each = require('lodash/each');
+const _values = require('lodash/values');
+const _compact = require('lodash/compact');
+const BaseController = require('../base/Controller');
+const fs = require('fs');
+const extract = require('extract-comments');
 
 class Controller extends BaseController {
 

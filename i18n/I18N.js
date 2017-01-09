@@ -5,15 +5,15 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var _isEmpty = require('lodash/isEmpty');
-var _trimEnd = require('lodash/trimEnd');
-var _isArray = require('lodash/isArray');
-var _isString = require('lodash/isString');
-var Component = require('../base/Component');
-var InvalidConfigException = require('../exceptions/InvalidConfigException');
-var MessageSource = require('./MessageSource');
-var MessageFormatter = require('./MessageFormatter');
+const Jii = require('../BaseJii');
+const _isEmpty = require('lodash/isEmpty');
+const _trimEnd = require('lodash/trimEnd');
+const _isArray = require('lodash/isArray');
+const _isString = require('lodash/isString');
+const Component = require('../base/Component');
+const InvalidConfigException = require('../exceptions/InvalidConfigException');
+const MessageSource = require('./MessageSource');
+const MessageFormatter = require('./MessageFormatter');
 
 class I18N extends Component {
 

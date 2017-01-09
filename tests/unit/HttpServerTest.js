@@ -1,12 +1,12 @@
 'use strict';
 
-var Jii = require('../../index');
-var Response = require('../../request/http/Response');
-var HttpServer = require('../../request/http/HttpServer');
-var UnitTest = require('../../base/UnitTest');
-var UrlManager = require('../../request/UrlManager');
-var request = require('request');
-var SiteController = require('../controllers/SiteController');
+const Jii = require('../../index');
+const Response = require('../../request/http/Response');
+const HttpServer = require('../../request/http/HttpServer');
+const UnitTest = require('../../base/UnitTest');
+const UrlManager = require('../../request/UrlManager');
+const request = require('request');
+const SiteController = require('../controllers/SiteController');
 require('../bootstrap');
 class HttpServerTest extends UnitTest {
 

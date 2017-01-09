@@ -5,19 +5,19 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var InvalidConfigException = require('../exceptions/InvalidConfigException');
-var InvalidParamException = require('../exceptions/InvalidParamException');
-var Collection = require('../base/Collection');
-var Pagination = require('../data/Pagination');
-var FetchEvent = require('../data/FetchEvent');
-var DataProviderEvent = require('../data/DataProviderEvent');
-var _isNumber = require('lodash/isNumber');
-var _isArray = require('lodash/isArray');
-var _isObject = require('lodash/isObject');
-var _isFunction = require('lodash/isFunction');
-var _findKey = require('lodash/findKey');
-var _has = require('lodash/has');
+const Jii = require('../BaseJii');
+const InvalidConfigException = require('../exceptions/InvalidConfigException');
+const InvalidParamException = require('../exceptions/InvalidParamException');
+const Collection = require('../base/Collection');
+const Pagination = require('../data/Pagination');
+const FetchEvent = require('../data/FetchEvent');
+const DataProviderEvent = require('../data/DataProviderEvent');
+const _isNumber = require('lodash/isNumber');
+const _isArray = require('lodash/isArray');
+const _isObject = require('lodash/isObject');
+const _isFunction = require('lodash/isFunction');
+const _findKey = require('lodash/findKey');
+const _has = require('lodash/has');
 
 class DataProvider extends Collection {
 

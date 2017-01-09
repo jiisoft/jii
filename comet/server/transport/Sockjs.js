@@ -5,14 +5,14 @@
 
 'use strict';
 
-var Jii = require('../../../BaseJii');
-var LogEvent = require('../../LogEvent');
-var Connection = require('../Connection');
-var Request = require('../Request');
-var MessageEvent = require('../MessageEvent');
-var ConnectionEvent = require('../ConnectionEvent');
-var TransportInterface = require('./TransportInterface');
-var SockJS = require('sockjs');
+const Jii = require('../../../BaseJii');
+const LogEvent = require('../../LogEvent');
+const Connection = require('../Connection');
+const Request = require('../Request');
+const MessageEvent = require('../MessageEvent');
+const ConnectionEvent = require('../ConnectionEvent');
+const TransportInterface = require('./TransportInterface');
+const SockJS = require('sockjs');
 
 class SockJs extends TransportInterface {
 

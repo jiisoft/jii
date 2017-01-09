@@ -5,9 +5,9 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var _isEmpty = require('lodash/isEmpty');
-var Component = require('../../base/Component');
+const Jii = require('../../BaseJii');
+const _isEmpty = require('lodash/isEmpty');
+const Component = require('../../base/Component');
 
 class Command extends Component {
 

@@ -5,15 +5,15 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Expression = require('./Expression');
-var InvalidConfigException = require('../exceptions/InvalidConfigException');
-var _isEmpty = require('lodash/isEmpty');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var _keys = require('lodash/keys');
-var _snakeCase = require('lodash/snakeCase');
-var BaseActiveRecord = require('./BaseActiveRecord');
+const Jii = require('../BaseJii');
+const Expression = require('./Expression');
+const InvalidConfigException = require('../exceptions/InvalidConfigException');
+const _isEmpty = require('lodash/isEmpty');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const _keys = require('lodash/keys');
+const _snakeCase = require('lodash/snakeCase');
+const BaseActiveRecord = require('./BaseActiveRecord');
 
 class ActiveRecord extends BaseActiveRecord {
 
@@ -122,7 +122,7 @@ class ActiveRecord extends BaseActiveRecord {
      * @inheritdoc
      */
     static find() {
-        var ActiveQuery = require('./ActiveQuery');
+        const ActiveQuery = require('./ActiveQuery');
         return new ActiveQuery(this);
     }
 

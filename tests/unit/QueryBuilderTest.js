@@ -1,17 +1,17 @@
 'use strict';
 
-var Jii = require('../../index');
-var BaseSchema = require('../../data/BaseSchema');
-var ColumnSchema = require('../../data/ColumnSchema');
-var QueryBuilder = require('jii-mysql/QueryBuilder');
-var ApplicationException = require('../../exceptions/ApplicationException');
-var Expression = require('../../data/Expression');
-var Query = require('../../data/Query');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var _isEmpty = require('lodash/isEmpty');
-var _indexOf = require('lodash/indexOf');
-var DatabaseTestCase = require('../DatabaseTestCase.js');
+const Jii = require('../../index');
+const BaseSchema = require('../../data/BaseSchema');
+const ColumnSchema = require('../../data/ColumnSchema');
+const QueryBuilder = require('jii-mysql/QueryBuilder');
+const ApplicationException = require('../../exceptions/ApplicationException');
+const Expression = require('../../data/Expression');
+const Query = require('../../data/Query');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const _isEmpty = require('lodash/isEmpty');
+const _indexOf = require('lodash/indexOf');
+const DatabaseTestCase = require('../DatabaseTestCase.js');
 class self extends DatabaseTestCase {
 
     /**

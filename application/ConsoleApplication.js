@@ -5,13 +5,13 @@
 
 'use strict';
 
-var Jii = require('../index');
-var File = require('../helpers/File');
-var Request = require('../console/Request');
-var Exception = require('../console/Exception');
-var Response = require('../console/Response');
-var _isEmpty = require('lodash/isEmpty');
-var Application = require('../base/Application');
+const Jii = require('../index');
+const File = require('../helpers/File');
+const Request = require('../console/Request');
+const Exception = require('../console/Exception');
+const Response = require('../console/Response');
+const _isEmpty = require('lodash/isEmpty');
+const Application = require('../base/Application');
 
 class ConsoleApplication extends Application {
 

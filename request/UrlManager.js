@@ -5,17 +5,17 @@
 
 'use strict';
 
-var Jii = require('../index');
-var UrlRule = require('./UrlRule');
-var Url = require('../helpers/Url');
-var HttpRequest = require('../base/HttpRequest');
-var _trimStart = require('lodash/trimStart');
-var _isObject = require('lodash/isObject');
-var _isEmpty = require('lodash/isEmpty');
-var _isString = require('lodash/isString');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var Component = require('../base/Component');
+const Jii = require('../index');
+const UrlRule = require('./UrlRule');
+const Url = require('../helpers/Url');
+const HttpRequest = require('../base/HttpRequest');
+const _trimStart = require('lodash/trimStart');
+const _isObject = require('lodash/isObject');
+const _isEmpty = require('lodash/isEmpty');
+const _isString = require('lodash/isString');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const Component = require('../base/Component');
 
 class UrlManager extends Component {
 

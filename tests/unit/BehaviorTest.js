@@ -1,9 +1,9 @@
 'use strict';
 
-var Jii = require('../../index');
-var UnitTest = require('../../base/UnitTest');
-var Component = require('../../base/Component');
-var Behavior = require('../../base/Behavior');
+const Jii = require('../../index');
+const UnitTest = require('../../base/UnitTest');
+const Component = require('../../base/Component');
+const Behavior = require('../../base/Behavior');
 require('../bootstrap');
 class BehaviorTest extends UnitTest {
 

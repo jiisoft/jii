@@ -4,11 +4,11 @@
  */
 'use strict';
 
-var Jii = require('../BaseJii');
-var Component = require('../base/Component');
-var InvalidParamException = require('jii/exceptions/InvalidParamException');
-var _upperFirst = require('lodash/upperFirst');
-var _clone = require('lodash/clone');
+const Jii = require('../BaseJii');
+const Component = require('../base/Component');
+const InvalidParamException = require('jii/exceptions/InvalidParamException');
+const _upperFirst = require('lodash/upperFirst');
+const _clone = require('lodash/clone');
 
 class Formatter extends Component {
 

@@ -1,8 +1,8 @@
 'use strict';
 
-var Jii = require('../../BaseJii');
-var BaseActiveRecord = require('../../data/BaseActiveRecord');
-var Link = require('./Link');
+const Jii = require('../../BaseJii');
+const BaseActiveRecord = require('../../data/BaseActiveRecord');
+const Link = require('./Link');
 class LinkJunction extends BaseActiveRecord {
 
     /**

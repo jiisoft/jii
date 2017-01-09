@@ -5,13 +5,13 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var IRenderer = require('./IRenderer');
-var InvalidConfigException = require('../exceptions/InvalidConfigException');
-var ViewEvent = require('./ViewEvent');
-var _isString = require('lodash/isString');
-var _isFunction = require('lodash/isFunction');
-var Component = require('../base/Component');
+const Jii = require('../BaseJii');
+const IRenderer = require('./IRenderer');
+const InvalidConfigException = require('../exceptions/InvalidConfigException');
+const ViewEvent = require('./ViewEvent');
+const _isString = require('lodash/isString');
+const _isFunction = require('lodash/isFunction');
+const Component = require('../base/Component');
 
 class View extends Component {
 

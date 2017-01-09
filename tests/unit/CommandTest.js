@@ -1,8 +1,8 @@
 'use strict';
 
-var Jii = require('../../index');
-var SqlQueryException = require('../../data/SqlQueryException');
-var DatabaseTestCase = require('../DatabaseTestCase.js');
+const Jii = require('../../index');
+const SqlQueryException = require('../../data/SqlQueryException');
+const DatabaseTestCase = require('../DatabaseTestCase.js');
 class self extends DatabaseTestCase {
 
     testConstruct(test) {

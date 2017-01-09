@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var CollectionEvent = require('./CollectionEvent');
+const Jii = require('../BaseJii');
+const CollectionEvent = require('./CollectionEvent');
 
 class DataProviderEvent extends CollectionEvent {
 

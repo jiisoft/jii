@@ -1,9 +1,9 @@
 'use strict';
 
-var Jii = require('../index');
-var _clone = require('lodash/clone');
-var _trimStart = require('lodash/trimStart');
-var _forIn = require('lodash/forIn');
+const Jii = require('../index');
+const _clone = require('lodash/clone');
+const _trimStart = require('lodash/trimStart');
+const _forIn = require('lodash/forIn');
 
 class MenuHelper {
 

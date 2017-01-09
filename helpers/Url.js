@@ -5,12 +5,12 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var _trim = require('lodash/trim');
-var _isObject = require('lodash/isObject');
-var _isString = require('lodash/isString');
-var _isArray = require('lodash/isArray');
-var BaseObject = require('../base/BaseObject');
+const Jii = require('../BaseJii');
+const _trim = require('lodash/trim');
+const _isObject = require('lodash/isObject');
+const _isString = require('lodash/isString');
+const _isArray = require('lodash/isArray');
+const BaseObject = require('../base/BaseObject');
 
 class Url extends BaseObject {
 

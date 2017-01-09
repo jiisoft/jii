@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var ChangeEvent = require('./ChangeEvent');
+const Jii = require('../BaseJii');
+const ChangeEvent = require('./ChangeEvent');
 
 class ChangeAttributeEvent extends ChangeEvent {
 

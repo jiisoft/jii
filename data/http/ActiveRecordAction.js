@@ -5,10 +5,10 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var InvalidParamException = require('../../exceptions/InvalidParamException');
-var Action = require('../../base/Action');
-var Command = require('./Command');
+const Jii = require('../../BaseJii');
+const InvalidParamException = require('../../exceptions/InvalidParamException');
+const Action = require('../../base/Action');
+const Command = require('./Command');
 
 class ActiveRecordAction extends Action {
 

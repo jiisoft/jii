@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Event = require('./Event');
+const Jii = require('../BaseJii');
+const Event = require('./Event');
 
 class ActionEvent extends Event {
 

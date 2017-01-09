@@ -5,13 +5,13 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var Component = require('../../base/Component');
-var Console = require('../../helpers/Console');
-var Query = require('../../data/Query');
-var _each = require('lodash/each');
-var BaseMigrateController = require('./BaseMigrateController');
-var fs = require('fs');
+const Jii = require('../../BaseJii');
+const Component = require('../../base/Component');
+const Console = require('../../helpers/Console');
+const Query = require('../../data/Query');
+const _each = require('lodash/each');
+const BaseMigrateController = require('./BaseMigrateController');
+const fs = require('fs');
 
 class MigrateController extends BaseMigrateController {
 

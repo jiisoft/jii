@@ -5,43 +5,43 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var InvalidParamException = require('../exceptions/InvalidParamException');
-var CollectionEvent = require('../data/CollectionEvent');
-var InvalidConfigException = require('../exceptions/InvalidConfigException');
-var NotSupportedException = require('../exceptions/NotSupportedException');
-var _isArray = require('lodash/isArray');
-var _isObject = require('lodash/isObject');
-var _isFunction = require('lodash/isFunction');
-var _isString = require('lodash/isString');
-var _indexOf = require('lodash/indexOf');
-var _toArray = require('lodash/toArray');
-var _reduceRight = require('lodash/reduceRight');
-var _groupBy = require('lodash/groupBy');
-var _countBy = require('lodash/countBy');
-var _lastIndexOf = require('lodash/lastIndexOf');
-var _findIndex = require('lodash/findIndex');
-var _findLastIndex = require('lodash/findLastIndex');
-var _has = require('lodash/has');
-var _each = require('lodash/each');
-var _map = require('lodash/map');
-var _filter = require('lodash/filter');
-var _reduce = require('lodash/reduce');
-var _find = require('lodash/find');
-var _reject = require('lodash/reject');
-var _every = require('lodash/every');
-var _some = require('lodash/some');
-var _maxBy = require('lodash/maxBy');
-var _minBy = require('lodash/minBy');
-var _first = require('lodash/first');
-var _initial = require('lodash/initial');
-var _last = require('lodash/last');
-var _drop = require('lodash/drop');
-var _shuffle = require('lodash/shuffle');
-var _sortBy = require('lodash/sortBy');
-var _without = require('lodash/without');
-var _extend = require('lodash/extend');
-var Component = require('../base/Component');
+const Jii = require('../BaseJii');
+const InvalidParamException = require('../exceptions/InvalidParamException');
+const CollectionEvent = require('../data/CollectionEvent');
+const InvalidConfigException = require('../exceptions/InvalidConfigException');
+const NotSupportedException = require('../exceptions/NotSupportedException');
+const _isArray = require('lodash/isArray');
+const _isObject = require('lodash/isObject');
+const _isFunction = require('lodash/isFunction');
+const _isString = require('lodash/isString');
+const _indexOf = require('lodash/indexOf');
+const _toArray = require('lodash/toArray');
+const _reduceRight = require('lodash/reduceRight');
+const _groupBy = require('lodash/groupBy');
+const _countBy = require('lodash/countBy');
+const _lastIndexOf = require('lodash/lastIndexOf');
+const _findIndex = require('lodash/findIndex');
+const _findLastIndex = require('lodash/findLastIndex');
+const _has = require('lodash/has');
+const _each = require('lodash/each');
+const _map = require('lodash/map');
+const _filter = require('lodash/filter');
+const _reduce = require('lodash/reduce');
+const _find = require('lodash/find');
+const _reject = require('lodash/reject');
+const _every = require('lodash/every');
+const _some = require('lodash/some');
+const _maxBy = require('lodash/maxBy');
+const _minBy = require('lodash/minBy');
+const _first = require('lodash/first');
+const _initial = require('lodash/initial');
+const _last = require('lodash/last');
+const _drop = require('lodash/drop');
+const _shuffle = require('lodash/shuffle');
+const _sortBy = require('lodash/sortBy');
+const _without = require('lodash/without');
+const _extend = require('lodash/extend');
+const Component = require('../base/Component');
 
 class Collection extends Component {
 
@@ -611,7 +611,7 @@ class Collection extends Component {
                 if (existsModels.length > 0) {
 
                     // Update model attributes
-                    var Model = require('../base/Model');
+                    const Model = require('../base/Model');
                     if (model instanceof Model && _isObject(data) && !(data instanceof Model)) {
                         model.set(data);
                     }
@@ -670,7 +670,7 @@ class Collection extends Component {
         Array.prototype.splice.call(this, index++, 0, model);
 
         // By id
-        var ActiveRecord = require('../data/BaseActiveRecord');
+        const ActiveRecord = require('../data/BaseActiveRecord');
         if (model instanceof ActiveRecord) {
             this._byId[this._getPrimaryKey(model)] = model;
         }
@@ -683,7 +683,7 @@ class Collection extends Component {
         Array.prototype.splice.call(this, index, 1);
 
         // By id
-        var ActiveRecord = require('../data/BaseActiveRecord');
+        const ActiveRecord = require('../data/BaseActiveRecord');
         if (model instanceof ActiveRecord) {
             delete this._byId[this._getPrimaryKey(model)];
         }
@@ -722,7 +722,7 @@ class Collection extends Component {
      * @returns {string}
      */
     _getPrimaryKey(data) {
-        var ActiveRecord = require('../data/BaseActiveRecord');
+        const ActiveRecord = require('../data/BaseActiveRecord');
         if (_isObject(data) && this.modelClass && !(data instanceof ActiveRecord)) {
             let keys = this.modelClass.primaryKey();
             if (keys.length === 1) {
@@ -753,7 +753,7 @@ class Collection extends Component {
      */
     createModel(data) {
         // Already model
-        var Model = require('../base/Model');
+        const Model = require('../base/Model');
         if (data instanceof Model) {
             return data;
         }
@@ -815,7 +815,7 @@ class Collection extends Component {
         // Attributes in models
         var changeNameFormat = this._detectKeyFormatChangeName(name);
         if (changeNameFormat) {
-            var Model = require('../base/Model');
+            const Model = require('../base/Model');
             var changeNameEvent = Model.EVENT_CHANGE_NAME + changeNameFormat.subName;
             this._eventsChangeName.push([
                 changeNameEvent,
@@ -855,7 +855,7 @@ class Collection extends Component {
         // Attributes in models
         var changeNameFormat = this._detectKeyFormatChangeName(name);
         if (changeNameFormat) {
-            var Model = require('../base/Model');
+            const Model = require('../base/Model');
             var changeNameEvent = Model.EVENT_CHANGE_NAME + changeNameFormat.subName;
             this._eventsChangeName = _filter(this._eventsChangeName, arr => {
                 return arr[0] !== changeNameEvent || arr[1] !== handler;

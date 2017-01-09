@@ -5,12 +5,12 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Component = require('../base/Component');
-var InvalidConfigException = require('../exceptions/InvalidConfigException');
-var _isObject = require('lodash/isObject');
-var _isEmpty = require('lodash/isEmpty');
-var _isArray = require('lodash/isArray');
+const Jii = require('../BaseJii');
+const Component = require('../base/Component');
+const InvalidConfigException = require('../exceptions/InvalidConfigException');
+const _isObject = require('lodash/isObject');
+const _isEmpty = require('lodash/isEmpty');
+const _isArray = require('lodash/isArray');
 
 class Pagination extends Component {
 

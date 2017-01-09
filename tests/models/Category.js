@@ -1,10 +1,10 @@
 'use strict';
 
-var Jii = require('../../BaseJii');
-var ActiveRecord = require('./ActiveRecord.js');
-var Item = require('./Item');
-var OrderItem = require('./OrderItem');
-var Order = require('./Order');
+const Jii = require('../../BaseJii');
+const ActiveRecord = require('./ActiveRecord.js');
+const Item = require('./Item');
+const OrderItem = require('./OrderItem');
+const Order = require('./Order');
 class Category extends ActiveRecord {
 
     static tableName() {

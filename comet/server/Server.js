@@ -5,13 +5,13 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var TransportInterface = require('./transport/TransportInterface');
-var _isEmpty = require('lodash/isEmpty');
-var _values = require('lodash/values');
-var _keys = require('lodash/keys');
-var _each = require('lodash/each');
-var HubServer = require('./HubServer');
+const Jii = require('../../BaseJii');
+const TransportInterface = require('./transport/TransportInterface');
+const _isEmpty = require('lodash/isEmpty');
+const _values = require('lodash/values');
+const _keys = require('lodash/keys');
+const _each = require('lodash/each');
+const HubServer = require('./HubServer');
 
 class Server extends HubServer {
 

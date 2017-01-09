@@ -5,18 +5,18 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var Request = require('./Request');
-var Response = require('./Response');
-var InvalidRouteException = require('../../exceptions/InvalidRouteException');
-var _isString = require('lodash/isString');
-var _each = require('lodash/each');
-var _extend = require('lodash/extend');
-var Component = require('../../base/Component');
-var http = require('http');
-var express = require('express');
-var bodyParser = require('body-parser');
-var multer = require('multer');
+const Jii = require('../../BaseJii');
+const Request = require('./Request');
+const Response = require('./Response');
+const InvalidRouteException = require('../../exceptions/InvalidRouteException');
+const _isString = require('lodash/isString');
+const _each = require('lodash/each');
+const _extend = require('lodash/extend');
+const Component = require('../../base/Component');
+const http = require('http');
+const express = require('express');
+const bodyParser = require('body-parser');
+const multer = require('multer');
 
 class HttpServer extends Component {
 

@@ -5,9 +5,9 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Component = require('../base/Component');
-var BaseSchema = require('./BaseSchema');
+const Jii = require('../BaseJii');
+const Component = require('../base/Component');
+const BaseSchema = require('./BaseSchema');
 
 class Migration extends Component {
 

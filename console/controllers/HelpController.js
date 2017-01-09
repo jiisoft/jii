@@ -5,23 +5,23 @@
 
 'use strict';
 
-var Jii = require('../../index');
-var Console = require('../../helpers/Console');
-var ConsoleApplication = require('../../application/ConsoleApplication');
-var Application = require('../../base/Application');
-var Exception = require('../Exception');
-var _trim = require('lodash/trim');
-var _isFunction = require('lodash/isFunction');
-var _isEmpty = require('lodash/isEmpty');
-var _isArray = require('lodash/isArray');
-var _isBoolean = require('lodash/isBoolean');
-var _isString = require('lodash/isString');
-var _uniq = require('lodash/uniq');
-var _each = require('lodash/each');
-var _repeat = require('lodash/repeat');
-var _endsWith = require('lodash/endsWith');
-var Controller = require('../Controller');
-var fs = require('fs');
+const Jii = require('../../index');
+const Console = require('../../helpers/Console');
+const ConsoleApplication = require('../../application/ConsoleApplication');
+const Application = require('../../base/Application');
+const Exception = require('../Exception');
+const _trim = require('lodash/trim');
+const _isFunction = require('lodash/isFunction');
+const _isEmpty = require('lodash/isEmpty');
+const _isArray = require('lodash/isArray');
+const _isBoolean = require('lodash/isBoolean');
+const _isString = require('lodash/isString');
+const _uniq = require('lodash/uniq');
+const _each = require('lodash/each');
+const _repeat = require('lodash/repeat');
+const _endsWith = require('lodash/endsWith');
+const Controller = require('../Controller');
+const fs = require('fs');
 
 class HelpController extends Controller {
 

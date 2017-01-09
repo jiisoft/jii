@@ -5,12 +5,12 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var InvalidParamException = require('../exceptions/InvalidParamException');
-var _isArray = require('lodash/isArray');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var ModelSchema = require('../data/ModelSchema');
+const Jii = require('../BaseJii');
+const InvalidParamException = require('../exceptions/InvalidParamException');
+const _isArray = require('lodash/isArray');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const ModelSchema = require('../data/ModelSchema');
 
 class TableSchema extends ModelSchema {
 

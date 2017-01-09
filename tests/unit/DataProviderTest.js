@@ -1,13 +1,13 @@
 'use strict';
 
-var Jii = require('../../index');
-var Article = require('../models/Article');
-var Pagination = require('../../data/Pagination');
-var Collection = require('../../base/Collection');
-var InvalidParamException = require('../../exceptions/InvalidParamException');
-var ChangeEvent = require('../../data/ChangeEvent');
-var Query = require('../../data/Query');
-var UnitTest = require('../../base/UnitTest');
+const Jii = require('../../index');
+const Article = require('../models/Article');
+const Pagination = require('../../data/Pagination');
+const Collection = require('../../base/Collection');
+const InvalidParamException = require('../../exceptions/InvalidParamException');
+const ChangeEvent = require('../../data/ChangeEvent');
+const Query = require('../../data/Query');
+const UnitTest = require('../../base/UnitTest');
 require('../bootstrap');
 class DataProviderTest extends UnitTest {
 

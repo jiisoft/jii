@@ -5,30 +5,30 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var NotSupportedException = require('../exceptions/NotSupportedException');
-var InvalidConfigException = require('../exceptions/InvalidConfigException');
-var InvalidParamException = require('../exceptions/InvalidParamException');
-var Expression = require('../data/Expression');
-var Query = require('../data/Query');
-var _isArray = require('lodash/isArray');
-var _isString = require('lodash/isString');
-var _isBoolean = require('lodash/isBoolean');
-var _isEmpty = require('lodash/isEmpty');
-var _isObject = require('lodash/isObject');
-var _isNaN = require('lodash/isNaN');
-var _extend = require('lodash/extend');
-var _filter = require('lodash/filter');
-var _each = require('lodash/each');
-var _size = require('lodash/size');
-var _has = require('lodash/has');
-var _map = require('lodash/map');
-var _clone = require('lodash/clone');
-var _values = require('lodash/values');
-var _words = require('lodash/words');
-var _trim = require('lodash/trim');
-var _trimStart = require('lodash/trimStart');
-var BaseObject = require('../base/BaseObject');
+const Jii = require('../BaseJii');
+const NotSupportedException = require('../exceptions/NotSupportedException');
+const InvalidConfigException = require('../exceptions/InvalidConfigException');
+const InvalidParamException = require('../exceptions/InvalidParamException');
+const Expression = require('../data/Expression');
+const Query = require('../data/Query');
+const _isArray = require('lodash/isArray');
+const _isString = require('lodash/isString');
+const _isBoolean = require('lodash/isBoolean');
+const _isEmpty = require('lodash/isEmpty');
+const _isObject = require('lodash/isObject');
+const _isNaN = require('lodash/isNaN');
+const _extend = require('lodash/extend');
+const _filter = require('lodash/filter');
+const _each = require('lodash/each');
+const _size = require('lodash/size');
+const _has = require('lodash/has');
+const _map = require('lodash/map');
+const _clone = require('lodash/clone');
+const _values = require('lodash/values');
+const _words = require('lodash/words');
+const _trim = require('lodash/trim');
+const _trimStart = require('lodash/trimStart');
+const BaseObject = require('../base/BaseObject');
 
 class QueryBuilder extends BaseObject {
 

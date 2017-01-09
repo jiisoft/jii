@@ -5,29 +5,29 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Validator = require('../validators/Validator');
-var RequiredValidator = require('../validators/RequiredValidator');
-var ChangeAttributeEvent = require('../data/ChangeAttributeEvent');
-var ChangeEvent = require('../data/ChangeEvent');
-var InvalidParamException = require('../exceptions/InvalidParamException');
-var UnknownPropertyException = require('../exceptions/UnknownPropertyException');
-var ApplicationException = require('../exceptions/ApplicationException');
-var ValidateEvent = require('../data/ValidateEvent');
-var _isObject = require('lodash/isObject');
-var _isEmpty = require('lodash/isEmpty');
-var _isEqual = require('lodash/isEqual');
-var _isUndefined = require('lodash/isUndefined');
-var _indexOf = require('lodash/indexOf');
-var _isNumber = require('lodash/isNumber');
-var _isArray = require('lodash/isArray');
-var _isString = require('lodash/isString');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var _map = require('lodash/map');
-var _keys = require('lodash/keys');
-var _startCase = require('lodash/startCase');
-var Component = require('./Component');
+const Jii = require('../BaseJii');
+const Validator = require('../validators/Validator');
+const RequiredValidator = require('../validators/RequiredValidator');
+const ChangeAttributeEvent = require('../data/ChangeAttributeEvent');
+const ChangeEvent = require('../data/ChangeEvent');
+const InvalidParamException = require('../exceptions/InvalidParamException');
+const UnknownPropertyException = require('../exceptions/UnknownPropertyException');
+const ApplicationException = require('../exceptions/ApplicationException');
+const ValidateEvent = require('../data/ValidateEvent');
+const _isObject = require('lodash/isObject');
+const _isEmpty = require('lodash/isEmpty');
+const _isEqual = require('lodash/isEqual');
+const _isUndefined = require('lodash/isUndefined');
+const _indexOf = require('lodash/indexOf');
+const _isNumber = require('lodash/isNumber');
+const _isArray = require('lodash/isArray');
+const _isString = require('lodash/isString');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const _map = require('lodash/map');
+const _keys = require('lodash/keys');
+const _startCase = require('lodash/startCase');
+const Component = require('./Component');
 
 class Model extends Component {
 
@@ -185,7 +185,7 @@ class Model extends Component {
             var subModel = this.get(subMatches[1]);
 
             // Check sub-model is Model
-            var Collection = require('./Collection');
+            const Collection = require('./Collection');
             if (subModel instanceof Collection) {
                 throw new InvalidParamException('Try set property of array models: `' + name + '`');
             } else if (!(subModel instanceof module.exports)) {
@@ -242,7 +242,7 @@ class Model extends Component {
         }
 
         var collection = this.get(arrMatches[1]);
-        var Collection = require('./Collection');
+        const Collection = require('./Collection');
         if (collection instanceof Collection) {
             var index = parseInt(arrMatches[2]);
             var arrSubModel = collection.at(index);
@@ -438,7 +438,7 @@ class Model extends Component {
         var obj = {};
         _each(names, (child, name) => {
             var value = model.get(name);
-            var Collection = require('./Collection');
+            const Collection = require('./Collection');
             if (value instanceof module.exports) {
                 obj[name] = this._buildTree(child, value);
             } else if (value instanceof Collection) {

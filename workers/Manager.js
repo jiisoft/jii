@@ -5,19 +5,19 @@
 
 'use strict';
 
-var Jii = require('../index');
-var Environment = require('../application/Environment');
-var MasterWorker = require('./MasterWorker');
-var ChildWorker = require('./ChildWorker');
-var _isFunction = require('lodash/isFunction');
-var _isObject = require('lodash/isObject');
-var _uniqueId = require('lodash/uniqueId');
-var _isString = require('lodash/isString');
-var _isEmpty = require('lodash/isEmpty');
-var _each = require('lodash/each');
-var BaseObject = require('../base/BaseObject');
-var cluster = require('cluster');
-var ConsoleApplication = require('../application/ConsoleApplication');
+const Jii = require('../index');
+const Environment = require('../application/Environment');
+const MasterWorker = require('./MasterWorker');
+const ChildWorker = require('./ChildWorker');
+const _isFunction = require('lodash/isFunction');
+const _isObject = require('lodash/isObject');
+const _uniqueId = require('lodash/uniqueId');
+const _isString = require('lodash/isString');
+const _isEmpty = require('lodash/isEmpty');
+const _each = require('lodash/each');
+const BaseObject = require('../base/BaseObject');
+const cluster = require('cluster');
+const ConsoleApplication = require('../application/ConsoleApplication');
 
 class Manager extends BaseObject {
 

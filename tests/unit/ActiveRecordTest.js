@@ -1,25 +1,25 @@
 'use strict';
 
-var Jii = require('../../BaseJii');
-var Event = require('../../base/Event');
-var ActiveRecord = require('../../data/ActiveRecord');
-var ActiveQuery = require('../../data/ActiveQuery');
-var _has = require('lodash/has');
-var _keys = require('lodash/keys');
-var _isObject = require('lodash/isObject');
-var _isEmpty = require('lodash/isEmpty');
-var _trim = require('lodash/trim');
-var Category = require('../models/Category.js');
-var Customer = require('../models/Customer.js');
-var Item = require('../models/Item.js');
-var NullValues = require('../models/NullValues.js');
-var Order = require('../models/Order.js');
-var OrderItem = require('../models/OrderItem.js');
-var OrderWithNullFK = require('../models/OrderWithNullFK.js');
-var OrderItemWithNullFK = require('../models/OrderItemWithNullFK.js');
-var Profile = require('../models/Profile.js');
-var Type = require('../models/Type.js');
-var DatabaseTestCase = require('../DatabaseTestCase.js');
+const Jii = require('../../BaseJii');
+const Event = require('../../base/Event');
+const ActiveRecord = require('../../data/ActiveRecord');
+const ActiveQuery = require('../../data/ActiveQuery');
+const _has = require('lodash/has');
+const _keys = require('lodash/keys');
+const _isObject = require('lodash/isObject');
+const _isEmpty = require('lodash/isEmpty');
+const _trim = require('lodash/trim');
+const Category = require('../models/Category.js');
+const Customer = require('../models/Customer.js');
+const Item = require('../models/Item.js');
+const NullValues = require('../models/NullValues.js');
+const Order = require('../models/Order.js');
+const OrderItem = require('../models/OrderItem.js');
+const OrderWithNullFK = require('../models/OrderWithNullFK.js');
+const OrderItemWithNullFK = require('../models/OrderItemWithNullFK.js');
+const Profile = require('../models/Profile.js');
+const Type = require('../models/Type.js');
+const DatabaseTestCase = require('../DatabaseTestCase.js');
 class self extends DatabaseTestCase {
 
     setUp() {

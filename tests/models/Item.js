@@ -1,7 +1,7 @@
 'use strict';
 
-var Jii = require('../../BaseJii');
-var ActiveRecord = require('./ActiveRecord.js');
+const Jii = require('../../BaseJii');
+const ActiveRecord = require('./ActiveRecord.js');
 class Item extends ActiveRecord {
 
     static tableName() {
@@ -9,7 +9,7 @@ class Item extends ActiveRecord {
     }
 
     getCategory() {
-        var Category = require('./Category');
+        const Category = require('./Category');
         return this.hasOne(Category, {
             id: 'category_id'
         });

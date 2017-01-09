@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../index');
-var ApplicationException = require('../exceptions/ApplicationException');
+const Jii = require('../index');
+const ApplicationException = require('../exceptions/ApplicationException');
 
 class Exception extends ApplicationException {
 

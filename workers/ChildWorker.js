@@ -5,17 +5,17 @@
 
 'use strict';
 
-var Jii = require('../index');
-var String = require('../helpers/String');
-var InvalidConfigException = require('../exceptions/InvalidConfigException');
-var MessageEvent = require('./MessageEvent');
-var _isFunction = require('lodash/isFunction');
-var _isArray = require('lodash/isArray');
-var _has = require('lodash/has');
-var Component = require('../base/Component');
-var WorkerRequest = require('./WorkerRequest');
-var WorkerResponse = require('./WorkerResponse');
-var cluster = require('cluster');
+const Jii = require('../index');
+const String = require('../helpers/String');
+const InvalidConfigException = require('../exceptions/InvalidConfigException');
+const MessageEvent = require('./MessageEvent');
+const _isFunction = require('lodash/isFunction');
+const _isArray = require('lodash/isArray');
+const _has = require('lodash/has');
+const Component = require('../base/Component');
+const WorkerRequest = require('./WorkerRequest');
+const WorkerResponse = require('./WorkerResponse');
+const cluster = require('cluster');
 
 class ChildWorker extends Component {
 

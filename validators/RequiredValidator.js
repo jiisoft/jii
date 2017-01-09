@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Validator = require('./Validator');
+const Jii = require('../BaseJii');
+const Validator = require('./Validator');
 
 class RequiredValidator extends Validator {
 

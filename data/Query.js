@@ -6,20 +6,20 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Expression = require('./Expression');
-var _isString = require('lodash/isString');
-var _isEmpty = require('lodash/isEmpty');
-var _isArray = require('lodash/isArray');
-var _isObject = require('lodash/isObject');
-var _isUndefined = require('lodash/isUndefined');
-var _each = require('lodash/each');
-var _extend = require('lodash/extend');
-var _has = require('lodash/has');
-var _toNumber = require('lodash/toNumber');
-var _words = require('lodash/words');
-var _trim = require('lodash/trim');
-var Component = require('../base/Component');
+const Jii = require('../BaseJii');
+const Expression = require('./Expression');
+const _isString = require('lodash/isString');
+const _isEmpty = require('lodash/isEmpty');
+const _isArray = require('lodash/isArray');
+const _isObject = require('lodash/isObject');
+const _isUndefined = require('lodash/isUndefined');
+const _each = require('lodash/each');
+const _extend = require('lodash/extend');
+const _has = require('lodash/has');
+const _toNumber = require('lodash/toNumber');
+const _words = require('lodash/words');
+const _trim = require('lodash/trim');
+const Component = require('../base/Component');
 
 class Query extends Component {
 

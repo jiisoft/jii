@@ -1,11 +1,11 @@
 'use strict';
 
-var Jii = require('../../index');
-var Article = require('../models/Article');
-var Collection = require('../../base/Collection');
-var UnknownPropertyException = require('../../exceptions/UnknownPropertyException');
-var InvalidParamException = require('../../exceptions/InvalidParamException');
-var UnitTest = require('../../base/UnitTest');
+const Jii = require('../../index');
+const Article = require('../models/Article');
+const Collection = require('../../base/Collection');
+const UnknownPropertyException = require('../../exceptions/UnknownPropertyException');
+const InvalidParamException = require('../../exceptions/InvalidParamException');
+const UnitTest = require('../../base/UnitTest');
 require('../bootstrap');
 class ClientTest extends UnitTest {
 

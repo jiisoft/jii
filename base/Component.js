@@ -5,17 +5,17 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Behavior = require('./Behavior');
-var Event = require('./Event');
-var UnknownPropertyException = require('../exceptions/UnknownPropertyException');
-var _upperFirst = require('lodash/upperFirst');
-var _isUndefined = require('lodash/isUndefined');
-var _isString = require('lodash/isString');
-var _isFunction = require('lodash/isFunction');
-var _isObject = require('lodash/isObject');
-var _each = require('lodash/each');
-var BaseObject = require('./BaseObject');
+const Jii = require('../BaseJii');
+const Behavior = require('./Behavior');
+const Event = require('./Event');
+const UnknownPropertyException = require('../exceptions/UnknownPropertyException');
+const _upperFirst = require('lodash/upperFirst');
+const _isUndefined = require('lodash/isUndefined');
+const _isString = require('lodash/isString');
+const _isFunction = require('lodash/isFunction');
+const _isObject = require('lodash/isObject');
+const _each = require('lodash/each');
+const BaseObject = require('./BaseObject');
 
 class Component extends BaseObject {
 

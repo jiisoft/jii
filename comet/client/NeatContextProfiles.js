@@ -5,11 +5,11 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var InvalidConfigException = require('../../exceptions/InvalidConfigException');
-var Collection = require('../../base/Collection');
-var _clone = require('lodash/clone');
-var INeatContextProfiles = require('../INeatContextProfiles');
+const Jii = require('../../BaseJii');
+const InvalidConfigException = require('../../exceptions/InvalidConfigException');
+const Collection = require('../../base/Collection');
+const _clone = require('lodash/clone');
+const INeatContextProfiles = require('../INeatContextProfiles');
 
 class NeatContextProfiles extends INeatContextProfiles {
 

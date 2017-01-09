@@ -5,7 +5,7 @@
 
 'use strict';
 
-var Jii = require('../../../BaseJii');
+const Jii = require('../../../BaseJii');
 // sockjs global fix: sockjs expect that global object is equal window, but it is not always, for example in node-webkit
 if (typeof global !== 'undefined' && typeof window !== 'undefined' && global !== window) {
     var usedWindowKeys = [
@@ -35,10 +35,10 @@ if (typeof global !== 'undefined' && typeof window !== 'undefined' && global !==
     });
 }
 // @todo jsonp callbacks
-var SockJS = require('sockjs-client');
-var Event = require('../../../base/Event');
-var MessageEvent = require('../MessageEvent');
-var TransportInterface = require('./TransportInterface');
+const SockJS = require('sockjs-client');
+const Event = require('../../../base/Event');
+const MessageEvent = require('../MessageEvent');
+const TransportInterface = require('./TransportInterface');
 
 class Sockjs extends TransportInterface {
 

@@ -5,17 +5,17 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var String = require('../../helpers/String');
-var HubInterface = require('./hub/HubInterface');
-var ChannelEvent = require('../ChannelEvent');
-var Request = require('./Request');
-var Connection = require('./Connection');
-var Response = require('./Response');
-var _extend = require('lodash/extend');
-var Component = require('../../base/Component');
-var RedisHub = require('./hub/Redis');
-var RedisQueue = require('./queue/Redis');
+const Jii = require('../../BaseJii');
+const String = require('../../helpers/String');
+const HubInterface = require('./hub/HubInterface');
+const ChannelEvent = require('../ChannelEvent');
+const Request = require('./Request');
+const Connection = require('./Connection');
+const Response = require('./Response');
+const _extend = require('lodash/extend');
+const Component = require('../../base/Component');
+const RedisHub = require('./hub/Redis');
+const RedisQueue = require('./queue/Redis');
 
 class HubServer extends Component {
 

@@ -5,13 +5,13 @@
 
 'use strict';
 
-var Jii = require('../../index');
-var InvalidConfigException = require('../../exceptions/InvalidConfigException');
-var _trimStart = require('lodash/trimStart');
-var _isEmpty = require('lodash/isEmpty');
-var _each = require('lodash/each');
-var _values = require('lodash/values');
-var HttpRequest = require('../../base/HttpRequest');
+const Jii = require('../../index');
+const InvalidConfigException = require('../../exceptions/InvalidConfigException');
+const _trimStart = require('lodash/trimStart');
+const _isEmpty = require('lodash/isEmpty');
+const _each = require('lodash/each');
+const _values = require('lodash/values');
+const HttpRequest = require('../../base/HttpRequest');
 
 class Request extends HttpRequest {
 

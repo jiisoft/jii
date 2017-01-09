@@ -5,16 +5,16 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var String = require('../../helpers/String');
-var TransportInterface = require('./transport/TransportInterface');
-var RequestEvent = require('./RequestEvent');
-var MessageEvent = require('./MessageEvent');
-var ChannelEvent = require('../ChannelEvent');
-var _indexOf = require('lodash/indexOf');
-var _each = require('lodash/each');
-var Component = require('../../base/Component');
-var AutoReconnect = require('./plugin/AutoReconnect');
+const Jii = require('../../BaseJii');
+const String = require('../../helpers/String');
+const TransportInterface = require('./transport/TransportInterface');
+const RequestEvent = require('./RequestEvent');
+const MessageEvent = require('./MessageEvent');
+const ChannelEvent = require('../ChannelEvent');
+const _indexOf = require('lodash/indexOf');
+const _each = require('lodash/each');
+const Component = require('../../base/Component');
+const AutoReconnect = require('./plugin/AutoReconnect');
 
 /**
  * Read-only from api stationUid

@@ -1,15 +1,15 @@
 'use strict';
 
-var Jii = require('../index');
-var MenuHelper = require('./MenuHelper');
-var SiteMenuItem = require('./SiteMenuItem');
-var Component = require('../base/Component');
-var Request = require('../request/client/Request');
-var _forIn = require('lodash/forIn');
-var _merge = require('lodash/merge');
-var _sortBy = require('lodash/sortBy');
-var _difference = require('lodash/difference');
-var _keys = require('lodash/keys');
+const Jii = require('../index');
+const MenuHelper = require('./MenuHelper');
+const SiteMenuItem = require('./SiteMenuItem');
+const Component = require('../base/Component');
+const Request = require('../request/client/Request');
+const _forIn = require('lodash/forIn');
+const _merge = require('lodash/merge');
+const _sortBy = require('lodash/sortBy');
+const _difference = require('lodash/difference');
+const _keys = require('lodash/keys');
 
 /**
  * Class SiteMenu

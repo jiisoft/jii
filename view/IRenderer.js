@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var BaseObject = require('../base/BaseObject');
+const Jii = require('../BaseJii');
+const BaseObject = require('../base/BaseObject');
 
 class IRenderer extends BaseObject {
 

@@ -5,20 +5,20 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var File = require('../helpers/File');
-var Response = require('./Response');
-var Context = require('./Context');
-var InvalidRouteException = require('../exceptions/InvalidRouteException');
-var InlineAction = require('../request/InlineAction');
-var ActionEvent = require('./ActionEvent');
-var _trimStart = require('lodash/trimStart');
-var _isUndefined = require('lodash/isUndefined');
-var _isFunction = require('lodash/isFunction');
-var _isObject = require('lodash/isObject');
-var _isString = require('lodash/isString');
-var _has = require('lodash/has');
-var Component = require('./Component');
+const Jii = require('../BaseJii');
+const File = require('../helpers/File');
+const Response = require('./Response');
+const Context = require('./Context');
+const InvalidRouteException = require('../exceptions/InvalidRouteException');
+const InlineAction = require('../request/InlineAction');
+const ActionEvent = require('./ActionEvent');
+const _trimStart = require('lodash/trimStart');
+const _isUndefined = require('lodash/isUndefined');
+const _isFunction = require('lodash/isFunction');
+const _isObject = require('lodash/isObject');
+const _isString = require('lodash/isString');
+const _has = require('lodash/has');
+const Component = require('./Component');
 
 class Controller extends Component {
 
@@ -198,7 +198,7 @@ class Controller extends Component {
      * @return string the controller ID that is prefixed with the module ID (if any).
      */
     getUniqueId() {
-        var Application = require('./Application');
+        const Application = require('./Application');
         return this.module instanceof Application ? this.id : this.module.getUniqueId() + '/' + this.id;
     }
 

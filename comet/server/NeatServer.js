@@ -5,17 +5,17 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var Server = require('./Server');
-var Component = require('../../base/Component');
-var Event = require('../../base/Event');
-var ActiveRecord = require('../../data/BaseActiveRecord');
-var InvalidConfigException = require('../../exceptions/InvalidConfigException');
-var _isFunction = require('lodash/isFunction');
-var _isEmpty = require('lodash/isEmpty');
-var _extend = require('lodash/extend');
-var BaseObject = require('../../base/BaseObject');
-var NeatComet = require('neatcomet');
+const Jii = require('../../BaseJii');
+const Server = require('./Server');
+const Component = require('../../base/Component');
+const Event = require('../../base/Event');
+const ActiveRecord = require('../../data/BaseActiveRecord');
+const InvalidConfigException = require('../../exceptions/InvalidConfigException');
+const _isFunction = require('lodash/isFunction');
+const _isEmpty = require('lodash/isEmpty');
+const _extend = require('lodash/extend');
+const BaseObject = require('../../base/BaseObject');
+const NeatComet = require('neatcomet');
 
 class NeatServer extends BaseObject {
 

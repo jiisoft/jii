@@ -5,17 +5,17 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var Exception = require('../Exception');
-var Console = require('../../helpers/Console');
-var _isEmpty = require('lodash/isEmpty');
-var _each = require('lodash/each');
-var _keys = require('lodash/keys');
-var _size = require('lodash/size');
-var _template = require('lodash/template');
-var _values = require('lodash/values');
-var Controller = require('../Controller');
-var fs = require('fs');
+const Jii = require('../../BaseJii');
+const Exception = require('../Exception');
+const Console = require('../../helpers/Console');
+const _isEmpty = require('lodash/isEmpty');
+const _each = require('lodash/each');
+const _keys = require('lodash/keys');
+const _size = require('lodash/size');
+const _template = require('lodash/template');
+const _values = require('lodash/values');
+const Controller = require('../Controller');
+const fs = require('fs');
 
 class BaseMigrateController extends Controller {
 

@@ -5,10 +5,10 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Expression = require('../data/Expression');
-var _isArray = require('lodash/isArray');
-var BaseObject = require('../base/BaseObject');
+const Jii = require('../BaseJii');
+const Expression = require('../data/Expression');
+const _isArray = require('lodash/isArray');
+const BaseObject = require('../base/BaseObject');
 
 class ColumnSchemaBuilder extends BaseObject {
 

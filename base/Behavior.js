@@ -5,10 +5,10 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Event = require('./Event');
-var _each = require('lodash/each');
-var BaseObject = require('./BaseObject');
+const Jii = require('../BaseJii');
+const Event = require('./Event');
+const _each = require('lodash/each');
+const BaseObject = require('./BaseObject');
 
 class Behavior extends BaseObject {
 

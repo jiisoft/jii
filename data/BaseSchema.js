@@ -5,16 +5,16 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var NotSupportedException = require('../exceptions/NotSupportedException');
-var QueryBuilder = require('./QueryBuilder');
-var FilterBuilder = require('../data/FilterBuilder');
-var ColumnSchemaBuilder = require('./ColumnSchemaBuilder');
-var _isUndefined = require('lodash/isUndefined');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var BaseObject = require('../base/BaseObject');
-var ColumnSchema = require('./ColumnSchema');
+const Jii = require('../BaseJii');
+const NotSupportedException = require('../exceptions/NotSupportedException');
+const QueryBuilder = require('./QueryBuilder');
+const FilterBuilder = require('../data/FilterBuilder');
+const ColumnSchemaBuilder = require('./ColumnSchemaBuilder');
+const _isUndefined = require('lodash/isUndefined');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const BaseObject = require('../base/BaseObject');
+const ColumnSchema = require('./ColumnSchema');
 
 class BaseSchema extends BaseObject {
 

@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('jii');
-var Component = require('jii/base/Component');
+const Jii = require('jii');
+const Component = require('jii/base/Component');
 
 class TransportInterface extends Component {
 

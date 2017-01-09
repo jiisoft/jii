@@ -5,13 +5,13 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var ApplicationException = require('../exceptions/ApplicationException');
-var Command = require('./Command');
-var _isString = require('lodash/isString');
-var _isFunction = require('lodash/isFunction');
-var _each = require('lodash/each');
-var Component = require('../base/Component');
+const Jii = require('../BaseJii');
+const ApplicationException = require('../exceptions/ApplicationException');
+const Command = require('./Command');
+const _isString = require('lodash/isString');
+const _isFunction = require('lodash/isFunction');
+const _each = require('lodash/each');
+const Component = require('../base/Component');
 
 class BaseConnection extends Component {
 

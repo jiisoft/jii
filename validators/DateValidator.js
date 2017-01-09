@@ -5,10 +5,10 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var _isArray = require('lodash/isArray');
-var _isNaN = require('lodash/isNaN');
-var Validator = require('./Validator');
+const Jii = require('../BaseJii');
+const _isArray = require('lodash/isArray');
+const _isNaN = require('lodash/isNaN');
+const Validator = require('./Validator');
 
 class DateValidator extends Validator {
 

@@ -1,11 +1,11 @@
 'use strict';
 
-var Jii = require('../index');
-var BaseObject = require('../base/BaseObject');
-var _merge = require('lodash/merge');
-var _clone = require('lodash/clone');
-var _keys = require('lodash/keys');
-var _difference = require('lodash/difference');
+const Jii = require('../index');
+const BaseObject = require('../base/BaseObject');
+const _merge = require('lodash/merge');
+const _clone = require('lodash/clone');
+const _keys = require('lodash/keys');
+const _difference = require('lodash/difference');
 
 class SiteMenuItem extends BaseObject {
 

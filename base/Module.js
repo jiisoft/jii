@@ -5,26 +5,26 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Action = require('./Action');
-var Response = require('./Response');
-var Controller = require('./Controller');
-var AnonymousAction = require('../request/AnonymousAction');
-var InvalidRouteException = require('../exceptions/InvalidRouteException');
-var InvalidConfigException = require('../exceptions/InvalidConfigException');
-var ActionEvent = require('./ActionEvent');
-var ErrorHandler = require('./ErrorHandler');
-var _trimStart = require('lodash/trimStart');
-var _trim = require('lodash/trim');
-var _lastIndexOf = require('lodash/lastIndexOf');
-var _isFunction = require('lodash/isFunction');
-var _indexOf = require('lodash/indexOf');
-var _isUndefined = require('lodash/isUndefined');
-var _isString = require('lodash/isString');
-var _map = require('lodash/map');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var Context = require('./Context');
+const Jii = require('../BaseJii');
+const Action = require('./Action');
+const Response = require('./Response');
+const Controller = require('./Controller');
+const AnonymousAction = require('../request/AnonymousAction');
+const InvalidRouteException = require('../exceptions/InvalidRouteException');
+const InvalidConfigException = require('../exceptions/InvalidConfigException');
+const ActionEvent = require('./ActionEvent');
+const ErrorHandler = require('./ErrorHandler');
+const _trimStart = require('lodash/trimStart');
+const _trim = require('lodash/trim');
+const _lastIndexOf = require('lodash/lastIndexOf');
+const _isFunction = require('lodash/isFunction');
+const _indexOf = require('lodash/indexOf');
+const _isUndefined = require('lodash/isUndefined');
+const _isString = require('lodash/isString');
+const _map = require('lodash/map');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const Context = require('./Context');
 
 class Module extends Context {
 

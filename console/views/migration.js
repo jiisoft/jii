@@ -1,7 +1,7 @@
 // 'use strict';
 //
-// var Jii = require('jii');
-// var Migration = require('jii/data/Migration');
+// const Jii = require('jii');
+// const Migration = require('jii/data/Migration');
 //
 // /**
 //  * @class <%= className %>

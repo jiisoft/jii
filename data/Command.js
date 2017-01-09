@@ -5,12 +5,12 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var _isEmpty = require('lodash/isEmpty');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var _extend = require('lodash/extend');
-var Component = require('../base/Component');
+const Jii = require('../BaseJii');
+const _isEmpty = require('lodash/isEmpty');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const _extend = require('lodash/extend');
+const Component = require('../base/Component');
 
 class Command extends Component {
 

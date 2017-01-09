@@ -4,12 +4,12 @@
  */
 'use strict';
 
-var Jii = require('../../BaseJii');
-var FilterBuilder = require('../../data/FilterBuilder');
-var ModelSchema = require('../../data/ModelSchema');
-var _isObject = require('lodash/isObject');
-var _keys = require('lodash/keys');
-var BaseObject = require('../../base/BaseObject');
+const Jii = require('../../BaseJii');
+const FilterBuilder = require('../../data/FilterBuilder');
+const ModelSchema = require('../../data/ModelSchema');
+const _isObject = require('lodash/isObject');
+const _keys = require('lodash/keys');
+const BaseObject = require('../../base/BaseObject');
 class Schema extends BaseObject {
 
     preInit() {

@@ -1,8 +1,8 @@
-var Jii = require('../../index');
-var UnitTest = require('../../base/UnitTest');
-var UrlManager = require('../../request/UrlManager');
-var UrlRule = require('../../request/UrlRule');
-var HttpRequest = require('../../base/HttpRequest');
+const Jii = require('../../index');
+const UnitTest = require('../../base/UnitTest');
+const UrlManager = require('../../request/UrlManager');
+const UrlRule = require('../../request/UrlRule');
+const HttpRequest = require('../../base/HttpRequest');
 require('../bootstrap');
 class UrlRuleTest extends UnitTest {
 

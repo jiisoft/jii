@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var ConnectionEvent = require('./ConnectionEvent');
+const Jii = require('../../BaseJii');
+const ConnectionEvent = require('./ConnectionEvent');
 
 class MessageEvent extends ConnectionEvent {
 

@@ -5,10 +5,10 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var _values = require('lodash/values');
-var _each = require('lodash/each');
-var WebView = require('./WebView');
+const Jii = require('../BaseJii');
+const _values = require('lodash/values');
+const _each = require('lodash/each');
+const WebView = require('./WebView');
 
 class ServerWebView extends WebView {
 

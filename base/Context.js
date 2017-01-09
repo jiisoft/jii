@@ -5,12 +5,12 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var InvalidConfigException = require('../exceptions/InvalidConfigException');
-var _isObject = require('lodash/isObject');
-var _has = require('lodash/has');
-var _each = require('lodash/each');
-var Component = require('./Component');
+const Jii = require('../BaseJii');
+const InvalidConfigException = require('../exceptions/InvalidConfigException');
+const _isObject = require('lodash/isObject');
+const _has = require('lodash/has');
+const _each = require('lodash/each');
+const Component = require('./Component');
 
 class Context extends Component {
 

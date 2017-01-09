@@ -1,17 +1,17 @@
 'use strict';
 
-var Jii = require('../../index');
-var Server = require('../../comet/server/Server');
-var HubServer = require('../../comet/server/HubServer');
-var TransportInterface = require('../../comet/server/transport/TransportInterface');
-var String = require('../../helpers/String');
-var ConnectionEvent = require('../../comet/server/ConnectionEvent');
-var MessageEvent = require('../../comet/server/MessageEvent');
-var Connection = require('../../comet/server/Connection');
-var Request = require('../../comet/server/Request');
-var HubInterface = require('../../comet/server/hub/HubInterface');
-var UnitTest = require('../../base/UnitTest');
-var SiteController = require('../controllers/SiteController');
+const Jii = require('../../index');
+const Server = require('../../comet/server/Server');
+const HubServer = require('../../comet/server/HubServer');
+const TransportInterface = require('../../comet/server/transport/TransportInterface');
+const String = require('../../helpers/String');
+const ConnectionEvent = require('../../comet/server/ConnectionEvent');
+const MessageEvent = require('../../comet/server/MessageEvent');
+const Connection = require('../../comet/server/Connection');
+const Request = require('../../comet/server/Request');
+const HubInterface = require('../../comet/server/hub/HubInterface');
+const UnitTest = require('../../base/UnitTest');
+const SiteController = require('../controllers/SiteController');
 require('../bootstrap');
 class CometServerTest extends UnitTest {
 

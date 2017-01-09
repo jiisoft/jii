@@ -5,22 +5,22 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var NotSupportedException = require('../exceptions/NotSupportedException');
-var InvalidParamException = require('../exceptions/InvalidParamException');
-var _isEmpty = require('lodash/isEmpty');
-var _isArray = require('lodash/isArray');
-var _isObject = require('lodash/isObject');
-var _uniq = require('lodash/uniq');
-var _every = require('lodash/every');
-var _keys = require('lodash/keys');
-var _each = require('lodash/each');
-var _some = require('lodash/some');
-var _has = require('lodash/has');
-var BaseObject = require('../base/BaseObject');
-var Query = require('../data/Query');
-var Expression = require('../data/Expression');
-var Model = require('../base/Model');
+const Jii = require('../BaseJii');
+const NotSupportedException = require('../exceptions/NotSupportedException');
+const InvalidParamException = require('../exceptions/InvalidParamException');
+const _isEmpty = require('lodash/isEmpty');
+const _isArray = require('lodash/isArray');
+const _isObject = require('lodash/isObject');
+const _uniq = require('lodash/uniq');
+const _every = require('lodash/every');
+const _keys = require('lodash/keys');
+const _each = require('lodash/each');
+const _some = require('lodash/some');
+const _has = require('lodash/has');
+const BaseObject = require('../base/BaseObject');
+const Query = require('../data/Query');
+const Expression = require('../data/Expression');
+const Model = require('../base/Model');
 
 class FilterBuilder extends BaseObject {
 
@@ -69,7 +69,7 @@ class FilterBuilder extends BaseObject {
 
     prepare(query) {
         // @todo prepare, tmp
-        var ActiveQuery = require('../data/ActiveQuery');
+        const ActiveQuery = require('../data/ActiveQuery');
         if (query instanceof ActiveQuery) {
             query._filterByModels([query.primaryModel]);
         }

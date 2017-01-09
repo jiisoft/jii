@@ -5,27 +5,27 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Query = require('./Query');
-var Model = require('../base/Model');
-var InvalidConfigException = require('../exceptions/InvalidConfigException');
-var _isEmpty = require('lodash/isEmpty');
-var _isString = require('lodash/isString');
-var _isArray = require('lodash/isArray');
-var _isUndefined = require('lodash/isUndefined');
-var _isNull = require('lodash/isNull');
-var _isNumber = require('lodash/isNumber');
-var _indexOf = require('lodash/indexOf');
-var _isObject = require('lodash/isObject');
-var _toArray = require('lodash/toArray');
-var _each = require('lodash/each');
-var _clone = require('lodash/clone');
-var _values = require('lodash/values');
-var _has = require('lodash/has');
-var _extend = require('lodash/extend');
-var _keys = require('lodash/keys');
-var _size = require('lodash/size');
-var _uniq = require('lodash/uniq');
+const Jii = require('../BaseJii');
+const Query = require('./Query');
+const Model = require('../base/Model');
+const InvalidConfigException = require('../exceptions/InvalidConfigException');
+const _isEmpty = require('lodash/isEmpty');
+const _isString = require('lodash/isString');
+const _isArray = require('lodash/isArray');
+const _isUndefined = require('lodash/isUndefined');
+const _isNull = require('lodash/isNull');
+const _isNumber = require('lodash/isNumber');
+const _indexOf = require('lodash/indexOf');
+const _isObject = require('lodash/isObject');
+const _toArray = require('lodash/toArray');
+const _each = require('lodash/each');
+const _clone = require('lodash/clone');
+const _values = require('lodash/values');
+const _has = require('lodash/has');
+const _extend = require('lodash/extend');
+const _keys = require('lodash/keys');
+const _size = require('lodash/size');
+const _uniq = require('lodash/uniq');
 
 class ActiveQuery extends Query {
 
@@ -909,7 +909,7 @@ class ActiveQuery extends Query {
                 return related;
             }
 
-            var ActiveRecord = require('./BaseActiveRecord');
+            const ActiveRecord = require('./BaseActiveRecord');
             var inverseRelation = new this.modelClass().getRelation(this._inverseOf);
 
             if (this.multiple) {
@@ -976,7 +976,7 @@ class ActiveQuery extends Query {
             if (primaryModels.length === 1 && !this.multiple) {
                 return this.one().then(model => {
 
-                    var ActiveRecord = require('./BaseActiveRecord');
+                    const ActiveRecord = require('./BaseActiveRecord');
                     _each(primaryModels, (primaryModel, i) => {
                         if (primaryModel instanceof ActiveRecord) {
                             primaryModel.populateRelation(name, model);
@@ -1034,7 +1034,7 @@ class ActiveQuery extends Query {
                         value = buckets[key] || (this.multiple ? [] : null);
                     }
 
-                    var ActiveRecord = require('./BaseActiveRecord');
+                    const ActiveRecord = require('./BaseActiveRecord');
                     if (primaryModel instanceof ActiveRecord) {
                         primaryModel.populateRelation(name, value);
                     } else {
@@ -1063,7 +1063,7 @@ class ActiveQuery extends Query {
         }
 
         var model = models[0];
-        var ActiveRecord = require('./BaseActiveRecord');
+        const ActiveRecord = require('./BaseActiveRecord');
 
         /** @typedef {Jii.data.ActiveQuery} relation */
         var relation = model instanceof ActiveRecord ? model.getRelation(name) : new this.modelClass().getRelation(name);
@@ -1296,7 +1296,7 @@ class ActiveQuery extends Query {
         this._filterByModels(primaryModels);
         /** @typedef {ActiveRecord} primaryModel */
         var primaryModel = primaryModels[0];
-        var ActiveRecord = require('./BaseActiveRecord');
+        const ActiveRecord = require('./BaseActiveRecord');
 
         if (!(primaryModel instanceof ActiveRecord)) {
             // when primaryModels are array of arrays (asArray case)

@@ -5,9 +5,9 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var _isObject = require('lodash/isObject');
-var BaseResponse = require('../../base/Response');
+const Jii = require('../../BaseJii');
+const _isObject = require('lodash/isObject');
+const BaseResponse = require('../../base/Response');
 
 class Response extends BaseResponse {
 

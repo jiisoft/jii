@@ -1,7 +1,7 @@
 'use strict';
 
-var Jii = require('../../BaseJii');
-var ActiveRecord = require('../../data/ActiveRecord');
+const Jii = require('../../BaseJii');
+const ActiveRecord = require('../../data/ActiveRecord');
 class TestActiveRecord extends ActiveRecord {
 
     static getDb() {

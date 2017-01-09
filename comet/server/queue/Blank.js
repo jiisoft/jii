@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../../../BaseJii');
-var QueueInterface = require('./QueueInterface');
+const Jii = require('../../../BaseJii');
+const QueueInterface = require('./QueueInterface');
 
 class Blank extends QueueInterface {
 

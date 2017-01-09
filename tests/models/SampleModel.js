@@ -1,6 +1,6 @@
 'use strict';
 
-var Model = require('../../base/Model');
+const Model = require('../../base/Model');
 
 class SampleModel extends Model {
 

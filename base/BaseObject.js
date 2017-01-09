@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var _isObject = require('lodash/isObject');
+const Jii = require('../BaseJii');
+const _isObject = require('lodash/isObject');
 
 class BaseObject {
 

@@ -1,21 +1,21 @@
 'use strict';
 
-var Jii = require('../../index');
-var SampleModel = require('../models/SampleModel');
-var Article = require('../models/Article');
-var User = require('../models/User');
-var Link = require('../models/Link');
-var _each = require('lodash/each');
-var _extend = require('lodash/extend');
-var ApplicationException = require('../../exceptions/ApplicationException');
-var InvalidParamException = require('../../exceptions/InvalidParamException');
-var ChangeAttributeEvent = require('../../data/ChangeAttributeEvent');
-var ChangeEvent = require('../../data/ChangeEvent');
-var Model = require('../../base/Model');
-var Collection = require('../../base/Collection');
-var CollectionEvent = require('../../data/CollectionEvent');
-var FilterBuilder = require('../../data/FilterBuilder');
-var UnitTest = require('../../base/UnitTest');
+const Jii = require('../../index');
+const SampleModel = require('../models/SampleModel');
+const Article = require('../models/Article');
+const User = require('../models/User');
+const Link = require('../models/Link');
+const _each = require('lodash/each');
+const _extend = require('lodash/extend');
+const ApplicationException = require('../../exceptions/ApplicationException');
+const InvalidParamException = require('../../exceptions/InvalidParamException');
+const ChangeAttributeEvent = require('../../data/ChangeAttributeEvent');
+const ChangeEvent = require('../../data/ChangeEvent');
+const Model = require('../../base/Model');
+const Collection = require('../../base/Collection');
+const CollectionEvent = require('../../data/CollectionEvent');
+const FilterBuilder = require('../../data/FilterBuilder');
+const UnitTest = require('../../base/UnitTest');
 require('../bootstrap');
 class self extends UnitTest {
 

@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Application = require('../base/Application');
+const Jii = require('../BaseJii');
+const Application = require('../base/Application');
 
 class WebApplication extends Application {
 

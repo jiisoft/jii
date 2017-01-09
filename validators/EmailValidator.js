@@ -5,9 +5,9 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var _isString = require('lodash/isString');
-var Validator = require('./Validator');
+const Jii = require('../BaseJii');
+const _isString = require('lodash/isString');
+const Validator = require('./Validator');
 
 class EmailValidator extends Validator {
 

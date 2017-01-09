@@ -5,13 +5,13 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var _isUndefined = require('lodash/isUndefined');
-var _isArray = require('lodash/isArray');
-var _has = require('lodash/has');
-var _first = require('lodash/first');
-var _each = require('lodash/each');
-var BaseObject = require('../base/BaseObject');
+const Jii = require('../BaseJii');
+const _isUndefined = require('lodash/isUndefined');
+const _isArray = require('lodash/isArray');
+const _has = require('lodash/has');
+const _first = require('lodash/first');
+const _each = require('lodash/each');
+const BaseObject = require('../base/BaseObject');
 
 class HeaderCollection extends BaseObject {
 

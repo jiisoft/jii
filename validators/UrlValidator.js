@@ -5,10 +5,10 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var _isString = require('lodash/isString');
-var _each = require('lodash/each');
-var Validator = require('./Validator');
+const Jii = require('../BaseJii');
+const _isString = require('lodash/isString');
+const _each = require('lodash/each');
+const Validator = require('./Validator');
 
 class UrlValidator extends Validator {
 

@@ -5,9 +5,9 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Component = require('../base/Component');
-var MissingTranslationEvent = require('./MissingTranslationEvent');
+const Jii = require('../BaseJii');
+const Component = require('../base/Component');
+const MissingTranslationEvent = require('./MissingTranslationEvent');
 
 class MessageSource extends Component {
 

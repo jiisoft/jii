@@ -1,7 +1,7 @@
 'use strict';
 
-var Jii = require('../../BaseJii');
-var ActiveQuery = require('../../data/ActiveQuery');
+const Jii = require('../../BaseJii');
+const ActiveQuery = require('../../data/ActiveQuery');
 class CustomerQuery extends ActiveQuery {
 
     active() {

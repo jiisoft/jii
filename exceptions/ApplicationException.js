@@ -5,7 +5,7 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
+const Jii = require('../BaseJii');
 
 class ApplicationException extends Error {
 

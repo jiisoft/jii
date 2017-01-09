@@ -5,16 +5,16 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var ApplicationException = require('../exceptions/ApplicationException');
-var _isObject = require('lodash/isObject');
-var _isArray = require('lodash/isArray');
-var _isFunction = require('lodash/isFunction');
-var _isString = require('lodash/isString');
-var _isUndefined = require('lodash/isUndefined');
-var _has = require('lodash/has');
-var _each = require('lodash/each');
-var BaseObject = require('./BaseObject');
+const Jii = require('../BaseJii');
+const ApplicationException = require('../exceptions/ApplicationException');
+const _isObject = require('lodash/isObject');
+const _isArray = require('lodash/isArray');
+const _isFunction = require('lodash/isFunction');
+const _isString = require('lodash/isString');
+const _isUndefined = require('lodash/isUndefined');
+const _has = require('lodash/has');
+const _each = require('lodash/each');
+const BaseObject = require('./BaseObject');
 
 class Event extends BaseObject {
 

@@ -79,13 +79,13 @@ class Formatter extends Component {
      * Use [[asRaw()]] if you do not want any purification of the value.
      * @param {string} value the value to be formatted.
      * @param {object|null} config the configuration for the HTMLPurifier class.
-     * @return string the formatted result.
+     * @return XML the formatted result.
      */
     asHtml(value, config = null) {
         if (value === null) {
             return this.nullDisplay;
         }
-        return value; //TODO: HtmlPurifier::process(value, config); - ?
+        return <span dangerouslySetInnerHTML={{__html: value}}/>;
     }
 
     /**

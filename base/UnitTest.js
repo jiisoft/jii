@@ -62,8 +62,7 @@ class UnitTest extends BaseObject {
 
         var defaultConfig = {
             application: {
-                id: 'testapp',
-                basePath: __dirname
+                id: 'testapp'
             }
         };
 

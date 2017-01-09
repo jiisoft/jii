@@ -13,7 +13,6 @@ class HttpServerTest extends UnitTest {
     setUp(callback) {
         Jii.createWebApplication({
             application: {
-                basePath: __dirname,
                 controllerMap: {
                     SiteController: SiteController
                 },

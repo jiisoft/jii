@@ -404,7 +404,7 @@ class UrlRule extends BaseObject {
             isGlobal = true;
         flags = flags.replace('g', '');
 
-        nativeRegExp = RegExp(nativeRegExp, flags);
+        nativeRegExp = new RegExp(nativeRegExp, flags);
 
         do {
             // parse string

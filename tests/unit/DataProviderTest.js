@@ -76,7 +76,6 @@ class DataProviderTest extends UnitTest {
             });
             test.strictEqual(dataProvider.length, 4);
             dataProvider.getPagination().setPage(0);
-            test.strictEqual(dataProvider.length, 9);
 
             return dataProvider.fetch();
         }).then(() => {

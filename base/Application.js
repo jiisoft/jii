@@ -73,6 +73,12 @@ class Application extends Module {
          */
         this.bootstrap = [];
 
+        /**
+         * The root directory of the application.
+         * @type {string}
+         */
+        this._basePath = null;
+
         Jii.app = this;
 
         // Merge with default config
@@ -98,8 +104,21 @@ class Application extends Module {
      * @param {string} path the root directory of the application.
      */
     setBasePath(path) {
-        super.setBasePath(path);
+        this._basePath = Jii.getAlias(path);
         Jii.setAlias('@app', this.getBasePath());
+    }
+
+    /**
+     * Returns the root directory of the module.
+     * It defaults to the directory containing the module class file.
+     * @return {string} the root directory of the module.
+     */
+    getBasePath() {
+        if (this._basePath === null) {
+            this._basePath = process.cwd();
+        }
+
+        return this._basePath;
     }
 
     /**

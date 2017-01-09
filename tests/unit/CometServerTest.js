@@ -18,7 +18,6 @@ class CometServerTest extends UnitTest {
     init() {
         Jii.createWebApplication({
             application: {
-                basePath: __dirname,
                 controllerMap: {
                     SiteController: SiteController
                 },

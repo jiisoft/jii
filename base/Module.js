@@ -42,12 +42,6 @@ class Module extends Context {
         this._viewPath = null;
 
         /**
-         * The root directory of the module.
-         * @type {string}
-         */
-        this._basePath = null;
-
-        /**
          * Stored controller instances
          * @type {object}
          */
@@ -175,28 +169,6 @@ class Module extends Context {
     }
 
     /**
-     * Returns the root directory of the module.
-     * It defaults to the directory containing the module class file.
-     * @return {string} the root directory of the module.
-     */
-    getBasePath() {
-        if (this._basePath === null) {
-            this._basePath = process.cwd();//Jii.getAlias('@' + this.className().replace(/\.[^.]+$/, '').replace(/\./g, '/'));
-        }
-
-        return this._basePath;
-    }
-
-    /**
-     * Sets the root directory of the module.
-     * This method can only be invoked at the beginning of the constructor.
-     * @param  {string} path the root directory of the module. This can be either a directory name or a path alias.
-     */
-    setBasePath(path) {
-        this._basePath = Jii.getAlias(path);
-    }
-
-    /**
      * Returns the directory that contains the controller classes according to [[controllerNamespace]].
      * Note that in order for this method to return a value, you must define
      * an alias for the root namespace of [[controllerNamespace]].
@@ -212,7 +184,7 @@ class Module extends Context {
      */
     getViewPath() {
         if (this._viewPath === null) {
-            this._viewPath = this.getBasePath() + '/views';
+            this._viewPath = Jii.app.getBasePath() + '/views';
         }
         return this._viewPath;
     }

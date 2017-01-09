@@ -130,14 +130,6 @@ class UrlManager extends Component {
     }
 
     /**
-     * Initializes UrlManager.
-     */
-    init() {
-        super.init();
-        this._compileRules();
-    }
-
-    /**
      * Parses the URL rules.
      */
     _compileRules() {

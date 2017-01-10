@@ -316,11 +316,14 @@ class DataProvider extends Collection {
                 throw new InvalidConfigException('DataProvider with pagination need parent collection.');
             }
 
-            const modelsPage = super._filterModels(pagination.getIndexes().map(i => {
+            // There were no filtering with super._filterModels when pagination is not null
+            // Now we're passing filtered models of the current page to the super._filterModels()
+            // @todo probably all the collection indices should be used, not the indices on the current page
+            const currentPageModels = pagination.getIndexes().map(i => {
                 return this.parent._byId[this._fetchedKeys[i]] || null;
-            }).filter(model => model !== null));
+            }).filter(model => model !== null);
 
-            return super._filterModels(modelsPage);
+            return super._filterModels(currentPageModels);
         }
 
         return super._filterModels();

@@ -28,7 +28,7 @@ class Response extends BaseResponse {
         this.connectionId = null;
 
         /**
-         * @type {Jii.comet.server.HubServer}
+         * @type {HubServer}
          */
         this.comet = null;
 

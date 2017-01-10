@@ -53,7 +53,7 @@ class ColumnSchemaBuilder extends BaseObject {
 
     /**
      * Adds a `NOT NULL` constraint to the column.
-     * @returns {Jii.data.ColumnSchemaBuilder}
+     * @returns {ColumnSchemaBuilder}
      */
     notNull() {
         this._isNotNull = true;
@@ -62,7 +62,7 @@ class ColumnSchemaBuilder extends BaseObject {
 
     /**
      * Adds a `UNIQUE` constraint to the column.
-     * @returns {Jii.data.ColumnSchemaBuilder}
+     * @returns {ColumnSchemaBuilder}
      */
     unique() {
         this._isUnique = true;
@@ -72,7 +72,7 @@ class ColumnSchemaBuilder extends BaseObject {
     /**
      * Sets a `CHECK` constraint for the column.
      * @param {string} check the SQL of the `CHECK` constraint to be added.
-     * @returns {Jii.data.ColumnSchemaBuilder}
+     * @returns {ColumnSchemaBuilder}
      */
     check(check) {
         this._check = check;
@@ -82,7 +82,7 @@ class ColumnSchemaBuilder extends BaseObject {
     /**
      * Specify the default value for the column.
      * @param {mixed} value the default value.
-     * @returns {Jii.data.ColumnSchemaBuilder}
+     * @returns {ColumnSchemaBuilder}
      */
     defaultValue(value) {
         this._default = value;
@@ -92,7 +92,7 @@ class ColumnSchemaBuilder extends BaseObject {
     /**
      * Specify the default SQL expression for the column.
      * @param {string} value the default value expression.
-     * @returns {Jii.data.ColumnSchemaBuilder}
+     * @returns {ColumnSchemaBuilder}
      */
     defaultExpression(value) {
         this._default = new Expression(value);

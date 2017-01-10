@@ -22,7 +22,7 @@ class InlineAction extends Action {
     /**
      * Runs this action with the specified parameters.
      * This method is mainly invoked by the controller.
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @returns {*} the result of the action
      */
     runWithParams(context) {

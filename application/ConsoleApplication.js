@@ -19,7 +19,7 @@ class ConsoleApplication extends Application {
         config = config || {};
 
         /**
-         * @type {Jii.console.Controller} the currently active controller instance
+         * @type {Controller} the currently active controller instance
          */
         this.controller = null;
 
@@ -93,8 +93,8 @@ class ConsoleApplication extends Application {
 
     /**
      * Handles the specified request.
-     * @param {Jii.console.Request} request the request to be handled
-     * @returns {Jii.console.Response} the resulting response
+     * @param {Request} request the request to be handled
+     * @returns {Response} the resulting response
      */
     handleRequest(request) {
         var result = request.resolve();

@@ -24,13 +24,13 @@ class CollectionEvent extends Event {
 
         /**
          *
-         * @type {Jii.base.Model[]}
+         * @type {Model[]}
          */
         this.removed = [];
 
         /**
          *
-         * @type {Jii.base.Model[]}
+         * @type {Model[]}
          */
         this.added = [];
 

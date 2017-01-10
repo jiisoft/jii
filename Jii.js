@@ -39,7 +39,7 @@ const Util = require('./helpers/Util');
 var Jii = _extend(BaseJii, /** @lends Jii */{
 
     /**
-     * @type {Jii.base.Application}
+     * @type {Application}
      */
     app: null,
 
@@ -53,7 +53,7 @@ var Jii = _extend(BaseJii, /** @lends Jii */{
     /**
      * Create web application, which available by Jii.app
      * @param {object} config
-     * @returns {Jii.app.Application}
+     * @returns {Application}
      */
     createWebApplication(config) {
         return this.createApplication(WebApplication, config);
@@ -63,7 +63,7 @@ var Jii = _extend(BaseJii, /** @lends Jii */{
      * Main method which create application by class name and config.
      * @param {string} className
      * @param {object} config
-     * @returns {Jii.app.Application}
+     * @returns {Application}
      */
     createApplication(className, config) {
         config = config || {};
@@ -320,7 +320,7 @@ var Jii = _extend(BaseJii, /** @lends Jii */{
     /**
      * Set configuration to object. This method find public param in object or setter method.
      * You can not use setter and public param at the same time for safety reason
-     * @param {Jii.base.Object} object Class instance
+     * @param {Object} object Class instance
      * @param {object} config Configuration object {key: value, ..}
      */
     configure(object, config) {

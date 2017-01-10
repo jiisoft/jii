@@ -11,7 +11,7 @@ class ConnectionEvent extends Event {
 
     preInit() {
         /**
-         * @type {Jii.comet.server.Connection}
+         * @type {Connection}
          */
         this.connection = null;
 

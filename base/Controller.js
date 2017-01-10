@@ -25,7 +25,7 @@ class Controller extends Component {
     preInit(id, moduleObject, config) {
         /**
          * The view object that can be used to render views or view files.
-         * @type {Jii.view.View}
+         * @type {View}
          */
         this._view = null;
 
@@ -49,7 +49,7 @@ class Controller extends Component {
         this.id = id;
 
         /**
-         * @type {Jii.base.Module} The module that this controller belongs to.
+         * @type {Module} The module that this controller belongs to.
          */
         this.module = moduleObject;
 
@@ -84,7 +84,7 @@ class Controller extends Component {
     /**
      * Runs a request specified in terms of a route.
      * @param {string} route the route to be handled, e.g., 'view', 'comment/view', 'admin/comment/view'.
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @return {Promise}
      */
     run(route, context) {
@@ -103,9 +103,9 @@ class Controller extends Component {
      * Runs an action within this controller with the specified action ID and parameters.
      * If the action ID is empty, the method will use [[defaultAction]].
      * @param {string} id The ID of the action to be executed.
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @return {Promise} The result of the action.
-     * @throws {Jii.exceptions.InvalidRouteException} if the requested action ID cannot be resolved into an action successfully.
+     * @throws {InvalidRouteException} if the requested action ID cannot be resolved into an action successfully.
      */
     runAction(id, context) {
         var action = this.createAction(id);
@@ -150,7 +150,7 @@ class Controller extends Component {
      * where `Xyz` stands for the action ID. If found, an [[InlineAction]] representing that
      * method will be created and returned.
      * @param {string} id the action ID.
-     * @return {Jii.base.Action} the newly created action instance. Null if the ID doesn't resolve into any action.
+     * @return {Action} the newly created action instance. Null if the ID doesn't resolve into any action.
      */
     createAction(id) {
         if (id === '') {
@@ -204,8 +204,8 @@ class Controller extends Component {
 
     /**
      * This method is invoked right before an action is to be executed (after all possible filters).
-     * @param {Jii.base.Action} action
-     * @param {Jii.base.Context} context
+     * @param {Action} action
+     * @param {Context} context
      * @return {Promise}
      */
     beforeAction(action, context) {
@@ -218,8 +218,8 @@ class Controller extends Component {
 
     /**
      * This method is invoked right after an action is executed.
-     * @param {Jii.base.Action} action
-     * @param {Jii.base.Context} context
+     * @param {Action} action
+     * @param {Context} context
      * @return {Promise}
      */
     afterAction(action, context) {
@@ -264,7 +264,7 @@ class Controller extends Component {
      * If the layout name does not contain a file extension, it will use the default one `.php`.
      *
      * @param {*} view   the view name. Please refer to [[findViewFile()]] on how to specify a view name.
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @param {object} [params] the parameters (name-value pairs) that should be made available in the view.
      * These parameters will not be available in the layout.
      * @return {Promise} the rendering result.
@@ -297,7 +297,7 @@ class Controller extends Component {
      * Renders a view.
      * This method differs from [[render()]] in that it does not apply any layout.
      * @param {*} view   the view name. Please refer to [[render()]] on how to specify a view name.
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @param {object} [params] the parameters (name-value pairs) that should be made available in the view.
      * @return {Promise} the rendering result.
      */
@@ -320,7 +320,7 @@ class Controller extends Component {
      * The [[render()]], [[renderPartial()]] and [[renderFile()]] methods will use
      * this view object to implement the actual view rendering.
      * If not set, it will default to the "view" application component.
-     * @return {Jii.view.View} the view object that can be used to render views or view files.
+     * @return {View} the view object that can be used to render views or view files.
      */
     getView() {
         if (this._view === null) {
@@ -332,7 +332,7 @@ class Controller extends Component {
 
     /**
      * Sets the view object to be used by this controller.
-     * @param {Jii.view.View} view the view object that can be used to render views or view files.
+     * @param {View} view the view object that can be used to render views or view files.
      */
     setView(view) {
         this._view = view;
@@ -350,7 +350,7 @@ class Controller extends Component {
 
     /**
      * Finds the applicable layout file.
-     * @param {Jii.view.View} view the view object to render the layout file.
+     * @param {View} view the view object to render the layout file.
      * @return {string|boolean} the layout file path, or false if layout is not needed.
      * Please refer to [[render()]] on how to specify this parameter.
      */
@@ -398,14 +398,14 @@ class Controller extends Component {
 }
 
 /**
- * @event Jii.base.Module#afterAction
- * @property {Jii.base.ActionEvent} event
+ * @event Module#afterAction
+ * @property {ActionEvent} event
  */
 Controller.EVENT_AFTER_ACTION = 'afterAction';
 
 /**
- * @event Jii.base.Module#beforeAction
- * @property {Jii.base.ActionEvent} event
+ * @event Module#beforeAction
+ * @property {ActionEvent} event
  */
 Controller.EVENT_BEFORE_ACTION = 'beforeAction';
 module.exports = Controller;

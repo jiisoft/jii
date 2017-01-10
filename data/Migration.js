@@ -13,7 +13,7 @@ class Migration extends Component {
 
     preInit() {
         /**
-         * @type {Jii.data.BaseConnection|object|string} the DB connection object or the application component ID of the DB connection
+         * @type {BaseConnection|object|string} the DB connection object or the application component ID of the DB connection
          * that this migration should work with. Starting from version 2.0.2, this can also be a configuration array
          * for creating the object.
          */
@@ -358,7 +358,7 @@ class Migration extends Component {
      * Creates a primary key column.
      * @param {number} [length] column size or precision definition.
      * This parameter will be ignored if not supported by the DBMS.
-     * @returns {Jii.data.ColumnSchemaBuilder} the column instance which can be further customized.
+     * @returns {ColumnSchemaBuilder} the column instance which can be further customized.
      * @since 2.0.6
      */
     primaryKey(length) {
@@ -371,7 +371,7 @@ class Migration extends Component {
      * Creates a big primary key column.
      * @param {number} [length] column size or precision definition.
      * This parameter will be ignored if not supported by the DBMS.
-     * @returns {Jii.data.ColumnSchemaBuilder} the column instance which can be further customized.
+     * @returns {ColumnSchemaBuilder} the column instance which can be further customized.
      * @since 2.0.6
      */
     bigPrimaryKey(length) {
@@ -384,7 +384,7 @@ class Migration extends Component {
      * Creates a string column.
      * @param {number} [length] column size definition i.e. the maximum string length.
      * This parameter will be ignored if not supported by the DBMS.
-     * @returns {Jii.data.ColumnSchemaBuilder} the column instance which can be further customized.
+     * @returns {ColumnSchemaBuilder} the column instance which can be further customized.
      * @since 2.0.6
      */
     string(length) {
@@ -394,7 +394,7 @@ class Migration extends Component {
 
     /**
      * Creates a text column.
-     * @returns {Jii.data.ColumnSchemaBuilder} the column instance which can be further customized.
+     * @returns {ColumnSchemaBuilder} the column instance which can be further customized.
      * @since 2.0.6
      */
     text() {
@@ -405,7 +405,7 @@ class Migration extends Component {
      * Creates a smallint column.
      * @param {number} [length] column size or precision definition.
      * This parameter will be ignored if not supported by the DBMS.
-     * @returns {Jii.data.ColumnSchemaBuilder} the column instance which can be further customized.
+     * @returns {ColumnSchemaBuilder} the column instance which can be further customized.
      * @since 2.0.6
      */
     smallInteger(length) {
@@ -418,7 +418,7 @@ class Migration extends Component {
      * Creates an integer column.
      * @param {number} [length] column size or precision definition.
      * This parameter will be ignored if not supported by the DBMS.
-     * @returns {Jii.data.ColumnSchemaBuilder} the column instance which can be further customized.
+     * @returns {ColumnSchemaBuilder} the column instance which can be further customized.
      * @since 2.0.6
      */
     integer(length) {
@@ -431,7 +431,7 @@ class Migration extends Component {
      * Creates a bigint column.
      * @param {number} [length] column size or precision definition.
      * This parameter will be ignored if not supported by the DBMS.
-     * @returns {Jii.data.ColumnSchemaBuilder} the column instance which can be further customized.
+     * @returns {ColumnSchemaBuilder} the column instance which can be further customized.
      * @since 2.0.6
      */
     bigInteger(length) {
@@ -444,7 +444,7 @@ class Migration extends Component {
      * Creates a float column.
      * @param {number} [precision] column value precision. First parameter passed to the column type, e.g. FLOAT(precision).
      * This parameter will be ignored if not supported by the DBMS.
-     * @returns {Jii.data.ColumnSchemaBuilder} the column instance which can be further customized.
+     * @returns {ColumnSchemaBuilder} the column instance which can be further customized.
      * @since 2.0.6
      */
     float(precision) {
@@ -457,7 +457,7 @@ class Migration extends Component {
      * Creates a double column.
      * @param {number} [precision] column value precision. First parameter passed to the column type, e.g. DOUBLE(precision).
      * This parameter will be ignored if not supported by the DBMS.
-     * @returns {Jii.data.ColumnSchemaBuilder} the column instance which can be further customized.
+     * @returns {ColumnSchemaBuilder} the column instance which can be further customized.
      * @since 2.0.6
      */
     double(precision) {
@@ -474,7 +474,7 @@ class Migration extends Component {
      * @param {number} [scale] column value scale, which is usually the number of digits after the decimal point.
      * Second parameter passed to the column type, e.g. DECIMAL(precision, scale).
      * This parameter will be ignored if not supported by the DBMS.
-     * @returns {Jii.data.ColumnSchemaBuilder} the column instance which can be further customized.
+     * @returns {ColumnSchemaBuilder} the column instance which can be further customized.
      * @since 2.0.6
      */
     decimal(precision, scale) {
@@ -495,7 +495,7 @@ class Migration extends Component {
      * Creates a datetime column.
      * @param {number} [precision] column value precision. First parameter passed to the column type, e.g. DATETIME(precision).
      * This parameter will be ignored if not supported by the DBMS.
-     * @returns {Jii.data.ColumnSchemaBuilder} the column instance which can be further customized.
+     * @returns {ColumnSchemaBuilder} the column instance which can be further customized.
      * @since 2.0.6
      */
     dateTime(precision) {
@@ -508,7 +508,7 @@ class Migration extends Component {
      * Creates a timestamp column.
      * @param {number} [precision] column value precision. First parameter passed to the column type, e.g. TIMESTAMP(precision).
      * This parameter will be ignored if not supported by the DBMS.
-     * @returns {Jii.data.ColumnSchemaBuilder} the column instance which can be further customized.
+     * @returns {ColumnSchemaBuilder} the column instance which can be further customized.
      * @since 2.0.6
      */
     timestamp(precision) {
@@ -521,7 +521,7 @@ class Migration extends Component {
      * Creates a time column.
      * @param {number} [precision] column value precision. First parameter passed to the column type, e.g. TIME(precision).
      * This parameter will be ignored if not supported by the DBMS.
-     * @returns {Jii.data.ColumnSchemaBuilder} the column instance which can be further customized.
+     * @returns {ColumnSchemaBuilder} the column instance which can be further customized.
      * @since 2.0.6
      */
     time(precision) {
@@ -532,7 +532,7 @@ class Migration extends Component {
 
     /**
      * Creates a date column.
-     * @returns {Jii.data.ColumnSchemaBuilder} the column instance which can be further customized.
+     * @returns {ColumnSchemaBuilder} the column instance which can be further customized.
      * @since 2.0.6
      */
     date() {
@@ -543,7 +543,7 @@ class Migration extends Component {
      * Creates a binary column.
      * @param {number} [length] column size or precision definition.
      * This parameter will be ignored if not supported by the DBMS.
-     * @returns {Jii.data.ColumnSchemaBuilder} the column instance which can be further customized.
+     * @returns {ColumnSchemaBuilder} the column instance which can be further customized.
      * @since 2.0.6
      */
     binary(length) {
@@ -554,7 +554,7 @@ class Migration extends Component {
 
     /**
      * Creates a boolean column.
-     * @returns {Jii.data.ColumnSchemaBuilder} the column instance which can be further customized.
+     * @returns {ColumnSchemaBuilder} the column instance which can be further customized.
      * @since 2.0.6
      */
     boolean() {
@@ -569,7 +569,7 @@ class Migration extends Component {
      * @param {number} [scale] column value scale, which is usually the number of digits after the decimal point.
      * Second parameter passed to the column type, e.g. DECIMAL(precision, scale).
      * This parameter will be ignored if not supported by the DBMS.
-     * @returns {Jii.data.ColumnSchemaBuilder} the column instance which can be further customized.
+     * @returns {ColumnSchemaBuilder} the column instance which can be further customized.
      * @since 2.0.6
      */
     money(precision, scale) {

@@ -19,7 +19,7 @@ class Router extends Component {
         this._bindRouteFunction = null;
         this.mode = null;
         /**
-         * @type {Jii.controller.UrlManager|string}
+         * @type {UrlManager|string}
          */
         this.urlManager = 'urlManager';
         super.preInit(...arguments);

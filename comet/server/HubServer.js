@@ -26,14 +26,14 @@ class HubServer extends Component {
         this._serverUid = null;
 
         /**
-         * @type {Jii.comet.server.queue.QueueInterface}
+         * @type {QueueInterface}
          */
         this.queue = {
             className: RedisQueue
         };
 
         /**
-         * @type {Jii.comet.server.hub.HubInterface}
+         * @type {HubInterface}
          */
         this.hub = {
             className: RedisHub
@@ -169,7 +169,7 @@ class HubServer extends Component {
 
     /**
      *
-     * @param {Jii.comet.server.Connection} connection
+     * @param {Connection} connection
      * @param {string} route
      * @param {object} data
      */
@@ -189,7 +189,7 @@ class HubServer extends Component {
 
     /**
      * Income message from hub
-     * @param {Jii.comet.ChannelEvent} event
+     * @param {ChannelEvent} event
      * @private
      */
     _onHubMessage(event) {
@@ -279,20 +279,20 @@ HubServer.CHANNEL_NAME_ACTION = '__actionXZj1sf';
 HubServer.CHANNEL_NAME_ALL = '__allVfcOS7';
 
 /**
- * @event Jii.comet.server.HubServer#message
- * @property {Jii.comet.server.MessageEvent} event
+ * @event HubServer#message
+ * @property {MessageEvent} event
  */
 HubServer.EVENT_MESSAGE = 'message';
 
 /**
- * @event Jii.comet.server.HubServer#channel:%channel_name%
- * @property {Jii.comet.ChannelEvent} event
+ * @event HubServer#channel:%channel_name%
+ * @property {ChannelEvent} event
  */
 HubServer.EVENT_CHANNEL_NAME = 'channel:';
 
 /**
- * @event Jii.comet.server.HubServer#channel
- * @property {Jii.comet.ChannelEvent} event
+ * @event HubServer#channel
+ * @property {ChannelEvent} event
  */
 HubServer.EVENT_CHANNEL = 'channel';
 module.exports = HubServer;

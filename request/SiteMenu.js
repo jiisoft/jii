@@ -127,7 +127,7 @@ class SiteMenu extends Component {
                 this._requestedRoute = [parseInfo[0] ? '/' + parseInfo[0] : ''];
             }
         } else {
-            this._requestedRoute = ['/404']; //TODO: add Jii.app.errorHandler.errorAction
+            this._requestedRoute = ['/404']; //TODO: add errorAction
         }
         return this._requestedRoute;
     }

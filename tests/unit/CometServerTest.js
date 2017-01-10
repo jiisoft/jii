@@ -66,25 +66,25 @@ class CometServerTest extends UnitTest {
     }
 
     subscribeTest(test) {
-        /** @typedef {Jii.comet.ChannelEvent} event */
+        /** @typedef {ChannelEvent} event */
         var event = null;
         Jii.app.comet.on(Server.EVENT_CHANNEL, function (e) {
             event = e;
         });
 
-        /** @typedef {Jii.comet.ChannelEvent} event */
+        /** @typedef {ChannelEvent} event */
         var event2 = null;
         Jii.app.comet.on(Server.EVENT_CHANNEL_NAME + 'test', function (e) {
             event2 = e;
         });
 
-        /** @typedef {Jii.comet.ChannelEvent} event */
+        /** @typedef {ChannelEvent} event */
         var event3 = null;
         Jii.app.comet.on(Server.EVENT_CHANNEL_NAME + 'blabla', function (e) {
             event3 = e;
         });
 
-        /** @typedef {Jii.comet.ChannelEvent} event */
+        /** @typedef {ChannelEvent} event */
         var hubEvent = null;
         Jii.app.comet.hub.on(HubInterface.EVENT_MESSAGE, function (e) {
             hubEvent = e;

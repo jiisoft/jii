@@ -70,7 +70,7 @@ class Url extends BaseObject {
 
     /**
      *
-     * @returns {Jii.request.UrlManager}
+     * @returns {UrlManager}
      * @private
      */
     static _getUrlManager() {
@@ -80,7 +80,7 @@ class Url extends BaseObject {
     /**
      *
      * @param {string|array|object} route
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @returns {{route: string, params: {}}}
      */
     static parseRoute(route, context) {
@@ -117,7 +117,7 @@ class Url extends BaseObject {
         return route;
         // relative route
         // @todo
-        /*if (!Jii.app || Jii.app.controller === null) {
+        /*if (!Jii.app || controller === null) {
          throw new InvalidParamException("Unable to resolve the relative route: $route. No active controller is available.");
          }
 
@@ -133,7 +133,7 @@ class Url extends BaseObject {
 }
 
 /**
- * @type {Jii.request.UrlManager}
+ * @type {UrlManager}
  */
 Url.urlManager = null;
 module.exports = Url;

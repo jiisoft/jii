@@ -60,12 +60,12 @@ class Collection extends Component {
 
         /**
          * Root collection
-         * @type {Jii.base.Collection}
+         * @type {Collection}
          */
         this.parent = null;
 
         /**
-         * @type {string|Jii.base.Model}
+         * @type {string|Model}
          */
         this.modelClass = null;
 
@@ -90,7 +90,7 @@ class Collection extends Component {
 
     /**
      *
-     * @param {object|object[]|Jii.base.Model|Jii.base.Model[]} models
+     * @param {object|object[]|Model|Model[]} models
      */
     setModels(models) {
         if (!_isArray(models)) {
@@ -106,9 +106,9 @@ class Collection extends Component {
 
     /**
      *
-     * @param {object|object[]|Jii.base.Model|Jii.base.Model[]} models
+     * @param {object|object[]|Model|Model[]} models
      * @param {number} [index]
-     * @returns {Jii.base.Model[]}
+     * @returns {Model[]}
      */
     add(models, index) {
         if (!_isArray(models)) {
@@ -129,7 +129,7 @@ class Collection extends Component {
     /**
      *
      * @param {*|*[]} models
-     * @returns {Jii.base.Model[]}
+     * @returns {Model[]}
      */
     remove(models) {
         if (!_isArray(models)) {
@@ -210,7 +210,7 @@ class Collection extends Component {
 
     /**
      *
-     * @param {function|Jii.data.Query} value
+     * @param {function|Query} value
      */
     setFilter(value) {
         // @todo normalize code, remove duplicates
@@ -309,7 +309,7 @@ class Collection extends Component {
 
     /**
      *
-     * @param {object|Jii.data.CollectionAdapterInterface} collectionAdapter
+     * @param {object|CollectionAdapterInterface} collectionAdapter
      */
     createProxy(collectionAdapter) {
         var cloned = collectionAdapter.instance(this);
@@ -318,7 +318,7 @@ class Collection extends Component {
         collectionAdapter.add(this, cloned, this.getModels());
 
         // Subscribe
-        this.on(Collection.EVENT_CHANGE, /** @param {Jii.data.CollectionEvent} event */
+        this.on(Collection.EVENT_CHANGE, /** @param {CollectionEvent} event */
                                          event => {
             if (event.added.length > 0) {
                 collectionAdapter.add(this, cloned, event.added);
@@ -379,7 +379,7 @@ class Collection extends Component {
             });
 
             // Each trigger events in children
-            _each(this._editedEvents, /** @param {Jii.data.CollectionEvent} event */
+            _each(this._editedEvents, /** @param {CollectionEvent} event */
                                       event => {
                 if (event.added.length > 0) {
                     this.trigger(Collection.EVENT_ADD, event);
@@ -509,10 +509,10 @@ class Collection extends Component {
 
     /**
      *
-     * @param {function|Jii.data.Query} [filter]
+     * @param {function|Query} [filter]
      * @param {object} [params]
-     * @param {Jii.base.Collection} [className]
-     * @returns {Jii.base.Collection}
+     * @param {Collection} [className]
+     * @returns {Collection}
      */
     createChild(filter, params, className) {
         filter = filter || null;
@@ -544,8 +544,8 @@ class Collection extends Component {
     /**
      *
      * @param {object} [params]
-     * @param {Jii.data.DataProvider} [className]
-     * @returns {Jii.base.Collection}
+     * @param {DataProvider} [className]
+     * @returns {Collection}
      */
     createDataProvider(params, className) {
         params = params || {};
@@ -694,7 +694,7 @@ class Collection extends Component {
     /**
      *
      * @param {object} params
-     * @returns {Jii.data.CollectionEvent}
+     * @returns {CollectionEvent}
      */
     _createEvent(params) {
         return new CollectionEvent(params);
@@ -749,7 +749,7 @@ class Collection extends Component {
     /**
      * Convert any data to model
      * @param {object|*} [data]
-     * @returns {Jii.base.Model}
+     * @returns {Model}
      */
     createModel(data) {
         // Already model
@@ -1071,7 +1071,7 @@ class Collection extends Component {
     /**
      *
      * @param {function} predicate
-     * @returns {object|Jii.base.Model|null}
+     * @returns {object|Model|null}
      */
     find(predicate) {
         return _find(this, this._normalizePredicate(predicate)) || null;
@@ -1098,7 +1098,7 @@ class Collection extends Component {
     /**
      *
      * @param {object} properties
-     * @returns {object|Jii.base.Model|null}
+     * @returns {object|Model|null}
      */
     findWhere(properties) {
         return _find(this, properties) || null;
@@ -1348,32 +1348,32 @@ class Collection extends Component {
 }
 
 /**
- * @event Jii.base.Collection#remove
- * @property {Jii.data.CollectionEvent} event
+ * @event Collection#remove
+ * @property {CollectionEvent} event
  */
 Collection.EVENT_REMOVE = 'remove';
 
 /**
- * @event Jii.base.Collection#change:
- * @property {Jii.data.CollectionEvent} event
+ * @event Collection#change:
+ * @property {CollectionEvent} event
  */
 Collection.EVENT_CHANGE_NAME = 'change:';
 
 /**
- * @event Jii.base.Collection#change
- * @property {Jii.data.CollectionEvent} event
+ * @event Collection#change
+ * @property {CollectionEvent} event
  */
 Collection.EVENT_CHANGE = 'change';
 
 /**
- * @event Jii.base.Collection#fetched
- * @property {Jii.data.CollectionEvent} event
+ * @event Collection#fetched
+ * @property {CollectionEvent} event
  */
 Collection.EVENT_FETCHED = 'fetched';
 
 /**
- * @event Jii.base.Collection#add
- * @property {Jii.data.CollectionEvent} event
+ * @event Collection#add
+ * @property {CollectionEvent} event
  */
 Collection.EVENT_ADD = 'add';
 module.exports = Collection;

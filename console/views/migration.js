@@ -5,7 +5,7 @@
 //
 // /**
 //  * @class <%= className %>
-//  * @extends Jii.data.Migration
+//  * @extends Migration
 //  */
 // module.exports = Jii.defineClass('<%= className %>', /** @lends <%= className %>.prototype */{
 //

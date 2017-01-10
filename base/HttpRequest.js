@@ -17,7 +17,7 @@ class HttpRequest extends Request {
 
     preInit() {
         /**
-         * @type {Jii.request.HeaderCollection}
+         * @type {HeaderCollection}
          */
         this._headers = null;
 

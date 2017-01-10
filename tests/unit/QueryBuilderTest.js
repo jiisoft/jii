@@ -16,7 +16,7 @@ class self extends DatabaseTestCase {
 
     /**
      * @throws \Exception
-     * @returns {Jii.data.QueryBuilder}
+     * @returns {QueryBuilder}
      */
     _getQueryBuilder() {
         var queryBuilder = null;

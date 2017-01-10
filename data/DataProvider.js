@@ -38,12 +38,12 @@ class DataProvider extends Collection {
         this._totalCount = 0;
 
         /**
-         * @type {Jii.data.Pagination|boolean}
+         * @type {Pagination|boolean}
          */
         this._pagination = null;
 
         /**
-         * @type {Jii.data.Sort}
+         * @type {Sort}
          */
         this._sort = null;
 
@@ -53,7 +53,7 @@ class DataProvider extends Collection {
         this.autoFetch = true;
 
         /**
-         * @type {function|Jii.data.Query}
+         * @type {function|Query}
          */
         this.query = null;
 
@@ -202,7 +202,7 @@ class DataProvider extends Collection {
      * Returns the pagination object used by this data provider.
      * Note that you should call [[prepare()]] or [[getModels()]] first to get correct values
      * of [[Pagination.totalCount]] and [[Pagination.pageCount]].
-     * @returns {Jii.data.Pagination|boolean} the pagination object. If this is false, it means the pagination is disabled.
+     * @returns {Pagination|boolean} the pagination object. If this is false, it means the pagination is disabled.
      */
     getPagination() {
         if (this._pagination === null) {
@@ -214,7 +214,7 @@ class DataProvider extends Collection {
 
     /**
      * Sets the pagination for this data provider.
-     * @param {object|Jii.data.Pagination|boolean} value the pagination to be used by this data provider.
+     * @param {object|Pagination|boolean} value the pagination to be used by this data provider.
      * @throws InvalidParamException
      */
     setPagination(value) {
@@ -238,7 +238,7 @@ class DataProvider extends Collection {
     }
 
     /**
-     * @returns {Jii.data.Sort|boolean} the sorting object. If this is false, it means the sorting is disabled.
+     * @returns {Sort|boolean} the sorting object. If this is false, it means the sorting is disabled.
      */
     getSort() {
         if (this._sort === null) {
@@ -250,7 +250,7 @@ class DataProvider extends Collection {
 
     /**
      * Sets the sort definition for this data provider.
-     * @param {object|Jii.data.Sort|boolean} value the sort definition to be used by this data provider.
+     * @param {object|Sort|boolean} value the sort definition to be used by this data provider.
      * This can be one of the following:
      *
      * - a configuration array for creating the sort definition object. The "class" element defaults
@@ -327,7 +327,7 @@ class DataProvider extends Collection {
     /**
      *
      * @param {object} params
-     * @returns {Jii.data.CollectionEvent}
+     * @returns {CollectionEvent}
      */
     _createEvent(params) {
         params.totalCount = this.getTotalCount();
@@ -337,20 +337,20 @@ class DataProvider extends Collection {
 }
 
 /**
- * @event Jii.data.DataProvider#loading
- * @property {Jii.data.FetchEvent} event
+ * @event DataProvider#loading
+ * @property {FetchEvent} event
  */
 DataProvider.EVENT_LOADING = 'loading';
 
 /**
- * @event Jii.data.DataProvider#after_fetch
- * @property {Jii.data.FetchEvent} event
+ * @event DataProvider#after_fetch
+ * @property {FetchEvent} event
  */
 DataProvider.EVENT_AFTER_FETCH = 'after_fetch';
 
 /**
- * @event Jii.data.DataProvider#before_fetch
- * @property {Jii.data.FetchEvent} event
+ * @event DataProvider#before_fetch
+ * @property {FetchEvent} event
  */
 DataProvider.EVENT_BEFORE_FETCH = 'before_fetch';
 module.exports = DataProvider;

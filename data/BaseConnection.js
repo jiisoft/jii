@@ -22,7 +22,7 @@ class BaseConnection extends Component {
         this._isOpen = false;
 
         /**
-         * @type {Jii.data.BaseSchema} the database schema
+         * @type {BaseSchema} the database schema
          */
         this._schema = null;
 
@@ -159,7 +159,7 @@ class BaseConnection extends Component {
 
     /**
      * Returns the schema information for the database opened by this connection.
-     * @returns {Jii.data.BaseSchema} the schema information for the database opened by this connection.
+     * @returns {BaseSchema} the schema information for the database opened by this connection.
      */
     getSchema() {
         if (this._schema === null) {
@@ -175,7 +175,7 @@ class BaseConnection extends Component {
 
     /**
      * Returns the query builder for the current DB connection.
-     * @returns {Jii.data.QueryBuilder} the query builder for the current DB connection.
+     * @returns {QueryBuilder} the query builder for the current DB connection.
      */
     getQueryBuilder() {
         return this.getSchema().getQueryBuilder();
@@ -261,7 +261,7 @@ class BaseConnection extends Component {
     /**
      *
      * @param modelClassName
-     * @returns {Jii.base.Collection|null}
+     * @returns {Collection|null}
      */
     getRootCollection(modelClassName) {
         return null;

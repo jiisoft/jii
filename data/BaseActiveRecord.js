@@ -72,7 +72,7 @@ class BaseActiveRecord extends Model {
     }
 
     /**
-     * @returns {Jii.data.TableSchema}
+     * @returns {TableSchema}
      */
     static getTableSchema() {
         const className = this.className();
@@ -94,7 +94,7 @@ class BaseActiveRecord extends Model {
 
     /**
      * @inheritdoc
-     * @returns {Jii.data.BaseActiveRecord} BaseActiveRecord instance matching the condition, or `null` if nothing matches.
+     * @returns {BaseActiveRecord} BaseActiveRecord instance matching the condition, or `null` if nothing matches.
      */
     static findOne(condition) {
         return this._findByCondition(condition, true);
@@ -102,7 +102,7 @@ class BaseActiveRecord extends Model {
 
     /**
      * @inheritdoc
-     * @returns {Jii.data.BaseActiveRecord[]} an array of BaseActiveRecord instances, or an empty array if nothing matches.
+     * @returns {BaseActiveRecord[]} an array of BaseActiveRecord instances, or an empty array if nothing matches.
      */
     static findAll(condition) {
         return this._findByCondition(condition, false);
@@ -119,7 +119,7 @@ class BaseActiveRecord extends Model {
      * Returns the database connection used by this AR class.
      * By default, the "db" application component is used as the database connection.
      * You may override this method if you want to use a different database connection.
-     * @returns {Jii.data.BaseConnection} the database connection used by this AR class.
+     * @returns {BaseConnection} the database connection used by this AR class.
      */
     static getDb() {
         return Jii.app ? Jii.app.getComponent('db') : null;
@@ -147,8 +147,8 @@ class BaseActiveRecord extends Model {
      * This method is internally called by [[findOne()]] and [[findAll()]].
      * @param {*} condition please refer to [[findOne()]] for the explanation of this parameter
      * @param {boolean} one whether this method is called by [[findOne()]] or [[findAll()]]
-     * @returns {Jii.data.BaseActiveRecord|Jii.data.BaseActiveRecord[]}
-     * @throws {Jii.exceptions.InvalidConfigException} if there is no primary key defined
+     * @returns {BaseActiveRecord|BaseActiveRecord[]}
+     * @throws {InvalidConfigException} if there is no primary key defined
      * @internal
      */
     static _findByCondition(condition, one) {
@@ -193,7 +193,7 @@ class BaseActiveRecord extends Model {
      * @param {string|[]} [condition] the conditions that will be put in the WHERE part of the UPDATE SQL.
      * Please refer to [[Query.where()]] on how to specify this parameter.
      * @returns {Promise.<number>} the number of rows updated
-     * @throws {Jii.exceptions.NotSupportedException} if not overrided
+     * @throws {NotSupportedException} if not overrided
      */
     static updateAll(attributes, condition) {
         condition = condition || '';
@@ -214,7 +214,7 @@ class BaseActiveRecord extends Model {
      * @param {string|[]} [condition] the conditions that will be put in the WHERE part of the UPDATE SQL.
      * Please refer to [[Query.where()]] on how to specify this parameter.
      * @returns {number} the number of rows updated
-     * @throws {Jii.exceptions.NotSupportedException} if not overrided
+     * @throws {NotSupportedException} if not overrided
      */
     static updateAllCounters(counters, condition) {
         condition = condition || '';
@@ -236,7 +236,7 @@ class BaseActiveRecord extends Model {
      * Please refer to [[Query.where()]] on how to specify this parameter.
      * @param {[]} [params] the parameters (name => value) to be bound to the query.
      * @returns {number} the number of rows deleted
-     * @throws {Jii.exceptions.NotSupportedException} if not overrided
+     * @throws {NotSupportedException} if not overrided
      */
     static deleteAll(condition, params) {
         condition = condition || '';
@@ -255,7 +255,7 @@ class BaseActiveRecord extends Model {
      * When calling this method manually you should call [[afterFind()]] on the created
      * record to trigger the [[EVENT_AFTER_FIND|afterFind Event]].
      *
-     * @param {Jii.data.BaseActiveRecord} record the record to be populated. In most cases this will be an instance
+     * @param {BaseActiveRecord} record the record to be populated. In most cases this will be an instance
      * created by [[instantiate()]] beforehand.
      * @param {object} row attribute values (name => value)
      */
@@ -283,7 +283,7 @@ class BaseActiveRecord extends Model {
      * For example, by creating a record based on the value of a column,
      * you may implement the so-called single-table inheritance mapping.
      * @param {object} row row data to be populated into the record.
-     * @returns {Jii.data.BaseActiveRecord} the newly created active record
+     * @returns {BaseActiveRecord} the newly created active record
      */
     static instantiate(row) {
         return new this(row);
@@ -344,13 +344,13 @@ class BaseActiveRecord extends Model {
      * @param {object} link the primary-foreign key constraint. The keys of the array refer to
      * the attributes of the record associated with the `class` model, while the values of the
      * array refer to the corresponding attributes in **this** AR class.
-     * @returns {Jii.data.ActiveQuery} the relational query object.
+     * @returns {ActiveQuery} the relational query object.
      */
     hasOne(className, link) {
-        /** @typedef {Jii.data.ActiveRecord} classObject */
+        /** @typedef {ActiveRecord} classObject */
         var classObject = Jii.namespace(className);
 
-        /** @typedef {Jii.data.ActiveQuery} query */
+        /** @typedef {ActiveQuery} query */
         var query = classObject.find();
         query.primaryModel = this;
         query.link = link;
@@ -386,12 +386,12 @@ class BaseActiveRecord extends Model {
      * @param {object} link the primary-foreign key constraint. The keys of the array refer to
      * the attributes of the record associated with the `class` model, while the values of the
      * array refer to the corresponding attributes in **this** AR class.
-     * @returns {Jii.data.ActiveQuery} the relational query object.
+     * @returns {ActiveQuery} the relational query object.
      */
     hasMany(className, link) {
         var classObject = Jii.namespace(className);
 
-        /** @type {Jii.data.ActiveQuery} */
+        /** @type {ActiveQuery} */
         var query = classObject.find();
         query.primaryModel = this;
         query.link = link;
@@ -421,7 +421,7 @@ class BaseActiveRecord extends Model {
      * Populates the named relation with the related records.
      * Note that this method does not check if the relation exists or not.
      * @param {string} name the relation name (case-sensitive)
-     * @param {Jii.data.BaseActiveRecord|Jii.data.BaseActiveRecord[]|null} records the related records to be populated into the relation.
+     * @param {BaseActiveRecord|BaseActiveRecord[]|null} records the related records to be populated into the relation.
      */
     populateRelation(name, records) {
         this._setRelated(name, _isArray(records) ? this._createRelatedCollection(name, records) : records);
@@ -489,7 +489,7 @@ class BaseActiveRecord extends Model {
                     if (!(model instanceof Model)) {
                         var _class = relation.modelClass;
 
-                        /** @typedef {Jii.data.ActiveRecord} model */
+                        /** @typedef {ActiveRecord} model */
                         model = _class.instantiate(value);
                         _class.populateRecord(model, value);
                     }
@@ -629,7 +629,7 @@ class BaseActiveRecord extends Model {
      *
      * @param {string} name
      * @param {string} [prefix]
-     * @returns {{model: Jii.data.BaseActiveRecord|null, name: string}|null}
+     * @returns {{model: BaseActiveRecord|null, name: string}|null}
      * @protected
      */
     _detectKeyFormatRelation(name, prefix) {
@@ -757,7 +757,7 @@ class BaseActiveRecord extends Model {
      * Sets the old value of the named attribute.
      * @param {string} name the attribute name
      * @param {*} value the old attribute value.
-     * @throws {Jii.exceptions.InvalidParamException} if the named attribute does not exist.
+     * @throws {InvalidParamException} if the named attribute does not exist.
      * @see hasAttribute()
      */
     setOldAttribute(name, value) {
@@ -1253,7 +1253,7 @@ class BaseActiveRecord extends Model {
      * Returns a value indicating whether the given active record is the same as the current one.
      * The comparison is made by comparing the table names and the primary key values of the two active records.
      * If one of the records [[isNewRecord|is new]] they are also considered not equal.
-     * @param {Jii.data.BaseActiveRecord} record record to compare to
+     * @param {BaseActiveRecord} record record to compare to
      * @returns {boolean} whether the two active records refer to the same row in the same database table.
      */
     equals(record) {
@@ -1334,9 +1334,9 @@ class BaseActiveRecord extends Model {
      * It can be declared in either the Active Record class itself or one of its behaviors.
      * @param {string} name the relation name
      * @param {boolean} [throwException] whether to throw exception if the relation does not exist.
-     * @returns {Promise.<Jii.data.ActiveQuery>} the relational query object. If the relation does not exist
+     * @returns {Promise.<ActiveQuery>} the relational query object. If the relation does not exist
      * and `throwException` is false, null will be returned.
-     * @throws {Jii.exceptions.InvalidParamException} if the named relation does not exist.
+     * @throws {InvalidParamException} if the named relation does not exist.
      */
     getRelation(name, throwException) {
         throwException = !_isUndefined(throwException) ? throwException : true;
@@ -1374,12 +1374,12 @@ class BaseActiveRecord extends Model {
      * Note that this method requires that the primary key value is not null.
      *
      * @param {string} name the case sensitive name of the relationship
-     * @param {Jii.data.BaseActiveRecord} model the model to be linked with the current one.
+     * @param {BaseActiveRecord} model the model to be linked with the current one.
      * @param {object} [extraColumns] additional column values to be saved into the pivot table.
      * This parameter is only meaningful for a relationship involving a pivot table
      * (i.e., a relation set with [[ActiveRelationTrait.via()]] or `[[ActiveQuery.viaTable()]]`.)
      * @returns {Promise}
-     * @throws {Jii.exceptions.InvalidCallException} if the method is unable to link two models.
+     * @throws {InvalidCallException} if the method is unable to link two models.
      */
     link(name, model, extraColumns) {
         extraColumns = extraColumns || {};
@@ -1398,11 +1398,11 @@ class BaseActiveRecord extends Model {
                 var viaTable = null;
 
                 if (_isArray(relation.getVia())) {
-                    /** @type {Jii.data.BaseActiveRecord} */
+                    /** @type {BaseActiveRecord} */
                     viaName = relation.getVia()[0];
                     viaRelation = relation.getVia()[1];
 
-                    /** @type {Jii.data.BaseActiveRecord} */
+                    /** @type {BaseActiveRecord} */
                     viaClass = viaRelation.modelClass;
 
                     // unset viaName so that it can be reloaded to reflect the change
@@ -1424,7 +1424,7 @@ class BaseActiveRecord extends Model {
                 });
 
                 if (_isArray(relation.getVia())) {
-                    /** @type {Jii.data.BaseActiveRecord} */
+                    /** @type {BaseActiveRecord} */
                     var record = new viaClass();
                     _each(columns, (value, column) => {
                         record.set(column, value);
@@ -1484,7 +1484,7 @@ class BaseActiveRecord extends Model {
      * Otherwise, the foreign key will be set null and the model will be saved without validation.
      *
      * @param {string} name the case sensitive name of the relationship.
-     * @param {Jii.data.BaseActiveRecord} model the model to be unlinked from the current one.
+     * @param {BaseActiveRecord} model the model to be unlinked from the current one.
      * @param {boolean} [isDelete] whether to delete the model that contains the foreign key.
      * If false, the model's foreign key will be set null and saved.
      * If true, the model containing the foreign key will be deleted.
@@ -1506,11 +1506,11 @@ class BaseActiveRecord extends Model {
                 var viaTable = null;
 
                 if (_isArray(relation.getVia())) {
-                    /** @type {Jii.data.BaseActiveRecord} */
+                    /** @type {BaseActiveRecord} */
                     viaName = relation.getVia()[0];
                     viaRelation = relation.getVia()[1];
 
-                    /** @type {Jii.data.BaseActiveRecord} */
+                    /** @type {BaseActiveRecord} */
                     viaClass = viaRelation.modelClass;
 
                     this._removeRelated(viaName);
@@ -1539,7 +1539,7 @@ class BaseActiveRecord extends Model {
                     return viaClass.updateAll(nulls, columns);
                 }
 
-                /* @type Jii.data.Command */
+                /* @type Command */
                 var command = this.constructor.getDb().createCommand();
                 if (isDelete) {
                     return command.delete(viaTable, columns);
@@ -1617,11 +1617,11 @@ class BaseActiveRecord extends Model {
                 var viaTable = null;
 
                 if (_isArray(relation.getVia())) {
-                    /** @type {Jii.data.BaseActiveRecord} */
+                    /** @type {BaseActiveRecord} */
                     viaName = relation.getVia()[0];
                     viaRelation = relation.getVia()[1];
 
-                    /** @type {Jii.data.BaseActiveRecord} */
+                    /** @type {BaseActiveRecord} */
                     viaClass = viaRelation.modelClass;
 
                     this._removeRelated(viaName);
@@ -1644,7 +1644,7 @@ class BaseActiveRecord extends Model {
                     return viaClass.updateAll(nulls, condition);
                 }
 
-                /** @type {Jii.data.Command} */
+                /** @type {Command} */
                 var command = this.constructor.getDb().createCommand();
                 if (isDelete) {
                     return command.delete(viaTable, condition);
@@ -1653,7 +1653,7 @@ class BaseActiveRecord extends Model {
                 return command.update(viaTable, nulls, condition);
             }
 
-            /** @typedef {Jii.data.BaseActiveRecord} relatedModel */
+            /** @typedef {BaseActiveRecord} relatedModel */
             var relatedModel = relation.modelClass;
             var key = relation.link[0];
             if (!isDelete && relation.link.length == 1 && _isArray(this.get(key))) {
@@ -1688,9 +1688,9 @@ class BaseActiveRecord extends Model {
 
     /**
      * @param {object} link
-     * @param {Jii.data.BaseActiveRecord} foreignModel
-     * @param {Jii.data.BaseActiveRecord} primaryModel
-     * @throws {Jii.exceptions.InvalidCallException}
+     * @param {BaseActiveRecord} foreignModel
+     * @param {BaseActiveRecord} primaryModel
+     * @throws {InvalidCallException}
      * @returns {Promise}
      */
     _bindModels(link, foreignModel, primaryModel) {
@@ -1774,8 +1774,8 @@ class BaseActiveRecord extends Model {
     /**
      *
      * @param {string} relationName
-     * @param {object[]|Jii.base.Model[]} [items]
-     * @returns {Jii.base.Collection}
+     * @param {object[]|Model[]} [items]
+     * @returns {Collection}
      * @private
      */
     _createRelatedCollection(relationName, items) {
@@ -1842,11 +1842,11 @@ class BaseActiveRecord extends Model {
 
     /**
      *
-     * @param {Jii.data.ChangeEvent} event
+     * @param {ChangeEvent} event
      * @private
      */
     _onChangeRelatedModel(event) {
-        /** @type {Jii.base.Model} model */
+        /** @type {Model} model */
         var model = event.sender;
         var name = event.data.relationName;
 
@@ -1876,54 +1876,54 @@ class BaseActiveRecord extends Model {
 BaseActiveRecord._modelSchema = {};
 
 /**
- * @event Jii.data.BaseActiveRecord#afterDelete
- * @property {Jii.base.Event} event an event that is triggered after a record is deleted.
+ * @event BaseActiveRecord#afterDelete
+ * @property {Event} event an event that is triggered after a record is deleted.
  */
 BaseActiveRecord.EVENT_AFTER_DELETE = 'afterDelete';
 
 /**
  * You may set [[ModelEvent.isValid]] to be false to stop the deletion.
- * @event Jii.data.BaseActiveRecord#beforeDelete
- * @property {Jii.base.ModelEvent} event an event that is triggered before deleting a record.
+ * @event BaseActiveRecord#beforeDelete
+ * @property {ModelEvent} event an event that is triggered before deleting a record.
  */
 BaseActiveRecord.EVENT_BEFORE_DELETE = 'beforeDelete';
 
 /**
- * @event Jii.data.BaseActiveRecord#afterUpdate
- * @property {Jii.data.AfterSaveEvent} event an event that is triggered after a record is updated.
+ * @event BaseActiveRecord#afterUpdate
+ * @property {AfterSaveEvent} event an event that is triggered after a record is updated.
  */
 BaseActiveRecord.EVENT_AFTER_UPDATE = 'afterUpdate';
 
 /**
  * You may set [[ModelEvent.isValid]] to be false to stop the update.
- * @event Jii.data.BaseActiveRecord#beforeUpdate
- * @property {Jii.base.ModelEvent} event an event that is triggered before updating a record.
+ * @event BaseActiveRecord#beforeUpdate
+ * @property {ModelEvent} event an event that is triggered before updating a record.
  */
 BaseActiveRecord.EVENT_BEFORE_UPDATE = 'beforeUpdate';
 
 /**
  * Event an event that is triggered after a record is inserted.
- * @event Jii.data.BaseActiveRecord#afterInsert
- * @property {Jii.data.AfterSaveEvent} event
+ * @event BaseActiveRecord#afterInsert
+ * @property {AfterSaveEvent} event
  */
 BaseActiveRecord.EVENT_AFTER_INSERT = 'afterInsert';
 
 /**
- * You may set [[Jii.base.ModelEvent.isValid]] to be false to stop the insertion.
- * @event Jii.data.BaseActiveRecord#beforeInsert
- * @property {Jii.base.ModelEvent} event an event that is triggered before inserting a record.
+ * You may set [[isValid]] to be false to stop the insertion.
+ * @event BaseActiveRecord#beforeInsert
+ * @property {ModelEvent} event an event that is triggered before inserting a record.
  */
 BaseActiveRecord.EVENT_BEFORE_INSERT = 'beforeInsert';
 
 /**
- * @event Jii.data.BaseActiveRecord#afterFind
- * @property {Jii.base.Event} event an event that is triggered after the record is created and populated with query result.
+ * @event BaseActiveRecord#afterFind
+ * @property {Event} event an event that is triggered after the record is created and populated with query result.
  */
 BaseActiveRecord.EVENT_AFTER_FIND = 'afterFind';
 
 /**
- * @event Jii.data.BaseActiveRecord#init
- * @property {Jii.base.Event} event an event that is triggered when the record is initialized via [[init()]].
+ * @event BaseActiveRecord#init
+ * @property {Event} event an event that is triggered when the record is initialized via [[init()]].
  */
 BaseActiveRecord.EVENT_INIT = 'init';
 module.exports = BaseActiveRecord;

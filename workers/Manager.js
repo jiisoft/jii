@@ -23,7 +23,7 @@ class Manager extends BaseObject {
 
     preInit() {
         /**
-         * @type {Jii.workers.Service}
+         * @type {Service}
          */
         this._service = null;
 
@@ -33,7 +33,7 @@ class Manager extends BaseObject {
         this._applicationConfigs = {};
 
         /**
-         * @type {Jii.application.Environment}
+         * @type {Environment}
          */
         this._environment = null;
 
@@ -49,7 +49,7 @@ class Manager extends BaseObject {
     /**
      *
      * @param name
-     * @return {Jii.workers.Manager}
+     * @return {Manager}
      */
     setEnvironment(name) {
         this._environment.setName(name);
@@ -58,14 +58,14 @@ class Manager extends BaseObject {
 
     /**
      * Callback function to be called when folder loaded from server.
-     * @callback Jii.workers.Manager~applicationConfigCallback
-     * @param {Jii.application.Environment} environment
+     * @callback Manager~applicationConfigCallback
+     * @param {Environment} environment
      */
     /**
      *
      * @param {object|function|string|string[]} names
-     * @param {object|Jii.workers.Manager~applicationConfigCallback} [config]
-     * @returns {Jii.workers.Manager}
+     * @param {object|Manager~applicationConfigCallback} [config]
+     * @returns {Manager}
      */
     application(names, config) {
         if (_isFunction(names) || _isObject(names)) {

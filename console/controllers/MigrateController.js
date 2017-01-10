@@ -17,7 +17,7 @@ class MigrateController extends BaseMigrateController {
 
     preInit() {
         /**
-         * @type {Jii.data.BaseConnection|string} the DB connection object or the application component ID of the DB connection to use
+         * @type {BaseConnection|string} the DB connection object or the application component ID of the DB connection to use
          * when applying migrations. Starting from version 2.0.3, this can also be a configuration array
          * for creating the object.
          */
@@ -49,7 +49,7 @@ class MigrateController extends BaseMigrateController {
     /**
      * This method is invoked right before an action is to be executed (after all possible filters.)
      * It checks the existence of the [[migrationPath]].
-     * @param {Jii.base.Action} action the action to be executed.
+     * @param {Action} action the action to be executed.
      * @returns {boolean} whether the action should continue to be executed.
      */
     beforeAction(action) {

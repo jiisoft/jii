@@ -49,7 +49,7 @@ class SockJs extends TransportInterface {
 
     /**
      *
-     * @param {Jii.comet.server.Connection} connection
+     * @param {Connection} connection
      * @param {string} message
      */
     send(connection, message) {
@@ -58,7 +58,7 @@ class SockJs extends TransportInterface {
 
     /**
      *
-     * @param {Jii.comet.server.Connection[]} connections
+     * @param {Connection[]} connections
      */
     destroy(connections) {
         connections.forEach(connection => {

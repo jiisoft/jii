@@ -34,7 +34,7 @@ class NeatClient extends Component {
         this.bindings = null;
 
         /**
-         * @type {Jii.comet.client.Client}
+         * @type {Client}
          */
         this.comet = null;
 
@@ -127,7 +127,7 @@ class NeatClient extends Component {
 
     /**
      *
-     * @param {Jii.base.Collection} collection
+     * @param {Collection} collection
      * @param {string} method
      * @param {*} param1
      * @param {...*} param2

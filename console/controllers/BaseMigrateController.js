@@ -78,7 +78,7 @@ class BaseMigrateController extends Controller {
     /**
      * This method is invoked right before an action is to be executed (after all possible filters.)
      * It checks the existence of the [[migrationPath]].
-     * @param {Jii.base.Action} action the action to be executed.
+     * @param {Action} action the action to be executed.
      * @returns {Promise} whether the action should continue to be executed.
      */
     beforeAction(action) {
@@ -538,7 +538,7 @@ class BaseMigrateController extends Controller {
      * ```
      *
      * If it is `all`, all available new migrations will be displayed.
-     * @throws Jii.console.Exception if invalid limit value passed
+     * @throws Exception if invalid limit value passed
      */
     actionNew(context) {
         var limit = context.request.get(0, 10);

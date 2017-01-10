@@ -20,12 +20,12 @@ class BaseSchema extends BaseObject {
 
     preInit() {
         /**
-         * @type {Jii.data.FilterBuilder}
+         * @type {FilterBuilder}
          */
         this._filterBuilder = null;
 
         /**
-         * @type {Jii.data.QueryBuilder}
+         * @type {QueryBuilder}
          */
         this._builder = null;
 
@@ -45,7 +45,7 @@ class BaseSchema extends BaseObject {
         this.defaultSchema = null;
 
         /**
-         * @type {Jii.sql.Connection} the database connection
+         * @type {Connection} the database connection
          */
         this.db = null;
 
@@ -143,14 +143,14 @@ class BaseSchema extends BaseObject {
     /**
      * Loads the metadata for the specified table.
      * @param {string} name table name
-     * @return {Jii.data.TableSchema} DBMS-dependent table metadata, null if the table does not exist.
+     * @return {TableSchema} DBMS-dependent table metadata, null if the table does not exist.
      */
     _loadTableSchema(name) {
         throw new NotSupportedException('Not implemented');
     }
 
     /**
-     * @return {Jii.data.QueryBuilder} the query builder for this connection.
+     * @return {QueryBuilder} the query builder for this connection.
      */
     getQueryBuilder() {
         if (this._builder === null) {
@@ -161,7 +161,7 @@ class BaseSchema extends BaseObject {
     }
 
     /**
-     * @return {Jii.data.FilterBuilder} the query builder for this connection.
+     * @return {FilterBuilder} the query builder for this connection.
      */
     getFilterBuilder() {
         if (this._filterBuilder === null) {
@@ -187,14 +187,14 @@ class BaseSchema extends BaseObject {
     /**
      * Creates a query builder for the database.
      * This method may be overridden by child classes to create a DBMS-specific query builder.
-     * @return {Jii.data.QueryBuilder} query builder instance
+     * @return {QueryBuilder} query builder instance
      */
     createQueryBuilder() {
         return new QueryBuilder(this.db);
     }
 
     /**
-     * @return {Jii.data.FilterBuilder}
+     * @return {FilterBuilder}
      */
     createFilterBuilder() {
         return new FilterBuilder();
@@ -207,7 +207,7 @@ class BaseSchema extends BaseObject {
      *
      * @param {string} type type of the column. See [[ColumnSchemaBuilder.type]].
      * @param {number|string|[]} length length or precision of the column. See [[ColumnSchemaBuilder.length]].
-     * @returns {Jii.data.ColumnSchemaBuilder} column schema builder instance
+     * @returns {ColumnSchemaBuilder} column schema builder instance
      * @since 2.0.6
      */
     createColumnSchemaBuilder(type, length) {
@@ -217,7 +217,7 @@ class BaseSchema extends BaseObject {
     }
 
     /**
-     * @return {Jii.data.ColumnSchema}
+     * @return {ColumnSchema}
      */
     _createColumnSchema() {
         return Jii.createObject(ColumnSchema);
@@ -248,7 +248,7 @@ class BaseSchema extends BaseObject {
      *
      * This method should be overridden by child classes in order to support this feature
      * because the default implementation simply throws an exception
-     * @param {Jii.data.TableSchema} table the table metadata
+     * @param {TableSchema} table the table metadata
      * @return {[]} all unique indexes for the given table.
      * @throws NotSupportedException if this method is called
      */
@@ -417,7 +417,7 @@ class BaseSchema extends BaseObject {
 
     /**
      * Extracts the JS type from abstract DB type.
-     * @param {Jii.data.ColumnSchema} column the column schema information
+     * @param {ColumnSchema} column the column schema information
      * @return {string} JS type name
      */
     _getColumnJsType(column) {

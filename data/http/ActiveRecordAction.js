@@ -15,11 +15,11 @@ class ActiveRecordAction extends Action {
     /**
      * Runs this action with the specified parameters.
      * This method is mainly invoked by the controller.
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @returns {*} the result of the action
      */
     runWithParams(context) {
-        /** @type {Jii.data.ActiveRecord} modelClass */
+        /** @type {ActiveRecord} modelClass */
         var modelClass = Jii.namespace(context.request.get('modelClassName'));
 
         switch (context.request.get('method')) {

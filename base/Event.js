@@ -22,7 +22,7 @@ class Event extends BaseObject {
         this.params = {};
 
         /**
-         * @var {*} the data that is passed to [[Jii.base.Component.on()]] when attaching an event handler.
+         * @var {*} the data that is passed to [[on()]] when attaching an event handler.
          * Note that this varies according to which event handler is currently executing.
          */
         this.data = null;
@@ -43,7 +43,7 @@ class Event extends BaseObject {
         this.sender = null;
 
         /**
-         * @var {string} the event name. This property is set by [[Jii.base.Component.trigger()]] and [[trigger()]].
+         * @var {string} the event name. This property is set by [[trigger()]] and [[trigger()]].
          * Event handlers may use this property to check what event it is handling.
          */
         this.name = null;
@@ -112,20 +112,20 @@ class Event extends BaseObject {
      * `afterInsert` event:
      *
      * ~~~
-     * Jii.base.Event.on(ActiveRecord, ActiveRecord.EVENT_AFTER_INSERT, function (event) {
+     * on(ActiveRecord, ActiveRecord.EVENT_AFTER_INSERT, function (event) {
          *     console.log(event.sender.className() + ' is inserted.');
          * });
      * ~~~
      *
      * The handler will be invoked for EVERY successful ActiveRecord insertion.
      *
-     * For more details about how to declare an event handler, please refer to [[Jii.base.Component.on()]].
+     * For more details about how to declare an event handler, please refer to [[on()]].
      *
      * @param {function|string} cls the fully qualified class name to which the event handler needs to attach.
      * @param {string} name the event name.
      * @param {string|function|object} handler the event handler.
      * @param {*} [data] the data to be passed to the event handler when the event is triggered.
-     * When the event handler is invoked, this data can be accessed via [[Jii.base.Event.data]].
+     * When the event handler is invoked, this data can be accessed via [[data]].
      * @param {boolean} [isAppend] whether to append new event handler to the end of the existing
      * handler list. If false, the new handler will be inserted at the beginning of the existing
      * handler list.
@@ -231,7 +231,7 @@ class Event extends BaseObject {
      * for the specified class and all its parent classes.
      * @param {object|function} cls the object or the fully qualified class name specifying the class-level event.
      * @param {string} name the event name.
-     * @param {Jii.base.Event} [event] the event parameter. If not set, a default [[Event]] object will be created.
+     * @param {Event} [event] the event parameter. If not set, a default [[Event]] object will be created.
      */
     static trigger(cls, name, event) {
         event = event || null;

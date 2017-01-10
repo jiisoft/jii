@@ -192,7 +192,7 @@ class Application extends Module {
 
     /**
      * Loads components that are declared in [[bootstrap]].
-     * @throws {Jii.exceptions.InvalidConfigException} if a component or module to be preloaded is unknown
+     * @throws {InvalidConfigException} if a component or module to be preloaded is unknown
      */
     _loadBootstrapComponents() {
         _each(this.bootstrap, id => {

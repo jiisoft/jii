@@ -31,7 +31,7 @@ class HelpController extends Controller {
      *
      * @param {string} context
      * @returns {number} the exit status
-     * @throws {Jii.console.Exception} if the command for help is unknown
+     * @throws {Exception} if the command for help is unknown
      */
     actionIndex(context) {
         var params = context.request.getParams();
@@ -85,7 +85,7 @@ class HelpController extends Controller {
 
     /**
      * Returns all available actions of the specified controller.
-     * @param {Jii.console.Controller} controller the controller instance
+     * @param {Controller} controller the controller instance
      * @returns {[]} all available action IDs.
      */
     getActions(className) {
@@ -104,7 +104,7 @@ class HelpController extends Controller {
 
     /**
      * Returns available commands of a specified module.
-     * @param {Jii.base.Module} module the module instance
+     * @param {Module} module the module instance
      * @returns {[]} the available command names
      */
     _getModuleCommands(module) {
@@ -157,7 +157,7 @@ class HelpController extends Controller {
 
     /**
      * Displays the overall information of the command.
-     * @param {Jii.console.Controller} controller the controller instance
+     * @param {Controller} controller the controller instance
      */
     _getCommandHelp(controller) {
         controller.color = this.color;
@@ -207,7 +207,7 @@ class HelpController extends Controller {
 
     /**
      * Displays the detailed information of a command action.
-     * @param {Jii.console.Controller} controller the controller instance
+     * @param {Controller} controller the controller instance
      * @param {string} actionID action ID
      * @throws Exception if the action does not exist
      */

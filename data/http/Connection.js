@@ -32,12 +32,12 @@ class Connection extends Component {
         this.route = 'api/ar';
 
         /**
-         * @type {Jii.data.http.TransportInterface}
+         * @type {TransportInterface}
          */
         this.transport = null;
 
         /**
-         * @type {Jii.data.http.Schema} the database schema
+         * @type {Schema} the database schema
          */
         this.schema = {
             className: Schema,
@@ -62,7 +62,7 @@ class Connection extends Component {
     /**
      *
      * @param {string} modelClassName
-     * @returns {Jii.base.Collection|null}
+     * @returns {Collection|null}
      */
     getRootCollection(modelClassName) {
         var modelClass = Jii.namespace(modelClassName);
@@ -102,7 +102,7 @@ class Connection extends Component {
 
     /**
      * Creates a command for execution.
-     * @returns {Jii.data.http.Command} the DB command
+     * @returns {Command} the DB command
      */
     createCommand() {
         return new Command({
@@ -127,7 +127,7 @@ class Connection extends Component {
 
     /**
      * Returns the schema information for the database opened by this connection.
-     * @returns {Jii.data.http.Schema} the schema information for the database opened by this connection.
+     * @returns {Schema} the schema information for the database opened by this connection.
      */
     getSchema() {
         return this.schema;

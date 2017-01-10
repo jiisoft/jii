@@ -18,14 +18,14 @@ class ModelAdapterInterface {
 
     /**
      *
-     * @param {Jii.base.Model} original
+     * @param {Model} original
      */
     instance(original) {
     }
 
     /**
      *
-     * @param {Jii.base.Model} original
+     * @param {Model} original
      * @param {*} proxy
      * @param {object} values
      */

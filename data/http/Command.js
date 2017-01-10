@@ -13,7 +13,7 @@ class Command extends Component {
 
     preInit() {
         /**
-         * @type {Jii.data.BaseConnection} the DB connection that this command is associated with
+         * @type {BaseConnection} the DB connection that this command is associated with
          */
         this.db = null;
 
@@ -59,7 +59,7 @@ class Command extends Component {
 
     /**
      *
-     * @param {Jii.data.ActiveRecord} model
+     * @param {ActiveRecord} model
      * @param {object} values
      * @returns {Promise}
      */
@@ -87,7 +87,7 @@ class Command extends Component {
 
     /**
      *
-     * @param {Jii.data.BaseActiveRecord} model
+     * @param {BaseActiveRecord} model
      * @param {object} values
      * @returns {Promise}
      */
@@ -111,7 +111,7 @@ class Command extends Component {
 
     /**
      *
-     * @param {Jii.data.BaseActiveRecord} model
+     * @param {BaseActiveRecord} model
      * @returns {Promise}
      */
     deleteModel(model) {

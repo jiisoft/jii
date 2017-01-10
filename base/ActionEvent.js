@@ -12,12 +12,12 @@ class ActionEvent extends Event {
 
     preInit() {
         /**
-         * @type {Jii.base.Context}
+         * @type {Context}
          */
         this.context = null;
 
         /**
-         * @type {Jii.base.Action}
+         * @type {Action}
          */
         this.action = null;
 

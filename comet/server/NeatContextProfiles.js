@@ -19,7 +19,7 @@ class NeatContextProfiles extends INeatContextProfiles {
         this.data = {};
 
         /**
-         * @type {Jii.comet.client.NeatClient}
+         * @type {NeatClient}
          */
         this.neat = 'neat';
 

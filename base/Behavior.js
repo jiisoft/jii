@@ -14,7 +14,7 @@ class Behavior extends BaseObject {
 
     preInit() {
         /**
-         * @var {Jii.base.Component} the owner of this behavior
+         * @var {Component} the owner of this behavior
          */
         this.owner = null;
 
@@ -60,7 +60,7 @@ class Behavior extends BaseObject {
      * The default implementation will set the [[owner]] property
      * and attach event handlers as declared in [[events]].
      * Make sure you call the parent implementation if you override this method.
-     * @param {Jii.base.Component} owner the component that this behavior is to be attached to.
+     * @param {Component} owner the component that this behavior is to be attached to.
      */
     attach(owner) {
         this.owner = owner;

@@ -26,12 +26,12 @@ class Context extends Component {
         this._components = {};
 
         /**
-         * @type {Jii.base.Response}
+         * @type {Response}
          */
         this.response = null;
 
         /**
-         * @type {Jii.base.Request|Jii.base.HttpRequest}
+         * @type {Request|HttpRequest}
          */
         this.request = null;
 
@@ -71,7 +71,7 @@ class Context extends Component {
     /**
      * Retrieves the named component.
      * @param {string} id component ID (case-sensitive)
-     * @return {Jii.base.Component|null} the component instance, null if the component does not exist.
+     * @return {Component|null} the component instance, null if the component does not exist.
      */
     getComponent(id) {
         return this._components[id] || null;
@@ -80,10 +80,10 @@ class Context extends Component {
     /**
      * Registers a component with this module.
      * @param {string} id component ID
-     * @param {Jii.base.Component|array|null} component the component to be registered with the module. This can
+     * @param {Component|array|null} component the component to be registered with the module. This can
      * be one of the followings:
      *
-     * - a [[Jii.base.Component]] object
+     * - a [[Component]] object
      * - a configuration array: when [[getComponent()]] is called initially for this component, the array
      *   will be used to instantiate the component via [[Jii.createObject()]].
      * - null: the named component will be removed from the module
@@ -111,7 +111,7 @@ class Context extends Component {
 
     /**
      * Returns the registered components.
-     * @return {Jii.base.Component[]} the components (indexed by their IDs)
+     * @return {Component[]} the components (indexed by their IDs)
      */
     getComponents() {
         return this._components;
@@ -132,11 +132,11 @@ class Context extends Component {
      * ~~~
      * {
      *     db: {
-     *         class: 'Jii.db.Connection',
+     *         class: 'Connection',
      *         dsn: 'sqlite:path/to/file.db'
      *     },
      *     cache: {
-     *         class: 'Jii.caching.DbCache',
+     *         class: 'DbCache',
      *         db: 'db'
      *     }
      * }
@@ -157,7 +157,7 @@ class Context extends Component {
 
     /**
      * Loads components that are declared in [[preload]].
-     * @throws {Jii.exceptions.InvalidConfigException} if a component or module to be preloaded is unknown
+     * @throws {InvalidConfigException} if a component or module to be preloaded is unknown
      */
     preloadComponents() {
         _each(this.preload, id => {

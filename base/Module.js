@@ -112,7 +112,7 @@ class Module extends Context {
 
         /**
          * The parent module of this module. Null if this module does not have a parent.
-         * @type {Jii.base.Module}
+         * @type {Module}
          */
         this.module = moduleObject;
 
@@ -242,7 +242,7 @@ class Module extends Context {
      * This method supports retrieving both child modules and grand child modules.
      * @param {string} id module ID (case-sensitive). To retrieve grand child modules,
      * use ID path relative to this module (e.g. `admin/content`).
-     * @return {Jii.base.Module} the module instance, null if the module does not exist.
+     * @return {Module} the module instance, null if the module does not exist.
      */
     getModule(id) {
         // Get sub-module
@@ -261,10 +261,10 @@ class Module extends Context {
     /**
      * Adds a sub-module to this module.
      * @param {string} id module ID
-     * @param {Jii.base.Module|array|null} moduleObject the sub-module to be added to this module. This can
+     * @param {Module|array|null} moduleObject the sub-module to be added to this module. This can
      * be one of the followings:
      *
-     * - a [[Jii.base.Module]] object
+     * - a [[Module]] object
      * - a configuration array: when [[getModule()]] is called initially, the array
      *   will be used to instantiate the sub-module
      * - null: the named sub-module will be removed from this module
@@ -285,7 +285,7 @@ class Module extends Context {
 
     /**
      * Returns the sub-modules in this module.
-     * @return {Jii.base.Module[]} the modules (indexed by their IDs)
+     * @return {Module[]} the modules (indexed by their IDs)
      */
     getModules() {
         return this._modules;
@@ -324,12 +324,12 @@ class Module extends Context {
     /**
      * Runs a controller action specified by a route.
      * This method parses the specified route and creates the corresponding child module(s), controller and action
-     * instances. It then calls [[Jii.base.Controller::runAction()]] to run the action with the given parameters.
+     * instances. It then calls [[Controller::runAction()]] to run the action with the given parameters.
      * If the route is empty, the method will use [[defaultRoute]].
      * @param {string} route the route that specifies the action.
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @return {Promise} the result of the action.
-     * @throws {Jii.exceptions.InvalidRouteException} if the requested route cannot be resolved into an action successfully
+     * @throws {InvalidRouteException} if the requested route cannot be resolved into an action successfully
      */
     runAction(route, context) {
         var routeParams = this._parseRoute(route);
@@ -361,7 +361,7 @@ class Module extends Context {
 
             var parts = this.createController(route);
             if (parts !== null) {
-                /** @type {Jii.base.Controller} */
+                /** @type {Controller} */
                 var controller = parts[0];
                 var actionId = parts[1];
 
@@ -429,7 +429,7 @@ class Module extends Context {
      * @param {string} route the route consisting of module, controller and action IDs.
      * @return {[]|null} If the controller is created successfully, it will be returned together
      * with the requested action ID. Otherwise false will be returned.
-     * @throws {Jii.exceptions.InvalidConfigException} if the controller class and its file do not match.
+     * @throws {InvalidConfigException} if the controller class and its file do not match.
      */
     createController(route) {
         var routeParams = this._parseRoute(route);
@@ -492,8 +492,8 @@ class Module extends Context {
      * This method is invoked right before an action of this module is to be executed (after all possible filters.)
      * You may override this method to do last-minute preparation for the action.
      * Make sure you call the parent implementation so that the relevant event is triggered.
-     * @param {Jii.base.Action} action the action to be executed.
-     * @param {Jii.base.Context} context
+     * @param {Action} action the action to be executed.
+     * @param {Context} context
      * @return {Promise}
      */
     beforeAction(action, context) {
@@ -508,8 +508,8 @@ class Module extends Context {
      * This method is invoked right after an action of this module has been executed.
      * You may override this method to do some postprocessing for the action.
      * Make sure you call the parent implementation so that the relevant event is triggered.
-     * @param {Jii.base.Action} action the action just executed.
-     * @param {Jii.base.Context} context
+     * @param {Action} action the action just executed.
+     * @param {Context} context
      * @return {Promise}
      */
     afterAction(action, context) {
@@ -541,14 +541,14 @@ class Module extends Context {
 }
 
 /**
- * @event Jii.base.Module#afterAction
- * @property {Jii.base.ActionEvent} event
+ * @event Module#afterAction
+ * @property {ActionEvent} event
  */
 Module.EVENT_AFTER_ACTION = 'afterAction';
 
 /**
- * @event Jii.base.Module#beforeAction
- * @property {Jii.base.ActionEvent} event
+ * @event Module#beforeAction
+ * @property {ActionEvent} event
  */
 Module.EVENT_BEFORE_ACTION = 'beforeAction';
 module.exports = Module;

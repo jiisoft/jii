@@ -47,8 +47,8 @@ class HubInterface extends Component {
 }
 
 /**
- * @event Jii.comet.server.hub.HubInterface#message
- * @property {Jii.comet.ChannelEvent} event
+ * @event HubInterface#message
+ * @property {ChannelEvent} event
  */
 HubInterface.EVENT_MESSAGE = 'message';
 module.exports = HubInterface;

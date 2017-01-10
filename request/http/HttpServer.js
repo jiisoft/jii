@@ -31,7 +31,7 @@ class HttpServer extends Component {
         this.staticDirs = null;
 
         /**
-         * @type {Jii.request.UrlManager|string}
+         * @type {UrlManager|string}
          */
         this.urlManager = 'urlManager';
 

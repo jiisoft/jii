@@ -68,7 +68,7 @@ class self extends DatabaseTestCase {
             return command.execute();
         }).then(function () {
 
-            test.ok(false, 'Not throw exception Jii.data.SqlQueryException.');
+            test.ok(false, 'Not throw exception SqlQueryException.');
             test.done();
         }, function (exception) {
 
@@ -198,7 +198,7 @@ class self extends DatabaseTestCase {
             return command.execute();
         }).then(function () {
 
-            test.ok(false, 'Not throw exception Jii.data.SqlQueryException.');
+            test.ok(false, 'Not throw exception SqlQueryException.');
             test.done();
         }, function (exception) {
 

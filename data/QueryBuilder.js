@@ -504,7 +504,7 @@ class QueryBuilder extends BaseObject {
      * @param {[]|string} value the value for the primary key of the next new row inserted. If this is not set,
      * the next new row's primary key will have a value 1.
      * @return {string} the SQL statement for resetting sequence
-     * @throws Jii.exceptions.NotSupportedException if this is not supported by the underlying DBMS
+     * @throws NotSupportedException if this is not supported by the underlying DBMS
      */
     resetSequence(table, value) {
         value = value || null;
@@ -517,7 +517,7 @@ class QueryBuilder extends BaseObject {
      * @param {string} schema the schema of the tables. Defaults to empty string, meaning the current or default schema.
      * @param {string} table the table name. Defaults to empty string, meaning that no table will be changed.
      * @return {string} the SQL statement for checking integrity
-     * @throws Jii.exceptions.NotSupportedException if this is not supported by the underlying DBMS
+     * @throws NotSupportedException if this is not supported by the underlying DBMS
      */
     checkIntegrity(check, schema, table) {
         check = _isBoolean(check) ? check : true;
@@ -897,7 +897,7 @@ class QueryBuilder extends BaseObject {
      * on how to specify a condition.
      * @param {object} params the binding parameters to be populated
      * @return {string} the generated SQL expression
-     * @throws Jii.exceptions.InvalidParamException if the condition is in bad format
+     * @throws InvalidParamException if the condition is in bad format
      */
     buildCondition(condition, params) {
         if (_isEmpty(condition)) {
@@ -998,7 +998,7 @@ class QueryBuilder extends BaseObject {
      * @param {[]} operands the SQL expressions to connect.
      * @param {object} params the binding parameters to be populated
      * @return {string} the generated SQL expression
-     * @throws Jii.exceptions.InvalidParamException if wrong number of operands have been given.
+     * @throws InvalidParamException if wrong number of operands have been given.
      */
     buildNotCondition(operator, operands, params) {
         if (operands.length !== 1) {
@@ -1023,7 +1023,7 @@ class QueryBuilder extends BaseObject {
      * describe the interval that column value should be in.
      * @param {object} params the binding parameters to be populated
      * @return {string} the generated SQL expression
-     * @throws {Jii.exceptions.InvalidParamException} if wrong number of operands have been given.
+     * @throws {InvalidParamException} if wrong number of operands have been given.
      */
     buildBetweenCondition(operator, operands, params) {
         if (operands.length !== 3) {
@@ -1073,7 +1073,7 @@ class QueryBuilder extends BaseObject {
      * operator is `IN` and empty if operator is `NOT IN`.
      * @param {object} params the binding parameters to be populated
      * @return {string} the generated SQL expression
-     * @throws {Jii.exceptions.InvalidParamException} if wrong number of operands have been given.
+     * @throws {InvalidParamException} if wrong number of operands have been given.
      */
     buildInCondition(operator, operands, params) {
         if (operands.length !== 2) {
@@ -1196,7 +1196,7 @@ class QueryBuilder extends BaseObject {
      *   the values will be automatically enclosed within a pair of percentage characters.
      * @param {object} params the binding parameters to be populated
      * @return {string} the generated SQL expression
-     * @throws {Jii.exceptions.InvalidParamException} if wrong number of operands have been given.
+     * @throws {InvalidParamException} if wrong number of operands have been given.
      */
     buildLikeCondition(operator, operands, params) {
         if (operands.length !== 2) {
@@ -1265,7 +1265,7 @@ class QueryBuilder extends BaseObject {
      * @param {[]} operands contains only one element which is a [[Query]] object representing the sub-query.
      * @param {object} params the binding parameters to be populated
      * @return {string} the generated SQL expression
-     * @throws {Jii.exceptions.InvalidParamException} if the operand is not a [[Query]] object.
+     * @throws {InvalidParamException} if the operand is not a [[Query]] object.
      */
     buildExistsCondition(operator, operands, params) {
         if (operands[0] instanceof Query) {

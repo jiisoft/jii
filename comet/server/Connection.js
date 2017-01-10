@@ -17,7 +17,7 @@ class Connection extends Component {
         this.originalConnection = null;
 
         /**
-         * @type {Jii.comet.server.Request}
+         * @type {Request}
          */
         this.request = null;
 

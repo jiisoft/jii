@@ -19,7 +19,7 @@ class Action extends BaseObject {
         this.id = id;
 
         /**
-         * @type {Jii.base.Controller} the controller that owns this action
+         * @type {Controller} the controller that owns this action
          */
         this.controller = controller;
 
@@ -35,7 +35,7 @@ class Action extends BaseObject {
     }
 
     /**
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      */
     run(context) {
     }
@@ -43,9 +43,9 @@ class Action extends BaseObject {
     /**
      * Runs this action with the specified parameters.
      * This method is mainly invoked by the controller.
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @returns {Promise} the result of the action
-     * @throws {Jii.exceptions.InvalidConfigException} if the action class does not have a run() method
+     * @throws {InvalidConfigException} if the action class does not have a run() method
      */
     runWithParams(context) {
         if (!_isFunction(this.run)) {
@@ -69,7 +69,7 @@ class Action extends BaseObject {
      * This method is called right before `run()` is executed.
      * You may override this method to do preparation work for the action run.
      * If the method returns false, it will cancel the action.
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @return {Promise|boolean} whether to run the action.
      */
     beforeRun(context) {

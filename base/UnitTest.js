@@ -44,9 +44,9 @@ class UnitTest extends BaseObject {
 
     tearDown() {
         // @todo
-        //Jii.app.redis && Jii.app.redis.end();
-        //Jii.app.db && Jii.app.db.close();
-        //Jii.app.comet && Jii.app.comet.end();
+        //redis && end();
+        //db && close();
+        //comet && end();
 
         return Promise.resolve();
     }

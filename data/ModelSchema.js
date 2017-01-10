@@ -21,7 +21,7 @@ class ModelSchema extends BaseObject {
 
     preInit() {
         /**
-         * @var {{string: Jii.data.ModelAttributeSchema}} column metadata of this table. Each array element is a [[Jii.data.ModelAttributeSchema]] object, indexed by column names.
+         * @var {{string: ModelAttributeSchema}} column metadata of this table. Each array element is a [[ModelAttributeSchema]] object, indexed by column names.
          */
         this.columns = {};
 
@@ -41,7 +41,7 @@ class ModelSchema extends BaseObject {
     /**
      *
      * @param {object} obj
-     * @returns {Jii.data.ModelSchema}
+     * @returns {ModelSchema}
      */
     static createFromObject(obj) {
         if (_isString(obj.primaryKey)) {
@@ -82,7 +82,7 @@ class ModelSchema extends BaseObject {
      * Gets the named column metadata.
      * This is a convenient method for retrieving a named column even if it does not exist.
      * @param {string} name column name
-     * @return {Jii.data.ModelAttributeSchema} metadata of the named column. Null if the named column does not exist.
+     * @return {ModelAttributeSchema} metadata of the named column. Null if the named column does not exist.
      */
     getColumn(name) {
         return _has(this.columns, name) ? this.columns[name] : null;

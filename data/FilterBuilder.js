@@ -298,7 +298,7 @@ class FilterBuilder extends BaseObject {
      *   the values will be automatically enclosed within a pair of percentage characters.
      * @param {object} params the binding parameters to be populated
      * @return {string} the generated SQL expression
-     * @throws {Jii.exceptions.InvalidParamException} if wrong number of operands have been given.
+     * @throws {InvalidParamException} if wrong number of operands have been given.
      */
     filterLikeCondition(operator, operands, params) {
         if (operands.length !== 2) {
@@ -369,7 +369,7 @@ class FilterBuilder extends BaseObject {
      * @param {[]} operands contains only one element which is a [[Query]] object representing the sub-query.
      * @param {object} params the binding parameters to be populated
      * @return {string} the generated SQL expression
-     * @throws {Jii.exceptions.InvalidParamException} if the operand is not a [[Query]] object.
+     * @throws {InvalidParamException} if the operand is not a [[Query]] object.
      */
     filterExistsCondition(operator, operands, params) {
         throw new NotSupportedException();

@@ -227,7 +227,7 @@ class Model extends Component {
      * @param {string} name
      * @param {string} [prefix]
      * @param {boolean} [skipThrow]
-     * @returns {{model: Jii.data.BaseActiveRecord, name: string, subName: string}|null}
+     * @returns {{model: BaseActiveRecord, name: string, subName: string}|null}
      * @protected
      */
     _detectKeyFormatCollection(name, prefix, skipThrow) {
@@ -267,7 +267,7 @@ class Model extends Component {
      *
      * @param {string} name
      * @param {string} [prefix]
-     * @returns {{model: Jii.data.BaseActiveRecord|null, name: string, subName: string}|null}
+     * @returns {{model: BaseActiveRecord|null, name: string, subName: string}|null}
      * @protected
      */
     _detectKeyFormatModel(name, prefix) {
@@ -308,7 +308,7 @@ class Model extends Component {
      * Sets the named attribute value.
      * @param {string} name the attribute name
      * @param {*} value the attribute value.
-     * @throws {Jii.exceptions.InvalidParamException} if the named attribute does not exist.
+     * @throws {InvalidParamException} if the named attribute does not exist.
      * @see hasAttribute()
      */
     setAttribute(name, value) {
@@ -347,7 +347,7 @@ class Model extends Component {
 
     /**
      *
-     * @param {object|Jii.data.ModelAdapterInterface} adapter
+     * @param {object|ModelAdapterInterface} adapter
      */
     createProxy(adapter) {
         var cloned = adapter.instance(this);
@@ -369,7 +369,7 @@ class Model extends Component {
 
         // Subscribe for sync
         _each(attributes, (name, alias) => {
-            this.on(Model.EVENT_CHANGE_NAME + name, /** @param {Jii.data.ChangeAttributeEvent} event */
+            this.on(Model.EVENT_CHANGE_NAME + name, /** @param {ChangeAttributeEvent} event */
                                                     event => {
                 var obj = {};
                 obj[alias] = event.newValue;
@@ -862,32 +862,32 @@ class Model extends Component {
 }
 
 /**
- * @event Jii.base.Model#after_validate
- * @property {Jii.data.ValidateEvent} event
+ * @event Model#after_validate
+ * @property {ValidateEvent} event
  */
 Model.EVENT_AFTER_VALIDATE = 'after_validate';
 
 /**
- * @event Jii.base.Model#change_errors
- * @property {Jii.data.ValidateEvent} event
+ * @event Model#change_errors
+ * @property {ValidateEvent} event
  */
 Model.EVENT_CHANGE_ERRORS = 'change_errors';
 
 /**
- * @event Jii.base.Model#before_validate
- * @property {Jii.data.ValidateEvent} event
+ * @event Model#before_validate
+ * @property {ValidateEvent} event
  */
 Model.EVENT_BEFORE_VALIDATE = 'before_validate';
 
 /**
- * @event Jii.base.Model#change:
- * @property {Jii.data.ChangeAttributeEvent} event
+ * @event Model#change:
+ * @property {ChangeAttributeEvent} event
  */
 Model.EVENT_CHANGE_NAME = 'change:';
 
 /**
- * @event Jii.base.Model#change
- * @property {Jii.data.ChangeEvent} event
+ * @event Model#change
+ * @property {ChangeEvent} event
  */
 Model.EVENT_CHANGE = 'change';
 module.exports = Model;

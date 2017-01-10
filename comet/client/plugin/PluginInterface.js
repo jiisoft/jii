@@ -12,7 +12,7 @@ class PluginInterface extends BaseObject {
 
     preInit() {
         /**
-         * @type {Jii.comet.client.Client}
+         * @type {Client}
          */
         this.comet = null;
 

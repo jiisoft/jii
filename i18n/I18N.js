@@ -118,7 +118,7 @@ class I18N extends Component {
 
     /**
      * Returns the message formatter instance.
-     * @return {Jii.i18n.MessageFormatter} the message formatter to be used to format message via ICU message format.
+     * @return {MessageFormatter} the message formatter to be used to format message via ICU message format.
      */
     getMessageFormatter() {
         if (this._messageFormatter === null) {
@@ -131,7 +131,7 @@ class I18N extends Component {
     }
 
     /**
-     * @param {string|array|Jii.i18n.MessageFormatter} value the message formatter to be used to format message via ICU message format.
+     * @param {string|array|MessageFormatter} value the message formatter to be used to format message via ICU message format.
      * Can be given as array or string configuration that will be given to [[Yii::createObject]] to create an instance
      * or a [[MessageFormatter]] instance.
      */

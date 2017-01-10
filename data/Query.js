@@ -137,8 +137,8 @@ class Query extends Component {
     /**
      * Creates a new Query object and copies its property values from an existing one.
      * The properties being copies are the ones to be used by query builders.
-     * @param {Jii.data.Query} from the source query object
-     * @return {Jii.data.Query} the new Query object
+     * @param {Query} from the source query object
+     * @return {Query} the new Query object
      */
     static createFromQuery(from) {
         return new this({
@@ -161,7 +161,7 @@ class Query extends Component {
 
     /**
      * Creates a DB command that can be used to execute this query.
-     * @param {Jii.data.BaseConnection} [db] the database connection used to generate the SQL statement.
+     * @param {BaseConnection} [db] the database connection used to generate the SQL statement.
      * If this parameter is not given, the `db` application component will be used.
      * @returns {Promise} the created DB command instance.
      */
@@ -178,9 +178,9 @@ class Query extends Component {
 
     /**
      * Prepares for building SQL.
-     * This method is called by [[Jii.data.QueryBuilder]] when it starts to build SQL from a query object.
+     * This method is called by [[QueryBuilder]] when it starts to build SQL from a query object.
      * You may override this method to do some final preparation work when converting a query into a SQL statement.
-     * @param {Jii.data.QueryBuilder} builder
+     * @param {QueryBuilder} builder
      */
     prepare(builder) {
         return Promise.resolve(this);
@@ -203,8 +203,8 @@ class Query extends Component {
      * ```
      *
      * @param {number} batchSize the number of records to be fetched in each batch.
-     * @param {Jii.sql.Connection} db the database connection. If not set, the "db" application component will be used.
-     * @returns {Jii.sql.BatchQueryResult} the batch query result. It implements the `Iterator` interface
+     * @param {Connection} db the database connection. If not set, the "db" application component will be used.
+     * @returns {BatchQueryResult} the batch query result. It implements the `Iterator` interface
      * and can be traversed to retrieve the data in batches.
      */
     /*batch(batchSize, db) {
@@ -212,7 +212,7 @@ class Query extends Component {
      db = db || null;
 
      return Jii.createObject({
-     className: Jii.sql.BatchQueryResult,
+     className: BatchQueryResult,
      query: this,
      batchSize: batchSize,
      db: db,
@@ -231,8 +231,8 @@ class Query extends Component {
      * ```
      *
      * @param {number} batchSize the number of records to be fetched in each batch.
-     * @param {Jii.sql.Connection} db the database connection. If not set, the "db" application component will be used.
-     * @returns {Jii.sql.BatchQueryResult} the batch query result. It implements the `Iterator` interface
+     * @param {Connection} db the database connection. If not set, the "db" application component will be used.
+     * @returns {BatchQueryResult} the batch query result. It implements the `Iterator` interface
      * and can be traversed to retrieve the data in batches.
      */
     /*each(batchSize, db) {
@@ -240,7 +240,7 @@ class Query extends Component {
      db = db || null;
 
      return Jii.createObject({
-     className: Jii.sql.BatchQueryResult,
+     className: BatchQueryResult,
      query: this,
      batchSize: batchSize,
      db: db,
@@ -249,7 +249,7 @@ class Query extends Component {
      },*/
     /**
      * Executes the query and returns all results as an array.
-     * @param {Jii.data.BaseConnection} [db] the database connection used to generate the SQL statement.
+     * @param {BaseConnection} [db] the database connection used to generate the SQL statement.
      * If this parameter is not given, the `db` application component will be used.
      * @returns {object} the query results. If the query results in nothing, an empty array will be returned.
      */
@@ -287,7 +287,7 @@ class Query extends Component {
 
     /**
      * Executes the query and returns a single row of result.
-     * @param {Jii.sql.Connection} [db] the database connection used to generate the SQL statement.
+     * @param {Connection} [db] the database connection used to generate the SQL statement.
      * If this parameter is not given, the `db` application component will be used.
      * @returns {[]|boolean} the first row (in terms of an array) of the query result. False is returned if the query
      * results in nothing.
@@ -303,7 +303,7 @@ class Query extends Component {
     /**
      * Returns the query result as a scalar value.
      * The value returned will be the first column in the first row of the query results.
-     * @param {Jii.sql.Connection} [db] the database connection used to generate the SQL statement.
+     * @param {Connection} [db] the database connection used to generate the SQL statement.
      * If this parameter is not given, the `db` application component will be used.
      * @returns {string|boolean} the value of the first column in the first row of the query result.
      * False is returned if the query result is empty.
@@ -318,7 +318,7 @@ class Query extends Component {
 
     /**
      * Executes the query and returns the first column of the result.
-     * @param {Jii.sql.Connection} [db] the database connection used to generate the SQL statement.
+     * @param {Connection} [db] the database connection used to generate the SQL statement.
      * If this parameter is not given, the `db` application component will be used.
      * @returns {[]} the first column of the query result. An empty array is returned if the query results in nothing.
      */
@@ -334,7 +334,7 @@ class Query extends Component {
      * Returns the number of records.
      * @param {string} [q] the COUNT expression. Defaults to '*'.
      * Make sure you properly quote column names in the expression.
-     * @param {Jii.sql.Connection} [db] the database connection used to generate the SQL statement.
+     * @param {Connection} [db] the database connection used to generate the SQL statement.
      * If this parameter is not given (or null), the `db` application component will be used.
      * @returns {Promise.promise} number of records
      */
@@ -351,7 +351,7 @@ class Query extends Component {
      * Returns the sum of the specified column values.
      * @param {string} q the column name or expression.
      * Make sure you properly quote column names in the expression.
-     * @param {Jii.sql.Connection} db the database connection used to generate the SQL statement.
+     * @param {Connection} db the database connection used to generate the SQL statement.
      * If this parameter is not given, the `db` application component will be used.
      * @returns {Promise.promise} the sum of the specified column values
      */
@@ -367,7 +367,7 @@ class Query extends Component {
      * Returns the average of the specified column values.
      * @param {string} q the column name or expression.
      * Make sure you properly quote column names in the expression.
-     * @param {Jii.sql.Connection} db the database connection used to generate the SQL statement.
+     * @param {Connection} db the database connection used to generate the SQL statement.
      * If this parameter is not given, the `db` application component will be used.
      * @returns {Promise.promise} the average of the specified column values.
      */
@@ -383,7 +383,7 @@ class Query extends Component {
      * Returns the minimum of the specified column values.
      * @param {string} q the column name or expression.
      * Make sure you properly quote column names in the expression.
-     * @param {Jii.sql.Connection} db the database connection used to generate the SQL statement.
+     * @param {Connection} db the database connection used to generate the SQL statement.
      * If this parameter is not given, the `db` application component will be used.
      * @returns {Promise.promise} the minimum of the specified column values.
      */
@@ -399,7 +399,7 @@ class Query extends Component {
      * Returns the maximum of the specified column values.
      * @param {string} q the column name or expression.
      * Make sure you properly quote column names in the expression.
-     * @param {Jii.sql.Connection} db the database connection used to generate the SQL statement.
+     * @param {Connection} db the database connection used to generate the SQL statement.
      * If this parameter is not given, the `db` application component will be used.
      * @returns {Promise.promise} the maximum of the specified column values.
      */
@@ -413,7 +413,7 @@ class Query extends Component {
 
     /**
      * Returns a value indicating whether the query result contains any row of data.
-     * @param {Jii.sql.Connection} db the database connection used to generate the SQL statement.
+     * @param {Connection} db the database connection used to generate the SQL statement.
      * If this parameter is not given, the `db` application component will be used.
      * @returns {Promise} whether the query result contains any row of data.
      */
@@ -435,8 +435,8 @@ class Query extends Component {
     /**
      * Queries a scalar value by setting [[select]] first.
      * Restores the value of select to make this query reusable.
-     * @param {string|Jii.data.Expression} selectExpression
-     * @param {Jii.sql.Connection|null} db
+     * @param {string|Expression} selectExpression
+     * @param {Connection|null} db
      * @returns {boolean|string}
      */
     _queryScalar(selectExpression, db) {
@@ -481,7 +481,7 @@ class Query extends Component {
      *
      * @param {string} [option] additional option that should be appended to the 'SELECT' keyword. For example,
      * in MySQL, the option 'SQL_CALC_FOUND_ROWS' can be used.
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     select(columns, option) {
         option = option || null;
@@ -496,7 +496,7 @@ class Query extends Component {
 
     /**
      *
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     setSelect(select) {
         this._select = select;
@@ -514,7 +514,7 @@ class Query extends Component {
      *
      * @param {string} [option] additional option that should be appended to the 'SELECT' keyword. For example,
      * in MySQL, the option 'SQL_CALC_FOUND_ROWS' can be used.
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     setSelectOption(option) {
         this._selectOption = option;
@@ -532,7 +532,7 @@ class Query extends Component {
     /**
      * Add more columns to the SELECT part of the query.
      * @param {string|[]} columns the columns to add to the select.
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      * @see select()
      */
     addSelect(columns) {
@@ -550,7 +550,7 @@ class Query extends Component {
     /**
      * Sets the value indicating whether to SELECT DISTINCT or not.
      * @param {boolean} [value] whether to SELECT DISTINCT or not.
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     distinct(value) {
         value = !_isUndefined(value) ? value : true;
@@ -561,7 +561,7 @@ class Query extends Component {
 
     /**
      *
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     setDistinct(distinct) {
         this._distinct = distinct;
@@ -589,7 +589,7 @@ class Query extends Component {
      * Use a Query object to represent a sub-query. In this case, the corresponding array key will be used
      * as the alias for the sub-query.
      *
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     from(tables) {
         if (_isString(tables)) {
@@ -601,7 +601,7 @@ class Query extends Component {
 
     /**
      *
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     setFrom(from) {
         this._from = from;
@@ -690,7 +690,7 @@ class Query extends Component {
      *
      * @param {string|object|[]} condition the conditions that should be put in the WHERE part.
      * @param {object} [params] the parameters (name: value) to be bound to the query.
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      * @see andWhere()
      * @see orWhere()
      */
@@ -704,7 +704,7 @@ class Query extends Component {
 
     /**
      *
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     setWhere(where) {
         this._where = where;
@@ -724,7 +724,7 @@ class Query extends Component {
      * @param {string|object|[]} condition the new WHERE() condition. Please refer to [[where()]]
      * on how to specify this parameter.
      * @param {object} [params] the parameters (name: value) to be bound to the query.
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      * @see where()
      * @see orWhere()
      */
@@ -750,7 +750,7 @@ class Query extends Component {
      * @param {string|object|[]} condition the new WHERE() condition. Please refer to [[where()]]
      * on how to specify this parameter.
      * @param {object} [params] the parameters (name: value) to be bound to the query.
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      * @see where()
      * @see andWhere()
      */
@@ -788,7 +788,7 @@ class Query extends Component {
      * @param {string|[]} [on] the join condition that should appear in the ON part.
      * Please refer to [[where()]] on how to specify this parameter.
      * @param {object} params the parameters (name: value) to be bound to the query.
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     join(type, table, on, params) {
         on = on || '';
@@ -804,7 +804,7 @@ class Query extends Component {
 
     /**
      *
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     setJoin(join) {
         this._join = join;
@@ -842,7 +842,7 @@ class Query extends Component {
      * @param {string|[]} [on] the join condition that should appear in the ON part.
      * Please refer to [[where()]] on how to specify this parameter.
      * @param {object} [params] the parameters (name: value) to be bound to the query.
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     innerJoin(table, on, params) {
         on = on || '';
@@ -872,7 +872,7 @@ class Query extends Component {
      * @param {string|[]} [on] the join condition that should appear in the ON part.
      * Please refer to [[where()]] on how to specify this parameter.
      * @param {object} [params] the parameters (name: value) to be bound to the query
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     leftJoin(table, on, params) {
         on = on || '';
@@ -902,7 +902,7 @@ class Query extends Component {
      * @param {string|[]} on the join condition that should appear in the ON part.
      * Please refer to [[where()]] on how to specify this parameter.
      * @param {object} [params] the parameters (name: value) to be bound to the query
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     rightJoin(table, on, params) {
         on = on || '';
@@ -922,7 +922,7 @@ class Query extends Component {
      * Columns can be specified in either a string (e.g. "id, name") or an array (e.g. ['id', 'name']).
      * The method will automatically quote the column names unless a column contains some parenthesis
      * (which means the column contains a DB expression).
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      * @see addGroupBy()
      */
     groupBy(columns) {
@@ -935,7 +935,7 @@ class Query extends Component {
 
     /**
      *
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     setGroupBy(groupBy) {
         this._groupBy = groupBy;
@@ -955,7 +955,7 @@ class Query extends Component {
      * Columns can be specified in either a string (e.g. "id, name") or an array (e.g. ['id', 'name']).
      * The method will automatically quote the column names unless a column contains some parenthesis
      * (which means the column contains a DB expression).
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      * @see groupBy()
      */
     addGroupBy(columns) {
@@ -975,7 +975,7 @@ class Query extends Component {
      * @param {string|[]} condition the conditions to be put after HAVING.
      * Please refer to [[where()]] on how to specify this parameter.
      * @param {object} [params] the parameters (name: value) to be bound to the query.
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      * @see andHaving()
      * @see orHaving()
      */
@@ -989,7 +989,7 @@ class Query extends Component {
 
     /**
      *
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     setHaving(having) {
         this._having = having;
@@ -1009,7 +1009,7 @@ class Query extends Component {
      * @param {string|[]} condition the new HAVING() condition. Please refer to [[where()]]
      * on how to specify this parameter.
      * @param {object} [params] the parameters (name: value) to be bound to the query.
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      * @see having()
      * @see orHaving()
      */
@@ -1035,7 +1035,7 @@ class Query extends Component {
      * @param {string|[]} condition the new HAVING() condition. Please refer to [[where()]]
      * on how to specify this parameter.
      * @param {object} [params] the parameters (name: value) to be bound to the query.
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      * @see having()
      * @see andHaving()
      */
@@ -1057,9 +1057,9 @@ class Query extends Component {
 
     /**
      * Appends a SQL statement using UNION operator.
-     * @param {string|Jii.data.Query} sql the SQL statement to be appended using UNION
+     * @param {string|Query} sql the SQL statement to be appended using UNION
      * @param {boolean} [all] TRUE if using UNION ALL and FALSE if using UNION
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     union(sql, all) {
         all = all || false;
@@ -1073,7 +1073,7 @@ class Query extends Component {
 
     /**
      *
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     setUnion(union) {
         return this._union = union;
@@ -1091,7 +1091,7 @@ class Query extends Component {
      * Sets the parameters to be bound to the query.
      * @param {object} params list of query parameter values indexed by parameter placeholders.
      * For example, `{':name': 'Dan', ':age': 31}`.
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      * @see addParams()
      */
     params(params) {
@@ -1101,7 +1101,7 @@ class Query extends Component {
 
     /**
      *
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     setParams(params) {
         this._params = params;
@@ -1119,7 +1119,7 @@ class Query extends Component {
      * Adds additional parameters to be bound to the query.
      * @param {object} params list of query parameter values indexed by parameter placeholders.
      * For example, `{':name': 'Dan', ':age': 31}`.
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      * @see params()
      */
     addParams(params) {
@@ -1149,7 +1149,7 @@ class Query extends Component {
      * }
      * ~~~
      *
-     * @returns {Jii.data.Query} the query object itself.
+     * @returns {Query} the query object itself.
      */
     indexBy(column) {
         this._indexBy = column;
@@ -1158,7 +1158,7 @@ class Query extends Component {
 
     /**
      *
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     setIndexBy(indexBy) {
         this._indexBy = indexBy;
@@ -1194,7 +1194,7 @@ class Query extends Component {
      *
      * @param {[]|object} condition the conditions that should be put in the WHERE part.
      * See [[where()]] on how to specify this parameter.
-     * @returns {Jii.data.Query} the query object itself.
+     * @returns {Query} the query object itself.
      * @see where()
      * @see andFilterWhere()
      * @see orFilterWhere()
@@ -1217,7 +1217,7 @@ class Query extends Component {
      *
      * @param {[]|object} condition the new WHERE() condition. Please refer to [[where()]]
      * on how to specify this parameter.
-     * @returns {Jii.data.Query} the query object itself.
+     * @returns {Query} the query object itself.
      * @see filterWhere()
      * @see orFilterWhere()
      */
@@ -1239,7 +1239,7 @@ class Query extends Component {
      *
      * @param {[]|object} condition the new WHERE() condition. Please refer to [[where()]]
      * on how to specify this parameter.
-     * @returns {Jii.data.Query} the query object itself.
+     * @returns {Query} the query object itself.
      * @see filterWhere()
      * @see andFilterWhere()
      */
@@ -1356,7 +1356,7 @@ class Query extends Component {
      * Note that if your order-by is an expression containing commas, you should always use an array
      * to represent the order-by information. Otherwise, the method will not be able to correctly determine
      * the order-by columns.
-     * @returns {Jii.data.Query} the query object itself.
+     * @returns {Query} the query object itself.
      * @see addOrderBy()
      */
     orderBy(columns) {
@@ -1366,7 +1366,7 @@ class Query extends Component {
 
     /**
      *
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     setOrderBy(orderBy) {
         this._orderBy = orderBy;
@@ -1387,7 +1387,7 @@ class Query extends Component {
      * (e.g. `{id: SORT_ASC, name: SORT_DESC}`).
      * The method will automatically quote the column names unless a column contains some parenthesis
      * (which means the column contains a DB expression).
-     * @returns {Jii.data.Query} the query object itself.
+     * @returns {Query} the query object itself.
      * @see orderBy()
      */
     addOrderBy(columns) {
@@ -1427,7 +1427,7 @@ class Query extends Component {
     /**
      * Sets the LIMIT part of the query.
      * @param {number} limit the limit. Use null or negative value to disable limit.
-     * @returns {Jii.data.Query} the query object itself.
+     * @returns {Query} the query object itself.
      */
     limit(limit) {
         this._limit = limit;
@@ -1436,7 +1436,7 @@ class Query extends Component {
 
     /**
      *
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     setLimit(limit) {
         this._limit = limit;
@@ -1453,7 +1453,7 @@ class Query extends Component {
     /**
      * Sets the OFFSET part of the query.
      * @param {number} offset the offset. Use null or negative value to disable offset.
-     * @returns {Jii.data.Query} the query object itself.
+     * @returns {Query} the query object itself.
      */
     offset(offset) {
         this._offset = offset;
@@ -1462,7 +1462,7 @@ class Query extends Component {
 
     /**
      *
-     * @returns {Jii.data.Query} the query object itself
+     * @returns {Query} the query object itself
      */
     setOffset(offset) {
         this._offset = offset;

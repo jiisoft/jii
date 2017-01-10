@@ -64,7 +64,7 @@ class Customer extends ActiveRecord {
 
     // deeply nested table relation
     getOrderItems() {
-        /** @typedef {Jii.data.ActiveQuery} rel */
+        /** @typedef {ActiveQuery} rel */
         var rel = this.hasMany(Item, {
             id: 'item_id'
         });
@@ -72,7 +72,7 @@ class Customer extends ActiveRecord {
         return rel.viaTable('order_item', {
             order_id: 'id'
         }, function (q) {
-            /** @typedef {Jii.data.ActiveQuery} q */
+            /** @typedef {ActiveQuery} q */
             q.viaTable('order', {
                 customer_id: 'id'
             });

@@ -141,7 +141,7 @@ class self extends UnitTest {
 
         /**
          *
-         * @param {Jii.data.ChangeEvent|Jii.data.ChangeAttributeEvent} event
+         * @param {ChangeEvent|ChangeAttributeEvent} event
          */
         var eventsFn = function (event) {
             if (event instanceof ChangeAttributeEvent) {
@@ -239,7 +239,7 @@ class self extends UnitTest {
 
         /**
          *
-         * @param {Jii.data.CollectionEvent|Jii.data.ChangeAttributeEvent|Jii.data.ChangeEvent} event
+         * @param {CollectionEvent|ChangeAttributeEvent|ChangeEvent} event
          */
         var eventsFn = function (event) {
             if (event instanceof ChangeAttributeEvent) {
@@ -529,7 +529,7 @@ class self extends UnitTest {
         var events = [];
         /**
          *
-         * @param {Jii.data.CollectionEvent|Jii.data.ChangeAttributeEvent|Jii.data.ChangeEvent} event
+         * @param {CollectionEvent|ChangeAttributeEvent|ChangeEvent} event
          */
         var eventsFn = function (event) {
             if (event instanceof ChangeAttributeEvent) {
@@ -572,7 +572,7 @@ class self extends UnitTest {
         var events = [];
         /**
          *
-         * @param {Jii.data.CollectionEvent|Jii.data.ChangeAttributeEvent|Jii.data.ChangeEvent} event
+         * @param {CollectionEvent|ChangeAttributeEvent|ChangeEvent} event
          */
         var eventsFn = function (event) {
             if (event instanceof ChangeAttributeEvent) {
@@ -631,7 +631,7 @@ class self extends UnitTest {
         var events = [];
         /**
          *
-         * @param {Jii.data.CollectionEvent|Jii.data.ChangeAttributeEvent|Jii.data.ChangeEvent} event
+         * @param {CollectionEvent|ChangeAttributeEvent|ChangeEvent} event
          */
         var eventsFn = function (event) {
             if (event instanceof ChangeAttributeEvent) {
@@ -716,7 +716,7 @@ class self extends UnitTest {
         var events = [];
         /**
          *
-         * @param {Jii.data.CollectionEvent|Jii.data.ChangeAttributeEvent|Jii.data.ChangeEvent} event
+         * @param {CollectionEvent|ChangeAttributeEvent|ChangeEvent} event
          */
         var eventsFn = function (event) {
             if (event instanceof ChangeAttributeEvent) {

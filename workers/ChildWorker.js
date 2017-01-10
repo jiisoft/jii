@@ -219,8 +219,8 @@ class ChildWorker extends Component {
 }
 
 /**
- * @event Jii.workers.ChildWorker#message
- * @property {Jii.workers.MessageEvent} event
+ * @event ChildWorker#message
+ * @property {MessageEvent} event
  */
 ChildWorker.EVENT_MESSAGE = 'message';
 module.exports = ChildWorker;

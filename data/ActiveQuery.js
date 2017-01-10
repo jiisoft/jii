@@ -143,7 +143,7 @@ class ActiveQuery extends Query {
 
     /**
      * Executes query and returns all results as an array.
-     * @param {Jii.sql.Connection} [db] the DB connection used to create the DB command.
+     * @param {Connection} [db] the DB connection used to create the DB command.
      * If null, the DB connection returned by [[modelClass]] will be used.
      * @returns {[]|ActiveRecord[]} the query results. If the query results in nothing, an empty array will be returned.
      */
@@ -218,7 +218,7 @@ class ActiveQuery extends Query {
                 }
 
                 // via relation
-                /** @typedef {Jii.data.ActiveQuery} viaQuery */
+                /** @typedef {ActiveQuery} viaQuery */
                 var viaName = this._via[0];
                 var viaQuery = this._via[1];
 
@@ -320,7 +320,7 @@ class ActiveQuery extends Query {
 
     /**
      * Executes query and returns a single row of result.
-     * @param {Jii.sql.Connection} [db] the DB connection used to create the DB command.
+     * @param {Connection} [db] the DB connection used to create the DB command.
      * If null, the DB connection returned by [[modelClass]] will be used.
      * @returns {ActiveRecord|[]|null} a single row of query result. Depending on the setting of [[asArray]],
      * the query result may be either an array or an ActiveRecord object. Null will be returned
@@ -342,9 +342,9 @@ class ActiveQuery extends Query {
 
     /**
      * Creates a DB command that can be used to execute this query.
-     * @param {Jii.sql.Connection} db the DB connection used to create the DB command.
+     * @param {Connection} db the DB connection used to create the DB command.
      * If null, the DB connection returned by [[modelClass]] will be used.
-     * @returns {Jii.data.Command} the created DB command instance.
+     * @returns {Command} the created DB command instance.
      */
     createCommand(db) {
         db = db || null;
@@ -410,7 +410,7 @@ class ActiveQuery extends Query {
      * @param {string|[]} joinType the join type of the relations specified in `with`.
      * When this is a string, it applies to all relations specified in `with`. Use an array
      * in the format of `relationName => joinType` to specify different join types for different relations.
-     * @returns {Jii.data.ActiveQuery} the query object itself
+     * @returns {ActiveQuery} the query object itself
      */
     joinWith(_with, eagerLoading, joinType) {
         eagerLoading = _isUndefined(eagerLoading) || _isNull(eagerLoading) ? true : eagerLoading;
@@ -484,7 +484,7 @@ class ActiveQuery extends Query {
      * Please refer to [[joinWith()]] for detailed usage of this method.
      * @param {[]} _with the relations to be joined with
      * @param {boolean|[]} eagerLoading whether to eager loading the relations
-     * @returns {Jii.data.ActiveQuery} the query object itself
+     * @returns {ActiveQuery} the query object itself
      * @see joinWith()
      */
     innerJoinWith(_with, eagerLoading) {
@@ -565,7 +565,7 @@ class ActiveQuery extends Query {
 
     /**
      * Returns the table name and the table alias for [[modelClass]].
-     * @param {Jii.data.ActiveQuery} query
+     * @param {ActiveQuery} query
      * @returns {[]} the table name and the table alias.
      */
     _getQueryTableName(query) {
@@ -610,8 +610,8 @@ class ActiveQuery extends Query {
     /**
      * Joins a parent query with a child query.
      * The current query object will be modified accordingly.
-     * @param {Jii.data.ActiveQuery} parent
-     * @param {Jii.data.ActiveQuery} child
+     * @param {ActiveQuery} parent
+     * @param {ActiveQuery} child
      * @param {string} joinType
      */
     _joinWithRelation(parent, child, joinType) {
@@ -706,7 +706,7 @@ class ActiveQuery extends Query {
      *
      * @param {string|[]} condition the ON condition. Please refer to [[Query.where()]] on how to specify this parameter.
      * @param {[]} params the parameters (name => value) to be bound to the query.
-     * @returns {Jii.data.ActiveQuery} the query object itself
+     * @returns {ActiveQuery} the query object itself
      */
     onCondition(condition, params) {
         params = params || {};
@@ -722,7 +722,7 @@ class ActiveQuery extends Query {
      * @param {string|[]} condition the new ON() condition. Please refer to [[where()]]
      * on how to specify this parameter.
      * @param {[]} params the parameters (name => value) to be bound to the query.
-     * @returns {Jii.data.ActiveQuery} the query object itself
+     * @returns {ActiveQuery} the query object itself
      * @see onCondition()
      * @see orOnCondition()
      */
@@ -748,7 +748,7 @@ class ActiveQuery extends Query {
      * @param {string|[]} condition the new ON() condition. Please refer to [[where()]]
      * on how to specify this parameter.
      * @param {[]} params the parameters (name => value) to be bound to the query.
-     * @returns {Jii.data.ActiveQuery} the query object itself
+     * @returns {ActiveQuery} the query object itself
      * @see onCondition()
      * @see andOnCondition()
      */
@@ -787,7 +787,7 @@ class ActiveQuery extends Query {
      * in the [[primaryModel]] table.
      * @param {function} callable a PHP callback for customizing the relation associated with the junction table.
      * Its signature should be `function(query)`, where `query` is the query to be customized.
-     * @returns {Jii.data.ActiveQuery}
+     * @returns {ActiveQuery}
      * @see via()
      */
     viaTable(tableName, link, callable) {
@@ -828,7 +828,7 @@ class ActiveQuery extends Query {
      * @param {string} relationName the relation name. This refers to a relation declared in [[primaryModel]].
      * @param {function} [callable] a PHP callback for customizing the relation associated with the junction table.
      * Its signature should be `function(query)`, where `query` is the query to be customized.
-     * @returns {Jii.data.ActiveQuery} the relation object itself.
+     * @returns {ActiveQuery} the relation object itself.
      */
     via(relationName, callable) {
         callable = callable || null;
@@ -870,7 +870,7 @@ class ActiveQuery extends Query {
      * ```
      *
      * @param {string} relationName the name of the relation that is the inverse of this relation.
-     * @returns {Jii.data.ActiveQuery} the relation object itself.
+     * @returns {ActiveQuery} the relation object itself.
      */
     inverseOf(relationName) {
         this._inverseOf = relationName;
@@ -879,7 +879,7 @@ class ActiveQuery extends Query {
 
     /**
      *
-     * @returns {Jii.data.ActiveQuery} the query object itself
+     * @returns {ActiveQuery} the query object itself
      */
     setInverseOf(inverseOf) {
         this._inverseOf = inverseOf;
@@ -897,7 +897,7 @@ class ActiveQuery extends Query {
      * Finds the related records for the specified primary record.
      * This method is invoked when a relation of an ActiveRecord is being accessed in a lazy fashion.
      * @param {string} name the relation name
-     * @param {Jii.data.BaseActiveRecord} model the primary model
+     * @param {BaseActiveRecord} model the primary model
      * @returns {*} the related record(s)
      * @throws InvalidParamException if the relation is invalid
      */
@@ -944,7 +944,7 @@ class ActiveQuery extends Query {
             throw new InvalidConfigException('Invalid link: it must be an array of key-value pairs.');
         }
 
-        /** @typedef {Jii.data.ActiveQuery} viaQuery */
+        /** @typedef {ActiveQuery} viaQuery */
         var viaQuery = null;
 
         return Promise.resolve().then(() => {
@@ -1065,7 +1065,7 @@ class ActiveQuery extends Query {
         var model = models[0];
         const ActiveRecord = require('./BaseActiveRecord');
 
-        /** @typedef {Jii.data.ActiveQuery} relation */
+        /** @typedef {ActiveQuery} relation */
         var relation = model instanceof ActiveRecord ? model.getRelation(name) : new this.modelClass().getRelation(name);
 
         if (relation.multiple) {
@@ -1309,7 +1309,7 @@ class ActiveQuery extends Query {
     /**
      * Sets the [[asArray]] property.
      * @param {boolean} [value] whether to return the query results in terms of arrays instead of Active Records.
-     * @returns {Jii.data.ActiveQuery} the query object itself
+     * @returns {ActiveQuery} the query object itself
      */
     asArray(value) {
         value = value !== false;
@@ -1336,7 +1336,7 @@ class ActiveQuery extends Query {
     /**
      * Alias asArray method
      * @param {boolean} value whether to return the query results in terms of arrays instead of Active Records.
-     * @returns {Jii.data.ActiveQuery} the query object itself
+     * @returns {ActiveQuery} the query object itself
      */
     asObject(value) {
         return this.asArray(value);
@@ -1393,7 +1393,7 @@ class ActiveQuery extends Query {
      * Customer.find().with('orders').with('country').all();
      * ~~~
      *
-     * @returns {Jii.data.ActiveQuery} the query object itself
+     * @returns {ActiveQuery} the query object itself
      */
     with() {
         var _with = _toArray(arguments);
@@ -1420,7 +1420,7 @@ class ActiveQuery extends Query {
 
     /**
      *
-     * @returns {Jii.data.ActiveQuery} the query object itself
+     * @returns {ActiveQuery} the query object itself
      */
     setWith(_with) {
         this._with = _with;
@@ -1493,7 +1493,7 @@ class ActiveQuery extends Query {
         var relations = this._normalizeRelations(primaryModel, _with);
         var promises = [];
 
-        /** @typedef {Jii.data.ActiveQuery} relation */
+        /** @typedef {ActiveQuery} relation */
         _each(relations, (relation, name) => {
             if (relation.getAsArray() === null) {
                 // inherit asArray from primary query
@@ -1509,7 +1509,7 @@ class ActiveQuery extends Query {
     /**
      * @param {ActiveRecord} model
      * @param {[]} _with
-     * @returns {Object.<string, Jii.data.ActiveQuery>}
+     * @returns {Object.<string, ActiveQuery>}
      */
     _normalizeRelations(model, _with) {
         var relations = {};

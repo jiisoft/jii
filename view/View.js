@@ -22,7 +22,7 @@ class View extends Component {
         this.renderers = null;
 
         /**
-         * @type {Jii.view.IRenderer|null}
+         * @type {IRenderer|null}
          */
         this.renderer = null;
 
@@ -65,9 +65,9 @@ class View extends Component {
     /**
      *
      * @param {*} view
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @param {object} params
-     * @param {Jii.base.Controller} controller
+     * @param {Controller} controller
      * @returns {Promise}
      */
     render(view, context, params, controller) {

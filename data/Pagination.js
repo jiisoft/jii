@@ -16,7 +16,7 @@ class Pagination extends Component {
 
     preInit() {
         /**
-         * @type {Jii.base.Context}
+         * @type {Context}
          */
         this._context = null;
 
@@ -66,7 +66,7 @@ class Pagination extends Component {
         this.validatePage = true;
 
         /**
-         * @type {Jii.request.UrlManager|null} the URL manager used for creating pagination URLs. If not set,
+         * @type {UrlManager|null} the URL manager used for creating pagination URLs. If not set,
          * the "urlManager" application component will be used.
          */
         this.urlManager = null;
@@ -111,7 +111,7 @@ class Pagination extends Component {
 
     /**
      *
-     * @param {Jii.base.Context} value
+     * @param {Context} value
      */
     setContext(value) {
         if (this._context !== value) {
@@ -129,7 +129,7 @@ class Pagination extends Component {
 
     /**
      *
-     * @returns {Jii.base.Context}
+     * @returns {Context}
      */
     getContext() {
         return this._context;
@@ -376,8 +376,8 @@ Pagination.LINK_NEXT = 'next';
 Pagination.REL_SELF = 'self';
 
 /**
- * @event Jii.data.Pagination#change
- * @property {Jii.base.Event} event
+ * @event Pagination#change
+ * @property {Event} event
  */
 Pagination.EVENT_CHANGE = 'change';
 module.exports = Pagination;

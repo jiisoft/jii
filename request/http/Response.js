@@ -119,7 +119,7 @@ class Response extends BaseResponse {
      * This method will set the corresponding status text if `text` is null.
      * @param {number} [value] the status code
      * @param {string} [text] the status text. If not set, it will be set automatically based on the status code.
-     * @throws {Jii.exceptions.InvalidParamException} if the status code is invalid.
+     * @throws {InvalidParamException} if the status code is invalid.
      */
     setStatusCode(value, text) {
         value = value || 200;
@@ -136,7 +136,7 @@ class Response extends BaseResponse {
     /**
      * Returns the header collection.
      * The header collection contains the currently registered HTTP headers.
-     * @return {Jii.request.HeaderCollection} the header collection
+     * @return {HeaderCollection} the header collection
      */
     getHeaders() {
         if (this._headers === null) {
@@ -339,7 +339,7 @@ class Response extends BaseResponse {
     /**
      * Prepares for sending the response.
      * The default implementation will convert [[data]] into [[content]] and set headers accordingly.
-     * @throws {Jii.exceptions.InvalidConfigException} if the formatter for the specified format is invalid or [[format]] is not supported
+     * @throws {InvalidConfigException} if the formatter for the specified format is invalid or [[format]] is not supported
      */
     _prepare() {
         if (this.data === null) {

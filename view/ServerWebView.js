@@ -15,9 +15,9 @@ class ServerWebView extends WebView {
     /**
      *
      * @param {*} view
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @param {object} params
-     * @param {Jii.base.Controller} controller
+     * @param {Controller} controller
      * @returns {Promise}
      */
     renderLayout(view, context, params, controller) {

@@ -12,7 +12,7 @@ class DatabaseTestCase extends UnitTest {
 
     preInit() {
         /**
-         * @type {Jii.sql.Connection}
+         * @type {Connection}
          */
         this.db = null;
         this.driverName = 'mysql';
@@ -39,7 +39,7 @@ class DatabaseTestCase extends UnitTest {
     /**
      * @param {boolean} [reset] whether to clean up the test database
      * @param {boolean} [open]  whether to open and populate test database
-     * @returns {Jii.sql.Connection}
+     * @returns {Connection}
      */
     getConnection(reset, open) {
         reset = !_isUndefined(reset) ? reset : true;

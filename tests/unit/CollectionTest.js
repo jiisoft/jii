@@ -727,7 +727,7 @@ class self extends UnitTest {
 
         /**
          *
-         * @param {Jii.data.CollectionEvent} event
+         * @param {CollectionEvent} event
          */
         var eventsFn = function (event) {
             _each(event.added, function (model) {
@@ -812,7 +812,7 @@ class self extends UnitTest {
 
         /**
          *
-         * @param {Jii.data.CollectionEvent|Jii.data.ChangeEvent} event
+         * @param {CollectionEvent|ChangeEvent} event
          */
         var eventsFn = function (event) {
             if (event instanceof ChangeEvent) {
@@ -886,7 +886,7 @@ class self extends UnitTest {
 
         /**
          *
-         * @param {Jii.data.CollectionEvent|Jii.data.ChangeEvent} event
+         * @param {CollectionEvent|ChangeEvent} event
          */
         var eventsFn = function (event) {
             _each(event.added, function (model) {
@@ -1162,7 +1162,7 @@ class self extends UnitTest {
 
         /**
          *
-         * @param {Jii.data.CollectionEvent|Jii.data.ChangeEvent} event
+         * @param {CollectionEvent|ChangeEvent} event
          */
         var eventsFn = function (event) {
             if (event instanceof ChangeEvent) {
@@ -1272,7 +1272,7 @@ class self extends UnitTest {
     /**
      *
      * @param arr
-     * @returns {Jii.base.Collection}
+     * @returns {Collection}
      * @private
      */
     _coll(arr) {

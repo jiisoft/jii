@@ -11,25 +11,25 @@ class CollectionAdapterInterface {
 
     /**
      *
-     * @param {Jii.base.Collection} original
+     * @param {Collection} original
      */
     instance(original) {
     }
 
     /**
      *
-     * @param {Jii.base.Collection} original
+     * @param {Collection} original
      * @param {*} cloned
-     * @param {Jii.base.Model[]} models
+     * @param {Model[]} models
      */
     add(original, cloned, models) {
     }
 
     /**
      *
-     * @param {Jii.base.Collection} original
+     * @param {Collection} original
      * @param {*} cloned
-     * @param {Jii.base.Model[]} models
+     * @param {Model[]} models
      */
     remove(original, cloned, models) {
     }

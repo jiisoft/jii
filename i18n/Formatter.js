@@ -71,21 +71,9 @@ class Formatter extends Component {
         return value;
     }
 
-
-
-    /**
-     * Formats the value as HTML text.
-     * The value will be purified using [[HtmlPurifier]] to avoid XSS attacks.
-     * Use [[asRaw()]] if you do not want any purification of the value.
-     * @param {string} value the value to be formatted.
-     * @param {object|null} config the configuration for the HTMLPurifier class.
-     * @return XML the formatted result.
-     */
     asHtml(value, config = null) {
-        if (value === null) {
-            return this.nullDisplay;
-        }
-        return <span dangerouslySetInnerHTML={{__html: value}}/>;
+        // TODO Bad pattern, method need to remove
+        return value;
     }
 
     /**

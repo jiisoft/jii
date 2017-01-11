@@ -316,11 +316,9 @@ class DataProvider extends Collection {
                 throw new InvalidConfigException('DataProvider with pagination need parent collection.');
             }
 
-            const modelsPage = super._filterModels(pagination.getIndexes().map(i => {
+            return pagination.getIndexes().map(i => {
                 return this.parent._byId[this._fetchedKeys[i]] || null;
-            }).filter(model => model !== null));
-
-            return super._filterModels(modelsPage);
+            }).filter(model => model !== null);
         }
 
         return super._filterModels();

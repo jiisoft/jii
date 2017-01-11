@@ -284,10 +284,8 @@ class Collection extends Component {
         });
     }
 
-    _filterModels(models = null) {
-        if(!models) {
-            models = this.parent ? this.parent.getModels() : this.getModels();
-        }
+    _filterModels() {
+        let models = this.parent ? this.parent.getModels() : this.getModels();
 
         if (this._filter) {
             // Optimize search by id

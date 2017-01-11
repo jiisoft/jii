@@ -5,16 +5,16 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var String = require('../../helpers/String');
-var TransportInterface = require('./transport/TransportInterface');
-var RequestEvent = require('./RequestEvent');
-var MessageEvent = require('./MessageEvent');
-var ChannelEvent = require('../ChannelEvent');
-var _indexOf = require('lodash/indexOf');
-var _each = require('lodash/each');
-var Component = require('../../base/Component');
-var AutoReconnect = require('./plugin/AutoReconnect');
+const Jii = require('../../BaseJii');
+const String = require('../../helpers/String');
+const TransportInterface = require('./transport/TransportInterface');
+const RequestEvent = require('./RequestEvent');
+const MessageEvent = require('./MessageEvent');
+const ChannelEvent = require('../ChannelEvent');
+const _indexOf = require('lodash/indexOf');
+const _each = require('lodash/each');
+const Component = require('../../base/Component');
+const AutoReconnect = require('./plugin/AutoReconnect');
 
 /**
  * Read-only from api stationUid
@@ -66,7 +66,7 @@ class Client extends Component {
         this.plugins = {
 
             /**
-             * @type {Jii.comet.client.plugin.AutoReconnect}
+             * @type {AutoReconnect}
              */
             autoReconnect: {
                 className: AutoReconnect
@@ -74,7 +74,7 @@ class Client extends Component {
         };
 
         /**
-         * @type {Jii.comet.client.transport.TransportInterface}
+         * @type {TransportInterface}
          */
         this.transport = null;
 
@@ -382,50 +382,50 @@ class Client extends Component {
 Client.CHANNEL_NAME_ALL = '__allVfcOS7';
 
 /**
- * @event Jii.comet.client.Client#request
- * @property {Jii.comet.client.RequestEvent} event
+ * @event Client#request
+ * @property {RequestEvent} event
  */
 Client.EVENT_REQUEST = 'request';
 
 /**
- * @event Jii.comet.client.Client#beforeRequest
- * @property {Jii.comet.client.RequestEvent} event
+ * @event Client#beforeRequest
+ * @property {RequestEvent} event
  */
 Client.EVENT_BEFORE_REQUEST = 'beforeRequest';
 
 /**
- * @event Jii.comet.client.Client#message
- * @property {Jii.comet.client.MessageEvent} event
+ * @event Client#message
+ * @property {MessageEvent} event
  */
 Client.EVENT_MESSAGE = 'message';
 
 /**
- * @event Jii.comet.client.Client#channel:
- * @property {Jii.comet.ChannelEvent} event
+ * @event Client#channel:
+ * @property {ChannelEvent} event
  */
 Client.EVENT_CHANNEL_NAME = 'channel:';
 
 /**
- * @event Jii.comet.client.Client#channel
- * @property {Jii.comet.ChannelEvent} event
+ * @event Client#channel
+ * @property {ChannelEvent} event
  */
 Client.EVENT_CHANNEL = 'channel';
 
 /**
- * @event Jii.comet.client.Client#beforeSend
- * @property {Jii.comet.client.MessageEvent} event
+ * @event Client#beforeSend
+ * @property {MessageEvent} event
  */
 Client.EVENT_BEFORE_SEND = 'beforeSend';
 
 /**
- * @event Jii.comet.client.Client#close
- * @property {Jii.base.Event} event
+ * @event Client#close
+ * @property {Event} event
  */
 Client.EVENT_CLOSE = 'close';
 
 /**
- * @event Jii.comet.client.Client#open
- * @property {Jii.base.Event} event
+ * @event Client#open
+ * @property {Event} event
  */
 Client.EVENT_OPEN = 'open';
 module.exports = Client;

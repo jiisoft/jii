@@ -1,18 +1,18 @@
 'use strict';
 
-var Jii = require('../../index');
-var Article = require('../models/Article');
-var User = require('../models/User');
-var _each = require('lodash/each');
-var _extend = require('lodash/extend');
-var _identity = require('lodash/identity');
-var Collection = require('../../base/Collection');
-var InvalidParamException = require('../../exceptions/InvalidParamException');
-var ChangeEvent = require('../../data/ChangeEvent');
-var CollectionEvent = require('../../data/CollectionEvent');
-var Query = require('../../data/Query');
-var FilterBuilder = require('../../data/FilterBuilder');
-var UnitTest = require('../../base/UnitTest');
+const Jii = require('../../index');
+const Article = require('../models/Article');
+const User = require('../models/User');
+const _each = require('lodash/each');
+const _extend = require('lodash/extend');
+const _identity = require('lodash/identity');
+const Collection = require('../../base/Collection');
+const InvalidParamException = require('../../exceptions/InvalidParamException');
+const ChangeEvent = require('../../data/ChangeEvent');
+const CollectionEvent = require('../../data/CollectionEvent');
+const Query = require('../../data/Query');
+const FilterBuilder = require('../../data/FilterBuilder');
+const UnitTest = require('../../base/UnitTest');
 require('../bootstrap');
 class self extends UnitTest {
 
@@ -727,7 +727,7 @@ class self extends UnitTest {
 
         /**
          *
-         * @param {Jii.data.CollectionEvent} event
+         * @param {CollectionEvent} event
          */
         var eventsFn = function (event) {
             _each(event.added, function (model) {
@@ -812,7 +812,7 @@ class self extends UnitTest {
 
         /**
          *
-         * @param {Jii.data.CollectionEvent|Jii.data.ChangeEvent} event
+         * @param {CollectionEvent|ChangeEvent} event
          */
         var eventsFn = function (event) {
             if (event instanceof ChangeEvent) {
@@ -886,7 +886,7 @@ class self extends UnitTest {
 
         /**
          *
-         * @param {Jii.data.CollectionEvent|Jii.data.ChangeEvent} event
+         * @param {CollectionEvent|ChangeEvent} event
          */
         var eventsFn = function (event) {
             _each(event.added, function (model) {
@@ -1162,7 +1162,7 @@ class self extends UnitTest {
 
         /**
          *
-         * @param {Jii.data.CollectionEvent|Jii.data.ChangeEvent} event
+         * @param {CollectionEvent|ChangeEvent} event
          */
         var eventsFn = function (event) {
             if (event instanceof ChangeEvent) {
@@ -1272,7 +1272,7 @@ class self extends UnitTest {
     /**
      *
      * @param arr
-     * @returns {Jii.base.Collection}
+     * @returns {Collection}
      * @private
      */
     _coll(arr) {

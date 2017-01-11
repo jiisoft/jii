@@ -5,9 +5,9 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Component = require('../base/Component');
-var IntlMessageFormat = require('intl-messageformat');
+const Jii = require('../BaseJii');
+const Component = require('../base/Component');
+const IntlMessageFormat = require('intl-messageformat');
 
 class MessageFormatter extends Component {
 

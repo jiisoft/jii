@@ -1,7 +1,7 @@
 'use strict';
 
-var Jii = require('../../BaseJii');
-var ActiveRecord = require('./ActiveRecord.js');
+const Jii = require('../../BaseJii');
+const ActiveRecord = require('./ActiveRecord.js');
 class Type extends ActiveRecord {
 
     static tableName() {

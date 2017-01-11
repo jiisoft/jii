@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var ApplicationException = require('./ApplicationException');
+const Jii = require('../BaseJii');
+const ApplicationException = require('./ApplicationException');
 
 class InvalidParamException extends ApplicationException {
 

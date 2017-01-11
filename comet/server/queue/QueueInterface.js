@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../../../BaseJii');
-var Component = require('../../../base/Component');
+const Jii = require('../../../BaseJii');
+const Component = require('../../../base/Component');
 
 class QueueInterface extends Component {
 

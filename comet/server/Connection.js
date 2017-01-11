@@ -4,9 +4,9 @@
  */
 'use strict';
 
-var Jii = require('../../BaseJii');
-var _pick = require('lodash/pick');
-var Component = require('../../base/Component');
+const Jii = require('../../BaseJii');
+const _pick = require('lodash/pick');
+const Component = require('../../base/Component');
 
 class Connection extends Component {
 
@@ -17,7 +17,7 @@ class Connection extends Component {
         this.originalConnection = null;
 
         /**
-         * @type {Jii.comet.server.Request}
+         * @type {Request}
          */
         this.request = null;
 

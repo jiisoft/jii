@@ -5,13 +5,13 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var File = require('../helpers/File');
-var InvalidConfigException = require('../exceptions/InvalidConfigException');
-var _isObject = require('lodash/isObject');
-var _has = require('lodash/has');
-var _each = require('lodash/each');
-var Module = require('./Module');
+const Jii = require('../BaseJii');
+const File = require('../helpers/File');
+const InvalidConfigException = require('../exceptions/InvalidConfigException');
+const _isObject = require('lodash/isObject');
+const _has = require('lodash/has');
+const _each = require('lodash/each');
+const Module = require('./Module');
 
 class Application extends Module {
 
@@ -192,7 +192,7 @@ class Application extends Module {
 
     /**
      * Loads components that are declared in [[bootstrap]].
-     * @throws {Jii.exceptions.InvalidConfigException} if a component or module to be preloaded is unknown
+     * @throws {InvalidConfigException} if a component or module to be preloaded is unknown
      */
     _loadBootstrapComponents() {
         _each(this.bootstrap, id => {

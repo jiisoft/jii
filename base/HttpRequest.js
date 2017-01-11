@@ -5,19 +5,19 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var HeaderCollection = require('../request/HeaderCollection');
-var _trimStart = require('lodash/trimStart');
-var _trimEnd = require('lodash/trimEnd');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var Request = require('./Request');
+const Jii = require('../BaseJii');
+const HeaderCollection = require('../request/HeaderCollection');
+const _trimStart = require('lodash/trimStart');
+const _trimEnd = require('lodash/trimEnd');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const Request = require('./Request');
 
 class HttpRequest extends Request {
 
     preInit() {
         /**
-         * @type {Jii.request.HeaderCollection}
+         * @type {HeaderCollection}
          */
         this._headers = null;
 

@@ -5,9 +5,9 @@
 
 'use strict';
 
-var Jii = require('../../../BaseJii');
-var ChannelEvent = require('../../ChannelEvent');
-var HubInterface = require('./HubInterface');
+const Jii = require('../../../BaseJii');
+const ChannelEvent = require('../../ChannelEvent');
+const HubInterface = require('./HubInterface');
 
 class Blank extends HubInterface {
 

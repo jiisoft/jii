@@ -1,11 +1,11 @@
 // 'use strict';
 //
-// var Jii = require('jii');
-// var Migration = require('jii/data/Migration');
+// const Jii = require('jii');
+// const Migration = require('jii/data/Migration');
 //
 // /**
 //  * @class <%= className %>
-//  * @extends Jii.data.Migration
+//  * @extends Migration
 //  */
 // module.exports = Jii.defineClass('<%= className %>', /** @lends <%= className %>.prototype */{
 //

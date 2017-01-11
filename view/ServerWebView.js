@@ -5,19 +5,19 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var _values = require('lodash/values');
-var _each = require('lodash/each');
-var WebView = require('./WebView');
+const Jii = require('../BaseJii');
+const _values = require('lodash/values');
+const _each = require('lodash/each');
+const WebView = require('./WebView');
 
 class ServerWebView extends WebView {
 
     /**
      *
      * @param {*} view
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @param {object} params
-     * @param {Jii.base.Controller} controller
+     * @param {Controller} controller
      * @returns {Promise}
      */
     renderLayout(view, context, params, controller) {

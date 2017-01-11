@@ -5,29 +5,29 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Validator = require('../validators/Validator');
-var RequiredValidator = require('../validators/RequiredValidator');
-var ChangeAttributeEvent = require('../data/ChangeAttributeEvent');
-var ChangeEvent = require('../data/ChangeEvent');
-var InvalidParamException = require('../exceptions/InvalidParamException');
-var UnknownPropertyException = require('../exceptions/UnknownPropertyException');
-var ApplicationException = require('../exceptions/ApplicationException');
-var ValidateEvent = require('../data/ValidateEvent');
-var _isObject = require('lodash/isObject');
-var _isEmpty = require('lodash/isEmpty');
-var _isEqual = require('lodash/isEqual');
-var _isUndefined = require('lodash/isUndefined');
-var _indexOf = require('lodash/indexOf');
-var _isNumber = require('lodash/isNumber');
-var _isArray = require('lodash/isArray');
-var _isString = require('lodash/isString');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var _map = require('lodash/map');
-var _keys = require('lodash/keys');
-var _startCase = require('lodash/startCase');
-var Component = require('./Component');
+const Jii = require('../BaseJii');
+const Validator = require('../validators/Validator');
+const RequiredValidator = require('../validators/RequiredValidator');
+const ChangeAttributeEvent = require('../data/ChangeAttributeEvent');
+const ChangeEvent = require('../data/ChangeEvent');
+const InvalidParamException = require('../exceptions/InvalidParamException');
+const UnknownPropertyException = require('../exceptions/UnknownPropertyException');
+const ApplicationException = require('../exceptions/ApplicationException');
+const ValidateEvent = require('../data/ValidateEvent');
+const _isObject = require('lodash/isObject');
+const _isEmpty = require('lodash/isEmpty');
+const _isEqual = require('lodash/isEqual');
+const _isUndefined = require('lodash/isUndefined');
+const _indexOf = require('lodash/indexOf');
+const _isNumber = require('lodash/isNumber');
+const _isArray = require('lodash/isArray');
+const _isString = require('lodash/isString');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const _map = require('lodash/map');
+const _keys = require('lodash/keys');
+const _startCase = require('lodash/startCase');
+const Component = require('./Component');
 
 class Model extends Component {
 
@@ -185,7 +185,7 @@ class Model extends Component {
             var subModel = this.get(subMatches[1]);
 
             // Check sub-model is Model
-            var Collection = require('./Collection');
+            const Collection = require('./Collection');
             if (subModel instanceof Collection) {
                 throw new InvalidParamException('Try set property of array models: `' + name + '`');
             } else if (!(subModel instanceof module.exports)) {
@@ -227,7 +227,7 @@ class Model extends Component {
      * @param {string} name
      * @param {string} [prefix]
      * @param {boolean} [skipThrow]
-     * @returns {{model: Jii.data.BaseActiveRecord, name: string, subName: string}|null}
+     * @returns {{model: BaseActiveRecord, name: string, subName: string}|null}
      * @protected
      */
     _detectKeyFormatCollection(name, prefix, skipThrow) {
@@ -242,7 +242,7 @@ class Model extends Component {
         }
 
         var collection = this.get(arrMatches[1]);
-        var Collection = require('./Collection');
+        const Collection = require('./Collection');
         if (collection instanceof Collection) {
             var index = parseInt(arrMatches[2]);
             var arrSubModel = collection.at(index);
@@ -267,7 +267,7 @@ class Model extends Component {
      *
      * @param {string} name
      * @param {string} [prefix]
-     * @returns {{model: Jii.data.BaseActiveRecord|null, name: string, subName: string}|null}
+     * @returns {{model: BaseActiveRecord|null, name: string, subName: string}|null}
      * @protected
      */
     _detectKeyFormatModel(name, prefix) {
@@ -308,7 +308,7 @@ class Model extends Component {
      * Sets the named attribute value.
      * @param {string} name the attribute name
      * @param {*} value the attribute value.
-     * @throws {Jii.exceptions.InvalidParamException} if the named attribute does not exist.
+     * @throws {InvalidParamException} if the named attribute does not exist.
      * @see hasAttribute()
      */
     setAttribute(name, value) {
@@ -347,7 +347,7 @@ class Model extends Component {
 
     /**
      *
-     * @param {object|Jii.data.ModelAdapterInterface} adapter
+     * @param {object|ModelAdapterInterface} adapter
      */
     createProxy(adapter) {
         var cloned = adapter.instance(this);
@@ -369,7 +369,7 @@ class Model extends Component {
 
         // Subscribe for sync
         _each(attributes, (name, alias) => {
-            this.on(Model.EVENT_CHANGE_NAME + name, /** @param {Jii.data.ChangeAttributeEvent} event */
+            this.on(Model.EVENT_CHANGE_NAME + name, /** @param {ChangeAttributeEvent} event */
                                                     event => {
                 var obj = {};
                 obj[alias] = event.newValue;
@@ -438,7 +438,7 @@ class Model extends Component {
         var obj = {};
         _each(names, (child, name) => {
             var value = model.get(name);
-            var Collection = require('./Collection');
+            const Collection = require('./Collection');
             if (value instanceof module.exports) {
                 obj[name] = this._buildTree(child, value);
             } else if (value instanceof Collection) {
@@ -862,32 +862,32 @@ class Model extends Component {
 }
 
 /**
- * @event Jii.base.Model#after_validate
- * @property {Jii.data.ValidateEvent} event
+ * @event Model#after_validate
+ * @property {ValidateEvent} event
  */
 Model.EVENT_AFTER_VALIDATE = 'after_validate';
 
 /**
- * @event Jii.base.Model#change_errors
- * @property {Jii.data.ValidateEvent} event
+ * @event Model#change_errors
+ * @property {ValidateEvent} event
  */
 Model.EVENT_CHANGE_ERRORS = 'change_errors';
 
 /**
- * @event Jii.base.Model#before_validate
- * @property {Jii.data.ValidateEvent} event
+ * @event Model#before_validate
+ * @property {ValidateEvent} event
  */
 Model.EVENT_BEFORE_VALIDATE = 'before_validate';
 
 /**
- * @event Jii.base.Model#change:
- * @property {Jii.data.ChangeAttributeEvent} event
+ * @event Model#change:
+ * @property {ChangeAttributeEvent} event
  */
 Model.EVENT_CHANGE_NAME = 'change:';
 
 /**
- * @event Jii.base.Model#change
- * @property {Jii.data.ChangeEvent} event
+ * @event Model#change
+ * @property {ChangeEvent} event
  */
 Model.EVENT_CHANGE = 'change';
 module.exports = Model;

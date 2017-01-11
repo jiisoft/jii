@@ -5,17 +5,17 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Behavior = require('./Behavior');
-var Event = require('./Event');
-var UnknownPropertyException = require('../exceptions/UnknownPropertyException');
-var _upperFirst = require('lodash/upperFirst');
-var _isUndefined = require('lodash/isUndefined');
-var _isString = require('lodash/isString');
-var _isFunction = require('lodash/isFunction');
-var _isObject = require('lodash/isObject');
-var _each = require('lodash/each');
-var BaseObject = require('./BaseObject');
+const Jii = require('../BaseJii');
+const Behavior = require('./Behavior');
+const Event = require('./Event');
+const UnknownPropertyException = require('../exceptions/UnknownPropertyException');
+const _upperFirst = require('lodash/upperFirst');
+const _isUndefined = require('lodash/isUndefined');
+const _isString = require('lodash/isString');
+const _isFunction = require('lodash/isFunction');
+const _isObject = require('lodash/isObject');
+const _each = require('lodash/each');
+const BaseObject = require('./BaseObject');
 
 class Component extends BaseObject {
 
@@ -31,7 +31,7 @@ class Component extends BaseObject {
         this._events = null;
 
         /**
-         * @var {Jii.base.Context|Jii.base.Module}
+         * @var {Context|Module}
          */
         this.owner = null;
 
@@ -58,7 +58,7 @@ class Component extends BaseObject {
      * }
      * ~~~
      *
-     * Note that a behavior class must extend from [[Jii.base.Behavior]]. Behavior names can be strings
+     * Note that a behavior class must extend from [[Behavior]]. Behavior names can be strings
      * or integers. If the former, they uniquely identify the behaviors. If the latter, the corresponding
      * behaviors are anonymous and their properties and methods will NOT be made available via the component
      * (however, the behaviors can still respond to the component's events).
@@ -98,7 +98,7 @@ class Component extends BaseObject {
      * function (event)
      * ~~~
      *
-     * where `event` is an [[Jii.base.Event]] object which includes parameters associated with the event.
+     * where `event` is an [[Event]] object which includes parameters associated with the event.
      *
      * @param {string|string[]} name the event name
      * @param {function} handler the event handler
@@ -203,7 +203,7 @@ class Component extends BaseObject {
      * This method represents the happening of an event. It invokes
      * all attached handlers for the event including class-level handlers.
      * @param {string} name the event name
-     * @param {Jii.base.Event} [event] the event parameter. If not set, a default [[Jii.base.Event]] object will be created.
+     * @param {Event} [event] the event parameter. If not set, a default [[Event]] object will be created.
      */
     trigger(name, event) {
         this.ensureBehaviors();
@@ -247,7 +247,7 @@ class Component extends BaseObject {
     /**
      * Returns the named behavior object.
      * @param {string} name the behavior name
-     * @return {Jii.base.Behavior} the behavior object, or null if the behavior does not exist
+     * @return {Behavior} the behavior object, or null if the behavior does not exist
      */
     getBehavior(name) {
         this.ensureBehaviors();
@@ -271,13 +271,13 @@ class Component extends BaseObject {
      * configuration. After that, the behavior object will be attached to
      * this component by calling the attach method.
      * @param {string} name the name of the behavior.
-     * @param {string|Jii.base.Behavior[]|Jii.base.Behavior} behavior the behavior configuration. This can be one of the following:
+     * @param {string|Behavior[]|Behavior} behavior the behavior configuration. This can be one of the following:
      *
-     *  - a [[Jii.base.Behavior]] object
+     *  - a [[Behavior]] object
      *  - a string specifying the behavior class
      *  - an object configuration array that will be passed to [[Jii.createObject()]] to create the behavior object.
      *
-     * @return {Jii.base.Behavior} the behavior object
+     * @return {Behavior} the behavior object
      * @see detachBehavior()
      */
     attachBehavior(name, behavior) {
@@ -288,7 +288,7 @@ class Component extends BaseObject {
 
     /**
      * Attaches a list of behaviors to the component.
-     * Each behavior is indexed by its name and should be a [[Jii.base.Behavior]] object,
+     * Each behavior is indexed by its name and should be a [[Behavior]] object,
      * a string specifying the behavior class, or an configuration array for creating the behavior.
      * @param {[]} behaviors list of behaviors to be attached to the component
      * @see attachBehavior()
@@ -305,7 +305,7 @@ class Component extends BaseObject {
      * Detaches a behavior from the component.
      * The behavior's detach method will be invoked.
      * @param {string} name the behavior's name.
-     * @return {Jii.base.Behavior} the detached behavior. Null if the behavior does not exist.
+     * @return {Behavior} the detached behavior. Null if the behavior does not exist.
      */
     detachBehavior(name) {
         this.ensureBehaviors();
@@ -355,8 +355,8 @@ class Component extends BaseObject {
     /**
      * Attaches a behavior to this component.
      * @param {string} name the name of the behavior.
-     * @param {string|Jii.base.Behavior} behavior the behavior to be attached
-     * @return {Jii.base.Behavior} the attached behavior.
+     * @param {string|Behavior} behavior the behavior to be attached
+     * @return {Behavior} the attached behavior.
      * @private
      */
     _attachBehaviorInternal(name, behavior) {

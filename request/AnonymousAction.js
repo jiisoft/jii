@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Action = require('../base/Action');
+const Jii = require('../BaseJii');
+const Action = require('../base/Action');
 
 class AnonymousAction extends Action {
 
@@ -22,7 +22,7 @@ class AnonymousAction extends Action {
         this.handler = handler;
 
         /**
-         * @type {Jii.base.Module}
+         * @type {Module}
          */
         this.module = module;
 
@@ -41,7 +41,7 @@ class AnonymousAction extends Action {
     /**
      * Runs this action with the specified parameters.
      * This method is mainly invoked by the controller.
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @returns {*} the result of the action
      */
     runWithParams(context) {

@@ -7,30 +7,30 @@
 
 'use strict';
 
-var neatness = require('neatness');
-var _isString = require('lodash/isString');
-var _isFunction = require('lodash/isFunction');
-var _isUndefined = require('lodash/isUndefined');
-var _has = require('lodash/has');
-var _each = require('lodash/each');
-var _indexOf = require('lodash/indexOf');
-var _isObject = require('lodash/isObject');
-var _clone = require('lodash/clone');
-var _drop = require('lodash/drop');
-var _isEmpty = require('lodash/isEmpty');
-var _isArray = require('lodash/isArray');
-var _trimEnd = require('lodash/trimEnd');
-var _upperFirst = require('lodash/upperFirst');
-var _extend = require('lodash/extend');
-var BaseJii = require('./BaseJii');
-var WebApplication = require('./application/WebApplication');
-var InvalidParamException = require('./exceptions/InvalidParamException');
-var ApplicationException = require('./exceptions/ApplicationException');
-var InvalidConfigException = require('./exceptions/InvalidConfigException');
-var BaseObject = require('./base/BaseObject');
-var Context = require('./base/Context');
-var Component = require('./base/Component');
-var Util = require('./helpers/Util');
+const neatness = require('neatness');
+const _isString = require('lodash/isString');
+const _isFunction = require('lodash/isFunction');
+const _isUndefined = require('lodash/isUndefined');
+const _has = require('lodash/has');
+const _each = require('lodash/each');
+const _indexOf = require('lodash/indexOf');
+const _isObject = require('lodash/isObject');
+const _clone = require('lodash/clone');
+const _drop = require('lodash/drop');
+const _isEmpty = require('lodash/isEmpty');
+const _isArray = require('lodash/isArray');
+const _trimEnd = require('lodash/trimEnd');
+const _upperFirst = require('lodash/upperFirst');
+const _extend = require('lodash/extend');
+const BaseJii = require('./BaseJii');
+const WebApplication = require('./application/WebApplication');
+const InvalidParamException = require('./exceptions/InvalidParamException');
+const ApplicationException = require('./exceptions/ApplicationException');
+const InvalidConfigException = require('./exceptions/InvalidConfigException');
+const BaseObject = require('./base/BaseObject');
+const Context = require('./base/Context');
+const Component = require('./base/Component');
+const Util = require('./helpers/Util');
 
 /**
  * @class Jii
@@ -39,7 +39,7 @@ var Util = require('./helpers/Util');
 var Jii = _extend(BaseJii, /** @lends Jii */{
 
     /**
-     * @type {Jii.base.Application}
+     * @type {Application}
      */
     app: null,
 
@@ -53,7 +53,7 @@ var Jii = _extend(BaseJii, /** @lends Jii */{
     /**
      * Create web application, which available by Jii.app
      * @param {object} config
-     * @returns {Jii.app.Application}
+     * @returns {Application}
      */
     createWebApplication(config) {
         return this.createApplication(WebApplication, config);
@@ -63,7 +63,7 @@ var Jii = _extend(BaseJii, /** @lends Jii */{
      * Main method which create application by class name and config.
      * @param {string} className
      * @param {object} config
-     * @returns {Jii.app.Application}
+     * @returns {Application}
      */
     createApplication(className, config) {
         config = config || {};
@@ -320,7 +320,7 @@ var Jii = _extend(BaseJii, /** @lends Jii */{
     /**
      * Set configuration to object. This method find public param in object or setter method.
      * You can not use setter and public param at the same time for safety reason
-     * @param {Jii.base.Object} object Class instance
+     * @param {Object} object Class instance
      * @param {object} config Configuration object {key: value, ..}
      */
     configure(object, config) {

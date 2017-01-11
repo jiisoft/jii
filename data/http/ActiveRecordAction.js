@@ -5,21 +5,21 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var InvalidParamException = require('../../exceptions/InvalidParamException');
-var Action = require('../../base/Action');
-var Command = require('./Command');
+const Jii = require('../../BaseJii');
+const InvalidParamException = require('../../exceptions/InvalidParamException');
+const Action = require('../../base/Action');
+const Command = require('./Command');
 
 class ActiveRecordAction extends Action {
 
     /**
      * Runs this action with the specified parameters.
      * This method is mainly invoked by the controller.
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @returns {*} the result of the action
      */
     runWithParams(context) {
-        /** @type {Jii.data.ActiveRecord} modelClass */
+        /** @type {ActiveRecord} modelClass */
         var modelClass = Jii.namespace(context.request.get('modelClassName'));
 
         switch (context.request.get('method')) {

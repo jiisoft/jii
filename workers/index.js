@@ -5,6 +5,6 @@
 
 'use strict';
 
-var Manager = require('./Manager.js');
+const Manager = require('./Manager.js');
 
 module.exports = new Manager();

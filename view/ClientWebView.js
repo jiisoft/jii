@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var WebView = require('./WebView');
+const Jii = require('../BaseJii');
+const WebView = require('./WebView');
 
 class ClientWebView extends WebView {
 

@@ -5,19 +5,19 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var Component = require('../../base/Component');
-var Console = require('../../helpers/Console');
-var Query = require('../../data/Query');
-var _each = require('lodash/each');
-var BaseMigrateController = require('./BaseMigrateController');
-var fs = require('fs');
+const Jii = require('../../BaseJii');
+const Component = require('../../base/Component');
+const Console = require('../../helpers/Console');
+const Query = require('../../data/Query');
+const _each = require('lodash/each');
+const BaseMigrateController = require('./BaseMigrateController');
+const fs = require('fs');
 
 class MigrateController extends BaseMigrateController {
 
     preInit() {
         /**
-         * @type {Jii.data.BaseConnection|string} the DB connection object or the application component ID of the DB connection to use
+         * @type {BaseConnection|string} the DB connection object or the application component ID of the DB connection to use
          * when applying migrations. Starting from version 2.0.3, this can also be a configuration array
          * for creating the object.
          */
@@ -49,7 +49,7 @@ class MigrateController extends BaseMigrateController {
     /**
      * This method is invoked right before an action is to be executed (after all possible filters.)
      * It checks the existence of the [[migrationPath]].
-     * @param {Jii.base.Action} action the action to be executed.
+     * @param {Action} action the action to be executed.
      * @returns {boolean} whether the action should continue to be executed.
      */
     beforeAction(action) {

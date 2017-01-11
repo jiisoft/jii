@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../../../BaseJii');
-var Component = require('../../../base/Component');
+const Jii = require('../../../BaseJii');
+const Component = require('../../../base/Component');
 
 class TransportInterface extends Component {
 
@@ -42,26 +42,26 @@ class TransportInterface extends Component {
 }
 
 /**
- * @event Jii.comet.server.transport.TransportInterface#log
- * @property {Jii.comet.LogEvent} event
+ * @event TransportInterface#log
+ * @property {LogEvent} event
  */
 TransportInterface.EVENT_LOG = 'log';
 
 /**
- * @event Jii.comet.server.transport.TransportInterface#message
- * @property {Jii.comet.server.MessageEvent} event
+ * @event TransportInterface#message
+ * @property {MessageEvent} event
  */
 TransportInterface.EVENT_MESSAGE = 'message';
 
 /**
- * @event Jii.comet.server.transport.TransportInterface#removeConnection
- * @property {Jii.comet.server.transport.ConnectionEvent} event
+ * @event TransportInterface#removeConnection
+ * @property {ConnectionEvent} event
  */
 TransportInterface.EVENT_REMOVE_CONNECTION = 'removeConnection';
 
 /**
- * @event Jii.comet.server.transport.TransportInterface#addConnection
- * @property {Jii.comet.server.transport.ConnectionEvent} event
+ * @event TransportInterface#addConnection
+ * @property {ConnectionEvent} event
  */
 TransportInterface.EVENT_ADD_CONNECTION = 'addConnection';
 module.exports = TransportInterface;

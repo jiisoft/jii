@@ -5,10 +5,10 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var _trimEnd = require('lodash/trimEnd');
-var _each = require('lodash/each');
-var BaseObject = require('../base/BaseObject');
+const Jii = require('../BaseJii');
+const _trimEnd = require('lodash/trimEnd');
+const _each = require('lodash/each');
+const BaseObject = require('../base/BaseObject');
 
 class File extends BaseObject {
 

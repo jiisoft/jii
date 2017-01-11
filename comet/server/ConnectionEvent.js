@@ -4,14 +4,14 @@
  */
 'use strict';
 
-var Jii = require('../../BaseJii');
-var Event = require('../../base/Event');
+const Jii = require('../../BaseJii');
+const Event = require('../../base/Event');
 
 class ConnectionEvent extends Event {
 
     preInit() {
         /**
-         * @type {Jii.comet.server.Connection}
+         * @type {Connection}
          */
         this.connection = null;
 

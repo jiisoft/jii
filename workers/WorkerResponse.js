@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../index');
-var BaseResponse = require('../base/Response');
+const Jii = require('../index');
+const BaseResponse = require('../base/Response');
 
 class WorkerResponse extends BaseResponse {
 

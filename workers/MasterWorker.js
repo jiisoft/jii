@@ -5,13 +5,13 @@
 
 'use strict';
 
-var Jii = require('../index');
-var _isNumber = require('lodash/isNumber');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var _size = require('lodash/size');
-var BaseObject = require('../base/BaseObject');
-var cluster = require('cluster');
+const Jii = require('../index');
+const _isNumber = require('lodash/isNumber');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const _size = require('lodash/size');
+const BaseObject = require('../base/BaseObject');
+const cluster = require('cluster');
 
 class MasterWorker extends BaseObject {
 

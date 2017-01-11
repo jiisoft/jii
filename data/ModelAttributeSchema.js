@@ -5,11 +5,11 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Expression = require('../data/Expression');
-var _isBoolean = require('lodash/isBoolean');
-var _isEmpty = require('lodash/isEmpty');
-var BaseObject = require('../base/BaseObject');
+const Jii = require('../BaseJii');
+const Expression = require('../data/Expression');
+const _isBoolean = require('lodash/isBoolean');
+const _isEmpty = require('lodash/isEmpty');
+const BaseObject = require('../base/BaseObject');
 
 class ModelAttributeSchema extends BaseObject {
 

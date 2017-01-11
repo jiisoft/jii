@@ -1,11 +1,11 @@
 'use strict';
 
-var Jii = require('../../index');
-var FilterBuilder = require('../../data/FilterBuilder');
-var Query = require('../../data/Query');
-var Collection = require('../../base/Collection');
-var Article = require('../models/Article');
-var UnitTest = require('../../base/UnitTest');
+const Jii = require('../../index');
+const FilterBuilder = require('../../data/FilterBuilder');
+const Query = require('../../data/Query');
+const Collection = require('../../base/Collection');
+const Article = require('../models/Article');
+const UnitTest = require('../../base/UnitTest');
 require('../bootstrap');
 class self extends UnitTest {
 

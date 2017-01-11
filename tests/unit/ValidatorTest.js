@@ -1,22 +1,22 @@
 'use strict';
 
-var Jii = require('../../index');
-var FakeValidationModel = require('../models/FakeValidationModel');
-var BooleanValidator = require('../../validators/BooleanValidator');
-var CompareValidator = require('../../validators/CompareValidator');
-var DateValidator = require('../../validators/DateValidator');
-var DefaultValueValidator = require('../../validators/DefaultValueValidator');
-var EmailValidator = require('../../validators/EmailValidator');
-var FilterValidator = require('../../validators/FilterValidator');
-var InlineValidator = require('../../validators/InlineValidator');
-var RequiredValidator = require('../../validators/RequiredValidator');
-var SafeValidator = require('../../validators/SafeValidator');
-var StringValidator = require('../../validators/StringValidator');
-var UrlValidator = require('../../validators/UrlValidator');
-var NumberValidator = require('../../validators/NumberValidator');
-var RangeValidator = require('../../validators/RangeValidator');
-var RegularExpressionValidator = require('../../validators/RegularExpressionValidator');
-var UnitTest = require('../../base/UnitTest');
+const Jii = require('../../index');
+const FakeValidationModel = require('../models/FakeValidationModel');
+const BooleanValidator = require('../../validators/BooleanValidator');
+const CompareValidator = require('../../validators/CompareValidator');
+const DateValidator = require('../../validators/DateValidator');
+const DefaultValueValidator = require('../../validators/DefaultValueValidator');
+const EmailValidator = require('../../validators/EmailValidator');
+const FilterValidator = require('../../validators/FilterValidator');
+const InlineValidator = require('../../validators/InlineValidator');
+const RequiredValidator = require('../../validators/RequiredValidator');
+const SafeValidator = require('../../validators/SafeValidator');
+const StringValidator = require('../../validators/StringValidator');
+const UrlValidator = require('../../validators/UrlValidator');
+const NumberValidator = require('../../validators/NumberValidator');
+const RangeValidator = require('../../validators/RangeValidator');
+const RegularExpressionValidator = require('../../validators/RegularExpressionValidator');
+const UnitTest = require('../../base/UnitTest');
 require('../bootstrap');
 class self extends UnitTest {
 

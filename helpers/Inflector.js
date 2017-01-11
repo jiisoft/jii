@@ -1,6 +1,6 @@
 'use strict';
 
-var _upperFirst = require('lodash/upperFirst');
+const _upperFirst = require('lodash/upperFirst');
 
 class Inflector{
     

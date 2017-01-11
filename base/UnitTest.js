@@ -5,12 +5,12 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var WebApplication = require('../application/WebApplication');
-var ApplicationException = require('../exceptions/ApplicationException');
-var _isFunction = require('lodash/isFunction');
-var _extend = require('lodash/extend');
-var BaseObject = require('./../base/BaseObject');
+const Jii = require('../BaseJii');
+const WebApplication = require('../application/WebApplication');
+const ApplicationException = require('../exceptions/ApplicationException');
+const _isFunction = require('lodash/isFunction');
+const _extend = require('lodash/extend');
+const BaseObject = require('./../base/BaseObject');
 
 class UnitTest extends BaseObject {
 
@@ -44,9 +44,9 @@ class UnitTest extends BaseObject {
 
     tearDown() {
         // @todo
-        //Jii.app.redis && Jii.app.redis.end();
-        //Jii.app.db && Jii.app.db.close();
-        //Jii.app.comet && Jii.app.comet.end();
+        //redis && end();
+        //db && close();
+        //comet && end();
 
         return Promise.resolve();
     }

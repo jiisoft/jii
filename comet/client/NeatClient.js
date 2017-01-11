@@ -5,18 +5,18 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var Client = require('./Client');
-var ActiveRecord = require('../../data/BaseActiveRecord');
-var InvalidConfigException = require('../../exceptions/InvalidConfigException');
-var Collection = require('../../base/Collection');
-var _isFunction = require('lodash/isFunction');
-var _toArray = require('lodash/toArray');
-var _extend = require('lodash/extend');
-var _clone = require('lodash/clone');
-var _map = require('lodash/map');
-var Component = require('../../base/Component');
-var NeatComet = require('neatcomet');
+const Jii = require('../../BaseJii');
+const Client = require('./Client');
+const ActiveRecord = require('../../data/BaseActiveRecord');
+const InvalidConfigException = require('../../exceptions/InvalidConfigException');
+const Collection = require('../../base/Collection');
+const _isFunction = require('lodash/isFunction');
+const _toArray = require('lodash/toArray');
+const _extend = require('lodash/extend');
+const _clone = require('lodash/clone');
+const _map = require('lodash/map');
+const Component = require('../../base/Component');
+const NeatComet = require('neatcomet');
 
 class NeatClient extends Component {
 
@@ -34,7 +34,7 @@ class NeatClient extends Component {
         this.bindings = null;
 
         /**
-         * @type {Jii.comet.client.Client}
+         * @type {Client}
          */
         this.comet = null;
 
@@ -127,7 +127,7 @@ class NeatClient extends Component {
 
     /**
      *
-     * @param {Jii.base.Collection} collection
+     * @param {Collection} collection
      * @param {string} method
      * @param {*} param1
      * @param {...*} param2

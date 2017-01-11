@@ -5,9 +5,9 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var _has = require('lodash/has');
-var Component = require('./Component');
+const Jii = require('../BaseJii');
+const _has = require('lodash/has');
+const Component = require('./Component');
 
 class Request extends Component {
 

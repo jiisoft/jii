@@ -5,17 +5,17 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var Exception = require('../Exception');
-var Console = require('../../helpers/Console');
-var _isEmpty = require('lodash/isEmpty');
-var _each = require('lodash/each');
-var _keys = require('lodash/keys');
-var _size = require('lodash/size');
-var _template = require('lodash/template');
-var _values = require('lodash/values');
-var Controller = require('../Controller');
-var fs = require('fs');
+const Jii = require('../../BaseJii');
+const Exception = require('../Exception');
+const Console = require('../../helpers/Console');
+const _isEmpty = require('lodash/isEmpty');
+const _each = require('lodash/each');
+const _keys = require('lodash/keys');
+const _size = require('lodash/size');
+const _template = require('lodash/template');
+const _values = require('lodash/values');
+const Controller = require('../Controller');
+const fs = require('fs');
 
 class BaseMigrateController extends Controller {
 
@@ -78,7 +78,7 @@ class BaseMigrateController extends Controller {
     /**
      * This method is invoked right before an action is to be executed (after all possible filters.)
      * It checks the existence of the [[migrationPath]].
-     * @param {Jii.base.Action} action the action to be executed.
+     * @param {Action} action the action to be executed.
      * @returns {Promise} whether the action should continue to be executed.
      */
     beforeAction(action) {
@@ -538,7 +538,7 @@ class BaseMigrateController extends Controller {
      * ```
      *
      * If it is `all`, all available new migrations will be displayed.
-     * @throws Jii.console.Exception if invalid limit value passed
+     * @throws Exception if invalid limit value passed
      */
     actionNew(context) {
         var limit = context.request.get(0, 10);

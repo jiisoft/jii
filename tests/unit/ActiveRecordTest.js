@@ -1,25 +1,25 @@
 'use strict';
 
-var Jii = require('../../BaseJii');
-var Event = require('../../base/Event');
-var ActiveRecord = require('../../data/ActiveRecord');
-var ActiveQuery = require('../../data/ActiveQuery');
-var _has = require('lodash/has');
-var _keys = require('lodash/keys');
-var _isObject = require('lodash/isObject');
-var _isEmpty = require('lodash/isEmpty');
-var _trim = require('lodash/trim');
-var Category = require('../models/Category.js');
-var Customer = require('../models/Customer.js');
-var Item = require('../models/Item.js');
-var NullValues = require('../models/NullValues.js');
-var Order = require('../models/Order.js');
-var OrderItem = require('../models/OrderItem.js');
-var OrderWithNullFK = require('../models/OrderWithNullFK.js');
-var OrderItemWithNullFK = require('../models/OrderItemWithNullFK.js');
-var Profile = require('../models/Profile.js');
-var Type = require('../models/Type.js');
-var DatabaseTestCase = require('../DatabaseTestCase.js');
+const Jii = require('../../BaseJii');
+const Event = require('../../base/Event');
+const ActiveRecord = require('../../data/ActiveRecord');
+const ActiveQuery = require('../../data/ActiveQuery');
+const _has = require('lodash/has');
+const _keys = require('lodash/keys');
+const _isObject = require('lodash/isObject');
+const _isEmpty = require('lodash/isEmpty');
+const _trim = require('lodash/trim');
+const Category = require('../models/Category.js');
+const Customer = require('../models/Customer.js');
+const Item = require('../models/Item.js');
+const NullValues = require('../models/NullValues.js');
+const Order = require('../models/Order.js');
+const OrderItem = require('../models/OrderItem.js');
+const OrderWithNullFK = require('../models/OrderWithNullFK.js');
+const OrderItemWithNullFK = require('../models/OrderItemWithNullFK.js');
+const Profile = require('../models/Profile.js');
+const Type = require('../models/Type.js');
+const DatabaseTestCase = require('../DatabaseTestCase.js');
 class self extends DatabaseTestCase {
 
     setUp() {
@@ -65,7 +65,7 @@ class self extends DatabaseTestCase {
     }
 
     testFind(test) {
-        /** @typedef Jii.data.ActiveRecord customerClass */
+        /** @typedef ActiveRecord customerClass */
         var customerClass = this.getCustomerClass();
 
         var result = customerClass.find();
@@ -165,7 +165,7 @@ class self extends DatabaseTestCase {
     }
 
     testFindAsArray(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         // asArray
@@ -206,7 +206,7 @@ class self extends DatabaseTestCase {
     }
 
     testFindScalar(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         // query scalar
@@ -238,7 +238,7 @@ class self extends DatabaseTestCase {
     }
 
     testFindColumn(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         customerClass.find().orderBy({
@@ -265,7 +265,7 @@ class self extends DatabaseTestCase {
     }
 
     testFindIndexBy(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         // indexBy
@@ -290,7 +290,7 @@ class self extends DatabaseTestCase {
     }
 
     testFindIndexByAsArray(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         // indexBy + asArray
@@ -339,7 +339,7 @@ class self extends DatabaseTestCase {
     }
 
     testRefresh(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         var customer = new customerClass();
@@ -361,10 +361,10 @@ class self extends DatabaseTestCase {
     }
 
     testEquals(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
-        /** @typedef {Jii.data.ActiveRecord} itemClass */
+        /** @typedef {ActiveRecord} itemClass */
         var itemClass = this.getItemClass();
 
         var customerA,
@@ -408,7 +408,7 @@ class self extends DatabaseTestCase {
     }
 
     testFindCount(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         customerClass.find().count().then(function (count) {
@@ -469,7 +469,7 @@ class self extends DatabaseTestCase {
     }
 
     testFindLimit(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         // all()
@@ -527,7 +527,7 @@ class self extends DatabaseTestCase {
     }
 
     testFindComplexCondition(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         customerClass.find().where([
@@ -612,7 +612,7 @@ class self extends DatabaseTestCase {
     }
 
     testFindNullValues(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         customerClass.findOne(2).then(function (customer) {
@@ -633,7 +633,7 @@ class self extends DatabaseTestCase {
     }
 
     testExists(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         customerClass.find().where({
@@ -691,7 +691,7 @@ class self extends DatabaseTestCase {
     }
 
     testFindLazy(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         /** @typedef {Customer} customer */
@@ -733,10 +733,10 @@ class self extends DatabaseTestCase {
     }
 
     testFindEager(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
-        /** @typedef {Jii.data.ActiveRecord} orderClass */
+        /** @typedef {ActiveRecord} orderClass */
         var orderClass = this.getOrderClass();
 
         var customer = null;
@@ -799,7 +799,7 @@ class self extends DatabaseTestCase {
     }
 
     testFindLazyVia(test) {
-        /** @typedef {Jii.data.ActiveRecord} orderClass */
+        /** @typedef {ActiveRecord} orderClass */
         var orderClass = this.getOrderClass();
 
         var order = null;
@@ -821,7 +821,7 @@ class self extends DatabaseTestCase {
     }
 
     testFindLazyVia2(test) {
-        /** @typedef {Jii.data.ActiveRecord} orderClass */
+        /** @typedef {ActiveRecord} orderClass */
         var orderClass = this.getOrderClass();
 
         /** @typedef {Order} order */
@@ -838,7 +838,7 @@ class self extends DatabaseTestCase {
     }
 
     testFindEagerViaRelation(test) {
-        /** @typedef {Jii.data.ActiveRecord} orderClass */
+        /** @typedef {ActiveRecord} orderClass */
         var orderClass = this.getOrderClass();
 
         var order = null;
@@ -861,7 +861,7 @@ class self extends DatabaseTestCase {
     }
 
     testFindNestedRelation(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         customerClass.find().with('orders', 'orders.items').indexBy('id').all().then(function (customers) {
@@ -890,7 +890,7 @@ class self extends DatabaseTestCase {
      * https://github.com/yiisoft/yii2/issues/1310
      */
     testFindEagerViaRelationPreserveOrder(test) {
-        /** @typedef {Jii.data.ActiveRecord} orderClass */
+        /** @typedef {ActiveRecord} orderClass */
         var orderClass = this.getOrderClass();
 
         /*
@@ -955,7 +955,7 @@ class self extends DatabaseTestCase {
 
     // different order in via table
     testFindEagerViaRelationPreserveOrderB(test) {
-        /** @typedef {Jii.data.ActiveRecord} orderClass */
+        /** @typedef {ActiveRecord} orderClass */
         var orderClass = this.getOrderClass();
 
         orderClass.find().with('itemsInOrder2').orderBy('created_at').all().then(function (orders) {
@@ -989,16 +989,16 @@ class self extends DatabaseTestCase {
     }
 
     testLink(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
-        /** @typedef {Jii.data.ActiveRecord} orderClass */
+        /** @typedef {ActiveRecord} orderClass */
         var orderClass = this.getOrderClass();
 
-        /** @typedef {Jii.data.ActiveRecord} orderItemClass */
+        /** @typedef {ActiveRecord} orderItemClass */
         var orderItemClass = this.getOrderItemClass();
 
-        /** @typedef {Jii.data.ActiveRecord} itemClass */
+        /** @typedef {ActiveRecord} itemClass */
         var itemClass = this.getItemClass();
 
         var order = null;
@@ -1101,13 +1101,13 @@ class self extends DatabaseTestCase {
     }
 
     testUnlink(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
-        /** @typedef {Jii.data.ActiveRecord} orderClass */
+        /** @typedef {ActiveRecord} orderClass */
         var orderClass = this.getOrderClass();
 
-        /** @typedef {Jii.data.ActiveRecord} orderWithNullFKClass */
+        /** @typedef {ActiveRecord} orderWithNullFKClass */
         var orderWithNullFKClass = this.getOrderWithNullFKClass();
 
         var order = null;
@@ -1193,22 +1193,22 @@ class self extends DatabaseTestCase {
     }
 
     testUnlinkAll(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
-        /** @typedef {Jii.data.ActiveRecord} orderClass */
+        /** @typedef {ActiveRecord} orderClass */
         var orderClass = this.getOrderClass();
 
-        /** @typedef {Jii.data.ActiveRecord} orderItemClass */
+        /** @typedef {ActiveRecord} orderItemClass */
         var orderItemClass = this.getOrderItemClass();
 
-        /** @typedef {Jii.data.ActiveRecord} itemClass */
+        /** @typedef {ActiveRecord} itemClass */
         var itemClass = this.getItemClass();
 
-        /** @typedef {Jii.data.ActiveRecord} orderWithNullFKClass */
+        /** @typedef {ActiveRecord} orderWithNullFKClass */
         var orderWithNullFKClass = this.getOrderWithNullFKClass();
 
-        /** @typedef {Jii.data.ActiveRecord} orderItemsWithNullFKClass */
+        /** @typedef {ActiveRecord} orderItemsWithNullFKClass */
         var orderItemsWithNullFKClass = this.getOrderItemWithNullFKmClass();
 
         var customer = null;
@@ -1434,10 +1434,10 @@ class self extends DatabaseTestCase {
 
     testUnlinkAllAndConditionDelete(test) {
 
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
-        /** @typedef {Jii.data.ActiveRecord} orderClass */
+        /** @typedef {ActiveRecord} orderClass */
         var orderClass = this.getOrderClass();
 
         var customer = null;
@@ -1496,7 +1496,7 @@ class self extends DatabaseTestCase {
     }
 
     testInsert(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         var customer = new customerClass();
@@ -1522,7 +1522,7 @@ class self extends DatabaseTestCase {
     }
 
     testUpdate(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         var customer = null;
@@ -1597,7 +1597,7 @@ class self extends DatabaseTestCase {
     }
 
     testUpdateAttributes(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         var customer = null;
@@ -1652,7 +1652,7 @@ class self extends DatabaseTestCase {
     }
 
     testUpdateCounters(test) {
-        /** @typedef {Jii.data.ActiveRecord} orderItemClass */
+        /** @typedef {ActiveRecord} orderItemClass */
         var orderItemClass = this.getOrderItemClass();
 
         var orderItem = null;
@@ -1707,7 +1707,7 @@ class self extends DatabaseTestCase {
     }
 
     testDelete(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         // delete
@@ -1751,7 +1751,7 @@ class self extends DatabaseTestCase {
      * Make sure this does not affect AR layer.
      */
     testBooleanAttribute(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         var customer = new customerClass();
@@ -1790,7 +1790,7 @@ class self extends DatabaseTestCase {
     }
 
     testAfterFind(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         /** @typedef {ActiveRecord} orderClass */
@@ -1916,7 +1916,7 @@ class self extends DatabaseTestCase {
     }
 
     testFindEmptyInCondition(test) {
-        /** @typedef {Jii.data.ActiveRecord} customerClass */
+        /** @typedef {ActiveRecord} customerClass */
         var customerClass = this.getCustomerClass();
 
         customerClass.find().where({
@@ -1951,7 +1951,7 @@ class self extends DatabaseTestCase {
     }
 
     testFindEagerIndexBy(test) {
-        /** @typedef {Jii.data.ActiveRecord} orderClass */
+        /** @typedef {ActiveRecord} orderClass */
         var orderClass = this.getOrderClass();
 
         /** @typedef {Order} order */
@@ -2791,16 +2791,16 @@ class self extends DatabaseTestCase {
     }
 
     testUnlinkAllViaTable(test) {
-        /** @typedef {Jii.data.ActiveRecord} orderClass */
+        /** @typedef {ActiveRecord} orderClass */
         var orderClass = this.getOrderClass();
 
-        /** @typedef {Jii.data.ActiveRecord} orderItemClass */
+        /** @typedef {ActiveRecord} orderItemClass */
         var orderItemClass = this.getOrderItemClass();
 
-        /** @typedef {Jii.data.ActiveRecord} itemClass */
+        /** @typedef {ActiveRecord} itemClass */
         var itemClass = this.getItemClass();
 
-        /** @typedef {Jii.data.ActiveRecord} orderItemsWithNullFKClass */
+        /** @typedef {ActiveRecord} orderItemsWithNullFKClass */
         var orderItemsWithNullFKClass = this.getOrderItemWithNullFKmClass();
 
         var order = null;

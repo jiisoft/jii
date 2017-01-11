@@ -5,10 +5,10 @@
 
 'use strict';
 
-var Jii = require('../../../BaseJii');
-var Client = require('../Client');
-var TransportInterface = require('../transport/TransportInterface');
-var PluginInterface = require('./PluginInterface');
+const Jii = require('../../../BaseJii');
+const Client = require('../Client');
+const TransportInterface = require('../transport/TransportInterface');
+const PluginInterface = require('./PluginInterface');
 
 class AutoReconnect extends PluginInterface {
 

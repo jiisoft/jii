@@ -5,11 +5,11 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Validator = require('./Validator');
-var _isArray = require('lodash/isArray');
-var _intersection = require('lodash/intersection');
-var _map = require('lodash/map');
+const Jii = require('../BaseJii');
+const Validator = require('./Validator');
+const _isArray = require('lodash/isArray');
+const _intersection = require('lodash/intersection');
+const _map = require('lodash/map');
 class DefaultValueValidator extends Validator {
 
     preInit() {

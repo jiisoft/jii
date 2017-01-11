@@ -5,9 +5,9 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Component = require('../base/Component');
-var MissingTranslationEvent = require('./MissingTranslationEvent');
+const Jii = require('../BaseJii');
+const Component = require('../base/Component');
+const MissingTranslationEvent = require('./MissingTranslationEvent');
 
 class MessageSource extends Component {
 
@@ -15,7 +15,7 @@ class MessageSource extends Component {
         this._messages = {};
 
         /**
-         * the language that the original messages are in. If not set, it will use the value of [[Jii.base.Application.sourceLanguage]]
+         * the language that the original messages are in. If not set, it will use the value of [[sourceLanguage]]
          * @type string|null
          */
         this.sourceLanguage = null;
@@ -122,8 +122,8 @@ class MessageSource extends Component {
 }
 
 /**
- * @event Jii.i18n.MessageSource#change
- * @property {Jii.i18n.MissingTranslationEvent} event
+ * @event MessageSource#change
+ * @property {MissingTranslationEvent} event
  */
 MessageSource.EVENT_MISSING_TRANSLATION = 'missingTranslation';
 module.exports = MessageSource;

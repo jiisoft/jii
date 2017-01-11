@@ -4,12 +4,12 @@
  */
 'use strict';
 
-var Jii = require('../../BaseJii');
-var FilterBuilder = require('../../data/FilterBuilder');
-var ModelSchema = require('../../data/ModelSchema');
-var _isObject = require('lodash/isObject');
-var _keys = require('lodash/keys');
-var BaseObject = require('../../base/BaseObject');
+const Jii = require('../../BaseJii');
+const FilterBuilder = require('../../data/FilterBuilder');
+const ModelSchema = require('../../data/ModelSchema');
+const _isObject = require('lodash/isObject');
+const _keys = require('lodash/keys');
+const BaseObject = require('../../base/BaseObject');
 class Schema extends BaseObject {
 
     preInit() {
@@ -19,7 +19,7 @@ class Schema extends BaseObject {
     }
 
     /**
-     * @return {Jii.data.QueryBuilder} the query builder for this connection.
+     * @return {QueryBuilder} the query builder for this connection.
      */
     getFilterBuilder() {
         if (this._filterBuilder === null) {
@@ -32,7 +32,7 @@ class Schema extends BaseObject {
     /**
      *
      * @param {string} name
-     * @returns {Jii.data.ModelSchema}
+     * @returns {ModelSchema}
      */
     getTableSchema(name) {
         if (_isObject(this.tables[name]) && !(this.tables[name] instanceof ModelSchema)) {
@@ -47,7 +47,7 @@ class Schema extends BaseObject {
     }
 
     /**
-     * @return {Jii.data.FilterBuilder}
+     * @return {FilterBuilder}
      */
     createFilterBuilder() {
         return new FilterBuilder();

@@ -5,10 +5,10 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var InvalidConfigException = require('../../exceptions/InvalidConfigException');
-var Collection = require('../../base/Collection');
-var INeatContextProfiles = require('../INeatContextProfiles');
+const Jii = require('../../BaseJii');
+const InvalidConfigException = require('../../exceptions/InvalidConfigException');
+const Collection = require('../../base/Collection');
+const INeatContextProfiles = require('../INeatContextProfiles');
 
 class NeatContextProfiles extends INeatContextProfiles {
 
@@ -19,7 +19,7 @@ class NeatContextProfiles extends INeatContextProfiles {
         this.data = {};
 
         /**
-         * @type {Jii.comet.client.NeatClient}
+         * @type {NeatClient}
          */
         this.neat = 'neat';
 

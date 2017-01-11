@@ -1,7 +1,7 @@
 'use strict';
 
-var Jii = require('../../BaseJii');
-var BaseActiveRecord = require('../../data/BaseActiveRecord');
+const Jii = require('../../BaseJii');
+const BaseActiveRecord = require('../../data/BaseActiveRecord');
 class User extends BaseActiveRecord {
 
     /**

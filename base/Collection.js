@@ -5,43 +5,43 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var InvalidParamException = require('../exceptions/InvalidParamException');
-var CollectionEvent = require('../data/CollectionEvent');
-var InvalidConfigException = require('../exceptions/InvalidConfigException');
-var NotSupportedException = require('../exceptions/NotSupportedException');
-var _isArray = require('lodash/isArray');
-var _isObject = require('lodash/isObject');
-var _isFunction = require('lodash/isFunction');
-var _isString = require('lodash/isString');
-var _indexOf = require('lodash/indexOf');
-var _toArray = require('lodash/toArray');
-var _reduceRight = require('lodash/reduceRight');
-var _groupBy = require('lodash/groupBy');
-var _countBy = require('lodash/countBy');
-var _lastIndexOf = require('lodash/lastIndexOf');
-var _findIndex = require('lodash/findIndex');
-var _findLastIndex = require('lodash/findLastIndex');
-var _has = require('lodash/has');
-var _each = require('lodash/each');
-var _map = require('lodash/map');
-var _filter = require('lodash/filter');
-var _reduce = require('lodash/reduce');
-var _find = require('lodash/find');
-var _reject = require('lodash/reject');
-var _every = require('lodash/every');
-var _some = require('lodash/some');
-var _maxBy = require('lodash/maxBy');
-var _minBy = require('lodash/minBy');
-var _first = require('lodash/first');
-var _initial = require('lodash/initial');
-var _last = require('lodash/last');
-var _drop = require('lodash/drop');
-var _shuffle = require('lodash/shuffle');
-var _sortBy = require('lodash/sortBy');
-var _without = require('lodash/without');
-var _extend = require('lodash/extend');
-var Component = require('../base/Component');
+const Jii = require('../BaseJii');
+const InvalidParamException = require('../exceptions/InvalidParamException');
+const CollectionEvent = require('../data/CollectionEvent');
+const InvalidConfigException = require('../exceptions/InvalidConfigException');
+const NotSupportedException = require('../exceptions/NotSupportedException');
+const _isArray = require('lodash/isArray');
+const _isObject = require('lodash/isObject');
+const _isFunction = require('lodash/isFunction');
+const _isString = require('lodash/isString');
+const _indexOf = require('lodash/indexOf');
+const _toArray = require('lodash/toArray');
+const _reduceRight = require('lodash/reduceRight');
+const _groupBy = require('lodash/groupBy');
+const _countBy = require('lodash/countBy');
+const _lastIndexOf = require('lodash/lastIndexOf');
+const _findIndex = require('lodash/findIndex');
+const _findLastIndex = require('lodash/findLastIndex');
+const _has = require('lodash/has');
+const _each = require('lodash/each');
+const _map = require('lodash/map');
+const _filter = require('lodash/filter');
+const _reduce = require('lodash/reduce');
+const _find = require('lodash/find');
+const _reject = require('lodash/reject');
+const _every = require('lodash/every');
+const _some = require('lodash/some');
+const _maxBy = require('lodash/maxBy');
+const _minBy = require('lodash/minBy');
+const _first = require('lodash/first');
+const _initial = require('lodash/initial');
+const _last = require('lodash/last');
+const _drop = require('lodash/drop');
+const _shuffle = require('lodash/shuffle');
+const _sortBy = require('lodash/sortBy');
+const _without = require('lodash/without');
+const _extend = require('lodash/extend');
+const Component = require('../base/Component');
 
 class Collection extends Component {
 
@@ -60,12 +60,12 @@ class Collection extends Component {
 
         /**
          * Root collection
-         * @type {Jii.base.Collection}
+         * @type {Collection}
          */
         this.parent = null;
 
         /**
-         * @type {string|Jii.base.Model}
+         * @type {string|Model}
          */
         this.modelClass = null;
 
@@ -90,7 +90,7 @@ class Collection extends Component {
 
     /**
      *
-     * @param {object|object[]|Jii.base.Model|Jii.base.Model[]} models
+     * @param {object|object[]|Model|Model[]} models
      */
     setModels(models) {
         if (!_isArray(models)) {
@@ -106,9 +106,9 @@ class Collection extends Component {
 
     /**
      *
-     * @param {object|object[]|Jii.base.Model|Jii.base.Model[]} models
+     * @param {object|object[]|Model|Model[]} models
      * @param {number} [index]
-     * @returns {Jii.base.Model[]}
+     * @returns {Model[]}
      */
     add(models, index) {
         if (!_isArray(models)) {
@@ -129,7 +129,7 @@ class Collection extends Component {
     /**
      *
      * @param {*|*[]} models
-     * @returns {Jii.base.Model[]}
+     * @returns {Model[]}
      */
     remove(models) {
         if (!_isArray(models)) {
@@ -210,7 +210,7 @@ class Collection extends Component {
 
     /**
      *
-     * @param {function|Jii.data.Query} value
+     * @param {function|Query} value
      */
     setFilter(value) {
         // @todo normalize code, remove duplicates
@@ -310,7 +310,7 @@ class Collection extends Component {
 
     /**
      *
-     * @param {object|Jii.data.CollectionAdapterInterface} collectionAdapter
+     * @param {object|CollectionAdapterInterface} collectionAdapter
      */
     createProxy(collectionAdapter) {
         var cloned = collectionAdapter.instance(this);
@@ -319,7 +319,7 @@ class Collection extends Component {
         collectionAdapter.add(this, cloned, this.getModels());
 
         // Subscribe
-        this.on(Collection.EVENT_CHANGE, /** @param {Jii.data.CollectionEvent} event */
+        this.on(Collection.EVENT_CHANGE, /** @param {CollectionEvent} event */
                                          event => {
             if (event.added.length > 0) {
                 collectionAdapter.add(this, cloned, event.added);
@@ -380,7 +380,7 @@ class Collection extends Component {
             });
 
             // Each trigger events in children
-            _each(this._editedEvents, /** @param {Jii.data.CollectionEvent} event */
+            _each(this._editedEvents, /** @param {CollectionEvent} event */
                                       event => {
                 if (event.added.length > 0) {
                     this.trigger(Collection.EVENT_ADD, event);
@@ -510,10 +510,10 @@ class Collection extends Component {
 
     /**
      *
-     * @param {function|Jii.data.Query} [filter]
+     * @param {function|Query} [filter]
      * @param {object} [params]
-     * @param {Jii.base.Collection} [className]
-     * @returns {Jii.base.Collection}
+     * @param {Collection} [className]
+     * @returns {Collection}
      */
     createChild(filter, params, className) {
         filter = filter || null;
@@ -545,8 +545,8 @@ class Collection extends Component {
     /**
      *
      * @param {object} [params]
-     * @param {Jii.data.DataProvider} [className]
-     * @returns {Jii.base.Collection}
+     * @param {DataProvider} [className]
+     * @returns {Collection}
      */
     createDataProvider(params, className) {
         params = params || {};
@@ -612,7 +612,7 @@ class Collection extends Component {
                 if (existsModels.length > 0) {
 
                     // Update model attributes
-                    var Model = require('../base/Model');
+                    const Model = require('../base/Model');
                     if (model instanceof Model && _isObject(data) && !(data instanceof Model)) {
                         model.set(data);
                     }
@@ -671,7 +671,7 @@ class Collection extends Component {
         Array.prototype.splice.call(this, index++, 0, model);
 
         // By id
-        var ActiveRecord = require('../data/BaseActiveRecord');
+        const ActiveRecord = require('../data/BaseActiveRecord');
         if (model instanceof ActiveRecord) {
             this._byId[this._getPrimaryKey(model)] = model;
         }
@@ -684,7 +684,7 @@ class Collection extends Component {
         Array.prototype.splice.call(this, index, 1);
 
         // By id
-        var ActiveRecord = require('../data/BaseActiveRecord');
+        const ActiveRecord = require('../data/BaseActiveRecord');
         if (model instanceof ActiveRecord) {
             delete this._byId[this._getPrimaryKey(model)];
         }
@@ -695,7 +695,7 @@ class Collection extends Component {
     /**
      *
      * @param {object} params
-     * @returns {Jii.data.CollectionEvent}
+     * @returns {CollectionEvent}
      */
     _createEvent(params) {
         return new CollectionEvent(params);
@@ -723,7 +723,7 @@ class Collection extends Component {
      * @returns {string}
      */
     _getPrimaryKey(data) {
-        var ActiveRecord = require('../data/BaseActiveRecord');
+        const ActiveRecord = require('../data/BaseActiveRecord');
         if (_isObject(data) && this.modelClass && !(data instanceof ActiveRecord)) {
             let keys = this.modelClass.primaryKey();
             if (keys.length === 1) {
@@ -750,11 +750,11 @@ class Collection extends Component {
     /**
      * Convert any data to model
      * @param {object|*} [data]
-     * @returns {Jii.base.Model}
+     * @returns {Model}
      */
     createModel(data) {
         // Already model
-        var Model = require('../base/Model');
+        const Model = require('../base/Model');
         if (data instanceof Model) {
             return data;
         }
@@ -816,7 +816,7 @@ class Collection extends Component {
         // Attributes in models
         var changeNameFormat = this._detectKeyFormatChangeName(name);
         if (changeNameFormat) {
-            var Model = require('../base/Model');
+            const Model = require('../base/Model');
             var changeNameEvent = Model.EVENT_CHANGE_NAME + changeNameFormat.subName;
             this._eventsChangeName.push([
                 changeNameEvent,
@@ -856,7 +856,7 @@ class Collection extends Component {
         // Attributes in models
         var changeNameFormat = this._detectKeyFormatChangeName(name);
         if (changeNameFormat) {
-            var Model = require('../base/Model');
+            const Model = require('../base/Model');
             var changeNameEvent = Model.EVENT_CHANGE_NAME + changeNameFormat.subName;
             this._eventsChangeName = _filter(this._eventsChangeName, arr => {
                 return arr[0] !== changeNameEvent || arr[1] !== handler;
@@ -1072,7 +1072,7 @@ class Collection extends Component {
     /**
      *
      * @param {function} predicate
-     * @returns {object|Jii.base.Model|null}
+     * @returns {object|Model|null}
      */
     find(predicate) {
         return _find(this, this._normalizePredicate(predicate)) || null;
@@ -1099,7 +1099,7 @@ class Collection extends Component {
     /**
      *
      * @param {object} properties
-     * @returns {object|Jii.base.Model|null}
+     * @returns {object|Model|null}
      */
     findWhere(properties) {
         return _find(this, properties) || null;
@@ -1349,32 +1349,32 @@ class Collection extends Component {
 }
 
 /**
- * @event Jii.base.Collection#remove
- * @property {Jii.data.CollectionEvent} event
+ * @event Collection#remove
+ * @property {CollectionEvent} event
  */
 Collection.EVENT_REMOVE = 'remove';
 
 /**
- * @event Jii.base.Collection#change:
- * @property {Jii.data.CollectionEvent} event
+ * @event Collection#change:
+ * @property {CollectionEvent} event
  */
 Collection.EVENT_CHANGE_NAME = 'change:';
 
 /**
- * @event Jii.base.Collection#change
- * @property {Jii.data.CollectionEvent} event
+ * @event Collection#change
+ * @property {CollectionEvent} event
  */
 Collection.EVENT_CHANGE = 'change';
 
 /**
- * @event Jii.base.Collection#fetched
- * @property {Jii.data.CollectionEvent} event
+ * @event Collection#fetched
+ * @property {CollectionEvent} event
  */
 Collection.EVENT_FETCHED = 'fetched';
 
 /**
- * @event Jii.base.Collection#add
- * @property {Jii.data.CollectionEvent} event
+ * @event Collection#add
+ * @property {CollectionEvent} event
  */
 Collection.EVENT_ADD = 'add';
 module.exports = Collection;

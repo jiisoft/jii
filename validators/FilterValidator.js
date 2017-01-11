@@ -5,9 +5,9 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var ApplicationException = require('../exceptions/ApplicationException');
-var Validator = require('./Validator');
+const Jii = require('../BaseJii');
+const ApplicationException = require('../exceptions/ApplicationException');
+const Validator = require('./Validator');
 
 class FilterValidator extends Validator {
 

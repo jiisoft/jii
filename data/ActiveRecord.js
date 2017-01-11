@@ -5,15 +5,15 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Expression = require('./Expression');
-var InvalidConfigException = require('../exceptions/InvalidConfigException');
-var _isEmpty = require('lodash/isEmpty');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var _keys = require('lodash/keys');
-var _snakeCase = require('lodash/snakeCase');
-var BaseActiveRecord = require('./BaseActiveRecord');
+const Jii = require('../BaseJii');
+const Expression = require('./Expression');
+const InvalidConfigException = require('../exceptions/InvalidConfigException');
+const _isEmpty = require('lodash/isEmpty');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const _keys = require('lodash/keys');
+const _snakeCase = require('lodash/snakeCase');
+const BaseActiveRecord = require('./BaseActiveRecord');
 
 class ActiveRecord extends BaseActiveRecord {
 
@@ -33,7 +33,7 @@ class ActiveRecord extends BaseActiveRecord {
      *
      * @param {string} sql the SQL statement to be executed
      * @param {[]} params parameters to be bound to the SQL statement during execution.
-     * @returns {Jii.data.ActiveQuery} the newly created [[ActiveQuery]] instance
+     * @returns {ActiveQuery} the newly created [[ActiveQuery]] instance
      */
     static findBySql(sql, params) {
         params = params || [];
@@ -122,7 +122,7 @@ class ActiveRecord extends BaseActiveRecord {
      * @inheritdoc
      */
     static find() {
-        var ActiveQuery = require('./ActiveQuery');
+        const ActiveQuery = require('./ActiveQuery');
         return new ActiveQuery(this);
     }
 
@@ -143,8 +143,8 @@ class ActiveRecord extends BaseActiveRecord {
 
     /**
      * Returns the schema information of the DB table associated with this AR class.
-     * @returns {Jii.data.TableSchema} the schema information of the DB table associated with this AR class.
-     * @throws {Jii.exceptions.InvalidConfigException} if the table for the AR class does not exist.
+     * @returns {TableSchema} the schema information of the DB table associated with this AR class.
+     * @throws {InvalidConfigException} if the table for the AR class does not exist.
      */
     static getTableSchema() {
         var schema = this.getDb().getTableSchema(this.tableName());
@@ -489,7 +489,7 @@ class ActiveRecord extends BaseActiveRecord {
      * Returns a value indicating whether the given active record is the same as the current one.
      * The comparison is made by comparing the table names and the primary key values of the two active records.
      * If one of the records [[isNewRecord|is new]] they are also considered not equal.
-     * @param {Jii.data.ActiveRecord} record record to compare to
+     * @param {ActiveRecord} record record to compare to
      * @returns {boolean} whether the two active records refer to the same row in the same database table.
      */
     equals(record) {

@@ -5,17 +5,17 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var File = require('../../helpers/File');
-var Controller = require('../../base/Controller');
-var InvalidParamException = require('../../exceptions/InvalidParamException');
-var ApplicationException = require('../../exceptions/ApplicationException');
-var InvalidCallException = require('../../exceptions/InvalidCallException');
-var _trimStart = require('lodash/trimStart');
-var _isObject = require('lodash/isObject');
-var _isFunction = require('lodash/isFunction');
-var _template = require('lodash/template');
-var IRenderer = require('../IRenderer');
+const Jii = require('../../BaseJii');
+const File = require('../../helpers/File');
+const Controller = require('../../base/Controller');
+const InvalidParamException = require('../../exceptions/InvalidParamException');
+const ApplicationException = require('../../exceptions/ApplicationException');
+const InvalidCallException = require('../../exceptions/InvalidCallException');
+const _trimStart = require('lodash/trimStart');
+const _isObject = require('lodash/isObject');
+const _isFunction = require('lodash/isFunction');
+const _template = require('lodash/template');
+const IRenderer = require('../IRenderer');
 
 class UnderscoreRenderer extends IRenderer {
 
@@ -44,10 +44,10 @@ class UnderscoreRenderer extends IRenderer {
     /**
      *
      * @param {*} view
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @param {object} params
-     * @param {Jii.base.Controller} controller
-     * @param {Jii.view.WebView} webView
+     * @param {Controller} controller
+     * @param {WebView} webView
      * @returns {*}
      */
     render(view, context, params, controller, webView) {
@@ -58,10 +58,10 @@ class UnderscoreRenderer extends IRenderer {
     /**
      *
      * @param {*} view
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @param {object} params
-     * @param {Jii.base.Controller} controller
-     * @param {Jii.view.WebView} webView
+     * @param {Controller} controller
+     * @param {WebView} webView
      * @returns {*}
      */
     renderLayout(view, context, params, controller, webView) {

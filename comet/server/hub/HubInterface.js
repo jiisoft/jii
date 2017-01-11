@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../../../BaseJii');
-var Component = require('../../../base/Component');
+const Jii = require('../../../BaseJii');
+const Component = require('../../../base/Component');
 
 class HubInterface extends Component {
 
@@ -47,8 +47,8 @@ class HubInterface extends Component {
 }
 
 /**
- * @event Jii.comet.server.hub.HubInterface#message
- * @property {Jii.comet.ChannelEvent} event
+ * @event HubInterface#message
+ * @property {ChannelEvent} event
  */
 HubInterface.EVENT_MESSAGE = 'message';
 module.exports = HubInterface;

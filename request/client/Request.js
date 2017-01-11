@@ -6,10 +6,10 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var InvalidConfigException = require('../../exceptions/InvalidConfigException');
-var _trimStart = require('lodash/trimStart');
-var HttpRequest = require('../../base/HttpRequest');
+const Jii = require('../../BaseJii');
+const InvalidConfigException = require('../../exceptions/InvalidConfigException');
+const _trimStart = require('lodash/trimStart');
+const HttpRequest = require('../../base/HttpRequest');
 
 class Request extends HttpRequest {
 

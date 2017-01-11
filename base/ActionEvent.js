@@ -5,19 +5,19 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Event = require('./Event');
+const Jii = require('../BaseJii');
+const Event = require('./Event');
 
 class ActionEvent extends Event {
 
     preInit() {
         /**
-         * @type {Jii.base.Context}
+         * @type {Context}
          */
         this.context = null;
 
         /**
-         * @type {Jii.base.Action}
+         * @type {Action}
          */
         this.action = null;
 

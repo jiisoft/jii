@@ -5,12 +5,12 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var String = require('../helpers/String');
-var _trim = require('lodash/trim');
-var _isFunction = require('lodash/isFunction');
-var _has = require('lodash/has');
-var View = require('./View');
+const Jii = require('../BaseJii');
+const String = require('../helpers/String');
+const _trim = require('lodash/trim');
+const _isFunction = require('lodash/isFunction');
+const _has = require('lodash/has');
+const View = require('./View');
 
 class WebView extends View {
 
@@ -231,9 +231,9 @@ class WebView extends View {
     /**
      *
      * @param {*} view
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @param {object} params
-     * @param {Jii.base.Controller} controller
+     * @param {Controller} controller
      * @returns {Promise}
      */
     renderLayout(view, context, params, controller) {

@@ -5,13 +5,13 @@
  */
 'use strict';
 
-var Jii = require('../../BaseJii');
-var Request = require('./Request');
-var Response = require('./Response');
-var Component = require('../../base/Component');
-var _isString = require('lodash/isString');
-var _extend = require('lodash/extend');
-var _upperFirst = require('lodash/upperFirst');
+const Jii = require('../../BaseJii');
+const Request = require('./Request');
+const Response = require('./Response');
+const Component = require('../../base/Component');
+const _isString = require('lodash/isString');
+const _extend = require('lodash/extend');
+const _upperFirst = require('lodash/upperFirst');
 
 class Router extends Component {
 
@@ -19,7 +19,7 @@ class Router extends Component {
         this._bindRouteFunction = null;
         this.mode = null;
         /**
-         * @type {Jii.controller.UrlManager|string}
+         * @type {UrlManager|string}
          */
         this.urlManager = 'urlManager';
         super.preInit(...arguments);

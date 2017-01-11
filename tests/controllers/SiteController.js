@@ -1,7 +1,7 @@
 'use strict';
 
-var Jii = require('../../BaseJii');
-var Controller = require('../../base/Controller');
+const Jii = require('../../BaseJii');
+const Controller = require('../../base/Controller');
 class SiteController extends Controller {
 
     actionIndex(context) {

@@ -1,7 +1,7 @@
 'use strict';
 
-var Jii = require('../../index');
-var UnitTest = require('../../base/UnitTest');
+const Jii = require('../../index');
+const UnitTest = require('../../base/UnitTest');
 class self extends UnitTest {
 
     mergeTest(test) {

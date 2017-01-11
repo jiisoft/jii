@@ -5,13 +5,13 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var TransportInterface = require('./transport/TransportInterface');
-var _isEmpty = require('lodash/isEmpty');
-var _values = require('lodash/values');
-var _keys = require('lodash/keys');
-var _each = require('lodash/each');
-var HubServer = require('./HubServer');
+const Jii = require('../../BaseJii');
+const TransportInterface = require('./transport/TransportInterface');
+const _isEmpty = require('lodash/isEmpty');
+const _values = require('lodash/values');
+const _keys = require('lodash/keys');
+const _each = require('lodash/each');
+const HubServer = require('./HubServer');
 
 class Server extends HubServer {
 
@@ -32,7 +32,7 @@ class Server extends HubServer {
         this._httpServer = null;
 
         /**
-         * @type {Jii.comet.server.transport.TransportInterface}
+         * @type {TransportInterface}
          */
         this.transport = null;
 
@@ -95,7 +95,7 @@ class Server extends HubServer {
 
     /**
      *
-     * @returns {{string: Jii.comet.server.Connection}}
+     * @returns {{string: Connection}}
      */
     getConnections() {
         return this._connections;
@@ -191,7 +191,7 @@ class Server extends HubServer {
 
     /**
      * Store client connection
-     * @param {Jii.comet.server.ConnectionEvent} event
+     * @param {ConnectionEvent} event
      * @private
      */
     _onAddConnection(event) {
@@ -205,7 +205,7 @@ class Server extends HubServer {
 
     /**
      * Remove client connection from store
-     * @param {Jii.comet.server.ConnectionEvent} event
+     * @param {ConnectionEvent} event
      * @private
      */
     _onRemoveConnection(event) {
@@ -227,7 +227,7 @@ class Server extends HubServer {
 
     /**
      * Income messages from clients (browsers, ..)
-     * @param {Jii.comet.server.MessageEvent} event
+     * @param {MessageEvent} event
      * @private
      */
     _onClientMessage(event) {
@@ -258,7 +258,7 @@ class Server extends HubServer {
 
     /**
      *
-     * @param {Jii.comet.LogEvent} event
+     * @param {LogEvent} event
      * @private
      */
     _onLog(event) {
@@ -268,7 +268,7 @@ class Server extends HubServer {
 
     /**
      * Income message from hub
-     * @param {Jii.comet.ChannelEvent} event
+     * @param {ChannelEvent} event
      * @private
      */
     _onHubMessage(event) {
@@ -299,14 +299,14 @@ class Server extends HubServer {
 }
 
 /**
- * @event Jii.comet.server.Server#removeConnection
- * @property {Jii.comet.server.ConnectionEvent} event
+ * @event Server#removeConnection
+ * @property {ConnectionEvent} event
  */
 Server.EVENT_REMOVE_CONNECTION = 'removeConnection';
 
 /**
- * @event Jii.comet.server.Server#addConnection
- * @property {Jii.comet.server.ConnectionEvent} event
+ * @event Server#addConnection
+ * @property {ConnectionEvent} event
  */
 Server.EVENT_ADD_CONNECTION = 'addConnection';
 module.exports = Server;

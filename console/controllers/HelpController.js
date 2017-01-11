@@ -5,23 +5,23 @@
 
 'use strict';
 
-var Jii = require('../../index');
-var Console = require('../../helpers/Console');
-var ConsoleApplication = require('../../application/ConsoleApplication');
-var Application = require('../../base/Application');
-var Exception = require('../Exception');
-var _trim = require('lodash/trim');
-var _isFunction = require('lodash/isFunction');
-var _isEmpty = require('lodash/isEmpty');
-var _isArray = require('lodash/isArray');
-var _isBoolean = require('lodash/isBoolean');
-var _isString = require('lodash/isString');
-var _uniq = require('lodash/uniq');
-var _each = require('lodash/each');
-var _repeat = require('lodash/repeat');
-var _endsWith = require('lodash/endsWith');
-var Controller = require('../Controller');
-var fs = require('fs');
+const Jii = require('../../index');
+const Console = require('../../helpers/Console');
+const ConsoleApplication = require('../../application/ConsoleApplication');
+const Application = require('../../base/Application');
+const Exception = require('../Exception');
+const _trim = require('lodash/trim');
+const _isFunction = require('lodash/isFunction');
+const _isEmpty = require('lodash/isEmpty');
+const _isArray = require('lodash/isArray');
+const _isBoolean = require('lodash/isBoolean');
+const _isString = require('lodash/isString');
+const _uniq = require('lodash/uniq');
+const _each = require('lodash/each');
+const _repeat = require('lodash/repeat');
+const _endsWith = require('lodash/endsWith');
+const Controller = require('../Controller');
+const fs = require('fs');
 
 class HelpController extends Controller {
 
@@ -31,7 +31,7 @@ class HelpController extends Controller {
      *
      * @param {string} context
      * @returns {number} the exit status
-     * @throws {Jii.console.Exception} if the command for help is unknown
+     * @throws {Exception} if the command for help is unknown
      */
     actionIndex(context) {
         var params = context.request.getParams();
@@ -85,7 +85,7 @@ class HelpController extends Controller {
 
     /**
      * Returns all available actions of the specified controller.
-     * @param {Jii.console.Controller} controller the controller instance
+     * @param {Controller} controller the controller instance
      * @returns {[]} all available action IDs.
      */
     getActions(className) {
@@ -104,7 +104,7 @@ class HelpController extends Controller {
 
     /**
      * Returns available commands of a specified module.
-     * @param {Jii.base.Module} module the module instance
+     * @param {Module} module the module instance
      * @returns {[]} the available command names
      */
     _getModuleCommands(module) {
@@ -157,7 +157,7 @@ class HelpController extends Controller {
 
     /**
      * Displays the overall information of the command.
-     * @param {Jii.console.Controller} controller the controller instance
+     * @param {Controller} controller the controller instance
      */
     _getCommandHelp(controller) {
         controller.color = this.color;
@@ -207,7 +207,7 @@ class HelpController extends Controller {
 
     /**
      * Displays the detailed information of a command action.
-     * @param {Jii.console.Controller} controller the controller instance
+     * @param {Controller} controller the controller instance
      * @param {string} actionID action ID
      * @throws Exception if the action does not exist
      */

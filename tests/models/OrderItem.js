@@ -1,8 +1,8 @@
 'use strict';
 
-var Jii = require('../../BaseJii');
-var ActiveRecord = require('./ActiveRecord.js');
-var Item = require('./Item');
+const Jii = require('../../BaseJii');
+const ActiveRecord = require('./ActiveRecord.js');
+const Item = require('./Item');
 class OrderItem extends ActiveRecord {
 
     static tableName() {
@@ -10,7 +10,7 @@ class OrderItem extends ActiveRecord {
     }
 
     getOrder() {
-        var Order = require('./Order');
+        const Order = require('./Order');
         return this.hasOne(Order, {
             id: 'order_id'
         });

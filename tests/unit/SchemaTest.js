@@ -1,15 +1,15 @@
 'use strict';
 
-var Jii = require('../../index');
-var TableSchema = require('../../data/TableSchema');
-var Expression = require('../../data/Expression');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var _keys = require('lodash/keys');
-var _isArray = require('lodash/isArray');
-var _isObject = require('lodash/isObject');
-var _indexOf = require('lodash/indexOf');
-var DatabaseTestCase = require('../DatabaseTestCase.js');
+const Jii = require('../../index');
+const TableSchema = require('../../data/TableSchema');
+const Expression = require('../../data/Expression');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const _keys = require('lodash/keys');
+const _isArray = require('lodash/isArray');
+const _isObject = require('lodash/isObject');
+const _indexOf = require('lodash/indexOf');
+const DatabaseTestCase = require('../DatabaseTestCase.js');
 class self extends DatabaseTestCase {
 
     testGetTableNames(test) {

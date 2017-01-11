@@ -5,17 +5,17 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var String = require('../../helpers/String');
-var HubInterface = require('./hub/HubInterface');
-var ChannelEvent = require('../ChannelEvent');
-var Request = require('./Request');
-var Connection = require('./Connection');
-var Response = require('./Response');
-var _extend = require('lodash/extend');
-var Component = require('../../base/Component');
-var RedisHub = require('./hub/Redis');
-var RedisQueue = require('./queue/Redis');
+const Jii = require('../../BaseJii');
+const String = require('../../helpers/String');
+const HubInterface = require('./hub/HubInterface');
+const ChannelEvent = require('../ChannelEvent');
+const Request = require('./Request');
+const Connection = require('./Connection');
+const Response = require('./Response');
+const _extend = require('lodash/extend');
+const Component = require('../../base/Component');
+const RedisHub = require('./hub/Redis');
+const RedisQueue = require('./queue/Redis');
 
 class HubServer extends Component {
 
@@ -26,14 +26,14 @@ class HubServer extends Component {
         this._serverUid = null;
 
         /**
-         * @type {Jii.comet.server.queue.QueueInterface}
+         * @type {QueueInterface}
          */
         this.queue = {
             className: RedisQueue
         };
 
         /**
-         * @type {Jii.comet.server.hub.HubInterface}
+         * @type {HubInterface}
          */
         this.hub = {
             className: RedisHub
@@ -169,7 +169,7 @@ class HubServer extends Component {
 
     /**
      *
-     * @param {Jii.comet.server.Connection} connection
+     * @param {Connection} connection
      * @param {string} route
      * @param {object} data
      */
@@ -189,7 +189,7 @@ class HubServer extends Component {
 
     /**
      * Income message from hub
-     * @param {Jii.comet.ChannelEvent} event
+     * @param {ChannelEvent} event
      * @private
      */
     _onHubMessage(event) {
@@ -279,20 +279,20 @@ HubServer.CHANNEL_NAME_ACTION = '__actionXZj1sf';
 HubServer.CHANNEL_NAME_ALL = '__allVfcOS7';
 
 /**
- * @event Jii.comet.server.HubServer#message
- * @property {Jii.comet.server.MessageEvent} event
+ * @event HubServer#message
+ * @property {MessageEvent} event
  */
 HubServer.EVENT_MESSAGE = 'message';
 
 /**
- * @event Jii.comet.server.HubServer#channel:%channel_name%
- * @property {Jii.comet.ChannelEvent} event
+ * @event HubServer#channel:%channel_name%
+ * @property {ChannelEvent} event
  */
 HubServer.EVENT_CHANNEL_NAME = 'channel:';
 
 /**
- * @event Jii.comet.server.HubServer#channel
- * @property {Jii.comet.ChannelEvent} event
+ * @event HubServer#channel
+ * @property {ChannelEvent} event
  */
 HubServer.EVENT_CHANNEL = 'channel';
 module.exports = HubServer;

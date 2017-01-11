@@ -5,17 +5,17 @@
 
 'use strict';
 
-var Jii = require('../index');
-var UrlRule = require('./UrlRule');
-var Url = require('../helpers/Url');
-var HttpRequest = require('../base/HttpRequest');
-var _trimStart = require('lodash/trimStart');
-var _isObject = require('lodash/isObject');
-var _isEmpty = require('lodash/isEmpty');
-var _isString = require('lodash/isString');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var Component = require('../base/Component');
+const Jii = require('../index');
+const UrlRule = require('./UrlRule');
+const Url = require('../helpers/Url');
+const HttpRequest = require('../base/HttpRequest');
+const _trimStart = require('lodash/trimStart');
+const _isObject = require('lodash/isObject');
+const _isEmpty = require('lodash/isEmpty');
+const _isString = require('lodash/isString');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const Component = require('../base/Component');
 
 class UrlManager extends Component {
 
@@ -101,7 +101,7 @@ class UrlManager extends Component {
 
         /**
          * Instance with request data
-         * @type {Jii.request.BaseRequest}
+         * @type {BaseRequest}
          */
         this.request = null;
 
@@ -179,14 +179,14 @@ class UrlManager extends Component {
 
     /**
      * Parses the user request.
-     * @param {Jii.request.BaseRequest} request the request component
+     * @param {BaseRequest} request the request component
      * @return {array|boolean} the route and the associated parameters. The latter is always empty
      */
     parseRequest(request) {
         var result = false;
 
         /**
-         * @type {Jii.request.UrlRule} rule
+         * @type {UrlRule} rule
          */
         _each(this.rules, rule => {
             if (result === false) {
@@ -229,7 +229,7 @@ class UrlManager extends Component {
      * Creates a URL using the given route and parameters.
      * The URL created is a relative one. Use [[createAbsoluteUrl()]] to create an absolute URL.
      * @param {string|array|object} route the route
-     * @param {Jii.base.Context} [context]
+     * @param {Context} [context]
      * @return {string} the created URL
      */
     createUrl(route, context) {
@@ -243,7 +243,7 @@ class UrlManager extends Component {
         var baseUrl = context && context.request instanceof HttpRequest ? context.request.getBaseUrl() : '';
 
         var url = false;
-        /** @type {Jii.request.UrlRule} rule */
+        /** @type {UrlRule} rule */
         _each(this.rules, rule => {
             if (url !== false) {
                 return;
@@ -283,7 +283,7 @@ class UrlManager extends Component {
      * Creates an absolute URL using the given route and parameters.
      * This method prepends the URL created by [[createUrl()]] with the [[hostInfo]].
      * @param {string|array|object} route the route
-     * @param {Jii.base.Context} [context]
+     * @param {Context} [context]
      * @param {boolean|string} [scheme]
      * @return {string} the created URL
      * @see createUrl()

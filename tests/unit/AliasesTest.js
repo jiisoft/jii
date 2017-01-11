@@ -1,12 +1,12 @@
 'use strict';
 
-var Jii = require('../../index');
-var UnitTest = require('../../base/UnitTest');
+const Jii = require('../../index');
+const UnitTest = require('../../base/UnitTest');
 require('../bootstrap');
 class self extends UnitTest {
 
     aliasesTest(test) {
-        var jiiPath = require('fs').realpathSync(__dirname + '/../..');
+        const jiiPath = require('fs').realpathSync(__dirname + '/../..');
         test.strictEqual(jiiPath, Jii.getAlias('@jii'));
 
         Jii.aliases = {};

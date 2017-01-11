@@ -5,14 +5,14 @@
 
 'use strict';
 
-var Jii = require('../../../BaseJii');
-var BaseObject = require('../../../base/BaseObject');
+const Jii = require('../../../BaseJii');
+const BaseObject = require('../../../base/BaseObject');
 
 class PluginInterface extends BaseObject {
 
     preInit() {
         /**
-         * @type {Jii.comet.client.Client}
+         * @type {Client}
          */
         this.comet = null;
 

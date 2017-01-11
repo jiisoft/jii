@@ -5,10 +5,10 @@
 
 'use strict';
 
-var Jii = require('../../index');
-var Console = require('../../helpers/Console');
-var Controller = require('../Controller');
-var fs = require('fs');
+const Jii = require('../../index');
+const Console = require('../../helpers/Console');
+const Controller = require('../Controller');
+const fs = require('fs');
 
 class ServiceController extends Controller {
 
@@ -69,7 +69,7 @@ class ServiceController extends Controller {
             outFile: logPath
         };
 
-        //var realPath = require('fs').realpathSync(script);
+        //const realPath = require('fs').realpathSync(script);
         //var cwd = script.indexOf('/') === 0 ? script.replace(/[^\/]$/, '') : process.cwd();
         /*var options = [ { script: 'index.js',
          args: [],

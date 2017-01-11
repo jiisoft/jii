@@ -1,12 +1,12 @@
 'use strict';
 
-var Jii = require('../../BaseJii');
-var ActiveRecord = require('./ActiveRecord.js');
-var CustomerQuery = require('./CustomerQuery.js');
-var Profile = require('./Profile.js');
-var Order = require('./Order.js');
-var OrderWithNullFK = require('./OrderWithNullFK.js');
-var Item = require('./Item.js');
+const Jii = require('../../BaseJii');
+const ActiveRecord = require('./ActiveRecord.js');
+const CustomerQuery = require('./CustomerQuery.js');
+const Profile = require('./Profile.js');
+const Order = require('./Order.js');
+const OrderWithNullFK = require('./OrderWithNullFK.js');
+const Item = require('./Item.js');
 class Customer extends ActiveRecord {
 
     preInit() {
@@ -64,7 +64,7 @@ class Customer extends ActiveRecord {
 
     // deeply nested table relation
     getOrderItems() {
-        /** @typedef {Jii.data.ActiveQuery} rel */
+        /** @typedef {ActiveQuery} rel */
         var rel = this.hasMany(Item, {
             id: 'item_id'
         });
@@ -72,7 +72,7 @@ class Customer extends ActiveRecord {
         return rel.viaTable('order_item', {
             order_id: 'id'
         }, function (q) {
-            /** @typedef {Jii.data.ActiveQuery} q */
+            /** @typedef {ActiveQuery} q */
             q.viaTable('order', {
                 customer_id: 'id'
             });

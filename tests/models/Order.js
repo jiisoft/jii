@@ -1,10 +1,10 @@
 'use strict';
 
-var Jii = require('../../BaseJii');
-var ActiveRecord = require('./ActiveRecord.js');
-var OrderItem = require('./OrderItem');
-var Item = require('./Item');
-var OrderItemWithNullFK = require('./OrderItemWithNullFK');
+const Jii = require('../../BaseJii');
+const ActiveRecord = require('./ActiveRecord.js');
+const OrderItem = require('./OrderItem');
+const Item = require('./Item');
+const OrderItemWithNullFK = require('./OrderItemWithNullFK');
 class Order extends ActiveRecord {
 
     static tableName() {
@@ -12,14 +12,14 @@ class Order extends ActiveRecord {
     }
 
     getCustomer() {
-        var Customer = require('./Customer');
+        const Customer = require('./Customer');
         return this.hasOne(Customer, {
             id: 'customer_id'
         });
     }
 
     getCustomer2() {
-        var Customer = require('./Customer');
+        const Customer = require('./Customer');
         return this.hasOne(Customer, {
             id: 'customer_id'
         }).inverseOf('orders2');

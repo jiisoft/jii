@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var ApplicationException = require('../exceptions/ApplicationException');
+const Jii = require('../BaseJii');
+const ApplicationException = require('../exceptions/ApplicationException');
 
 class SqlQueryException extends ApplicationException {
 

@@ -5,22 +5,22 @@
 
 'use strict';
 
-var Jii = require('../index');
-var Console = require('../helpers/Console');
-var Exception = require('./Exception');
-var _trim = require('lodash/trim');
-var _isEmpty = require('lodash/isEmpty');
-var _indexOf = require('lodash/indexOf');
-var _isArray = require('lodash/isArray');
-var _toArray = require('lodash/toArray');
-var _isFunction = require('lodash/isFunction');
-var _isUndefined = require('lodash/isUndefined');
-var _each = require('lodash/each');
-var _values = require('lodash/values');
-var _compact = require('lodash/compact');
-var BaseController = require('../base/Controller');
-var fs = require('fs');
-var extract = require('extract-comments');
+const Jii = require('../index');
+const Console = require('../helpers/Console');
+const Exception = require('./Exception');
+const _trim = require('lodash/trim');
+const _isEmpty = require('lodash/isEmpty');
+const _indexOf = require('lodash/indexOf');
+const _isArray = require('lodash/isArray');
+const _toArray = require('lodash/toArray');
+const _isFunction = require('lodash/isFunction');
+const _isUndefined = require('lodash/isUndefined');
+const _each = require('lodash/each');
+const _values = require('lodash/values');
+const _compact = require('lodash/compact');
+const BaseController = require('../base/Controller');
+const fs = require('fs');
+const extract = require('extract-comments');
 
 class Controller extends BaseController {
 
@@ -65,7 +65,7 @@ class Controller extends BaseController {
      * Runs an action with the specified action ID and parameters.
      * If the action ID is empty, the method will use [[defaultAction]].
      * @param {string} id the ID of the action to be executed.
-     * @param {Jii.base.Context} context
+     * @param {Context} context
      * @returns {Promise} the status of the action execution. 0 means normal, other values mean abnormal.
      */
     runAction(id, context) {
@@ -94,12 +94,12 @@ class Controller extends BaseController {
     /**
      * Formats a string with ANSI codes
      *
-     * You may pass additional parameters using the constants defined in [[Jii.helpers.Console]].
+     * You may pass additional parameters using the constants defined in [[Console]].
      *
      * Example:
      *
      * ```
-     * echo this.ansiFormat('This will be red and underlined.', Jii.helpers.Console.FG_RED, Jii.helpers.Console.UNDERLINE);
+     * echo this.ansiFormat('This will be red and underlined.', FG_RED, UNDERLINE);
      * ```
      *
      * @param {string} string the string to be formatted
@@ -116,12 +116,12 @@ class Controller extends BaseController {
      * Prints a string to STDOUT
      *
      * You may optionally format the string with ANSI codes by
-     * passing additional parameters using the constants defined in [[Jii.helpers.Console]].
+     * passing additional parameters using the constants defined in [[Console]].
      *
      * Example:
      *
      * ```
-     * this.stdout('This will be red and underlined.', Jii.helpers.Console.FG_RED, Jii.helpers.Console.UNDERLINE);
+     * this.stdout('This will be red and underlined.', FG_RED, UNDERLINE);
      * ```
      *
      * @param {string} string the string to print
@@ -138,12 +138,12 @@ class Controller extends BaseController {
      * Prints a string to STDERR
      *
      * You may optionally format the string with ANSI codes by
-     * passing additional parameters using the constants defined in [[Jii.helpers.Console]].
+     * passing additional parameters using the constants defined in [[Console]].
      *
      * Example:
      *
      * ```
-     * this.stderr('This will be red and underlined.', Jii.helpers.Console.FG_RED, Jii.helpers.Console.UNDERLINE);
+     * this.stderr('This will be red and underlined.', FG_RED, UNDERLINE);
      * ```
      *
      * @param {string} string the string to print
@@ -295,7 +295,7 @@ class Controller extends BaseController {
 
     /**
      * Returns a one-line short summary describing the specified action.
-     * @param {Jii.console.Action} action action to get summary for
+     * @param {Action} action action to get summary for
      * @returns {string} a one-line short summary describing the specified action.
      */
     getActionHelpSummary(action) {
@@ -304,7 +304,7 @@ class Controller extends BaseController {
 
     /**
      * Returns the detailed help information for the specified action.
-     * @param {Jii.console.Action} action action to get help for
+     * @param {Action} action action to get help for
      * @returns {string} the detailed help information for the specified action.
      */
     getActionHelp(action) {
@@ -324,7 +324,7 @@ class Controller extends BaseController {
      * The default implementation will return the help information extracted from the doc-comment of
      * the parameters corresponding to the action method.
      *
-     * @param {Jii.console.Action} action
+     * @param {Action} action
      * @returns {[]} the help information of the action arguments
      */
     getActionArgsHelp(action) {
@@ -343,7 +343,7 @@ class Controller extends BaseController {
      * The default implementation will return the help information extracted from the doc-comment of
      * the properties corresponding to the action options.
      *
-     * @param {Jii.console.Action} action
+     * @param {Action} action
      * @returns {object} the help information of the action options
      */
     getActionOptionsHelp(action) {

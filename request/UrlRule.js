@@ -5,19 +5,19 @@
 
 'use strict';
 
-var Jii = require('../index');
-var InvalidConfigException = require('../exceptions/InvalidConfigException');
-var _trim = require('lodash/trim');
-var _trimEnd = require('lodash/trimEnd');
-var _trimStart = require('lodash/trimStart');
-var _isArray = require('lodash/isArray');
-var _indexOf = require('lodash/indexOf');
-var _isEmpty = require('lodash/isEmpty');
-var _isObject = require('lodash/isObject');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var _clone = require('lodash/clone');
-var BaseObject = require('../base/BaseObject');
+const Jii = require('../index');
+const InvalidConfigException = require('../exceptions/InvalidConfigException');
+const _trim = require('lodash/trim');
+const _trimEnd = require('lodash/trimEnd');
+const _trimStart = require('lodash/trimStart');
+const _isArray = require('lodash/isArray');
+const _indexOf = require('lodash/indexOf');
+const _isEmpty = require('lodash/isEmpty');
+const _isObject = require('lodash/isObject');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const _clone = require('lodash/clone');
+const BaseObject = require('../base/BaseObject');
 
 class UrlRule extends BaseObject {
 
@@ -199,8 +199,8 @@ class UrlRule extends BaseObject {
 
     /**
      * Parses the given request and returns the corresponding route and parameters.
-     * @param {Jii.request.UrlManager} manager the URL manager
-     * @param {Jii.request.BaseRequest} request the request component
+     * @param {UrlManager} manager the URL manager
+     * @param {BaseRequest} request the request component
      * @return {[]|boolean} the parsing result. The route and the parameters are returned as an array.
      * If false, it means this rule cannot be used to parse this path info.
      */
@@ -273,7 +273,7 @@ class UrlRule extends BaseObject {
 
     /**
      * Creates a URL according to the given route and parameters.
-     * @param {Jii.request.UrlManager} manager the URL manager
+     * @param {UrlManager} manager the URL manager
      * @param {string} route the route. It should not have slashes at the beginning or the end.
      * @param {array} params the parameters
      * @return string|boolean the created URL, or false if this rule cannot be used for creating this URL.
@@ -353,7 +353,7 @@ class UrlRule extends BaseObject {
         }
 
         if (!_isEmpty(params)) {
-            var UrlManager = require('./UrlManager');
+            const UrlManager = require('./UrlManager');
             url += '?' + UrlManager.buildQuery(params);
         }
         return url;

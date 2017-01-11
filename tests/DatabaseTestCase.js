@@ -1,18 +1,18 @@
 'use strict';
 
-var Jii = require('../BaseJii');
-var _trim = require('lodash/trim');
-var _clone = require('lodash/clone');
-var _isUndefined = require('lodash/isUndefined');
-var fs = require('fs');
-var config = require('./config');
-var UnitTest = require('../base/UnitTest');
+const Jii = require('../BaseJii');
+const _trim = require('lodash/trim');
+const _clone = require('lodash/clone');
+const _isUndefined = require('lodash/isUndefined');
+const fs = require('fs');
+const config = require('./config');
+const UnitTest = require('../base/UnitTest');
 require('./bootstrap');
 class DatabaseTestCase extends UnitTest {
 
     preInit() {
         /**
-         * @type {Jii.sql.Connection}
+         * @type {Connection}
          */
         this.db = null;
         this.driverName = 'mysql';
@@ -39,7 +39,7 @@ class DatabaseTestCase extends UnitTest {
     /**
      * @param {boolean} [reset] whether to clean up the test database
      * @param {boolean} [open]  whether to open and populate test database
-     * @returns {Jii.sql.Connection}
+     * @returns {Connection}
      */
     getConnection(reset, open) {
         reset = !_isUndefined(reset) ? reset : true;

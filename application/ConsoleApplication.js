@@ -5,13 +5,13 @@
 
 'use strict';
 
-var Jii = require('../index');
-var File = require('../helpers/File');
-var Request = require('../console/Request');
-var Exception = require('../console/Exception');
-var Response = require('../console/Response');
-var _isEmpty = require('lodash/isEmpty');
-var Application = require('../base/Application');
+const Jii = require('../index');
+const File = require('../helpers/File');
+const Request = require('../console/Request');
+const Exception = require('../console/Exception');
+const Response = require('../console/Response');
+const _isEmpty = require('lodash/isEmpty');
+const Application = require('../base/Application');
 
 class ConsoleApplication extends Application {
 
@@ -19,7 +19,7 @@ class ConsoleApplication extends Application {
         config = config || {};
 
         /**
-         * @type {Jii.console.Controller} the currently active controller instance
+         * @type {Controller} the currently active controller instance
          */
         this.controller = null;
 
@@ -93,8 +93,8 @@ class ConsoleApplication extends Application {
 
     /**
      * Handles the specified request.
-     * @param {Jii.console.Request} request the request to be handled
-     * @returns {Jii.console.Response} the resulting response
+     * @param {Request} request the request to be handled
+     * @returns {Response} the resulting response
      */
     handleRequest(request) {
         var result = request.resolve();

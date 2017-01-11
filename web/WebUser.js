@@ -1,6 +1,6 @@
 'use strict';
 
-var Component = require('../base/Component');
+const Component = require('../base/Component');
 
 class WebUser extends Component {
 

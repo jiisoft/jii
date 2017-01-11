@@ -1,7 +1,7 @@
 'use strict';
 
-var Jii = require('../../BaseJii');
-var Model = require('../../base/Model');
+const Jii = require('../../BaseJii');
+const Model = require('../../base/Model');
 class FakeValidationModel extends Model {
 
     preInit() {

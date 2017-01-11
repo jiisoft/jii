@@ -1,7 +1,7 @@
 'use strict';
 
-var Jii = require('../BaseJii');
-var SiteController = require('./controllers/SiteController');
+const Jii = require('../BaseJii');
+const SiteController = require('./controllers/SiteController');
 
 Jii.createWebApplication({
     application: {

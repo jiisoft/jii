@@ -5,17 +5,17 @@
 
 'use strict';
 
-var Jii = require('../../BaseJii');
-var Server = require('./Server');
-var Component = require('../../base/Component');
-var Event = require('../../base/Event');
-var ActiveRecord = require('../../data/BaseActiveRecord');
-var InvalidConfigException = require('../../exceptions/InvalidConfigException');
-var _isFunction = require('lodash/isFunction');
-var _isEmpty = require('lodash/isEmpty');
-var _extend = require('lodash/extend');
-var BaseObject = require('../../base/BaseObject');
-var NeatComet = require('neatcomet');
+const Jii = require('../../BaseJii');
+const Server = require('./Server');
+const Component = require('../../base/Component');
+const Event = require('../../base/Event');
+const ActiveRecord = require('../../data/BaseActiveRecord');
+const InvalidConfigException = require('../../exceptions/InvalidConfigException');
+const _isFunction = require('lodash/isFunction');
+const _isEmpty = require('lodash/isEmpty');
+const _extend = require('lodash/extend');
+const BaseObject = require('../../base/BaseObject');
+const NeatComet = require('neatcomet');
 
 class NeatServer extends BaseObject {
 
@@ -45,17 +45,17 @@ class NeatServer extends BaseObject {
 
         /**
          * Callback function to be called when folder loaded from server.
-         * @callback Jii.comet.server.NeatServer~dataLoadHandlerCallback
+         * @callback NeatServer~dataLoadHandlerCallback
          * @param {object} params
          * @returns {Promise}
          */
         /**
-         * @type {Jii.comet.server.NeatServer~dataLoadHandlerCallback}
+         * @type {NeatServer~dataLoadHandlerCallback}
          */
         this.dataLoadHandler = null;
 
         /**
-         * @type {Jii.comet.server.Server}
+         * @type {Server}
          **/
         this.comet = null;
 
@@ -134,7 +134,7 @@ class NeatServer extends BaseObject {
      */
     subscribe(channel, callback) {
         /**
-         * @param Jii.comet.ChannelEvent event
+         * @param ChannelEvent event
          */
         callback.__jiiCallbackWrapper = event => {
             callback(event.channel.substr(this.constructor.ROUTE_PREFIX.length), JSON.parse(event.message));
@@ -169,7 +169,7 @@ class NeatServer extends BaseObject {
     }
 
     /**
-     * @param {string|Jii.data.ActiveQuery} modelClassName
+     * @param {string|ActiveQuery} modelClassName
      * @param {object|null} match
      * @param {string} whereType
      * @param {string|null} where
@@ -179,13 +179,13 @@ class NeatServer extends BaseObject {
      */
     loadRecords(modelClassName, match, whereType, where, attributes, binding) {
 
-        /** @typedef {Jii.data.BaseActiveRecord} modelClass  */
+        /** @typedef {BaseActiveRecord} modelClass  */
         var modelClass = Jii.namespace(modelClassName);
         if (!_isFunction(modelClass)) {
             throw new InvalidConfigException('Not found model `' + modelClassName + '` for binding');
         }
 
-        /** @typedef {Jii.data.ActiveQuery} query  */
+        /** @typedef {ActiveQuery} query  */
         var query = modelClass.find();
 
         // Apply match condition
@@ -225,7 +225,7 @@ class NeatServer extends BaseObject {
 
     /**
      *
-     * @param {Jii.data.AfterSaveEvent} event
+     * @param {AfterSaveEvent} event
      * @param {} event.sender
      * @private
      */
@@ -238,7 +238,7 @@ class NeatServer extends BaseObject {
 
     /**
      *
-     * @param {Jii.data.AfterSaveEvent} event
+     * @param {AfterSaveEvent} event
      * @param {ActiveRecord} event.sender
      * @private
      */
@@ -252,7 +252,7 @@ class NeatServer extends BaseObject {
 
     /**
      *
-     * @param {Jii.base.Event} event
+     * @param {Event} event
      * @param {ActiveRecord} event.sender
      * @private
      */
@@ -264,10 +264,10 @@ class NeatServer extends BaseObject {
     }
 
     /**
-     * @param {Jii.base.Context} context
-     * @param {Jii.comet.server.Connection} context.connection
-     * @param {Jii.comet.server.Request} context.request
-     * @param {Jii.comet.server.Response} context.response
+     * @param {Context} context
+     * @param {Connection} context.connection
+     * @param {Request} context.request
+     * @param {Response} context.response
      */
     _actionOpenProfile(context) {
         this._events.onOpenProfileCommand(context.connection.id, context.request.get('neat')).then(neatResponse => {
@@ -279,10 +279,10 @@ class NeatServer extends BaseObject {
     }
 
     /**
-     * @param {Jii.base.Context} context
-     * @param {Jii.comet.server.Connection} context.connection
-     * @param {Jii.comet.server.Request} context.request
-     * @param {Jii.comet.server.Response} context.response
+     * @param {Context} context
+     * @param {Connection} context.connection
+     * @param {Request} context.request
+     * @param {Response} context.response
      */
     _actionCloseProfile(context) {
         context.response.send();

@@ -5,15 +5,15 @@
 
 'use strict';
 
-var Jii = require('../index');
-var _trim = require('lodash/trim');
-var _isString = require('lodash/isString');
-var _extend = require('lodash/extend');
-var _keys = require('lodash/keys');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var BaseObject = require('../base/BaseObject');
-var keypress = require('keypress');
+const Jii = require('../index');
+const _trim = require('lodash/trim');
+const _isString = require('lodash/isString');
+const _extend = require('lodash/extend');
+const _keys = require('lodash/keys');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const BaseObject = require('../base/BaseObject');
+const keypress = require('keypress');
 
 class Console extends BaseObject {
 

@@ -5,10 +5,10 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var ApplicationException = require('../exceptions/ApplicationException');
-var _isArray = require('lodash/isArray');
-var Validator = require('./Validator');
+const Jii = require('../BaseJii');
+const ApplicationException = require('../exceptions/ApplicationException');
+const _isArray = require('lodash/isArray');
+const Validator = require('./Validator');
 
 class CompareValidator extends Validator {
 

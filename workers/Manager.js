@@ -5,25 +5,25 @@
 
 'use strict';
 
-var Jii = require('../index');
-var Environment = require('../application/Environment');
-var MasterWorker = require('./MasterWorker');
-var ChildWorker = require('./ChildWorker');
-var _isFunction = require('lodash/isFunction');
-var _isObject = require('lodash/isObject');
-var _uniqueId = require('lodash/uniqueId');
-var _isString = require('lodash/isString');
-var _isEmpty = require('lodash/isEmpty');
-var _each = require('lodash/each');
-var BaseObject = require('../base/BaseObject');
-var cluster = require('cluster');
-var ConsoleApplication = require('../application/ConsoleApplication');
+const Jii = require('../index');
+const Environment = require('../application/Environment');
+const MasterWorker = require('./MasterWorker');
+const ChildWorker = require('./ChildWorker');
+const _isFunction = require('lodash/isFunction');
+const _isObject = require('lodash/isObject');
+const _uniqueId = require('lodash/uniqueId');
+const _isString = require('lodash/isString');
+const _isEmpty = require('lodash/isEmpty');
+const _each = require('lodash/each');
+const BaseObject = require('../base/BaseObject');
+const cluster = require('cluster');
+const ConsoleApplication = require('../application/ConsoleApplication');
 
 class Manager extends BaseObject {
 
     preInit() {
         /**
-         * @type {Jii.workers.Service}
+         * @type {Service}
          */
         this._service = null;
 
@@ -33,7 +33,7 @@ class Manager extends BaseObject {
         this._applicationConfigs = {};
 
         /**
-         * @type {Jii.application.Environment}
+         * @type {Environment}
          */
         this._environment = null;
 
@@ -49,7 +49,7 @@ class Manager extends BaseObject {
     /**
      *
      * @param name
-     * @return {Jii.workers.Manager}
+     * @return {Manager}
      */
     setEnvironment(name) {
         this._environment.setName(name);
@@ -58,14 +58,14 @@ class Manager extends BaseObject {
 
     /**
      * Callback function to be called when folder loaded from server.
-     * @callback Jii.workers.Manager~applicationConfigCallback
-     * @param {Jii.application.Environment} environment
+     * @callback Manager~applicationConfigCallback
+     * @param {Environment} environment
      */
     /**
      *
      * @param {object|function|string|string[]} names
-     * @param {object|Jii.workers.Manager~applicationConfigCallback} [config]
-     * @returns {Jii.workers.Manager}
+     * @param {object|Manager~applicationConfigCallback} [config]
+     * @returns {Manager}
      */
     application(names, config) {
         if (_isFunction(names) || _isObject(names)) {

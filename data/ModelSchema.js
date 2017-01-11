@@ -5,23 +5,23 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var InvalidConfigException = require('../exceptions/InvalidConfigException');
-var ModelAttributeSchema = require('./ModelAttributeSchema');
-var _isString = require('lodash/isString');
-var _isNumber = require('lodash/isNumber');
-var _isObject = require('lodash/isObject');
-var _isEmpty = require('lodash/isEmpty');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var _keys = require('lodash/keys');
-var BaseObject = require('../base/BaseObject');
+const Jii = require('../BaseJii');
+const InvalidConfigException = require('../exceptions/InvalidConfigException');
+const ModelAttributeSchema = require('./ModelAttributeSchema');
+const _isString = require('lodash/isString');
+const _isNumber = require('lodash/isNumber');
+const _isObject = require('lodash/isObject');
+const _isEmpty = require('lodash/isEmpty');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const _keys = require('lodash/keys');
+const BaseObject = require('../base/BaseObject');
 
 class ModelSchema extends BaseObject {
 
     preInit() {
         /**
-         * @var {{string: Jii.data.ModelAttributeSchema}} column metadata of this table. Each array element is a [[Jii.data.ModelAttributeSchema]] object, indexed by column names.
+         * @var {{string: ModelAttributeSchema}} column metadata of this table. Each array element is a [[ModelAttributeSchema]] object, indexed by column names.
          */
         this.columns = {};
 
@@ -41,7 +41,7 @@ class ModelSchema extends BaseObject {
     /**
      *
      * @param {object} obj
-     * @returns {Jii.data.ModelSchema}
+     * @returns {ModelSchema}
      */
     static createFromObject(obj) {
         if (_isString(obj.primaryKey)) {
@@ -82,7 +82,7 @@ class ModelSchema extends BaseObject {
      * Gets the named column metadata.
      * This is a convenient method for retrieving a named column even if it does not exist.
      * @param {string} name column name
-     * @return {Jii.data.ModelAttributeSchema} metadata of the named column. Null if the named column does not exist.
+     * @return {ModelAttributeSchema} metadata of the named column. Null if the named column does not exist.
      */
     getColumn(name) {
         return _has(this.columns, name) ? this.columns[name] : null;

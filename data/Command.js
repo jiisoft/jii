@@ -5,12 +5,12 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var _isEmpty = require('lodash/isEmpty');
-var _each = require('lodash/each');
-var _has = require('lodash/has');
-var _extend = require('lodash/extend');
-var Component = require('../base/Component');
+const Jii = require('../BaseJii');
+const _isEmpty = require('lodash/isEmpty');
+const _each = require('lodash/each');
+const _has = require('lodash/has');
+const _extend = require('lodash/extend');
+const Component = require('../base/Component');
 
 class Command extends Component {
 
@@ -28,7 +28,7 @@ class Command extends Component {
         this.params = null;
 
         /**
-         * @type {Jii.data.BaseConnection} the DB connection that this command is associated with
+         * @type {BaseConnection} the DB connection that this command is associated with
          */
         this.db = null;
 
@@ -212,16 +212,16 @@ class Command extends Component {
     _queryInternal(method) {
         var rawSql = this.getRawSql();
 
-        //Jii.info(rawSql, 'Jii.data.Command.query');
+        //Jii.info(rawSql, 'query');
 
         //var token = rawSql;
-        //Jii.beginProfile(token, 'Jii.data.Command.query');
+        //Jii.beginProfile(token, 'query');
         return this.db.exec(rawSql, method).then(result => {
             //Jii.endProfile(token, __METHOD__);
 
             return result;
         }, exception => {
-            //Jii.endProfile(token, 'Jii.data.Command.query');
+            //Jii.endProfile(token, 'query');
             //$this->db->getSchema()->handleException($e, $rawSql);
 
             return Promise.reject(exception, rawSql);
@@ -260,7 +260,7 @@ class Command extends Component {
 
     /**
      *
-     * @param {Jii.data.ActiveRecord} model
+     * @param {ActiveRecord} model
      * @param {object} values
      * @returns {static}
      */
@@ -328,7 +328,7 @@ class Command extends Component {
 
     /**
      *
-     * @param {Jii.data.BaseActiveRecord} model
+     * @param {BaseActiveRecord} model
      * @param {object} values
      * @returns {static}
      */
@@ -368,7 +368,7 @@ class Command extends Component {
 
     /**
      *
-     * @param {Jii.data.BaseActiveRecord} model
+     * @param {BaseActiveRecord} model
      * @returns {static}
      */
     deleteModel(model) {
@@ -444,7 +444,7 @@ class Command extends Component {
      * Creates a SQL command for adding a new DB() column.
      * @param {string} table the table that the new column() will be added to. The table name will be properly quoted by the method.
      * @param {string} column the name of the new column.() The name will be properly quoted by the method.
-     * @param {string} type the column type. [[\Jii.data.QueryBuilder.getColumnType()]] will be called
+     * @param {string} type the column type. [[\getColumnType()]] will be called
      * to convert the give column type to the physical one. For example, `string` will be converted
      * as `varchar(255)`, and `string not null` becomes `varchar(255) not null`.
      * @returns {static} the command object itself
@@ -487,7 +487,7 @@ class Command extends Component {
      * Creates a SQL command for changing the definition of a column.
      * @param {string} table the table whose column is to be changed. The table name will be properly quoted by the method.
      * @param {string} column the name of the column to be changed. The name will be properly quoted by the method.
-     * @param {string} type the column type. [[\Jii.data.QueryBuilder.getColumnType()]] will be called
+     * @param {string} type the column type. [[\getColumnType()]] will be called
      * to convert the give column type to the physical one. For example, `string` will be converted
      * as `varchar(255)`, and `string not null` becomes `varchar(255) not null`.
      * @returns {static} the command object itself
@@ -601,7 +601,7 @@ class Command extends Component {
      * @param {*} [value] the value for the primary key of the next new row() inserted. If this is not set,
      * the next new row()'s primary key will have a value 1.
      * @returns {static} the command object itself
-     * @throws Jii.sql.NotSupportedException if this is not supported by the underlying DBMS
+     * @throws NotSupportedException if this is not supported by the underlying DBMS
      */
     resetSequence(table, value) {
         value = value || null;
@@ -619,7 +619,7 @@ class Command extends Component {
      * or default schema.
      * @param {string} table the table name.
      * @returns {static} the command object itself
-     * @throws Jii.sql.NotSupportedException if this is not supported by the underlying DBMS
+     * @throws NotSupportedException if this is not supported by the underlying DBMS
      */
     checkIntegrity(check, schema, table) {
         check = check || true;

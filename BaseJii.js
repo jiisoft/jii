@@ -7,8 +7,8 @@
 
 'use strict';
 
-var _isString = require('lodash/isString');
-var _extend = require('lodash/extend');
+const _isString = require('lodash/isString');
+const _extend = require('lodash/extend');
 
 var Jii = {};
 

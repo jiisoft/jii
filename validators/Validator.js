@@ -5,17 +5,17 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var ApplicationException = require('../exceptions/ApplicationException');
-var _isFunction = require('lodash/isFunction');
-var _isArray = require('lodash/isArray');
-var _indexOf = require('lodash/indexOf');
-var _isString = require('lodash/isString');
-var _extend = require('lodash/extend');
-var _intersection = require('lodash/intersection');
-var _map = require('lodash/map');
-var _each = require('lodash/each');
-var BaseObject = require('../base/BaseObject');
+const Jii = require('../BaseJii');
+const ApplicationException = require('../exceptions/ApplicationException');
+const _isFunction = require('lodash/isFunction');
+const _isArray = require('lodash/isArray');
+const _indexOf = require('lodash/indexOf');
+const _isString = require('lodash/isString');
+const _extend = require('lodash/extend');
+const _intersection = require('lodash/intersection');
+const _map = require('lodash/map');
+const _each = require('lodash/each');
+const BaseObject = require('../base/BaseObject');
 
 class Validator extends BaseObject {
 

@@ -5,8 +5,8 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var Component = require('./Component');
+const Jii = require('../BaseJii');
+const Component = require('./Component');
 
 class ErrorHandler extends Component {
 

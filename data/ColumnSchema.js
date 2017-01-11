@@ -5,11 +5,11 @@
 
 'use strict';
 
-var Jii = require('../BaseJii');
-var BaseSchema = require('./BaseSchema');
-var Expression = require('../data/Expression');
-var _isBoolean = require('lodash/isBoolean');
-var ModelAttributeSchema = require('../data/ModelAttributeSchema');
+const Jii = require('../BaseJii');
+const BaseSchema = require('./BaseSchema');
+const Expression = require('../data/Expression');
+const _isBoolean = require('lodash/isBoolean');
+const ModelAttributeSchema = require('../data/ModelAttributeSchema');
 
 class ColumnSchema extends ModelAttributeSchema {
 

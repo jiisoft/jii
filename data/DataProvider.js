@@ -234,7 +234,9 @@ class DataProvider extends Collection {
             throw new InvalidParamException('Only Pagination instance, configuration object or false is allowed.');
         }
 
-        this._pagination.on(Pagination.EVENT_CHANGE, this._onPaginationChange.bind(this));
+        if(this._pagination){
+            this._pagination.on(Pagination.EVENT_CHANGE, this._onPaginationChange.bind(this));
+        }
     }
 
     /**

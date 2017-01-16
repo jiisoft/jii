@@ -1,6 +1,6 @@
 {
   "name": "jii",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "Jii - Full-Stack JavaScript Framework",
   "main": "index.js",
   "author": "Vladimir Kozhin <affka@affka.ru>",

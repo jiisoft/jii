@@ -246,6 +246,9 @@ class SiteMenu extends Component {
             delete parent['urlRule'];
         });
 
+        //last element - current page
+        parents[parents.length - 1]['url'] = false;
+
         return parents;
     }
 

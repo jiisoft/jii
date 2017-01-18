@@ -247,6 +247,7 @@ class SiteMenu extends Component {
         });
 
         //last element - current page
+        // @todo ugly solution - rework needed
         parents[parents.length - 1]['url'] = false;
 
         return parents;

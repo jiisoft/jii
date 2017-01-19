@@ -222,6 +222,7 @@ class SiteMenu extends Component {
             parent['url'] = MenuHelper.normalizeUrl(parent['url'], parent['urlRule']);
             delete parent['urlRule'];
         });
+        // @todo ugly solution - rework needed
         parents[parents.length - 1]['url'] = false;
 
         return parents;

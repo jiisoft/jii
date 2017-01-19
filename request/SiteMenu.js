@@ -274,7 +274,9 @@ class SiteMenu extends Component {
             }
 
             // Compare routes' parameters by checking if keys are identical
-            if (_difference(url1, url2).length || _difference(url2, url1).length) {
+            const keysUrl1 = Object.keys(url1);
+            const keysUrl2 = Object.keys(url2);
+            if (keysUrl1.length != keysUrl2.length || _difference(keysUrl1, keysUrl2).length || _difference(keysUrl2, keysUrl1).length) {
                 return false;
             }
 

@@ -17,6 +17,7 @@ const _isObject = require('lodash/isObject');
 const _each = require('lodash/each');
 const _has = require('lodash/has');
 const _clone = require('lodash/clone');
+const _cloneDeep = require('lodash/cloneDeep');
 const BaseObject = require('../base/BaseObject');
 
 class UrlRule extends BaseObject {

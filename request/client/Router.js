@@ -12,7 +12,6 @@ const Component = require('../../base/Component');
 const _isString = require('lodash/isString');
 const _extend = require('lodash/extend');
 const _upperFirst = require('lodash/upperFirst');
-const _cloneDeep = require('lodash/cloneDeep');
 
 class Router extends Component {
 
@@ -91,7 +90,7 @@ class Router extends Component {
      * @returns {boolean}
      */
     goTo(route) {
-        var url = this.urlManager.createAbsoluteUrl(_cloneDeep(route));
+        var url = this.urlManager.createAbsoluteUrl(route);
         if (!url) {
             return false;
         }
@@ -111,7 +110,7 @@ class Router extends Component {
     }
 
     createUrl(route) {
-        var url = this.urlManager.createAbsoluteUrl(_cloneDeep(route));
+        var url = this.urlManager.createAbsoluteUrl(route);
         if (!url) {
             return '#';
         }

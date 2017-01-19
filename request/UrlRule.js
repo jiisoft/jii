@@ -301,6 +301,8 @@ class UrlRule extends BaseObject {
             });
         }
 
+        params = _cloneDeep(params);
+
         // match default params
         // if a default param is not in the route pattern, its value must also be matched
         for (var name in this.defaults) {

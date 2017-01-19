@@ -15,29 +15,17 @@ class MenuHelper {
                 let urlRule = items[item].urlRule;
 
                 if (url && (urlRule || urlRule == '') && typeof(url) == 'object') {
-                    const defaults = _clone(url);
-                    const route = defaults[0];
-
-                    if (defaults.length > 0) {
-                        defaults.splice(0, 1);
-                    }
-                    else {
-                        delete defaults[0];
-                    }
+                    const route = url[0];
 
                     if (typeof(urlRule) == 'string') {
                         rules.push({
                             'pattern': urlRule,
                             'route': route,
-                            'defaults': defaults
                         });
                     }
                     else if (typeof(urlRule) == 'object') {
                         if (!urlRule['route']) {
                             urlRule['route'] = route;
-                        }
-                        if (!urlRule['defaults']) {
-                            urlRule['defaults'] = defaults;
                         }
                         rules.push(urlRule);
                     }

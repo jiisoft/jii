@@ -17,7 +17,9 @@ var _isArray = require('lodash/isArray');
 var _isObject = require('lodash/isObject');
 var _isFunction = require('lodash/isFunction');
 var _findKey = require('lodash/findKey');
+var _orderBy = require('lodash/orderBy');
 var _has = require('lodash/has');
+var _isEqual = require('lodash/isEqual');
 
 class DataProvider extends Collection {
 
@@ -43,9 +45,14 @@ class DataProvider extends Collection {
         this._pagination = null;
 
         /**
-         * @type {Jii.data.Sort}
+         * @type {Array|string}
          */
         this._sort = null;
+
+        /**
+         * @type {Array|string}
+         */
+        this._sortDirection = null;
 
         /**
          * @type {boolean}
@@ -252,30 +259,32 @@ class DataProvider extends Collection {
 
     /**
      * Sets the sort definition for this data provider.
-     * @param {object|Jii.data.Sort|boolean} value the sort definition to be used by this data provider.
-     * This can be one of the following:
-     *
-     * - a configuration array for creating the sort definition object. The "class" element defaults
-     *   to 'jii\data\Sort'
-     * - an instance of [[Sort]] or its subclass
-     * - false, if sorting needs to be disabled.
-     *
-     * @throws InvalidParamException
+     * @param {Array, string} attributes
+     * @param {Array, string} [directions]
      */
-    setSort(value) {
-        if (_isObject(value)) {
-            let config = {};
-            // @todo Sort implementation
-            if (this.id !== null) {
-                config.sortParam = `${ this.id }-sort`;
-            }
-            this._sort = Jii.createObject(Jii.mergeConfigs(config, value));
-        } else if (/*value instanceof Sort ||*/
-        value === false) {
-            // @todo Sort implementation
-            this._sort = value;
+    setSort(attributes, directions = null) {
+        if(typeof(attributes) == 'function'){
+            this._sort = attributes;
+        } else if(typeof(attributes) == 'string'){
+            this._sort = (model) => model.get(attributes);
+        } else if(typeof(attributes) == 'Array'){
+            this._sort = (model) => attributes.map(attribute => model.get(attribute));
         } else {
-            throw new InvalidParamException('Only Sort instance, configuration object or false is allowed.');
+            throw new InvalidParamException('attributes the wrong type of format! see params lodash.com orderBy.');
+        }
+
+        this._sortDirection = directions;
+    }
+
+    _onSort(){
+        const sortedArray = _orderBy(this, this._sort, this._sortDirection);
+        for(let index in sortedArray){
+            if(sortedArray.hasOwnProperty(index)){
+                if(!_isEqual(sortedArray[index].getAttributes(), this[index].getAttributes())){
+                    this._change(this.length, sortedArray, this.getModels(), true);
+                    return;
+                }
+            }
         }
     }
 

@@ -76,7 +76,7 @@ class Command extends Component {
                 return null;
             }
             if (result.attributes) {
-                model.setAttributes(result.attributes);
+                model.setAttributes(result.attributes, false);
             }
 
             return {

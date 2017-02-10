@@ -4,7 +4,6 @@ const Jii = require('../index');
 const MenuHelper = require('./MenuHelper');
 const SiteMenuItem = require('./SiteMenuItem');
 const Component = require('../base/Component');
-const Request = require('../request/client/Request');
 const _forIn = require('lodash/forIn');
 const _merge = require('lodash/merge');
 const _sortBy = require('lodash/sortBy');
@@ -20,7 +19,6 @@ class SiteMenu extends Component {
 
     preInit() {
         this._items = {};
-        this._requestedRoute = null;
 
         super.preInit(...arguments);
     }
@@ -108,28 +106,7 @@ class SiteMenu extends Component {
      * @return {SiteMenuItem}
      */
     getActiveItem() {
-        return this.getItem(this.getRequestedRoute());
-    }
-
-    /**
-     *
-     * @returns {object|string[]|null|*}
-     */
-    getRequestedRoute() {
-        // Set active item
-        const parseInfo = Jii.app.urlManager.parseRequest(new Request(location));
-        if (parseInfo) {
-            //set object/array in depending from parseInfo
-            if (_keys(parseInfo[1]).length) {
-                this._requestedRoute = _merge({0: parseInfo[0] ? '/' + parseInfo[0] : ''}, parseInfo[1]);
-            }
-            else {
-                this._requestedRoute = [parseInfo[0] ? '/' + parseInfo[0] : ''];
-            }
-        } else {
-            this._requestedRoute = ['/404']; //TODO: add errorAction
-        }
-        return this._requestedRoute;
+        return this.getItem(MenuHelper.getRequestedRoute());
     }
 
     /**
@@ -220,7 +197,7 @@ class SiteMenu extends Component {
      * @return {object}
      */
     getBreadcrumbs(url = null) {
-        url = url ? url : this.getRequestedRoute();
+        url = url ? url : MenuHelper.getRequestedRoute();
 
         // Find child and it parents by url
         let parents = [];
@@ -245,6 +222,8 @@ class SiteMenu extends Component {
             parent['url'] = MenuHelper.normalizeUrl(parent['url'], parent['urlRule']);
             delete parent['urlRule'];
         });
+        // @todo ugly solution - rework needed
+        parents[parents.length - 1]['url'] = false;
 
         return parents;
     }
@@ -295,7 +274,9 @@ class SiteMenu extends Component {
             }
 
             // Compare routes' parameters by checking if keys are identical
-            if (_difference(url1, url2).length || _difference(url2, url1).length) {
+            const keysUrl1 = Object.keys(url1);
+            const keysUrl2 = Object.keys(url2);
+            if (keysUrl1.length != keysUrl2.length || _difference(keysUrl1, keysUrl2).length || _difference(keysUrl2, keysUrl1).length) {
                 return false;
             }
 

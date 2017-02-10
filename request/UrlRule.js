@@ -17,6 +17,7 @@ const _isObject = require('lodash/isObject');
 const _each = require('lodash/each');
 const _has = require('lodash/has');
 const _clone = require('lodash/clone');
+const _cloneDeep = require('lodash/cloneDeep');
 const BaseObject = require('../base/BaseObject');
 
 class UrlRule extends BaseObject {
@@ -300,6 +301,8 @@ class UrlRule extends BaseObject {
                 tr[token] = !_has(this.defaults, name) || this.defaults[name] !== matches[0][name] ? matches[0][name] : '';
             });
         }
+
+        params = _cloneDeep(params);
 
         // match default params
         // if a default param is not in the route pattern, its value must also be matched

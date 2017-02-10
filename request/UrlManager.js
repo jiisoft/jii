@@ -15,6 +15,7 @@ const _isEmpty = require('lodash/isEmpty');
 const _isString = require('lodash/isString');
 const _each = require('lodash/each');
 const _has = require('lodash/has');
+const _cloneDeep = require('lodash/cloneDeep');
 const Component = require('../base/Component');
 
 class UrlManager extends Component {
@@ -233,6 +234,7 @@ class UrlManager extends Component {
      * @return {string} the created URL
      */
     createUrl(route, context) {
+        route = _cloneDeep(route);
         var parts = Url.parseRoute(route, context);
         var params = parts.params;
         route = parts.route;

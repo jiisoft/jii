@@ -652,7 +652,8 @@ class Collection extends Component {
         this._editedEvents.push(this._createEvent({
             isFetch: isFirstUpdate,
             added: added,
-            removed: removed
+            removed: removed,
+            isSorted: this._sort
         }));
 
         // Change children

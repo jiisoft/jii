@@ -5,19 +5,21 @@
 
 'use strict';
 
-const Jii = require('../BaseJii');
-const InvalidConfigException = require('../exceptions/InvalidConfigException');
-const InvalidParamException = require('../exceptions/InvalidParamException');
-const Collection = require('../base/Collection');
-const Pagination = require('../data/Pagination');
-const FetchEvent = require('../data/FetchEvent');
-const DataProviderEvent = require('../data/DataProviderEvent');
-const _isNumber = require('lodash/isNumber');
-const _isArray = require('lodash/isArray');
-const _isObject = require('lodash/isObject');
-const _isFunction = require('lodash/isFunction');
-const _findKey = require('lodash/findKey');
-const _has = require('lodash/has');
+var Jii = require('../BaseJii');
+var InvalidConfigException = require('../exceptions/InvalidConfigException');
+var InvalidParamException = require('../exceptions/InvalidParamException');
+var Collection = require('../base/Collection');
+var Pagination = require('../data/Pagination');
+var FetchEvent = require('../data/FetchEvent');
+var DataProviderEvent = require('../data/DataProviderEvent');
+var _isNumber = require('lodash/isNumber');
+var _isArray = require('lodash/isArray');
+var _isObject = require('lodash/isObject');
+var _isFunction = require('lodash/isFunction');
+var _findKey = require('lodash/findKey');
+var _orderBy = require('lodash/orderBy');
+var _has = require('lodash/has');
+var _isEqual = require('lodash/isEqual');
 
 class DataProvider extends Collection {
 
@@ -38,14 +40,19 @@ class DataProvider extends Collection {
         this._totalCount = 0;
 
         /**
-         * @type {Pagination|boolean}
+         * @type {Jii.data.Pagination|boolean}
          */
         this._pagination = null;
 
         /**
-         * @type {Sort}
+         * @type {Array|string}
          */
         this._sort = null;
+
+        /**
+         * @type {Array|string}
+         */
+        this._sortDirection = null;
 
         /**
          * @type {boolean}
@@ -53,7 +60,7 @@ class DataProvider extends Collection {
         this.autoFetch = true;
 
         /**
-         * @type {function|Query}
+         * @type {function|Jii.data.Query}
          */
         this.query = null;
 
@@ -202,7 +209,7 @@ class DataProvider extends Collection {
      * Returns the pagination object used by this data provider.
      * Note that you should call [[prepare()]] or [[getModels()]] first to get correct values
      * of [[Pagination.totalCount]] and [[Pagination.pageCount]].
-     * @returns {Pagination|boolean} the pagination object. If this is false, it means the pagination is disabled.
+     * @returns {Jii.data.Pagination|boolean} the pagination object. If this is false, it means the pagination is disabled.
      */
     getPagination() {
         if (this._pagination === null) {
@@ -214,7 +221,7 @@ class DataProvider extends Collection {
 
     /**
      * Sets the pagination for this data provider.
-     * @param {object|Pagination|boolean} value the pagination to be used by this data provider.
+     * @param {object|Jii.data.Pagination|boolean} value the pagination to be used by this data provider.
      * @throws InvalidParamException
      */
     setPagination(value) {
@@ -234,11 +241,13 @@ class DataProvider extends Collection {
             throw new InvalidParamException('Only Pagination instance, configuration object or false is allowed.');
         }
 
-        this._pagination.on(Pagination.EVENT_CHANGE, this._onPaginationChange.bind(this));
+        if(this._pagination){
+            this._pagination.on(Pagination.EVENT_CHANGE, this._onPaginationChange.bind(this));
+        }
     }
 
     /**
-     * @returns {Sort|boolean} the sorting object. If this is false, it means the sorting is disabled.
+     * @returns {Jii.data.Sort|boolean} the sorting object. If this is false, it means the sorting is disabled.
      */
     getSort() {
         if (this._sort === null) {
@@ -250,30 +259,32 @@ class DataProvider extends Collection {
 
     /**
      * Sets the sort definition for this data provider.
-     * @param {object|Sort|boolean} value the sort definition to be used by this data provider.
-     * This can be one of the following:
-     *
-     * - a configuration array for creating the sort definition object. The "class" element defaults
-     *   to 'jii\data\Sort'
-     * - an instance of [[Sort]] or its subclass
-     * - false, if sorting needs to be disabled.
-     *
-     * @throws InvalidParamException
+     * @param {Array, string} attributes
+     * @param {Array, string} [directions]
      */
-    setSort(value) {
-        if (_isObject(value)) {
-            let config = {};
-            // @todo Sort implementation
-            if (this.id !== null) {
-                config.sortParam = `${ this.id }-sort`;
-            }
-            this._sort = Jii.createObject(Jii.mergeConfigs(config, value));
-        } else if (/*value instanceof Sort ||*/
-        value === false) {
-            // @todo Sort implementation
-            this._sort = value;
+    setSort(attributes, directions = null) {
+        if(typeof(attributes) == 'function'){
+            this._sort = attributes;
+        } else if(typeof(attributes) == 'string'){
+            this._sort = (model) => model.get(attributes);
+        } else if(typeof(attributes) == 'Array'){
+            this._sort = (model) => attributes.map(attribute => model.get(attribute));
         } else {
-            throw new InvalidParamException('Only Sort instance, configuration object or false is allowed.');
+            throw new InvalidParamException('attributes the wrong type of format! see params lodash.com orderBy.');
+        }
+
+        this._sortDirection = directions;
+    }
+
+    _onSort(){
+        const sortedArray = _orderBy(this, this._sort, this._sortDirection);
+        for(let index in sortedArray){
+            if(sortedArray.hasOwnProperty(index)){
+                if(!_isEqual(sortedArray[index].getAttributes(), this[index].getAttributes())){
+                    this._change(this.length, sortedArray, this.getModels(), true);
+                    return;
+                }
+            }
         }
     }
 
@@ -316,14 +327,9 @@ class DataProvider extends Collection {
                 throw new InvalidConfigException('DataProvider with pagination need parent collection.');
             }
 
-            // There were no filtering with super._filterModels when pagination is not null
-            // Now we're passing filtered models of the current page to the super._filterModels()
-            // @todo probably all the collection indices should be used, not the indices on the current page
-            const currentPageModels = pagination.getIndexes().map(i => {
+            return pagination.getIndexes().map(i => {
                 return this.parent._byId[this._fetchedKeys[i]] || null;
             }).filter(model => model !== null);
-
-            return super._filterModels(currentPageModels);
         }
 
         return super._filterModels();
@@ -332,7 +338,7 @@ class DataProvider extends Collection {
     /**
      *
      * @param {object} params
-     * @returns {CollectionEvent}
+     * @returns {Jii.data.CollectionEvent}
      */
     _createEvent(params) {
         params.totalCount = this.getTotalCount();
@@ -342,20 +348,20 @@ class DataProvider extends Collection {
 }
 
 /**
- * @event DataProvider#loading
- * @property {FetchEvent} event
+ * @event Jii.data.DataProvider#loading
+ * @property {Jii.data.FetchEvent} event
  */
 DataProvider.EVENT_LOADING = 'loading';
 
 /**
- * @event DataProvider#after_fetch
- * @property {FetchEvent} event
+ * @event Jii.data.DataProvider#after_fetch
+ * @property {Jii.data.FetchEvent} event
  */
 DataProvider.EVENT_AFTER_FETCH = 'after_fetch';
 
 /**
- * @event DataProvider#before_fetch
- * @property {FetchEvent} event
+ * @event Jii.data.DataProvider#before_fetch
+ * @property {Jii.data.FetchEvent} event
  */
 DataProvider.EVENT_BEFORE_FETCH = 'before_fetch';
 module.exports = DataProvider;

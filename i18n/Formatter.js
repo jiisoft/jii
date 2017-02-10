@@ -92,7 +92,7 @@ class Formatter extends Component {
     format(value, format) {
         let params;
 
-        if (typeof(format) == 'object') {
+        if (typeof(format) == 'object' && format !== null) {
             if (!format[0]) {
                 throw new InvalidParamException('The format array must contain at least one element.');
             }

@@ -2,6 +2,7 @@
 
 const Jii = require('../index');
 const BaseObject = require('../base/BaseObject');
+const MenuHelper  = require('./MenuHelper');
 const _merge = require('lodash/merge');
 const _clone = require('lodash/clone');
 const _keys = require('lodash/keys');
@@ -87,17 +88,23 @@ class SiteMenuItem extends BaseObject {
     getActive() {
         this._active = false;
 
-        const request = this.owner.getRequestedRoute();
+        const request = MenuHelper.getRequestedRoute();
         if (this.url && this.owner.isUrlEquals(this.url, request)) {
             this._active = true;
         } else {
             for (const index in this.items) {
-                if (this.items.hasOwnProperty(index) &&
-                    this.items[index].url[0] == request[0] &&
-                    _difference(_keys(this.items[index].url), _keys(request)).length == 0) {
-                    this.items[index].url = request;
-                    this._active = true;
-                    break;
+                if (this.items.hasOwnProperty(index)){
+                    if(this.items[index].url && this.items[index].url[0] == request[0] && _difference(_keys(this.items[index].url), _keys(request)).length == 0) {
+                        this.items[index].url = request;
+                        this._active = true;
+                    }
+                    else if(this.items[index].items){
+                        this._active = this.items[index].getActive();
+                    }
+
+                    if(this._active){
+                        break;
+                    }
                 }
             }
         }

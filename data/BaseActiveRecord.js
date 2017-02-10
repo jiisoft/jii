@@ -1728,6 +1728,14 @@ class BaseActiveRecord extends Model {
 
                 if (_has(this._related, relationName) && _isFunction(this._related[relationName].attributeLabels)) {
                     relatedModel = this._related[relationName];
+                } else {
+                    try {
+                        const relation = this.getRelation(relationName);
+                        relatedModel = new relation.modelClass();
+                    }
+                    catch (error){
+                        return this.generateAttributeLabel(attribute);
+                    }
                 }
             });
 

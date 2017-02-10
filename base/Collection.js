@@ -285,7 +285,7 @@ class Collection extends Component {
     }
 
     _filterModels(models = null) {
-        if(!models) {
+        if (!models) {
             models = this.parent ? this.parent.getModels() : this.getModels();
         }
 
@@ -321,15 +321,18 @@ class Collection extends Component {
         collectionAdapter.add(this, cloned, this.getModels());
 
         // Subscribe
-        this.on(Collection.EVENT_CHANGE, /** @param {CollectionEvent} event */
-                                         event => {
-            if (event.added.length > 0) {
-                collectionAdapter.add(this, cloned, event.added);
+        this.on(
+            Collection.EVENT_CHANGE,
+            /** @param {CollectionEvent} event */
+            event => {
+                if (event.added.length > 0) {
+                    collectionAdapter.add(this, cloned, event.added);
+                }
+                if (event.removed.length > 0) {
+                    collectionAdapter.remove(this, cloned, event.removed);
+                }
             }
-            if (event.removed.length > 0) {
-                collectionAdapter.remove(this, cloned, event.removed);
-            }
-        });
+        );
 
         return cloned;
     }
@@ -382,25 +385,28 @@ class Collection extends Component {
             });
 
             // Each trigger events in children
-            _each(this._editedEvents, /** @param {CollectionEvent} event */
-                                      event => {
-                if (event.added.length > 0) {
-                    this.trigger(Collection.EVENT_ADD, event);
-                }
-                if (event.isFetch) {
-                    this.trigger(Collection.EVENT_FETCHED, event);
-                }
-                if (event.removed.length > 0) {
-                    this.trigger(Collection.EVENT_REMOVE, event);
-                }
-                if (event.added.length > 0 || event.removed.length > 0) {
-                    this.trigger(Collection.EVENT_CHANGE, event);
-                }
+            _each(
+                this._editedEvents,
+                /** @param {CollectionEvent} event */
+                event => {
+                    if (event.added.length > 0) {
+                        this.trigger(Collection.EVENT_ADD, event);
+                    }
+                    if (event.isFetch) {
+                        this.trigger(Collection.EVENT_FETCHED, event);
+                    }
+                    if (event.removed.length > 0) {
+                        this.trigger(Collection.EVENT_REMOVE, event);
+                    }
+                    if (event.added.length > 0 || event.removed.length > 0) {
+                        this.trigger(Collection.EVENT_CHANGE, event);
+                    }
 
-                if (event.isSorted) {
-                    this._onSort();
+                    if (event.isSorted) {
+                        this._onSort();
+                    }
                 }
-            });
+            );
 
             // Reset state
             this._editedEvents = [];

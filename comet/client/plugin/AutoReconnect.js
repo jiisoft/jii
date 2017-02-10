@@ -5,8 +5,6 @@
 
 'use strict';
 
-const Jii = require('../../../BaseJii');
-const Client = require('../Client');
 const TransportInterface = require('../transport/TransportInterface');
 const PluginInterface = require('./PluginInterface');
 
@@ -39,6 +37,7 @@ class AutoReconnect extends PluginInterface {
     }
 
     init() {
+        const Client = require('../Client');
         this.comet.on(Client.EVENT_OPEN, this._onOpen.bind(this));
         this.comet.transport.on(TransportInterface.EVENT_CLOSE, this._onClose.bind(this));
     }

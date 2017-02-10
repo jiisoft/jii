@@ -6,7 +6,6 @@
 'use strict';
 
 const Jii = require('../BaseJii');
-const Event = require('../base/Event');
 const ModelSchema = require('./ModelSchema');
 const InvalidConfigException = require('../exceptions/InvalidConfigException');
 const NotSupportedException = require('../exceptions/NotSupportedException');
@@ -192,7 +191,6 @@ class BaseActiveRecord extends Model {
      * @param {object} attributes attribute values (name-value pairs) to be saved into the table
      * @param {string|[]} [condition] the conditions that will be put in the WHERE part of the UPDATE SQL.
      * Please refer to [[Query.where()]] on how to specify this parameter.
-     * @returns {Promise.<number>} the number of rows updated
      * @throws {NotSupportedException} if not overrided
      */
     static updateAll(attributes, condition) {
@@ -213,7 +211,6 @@ class BaseActiveRecord extends Model {
      * Use negative values if you want to decrement the counters.
      * @param {string|[]} [condition] the conditions that will be put in the WHERE part of the UPDATE SQL.
      * Please refer to [[Query.where()]] on how to specify this parameter.
-     * @returns {number} the number of rows updated
      * @throws {NotSupportedException} if not overrided
      */
     static updateAllCounters(counters, condition) {
@@ -235,7 +232,6 @@ class BaseActiveRecord extends Model {
      * @param {string|[]} [condition] the conditions that will be put in the WHERE part of the DELETE SQL.
      * Please refer to [[Query.where()]] on how to specify this parameter.
      * @param {[]} [params] the parameters (name => value) to be bound to the query.
-     * @returns {number} the number of rows deleted
      * @throws {NotSupportedException} if not overrided
      */
     static deleteAll(condition, params) {
@@ -629,7 +625,7 @@ class BaseActiveRecord extends Model {
      *
      * @param {string} name
      * @param {string} [prefix]
-     * @returns {{model: BaseActiveRecord|null, name: string}|null}
+     * @returns {object|null}
      * @protected
      */
     _detectKeyFormatRelation(name, prefix) {
@@ -663,7 +659,7 @@ class BaseActiveRecord extends Model {
     /**
      *
      * @param {string} name
-     * @param value
+     * @param {*} value
      * @protected
      */
     _setRelated(name, value) {
@@ -881,7 +877,6 @@ class BaseActiveRecord extends Model {
      * If the validation fails, the record will not be inserted into the database.
      * @param {object} attributeNames list of attributes that need to be saved. Defaults to null,
      * meaning all attributes that are loaded from DB will be saved.
-     * @return boolean whether the attributes are valid and the record is inserted successfully.
      */
     insert(runValidation, attributeNames) {
     }
@@ -1125,6 +1120,7 @@ class BaseActiveRecord extends Model {
      * The default implementation will trigger an [[EVENT_AFTER_FIND]] event.
      * When overriding this method, make sure you call the parent implementation to ensure the
      * event is triggered.
+     * @return {Promise.<T>}
      */
     afterFind() {
         this.trigger(BaseActiveRecord.EVENT_AFTER_FIND);
@@ -1175,6 +1171,7 @@ class BaseActiveRecord extends Model {
      * when the password had changed or implement audit trail that tracks all the changes.
      * `changedAttributes` gives you the old attribute values while the active record (`this`) has
      * already the new, updated values.
+     * @return {Promise.<T>}
      */
     afterSave(insert, changedAttributes) {
         var eventName = insert ? BaseActiveRecord.EVENT_AFTER_INSERT : BaseActiveRecord.EVENT_AFTER_UPDATE;
@@ -1217,6 +1214,7 @@ class BaseActiveRecord extends Model {
      * The default implementation raises the [[EVENT_AFTER_DELETE]] event.
      * You may override this method to do postprocessing after the record is deleted.
      * Make sure you call the parent implementation so that the event is raised properly.
+     * @return {Promise.<T>}
      */
     afterDelete() {
         this.trigger(BaseActiveRecord.EVENT_AFTER_DELETE);
@@ -1273,9 +1271,6 @@ class BaseActiveRecord extends Model {
      * @param {boolean} [asArray] whether to return the primary key value as an array. If true,
      * the return value will be an array with column names as keys and column values as values.
      * Note that for composite primary keys, an array will always be returned regardless of this parameter value.
-     * @property mixed The primary key value. An array (column name => column value) is returned if
-     * the primary key is composite. A string is returned otherwise (null will be returned if
-     * the key value is null).
      * @returns {*} the primary key value. An array (column name => column value) is returned if the primary key
      * is composite or `asArray` is true. A string is returned otherwise (null will be returned if
      * the key value is null).
@@ -1304,10 +1299,7 @@ class BaseActiveRecord extends Model {
      * @param {boolean} [asArray] whether to return the primary key value as an array. If true,
      * the return value will be an array with column name as key and column value as value.
      * If this is false (default), a scalar value will be returned for non-composite primary key.
-     * @property mixed The old primary key value. An array (column name => column value) is
-     * returned if the primary key is composite. A string is returned otherwise (null will be
-     * returned if the key value is null).
-     * @returns {*} the old primary key value. An array (column name => column value) is returned if the primary key
+     * @returns {*} The old primary key value. An array (column name => column value) is returned if the primary key
      * is composite or `asArray` is true. A string is returned otherwise (null will be returned if
      * the key value is null).
      */
@@ -1736,7 +1728,6 @@ class BaseActiveRecord extends Model {
 
                 if (_has(this._related, relationName) && _isFunction(this._related[relationName].attributeLabels)) {
                     relatedModel = this._related[relationName];
-                } else {
                 }
             });
 

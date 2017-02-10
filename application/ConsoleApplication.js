@@ -60,7 +60,7 @@ class ConsoleApplication extends Application {
      * If so, the corresponding file will be loaded as the application configuration.
      * Otherwise, the configuration provided as the parameter will be returned back.
      * @param {object} config the configuration provided in the constructor.
-     * @returns {[]} the actual configuration to be used by the application.
+     * @returns {object} the actual configuration to be used by the application.
      */
     _loadConfig(config) {
         if (!_isEmpty(process.argv)) {

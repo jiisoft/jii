@@ -76,6 +76,7 @@ class BaseConnection extends Component {
 
     /**
      * @deprecated
+     * @return {*}
      */
     open() {
         return this.start();
@@ -83,6 +84,7 @@ class BaseConnection extends Component {
 
     /**
      * @deprecated
+     * @return {*}
      */
     close() {
         return this.stop();
@@ -92,6 +94,7 @@ class BaseConnection extends Component {
      * Establishes a DB connection.
      * It does nothing if a DB connection has already been established.
      * @throws Exception if connection fails
+     * @return {Promise}
      */
     start() {
         if (this._isOpen) {
@@ -260,7 +263,7 @@ class BaseConnection extends Component {
 
     /**
      *
-     * @param modelClassName
+     * @param {function} modelClassName
      * @returns {Collection|null}
      */
     getRootCollection(modelClassName) {

@@ -13,7 +13,6 @@ const _isFunction = require('lodash/isFunction');
 const _isString = require('lodash/isString');
 const _isUndefined = require('lodash/isUndefined');
 const _has = require('lodash/has');
-const _each = require('lodash/each');
 const BaseObject = require('./BaseObject');
 
 class Event extends BaseObject {

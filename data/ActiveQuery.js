@@ -5,7 +5,6 @@
 
 'use strict';
 
-const Jii = require('../BaseJii');
 const Query = require('./Query');
 const Model = require('../base/Model');
 const InvalidConfigException = require('../exceptions/InvalidConfigException');
@@ -293,7 +292,7 @@ class ActiveQuery extends Query {
         if (pks.length > 1) {
             _each(models, (model, i) => {
                 var key = [];
-                _.each(pks, pk => {
+                _each(pks, pk => {
                     key.push(model.get(pk));
                 });
                 key = JSON.stringify(key);
@@ -879,7 +878,7 @@ class ActiveQuery extends Query {
 
     /**
      *
-     * @returns {ActiveQuery} the query object itself
+     * @param {string} inverseOf
      */
     setInverseOf(inverseOf) {
         this._inverseOf = inverseOf;
@@ -920,12 +919,10 @@ class ActiveQuery extends Query {
                         related[i][this._inverseOf] = inverseRelation.multiple ? [model] : model;
                     }
                 });
+            } else if (related instanceof ActiveRecord) {
+                related.populateRelation(this._inverseOf, inverseRelation.multiple ? [model] : model);
             } else {
-                if (related instanceof ActiveRecord) {
-                    related.populateRelation(this._inverseOf, inverseRelation.multiple ? [model] : model);
-                } else {
-                    related[this._inverseOf] = inverseRelation.multiple ? [model] : model;
-                }
+                related[this._inverseOf] = inverseRelation.multiple ? [model] : model;
             }
 
             return related;
@@ -1088,27 +1085,25 @@ class ActiveQuery extends Query {
                     }
                 });
             }
-        } else {
-            if (this.multiple) {
-                _each(primaryModels, (primaryModel, i) => {
-                    var model = primaryModel instanceof Model ? primaryModel.get(primaryName) : primaryModel[primaryName];
-                    _each(model, (m, j) => {
-                        if (m instanceof ActiveRecord) {
-                            m.populateRelation(name, primaryModel);
-                        } else {
-                            model[j][name] = primaryModel;
-                        }
-                    });
-                });
-            } else {
-                _each(primaryModels, (primaryModel, i) => {
-                    if (primaryModels[i][primaryName] instanceof ActiveRecord) {
-                        primaryModels[i][primaryName].populateRelation(name, primaryModel);
-                    } else if (!_isEmpty(primaryModels[i][primaryName])) {
-                        primaryModels[i][primaryName][name] = primaryModel;
+        } else if (this.multiple) {
+            _each(primaryModels, (primaryModel, i) => {
+                var model = primaryModel instanceof Model ? primaryModel.get(primaryName) : primaryModel[primaryName];
+                _each(model, (m, j) => {
+                    if (m instanceof ActiveRecord) {
+                        m.populateRelation(name, primaryModel);
+                    } else {
+                        model[j][name] = primaryModel;
                     }
                 });
-            }
+            });
+        } else {
+            _each(primaryModels, (primaryModel, i) => {
+                if (primaryModels[i][primaryName] instanceof ActiveRecord) {
+                    primaryModels[i][primaryName].populateRelation(name, primaryModel);
+                } else if (!_isEmpty(primaryModels[i][primaryName])) {
+                    primaryModels[i][primaryName][name] = primaryModel;
+                }
+            });
         }
     }
 
@@ -1420,7 +1415,7 @@ class ActiveQuery extends Query {
 
     /**
      *
-     * @returns {ActiveQuery} the query object itself
+     * @param {[]} _with
      */
     setWith(_with) {
         this._with = _with;
@@ -1487,6 +1482,7 @@ class ActiveQuery extends Query {
      * @param {[]} _with a list of relations that this query should be performed with. Please
      * refer to [[with()]] for details about specifying this parameter.
      * @param {[]|ActiveRecord[]} models the primary models (can be either AR instances or arrays)
+     * @return {Promise.<*>}
      */
     findWith(_with, models) {
         var primaryModel = new this.modelClass();

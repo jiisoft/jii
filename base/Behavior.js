@@ -5,7 +5,6 @@
 
 'use strict';
 
-const Jii = require('../BaseJii');
 const Event = require('./Event');
 const _each = require('lodash/each');
 const BaseObject = require('./BaseObject');

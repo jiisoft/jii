@@ -46,9 +46,6 @@ class NeatClient extends Component {
 
         this.comet = this.comet === null ? Jii.app.get('comet') : this.comet instanceof Component ? this.comet : Jii.createObject(this.comet);
 
-        // Move NeatComet to Jii namespace
-        _extend(Jii.namespace('NeatComet'), NeatComet);
-
         this.engine.comet = this;
         this.engine.profilesDefinition = this.bindings;
         this.engine.createCollection = this.engine.createCollection || this._createCollection.bind(this);

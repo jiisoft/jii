@@ -5,7 +5,6 @@
 
 'use strict';
 
-const Jii = require('../BaseJii');
 const BaseObject = require('../base/BaseObject');
 
 class Environment extends BaseObject {

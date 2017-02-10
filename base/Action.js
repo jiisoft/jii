@@ -5,7 +5,6 @@
 
 'use strict';
 
-const Jii = require('../BaseJii');
 const InvalidConfigException = require('../exceptions/InvalidConfigException');
 const _isFunction = require('lodash/isFunction');
 const BaseObject = require('./BaseObject');

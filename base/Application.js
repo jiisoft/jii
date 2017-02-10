@@ -160,8 +160,9 @@ class Application extends Module {
     }
 
     /**
+     *
      * Overwrite this method for return default configuration specified for application
-     * @type {object} base application's config.
+     * @return {{}}
      */
     _getBaseConfig() {
         return {};
@@ -169,8 +170,7 @@ class Application extends Module {
 
     /**
      *
-     * @param config
-     * @private
+     * @param {object} config
      */
     _preInit(config) {
         if (!_isObject(config)) {

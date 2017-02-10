@@ -886,8 +886,10 @@ class self extends DatabaseTestCase {
     }
 
     /**
+     *
      * Ensure ActiveRelationTrait does preserve order of items on find via()
      * https://github.com/yiisoft/yii2/issues/1310
+     * @param test
      */
     testFindEagerViaRelationPreserveOrder(test) {
         /** @typedef {ActiveRecord} orderClass */
@@ -1528,7 +1530,7 @@ class self extends DatabaseTestCase {
         var customer = null;
 
         // save
-        /** @typedef {Customer} customer */
+        /** @var {Customer} customer */
         customerClass.findOne(2).then(function (c) {
             customer = c;
 

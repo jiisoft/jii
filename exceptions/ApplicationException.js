@@ -5,8 +5,6 @@
 
 'use strict';
 
-const Jii = require('../BaseJii');
-
 class ApplicationException extends Error {
 
     preInit(message) {

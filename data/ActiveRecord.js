@@ -186,9 +186,7 @@ class ActiveRecord extends BaseActiveRecord {
 
     /**
      * Loads default values from database table schema
-     *
      * @param {boolean} [skipIfSet] if existing value should be preserved
-     * @returns {Promise} model instance
      */
     loadDefaultValues(skipIfSet) {
         skipIfSet = skipIfSet !== false;

@@ -1,10 +1,10 @@
 'use strict';
 
-const Jii = require('../../BaseJii');
 const BaseActiveRecord = require('../../data/BaseActiveRecord');
 const User = require('./User');
 const Link = require('./Link');
 const LinkJunction = require('./LinkJunction');
+
 class Article extends BaseActiveRecord {
 
     /**

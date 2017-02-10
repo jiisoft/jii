@@ -5,7 +5,6 @@
 
 'use strict';
 
-const Jii = require('../BaseJii');
 const ModelEvent = require('../base/ModelEvent');
 
 class AfterSaveEvent extends ModelEvent {

@@ -5,7 +5,6 @@
 
 'use strict';
 
-const Jii = require('../BaseJii');
 const Action = require('../base/Action');
 
 class AnonymousAction extends Action {

@@ -7,7 +7,6 @@
 
 const Jii = require('../BaseJii');
 const InvalidConfigException = require('../exceptions/InvalidConfigException');
-const _isObject = require('lodash/isObject');
 const _has = require('lodash/has');
 const _each = require('lodash/each');
 const Component = require('./Component');

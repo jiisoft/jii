@@ -195,9 +195,6 @@ class Client extends Component {
      */
     on(name, handler, data, isAppend) {
         // Subscribe on hub channels
-        if (name === Client.EVENT_CHANNEL && !this.hasEventHandlers(name)) {
-            this.subscribe(Client.CHANNEL_NAME_ALL);
-        }
         if (name.indexOf(Client.EVENT_CHANNEL_NAME) === 0) {
             this.subscribe(name.substr(Client.EVENT_CHANNEL_NAME.length));
         }
@@ -214,9 +211,6 @@ class Client extends Component {
         super.off(...arguments);
 
         // Unsubscribe on hub channels
-        if (name === Client.EVENT_CHANNEL && !this.hasEventHandlers(name)) {
-            this.unsubscribe(Client.CHANNEL_NAME_ALL);
-        }
         if (name.indexOf(Client.EVENT_CHANNEL_NAME) === 0) {
             this.unsubscribe(name.substr(Client.EVENT_CHANNEL_NAME.length));
         }
@@ -375,11 +369,6 @@ class Client extends Component {
     }
 
 }
-
-/**
- * @type {string}
- */
-Client.CHANNEL_NAME_ALL = '__allVfcOS7';
 
 /**
  * @event Client#request
